@@ -10,7 +10,7 @@ pub struct Tuple {
 }
 
 impl Tuple {
-    pub fn tuple(x: f64, y: f64, z:f64, w: f64) -> Self {
+    pub fn new(x: f64, y: f64, z:f64, w: f64) -> Self {
         Self { x, y, z, w}
     }
 
@@ -47,7 +47,7 @@ impl ops::Add for Tuple {
         if self.is_point() && other.is_point() {
             panic!("Add tow points doesn't make sense");
         }
-        Tuple::tuple(
+        Tuple::new(
             self.x + other.x,
             self.y + other.y,
             self.z + other.z,
@@ -60,7 +60,7 @@ impl ops::Sub for Tuple {
     type Output = Self;
 
     fn sub(self, other: Self) -> Self {
-        Tuple::tuple(
+        Tuple::new(
             self.x - other.x,
             self.y - other.y,
             self.z - other.z,
@@ -73,7 +73,7 @@ impl ops::Neg for Tuple {
     type Output = Self;
 
     fn neg(self) -> Self {
-        Tuple::tuple(
+        Tuple::new(
             0. - self.x,
             0. - self.y,
             0. - self.z,
@@ -86,7 +86,7 @@ impl ops::Div<f64> for Tuple {
     type Output = Self;
 
     fn div(self, other: f64) -> Self {
-        Tuple::tuple(
+        Tuple::new(
             self.x / other,
             self.y / other,
             self.z / other,
@@ -99,7 +99,7 @@ impl ops::Mul<f64> for Tuple {
     type Output = Self;
 
     fn mul(self, other: f64) -> Self {
-        Tuple::tuple(
+        Tuple::new(
             self.x * other,
             self.y * other,
             self.z * other,
@@ -109,12 +109,12 @@ impl ops::Mul<f64> for Tuple {
 }
 
 impl Tuple {
-    pub fn magnitude(&self) -> f64 {
+    pub fn length(&self) -> f64 {
         (self.x.powi(2) + self.y.powi(2) + self.z.powi(2) + self.w.powi(2)).sqrt()
     }
 
     pub fn normalize(&self) -> Self {
-        *self / self.magnitude()
+        *self / self.length()
     }
 
     pub fn dot(&self, other: Self) -> f64 {
@@ -173,10 +173,10 @@ mod tests_tuple {
 
     #[test]
     fn add_to_tuple() {
-        let tuple_1 = Tuple::tuple(3.0,-2.0,5.0,1.0);
-        let tuple_2 = Tuple::tuple(-2.0,3.0, 1.0,0.0);
+        let tuple_1 = Tuple::new(3.0, -2.0, 5.0, 1.0);
+        let tuple_2 = Tuple::new(-2.0, 3.0, 1.0, 0.0);
 
-        let tuple_expected = Tuple::tuple(1.0,1.0,6.0,1.0);
+        let tuple_expected = Tuple::new(1.0, 1.0, 6.0, 1.0);
 
         assert_fuzzy_eq!(tuple_1 + tuple_2, tuple_expected);
     }
@@ -226,35 +226,35 @@ mod tests_tuple {
 
     #[test]
     fn neg_tuple() {
-        let tuple = Tuple::tuple(1.,-2.,3.,-4.);
-        let neg_tuple = Tuple::tuple(-1.,2.,-3.,4.);
+        let tuple = Tuple::new(1., -2., 3., -4.);
+        let neg_tuple = Tuple::new(-1., 2., -3., 4.);
 
         assert_fuzzy_eq!(-tuple, neg_tuple);
     }
 
     #[test]
     fn mul_tuple_by_scalar() {
-        let tuple = Tuple::tuple(1.,-2.,3.,-4.);
+        let tuple = Tuple::new(1., -2., 3., -4.);
         let scarlar = 3.5;
-        let expected_tuple = Tuple::tuple(3.5,-7.,10.5,-14.);
+        let expected_tuple = Tuple::new(3.5, -7., 10.5, -14.);
 
         assert_fuzzy_eq!(tuple * scarlar, expected_tuple);
     }
 
     #[test]
     fn mul_tuple_by_fraction() {
-        let tuple = Tuple::tuple(1.,-2.,3.,-4.);
+        let tuple = Tuple::new(1., -2., 3., -4.);
         let fraction = 0.5;
-        let expected_tuple = Tuple::tuple(0.5,-1.,1.5,-2.);
+        let expected_tuple = Tuple::new(0.5, -1., 1.5, -2.);
 
         assert_fuzzy_eq!(tuple * fraction, expected_tuple);
     }
 
     #[test]
     fn div_tuple_by_scalar() {
-        let tuple = Tuple::tuple(1.,-2.,3.,-4.);
+        let tuple = Tuple::new(1., -2., 3., -4.);
         let scarlar = 2.0;
-        let expected_tuple = Tuple::tuple(0.5,-1.,1.5,-2.);
+        let expected_tuple = Tuple::new(0.5, -1., 1.5, -2.);
 
         assert_fuzzy_eq!(tuple / scarlar, expected_tuple);
     }
@@ -267,11 +267,11 @@ mod tests_tuple {
         let vec_4 = Tuple::vector(1.,2.,3.);
         let vec_5 = Tuple::vector(-1.,-2.,-3.);
 
-        assert_fuzzy_eq!(vec_1.magnitude(), 1.);
-        assert_fuzzy_eq!(vec_2.magnitude(), 1.);
-        assert_fuzzy_eq!(vec_3.magnitude(), 1.);
-        assert_fuzzy_eq!(vec_4.magnitude(), (14. as f64).sqrt());
-        assert_fuzzy_eq!(vec_5.magnitude(), (14. as f64).sqrt());
+        assert_fuzzy_eq!(vec_1.length(), 1.);
+        assert_fuzzy_eq!(vec_2.length(), 1.);
+        assert_fuzzy_eq!(vec_3.length(), 1.);
+        assert_fuzzy_eq!(vec_4.length(), (14. as f64).sqrt());
+        assert_fuzzy_eq!(vec_5.length(), (14. as f64).sqrt());
     }
 
     #[test]
@@ -292,7 +292,7 @@ mod tests_tuple {
     fn get_magnitude_from_vector_normilize() {
         let vector = Tuple::vector(1.,2.,3.);
 
-        assert_fuzzy_eq!(vector.normalize().magnitude(), 1.);
+        assert_fuzzy_eq!(vector.normalize().length(), 1.);
     }
 
     #[test]
