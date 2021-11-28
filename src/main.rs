@@ -1,7 +1,10 @@
-use crate::tuple::Tuple;
-
+#[macro_use]
 mod fuzzy_eq;
 mod tuple;
+mod color;
+mod canvas;
+
+use crate::tuple::Tuple;
 
 fn main() {
     let enviroment = World::world(
