@@ -21,7 +21,7 @@ impl Canvas {
         self.pixels[self.get_pixel_index(x, y)]
     }
 
-    pub fn set_pixel(&mut self, x: usize, y: usize, color: Color) {
+    pub fn set_pixel_color(&mut self, x: usize, y: usize, color: Color) {
         let index = self.get_pixel_index(x, y);
         self.pixels[index] = color;
     }
@@ -114,7 +114,7 @@ mod tests_canvas {
         let mut canvas = Canvas::new(10, 20);
 
         let red = Color::new(1.0, 0.0, 0.0);
-        canvas.set_pixel(2, 3, red);
+        canvas.set_pixel_color(2, 3, red);
 
         let expected_color = Color::new(1.0, 0.0, 0.0);
 
@@ -142,9 +142,9 @@ mod tests_canvas {
         let color_2 = Color::new(0.0, 0.5, 0.);
         let color_3 = Color::new(-0.5, 0., 1.);
 
-        canvas.set_pixel(0,0, color_1);
-        canvas.set_pixel(2,1, color_2);
-        canvas.set_pixel(4,2, color_3);
+        canvas.set_pixel_color(0,0, color_1);
+        canvas.set_pixel_color(2,1, color_2);
+        canvas.set_pixel_color(4,2, color_3);
 
         let result = canvas.to_ppm();
 
