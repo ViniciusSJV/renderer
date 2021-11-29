@@ -21,7 +21,7 @@ impl Canvas {
         self.pixels[self.get_pixel_index(x, y)]
     }
 
-    pub fn write_pixel(&mut self, x: usize, y: usize, color: Color) {
+    pub fn set_pixel(&mut self, x: usize, y: usize, color: Color) {
         let index = self.get_pixel_index(x, y);
         self.pixels[index] = color;
     }
@@ -34,14 +34,59 @@ impl Canvas {
         let mut header = Vec::new();
         header.extend(String::from("P3\n").into_bytes());
         header.extend(format!("{} {}\n", self.width, self.height).into_bytes());
-        header.extend(format!("{}", 255).into_bytes());
+        header.extend(format!("{}\n", 255).into_bytes());
 
         return header;
     }
 
-    fn to_ppm(&self) -> Vec<u8> {
+    //https://github.com/lopossumi/Rust-Output-Image
+    fn create_ppm_pixel_data(&self) -> Vec<u8> {
+        let mut pixel_data: Vec<u8> = Vec::new();
+        let mut pixel_data_string: Vec<String> = Vec::new();
+        let mut i = 1;
+        for pixel in self.pixels.iter() {
+            let color = pixel.clamp(0.0, 1.0);
+
+            let red: u8 = (color.red * 255.).round() as u8;
+            let green: u8 = (color.green * 255.).round() as u8;
+            let blue: u8 = (color.blue * 255.).round() as u8;
+
+            pixel_data_string.push(format!("{}", red));
+            pixel_data_string.push(format!("{}", green));
+            pixel_data_string.push(format!("{}", blue));
+
+            if i % 5 == 0 {
+                pixel_data.extend(format!("{} {} {} {} {} {} {} {} {} {} {} {} {} {} {}\n",
+                                          pixel_data_string[0],
+                                          pixel_data_string[1],
+                                          pixel_data_string[2],
+                                          pixel_data_string[3],
+                                          pixel_data_string[4],
+                                          pixel_data_string[5],
+                                          pixel_data_string[6],
+                                          pixel_data_string[7],
+                                          pixel_data_string[8],
+                                          pixel_data_string[9],
+                                          pixel_data_string[10],
+                                          pixel_data_string[11],
+                                          pixel_data_string[12],
+                                          pixel_data_string[13],
+                                          pixel_data_string[14]).into_bytes());
+                pixel_data_string.clear();
+            }
+            i += 1;
+        }
+        pixel_data
+    }
+
+    pub fn to_ppm(&self) -> Vec<u8> {
         let header = self.create_ppm_header();
-        return header;
+        let pixel_data = self.create_ppm_pixel_data();
+
+        let mut ppm = Vec::new();
+        ppm.extend(header);
+        ppm.extend(pixel_data);
+        ppm
     }
 }
 
@@ -69,7 +114,7 @@ mod tests_canvas {
         let mut canvas = Canvas::new(10, 20);
 
         let red = Color::new(1.0, 0.0, 0.0);
-        canvas.write_pixel(2, 3, red);
+        canvas.set_pixel(2, 3, red);
 
         let expected_color = Color::new(1.0, 0.0, 0.0);
 
@@ -79,15 +124,42 @@ mod tests_canvas {
     #[test]
     fn constructing_the_ppm_header() {
         let canvas = Canvas::new(5, 3);
-        let ppm_image = canvas.to_ppm();
+        let ppm = canvas.to_ppm();
         /*
          * Magic number: P3
          * Width/Height: 5 3
          * Maximum Color Value: 255
          */
-        let expected_result = String::from("P3\n5 3\n255").into_bytes();
+        let expected_header = String::from("P3\n5 3\n255\n").into_bytes();
 
-        assert_eq!(ppm_image, expected_result);
+        assert_eq!(&ppm[..11], expected_header);
+    }
+
+    #[test]
+    fn set_ppm_pixel_data() {
+        let mut canvas = Canvas::new(5, 3);
+        let color_1 = Color::new(1.5, 0., 0.);
+        let color_2 = Color::new(0.0, 0.5, 0.);
+        let color_3 = Color::new(-0.5, 0., 1.);
+
+        canvas.set_pixel(0,0, color_1);
+        canvas.set_pixel(2,1, color_2);
+        canvas.set_pixel(4,2, color_3);
+
+        let result = canvas.to_ppm();
+
+        let header = String::from("P3\n5 3\n255\n").into_bytes();
+        let data = String::from("\
+        255 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n\
+        0 0 0 0 0 0 0 128 0 0 0 0 0 0 0\n\
+        0 0 0 0 0 0 0 0 0 0 0 0 0 0 255\n"
+        ).into_bytes();
+
+        let mut expected_result = Vec::new();
+        expected_result.extend(header);
+        expected_result.extend(data);
+
+        assert_eq!(expected_result, result);
     }
 }
 
