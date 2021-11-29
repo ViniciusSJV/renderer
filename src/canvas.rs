@@ -42,7 +42,6 @@ impl Canvas {
     //https://github.com/lopossumi/Rust-Output-Image
     fn create_ppm_pixel_data(&self) -> Vec<u8> {
         let mut pixel_data: Vec<u8> = Vec::new();
-        let mut pixel_data_string: Vec<String> = Vec::new();
         let mut i = 1;
         for pixel in self.pixels.iter() {
             let color = pixel.clamp(0.0, 1.0);
@@ -51,28 +50,11 @@ impl Canvas {
             let green: u8 = (color.green * 255.).round() as u8;
             let blue: u8 = (color.blue * 255.).round() as u8;
 
-            pixel_data_string.push(format!("{}", red));
-            pixel_data_string.push(format!("{}", green));
-            pixel_data_string.push(format!("{}", blue));
-
+            pixel_data.extend(format!("{} {} {}", red, green, blue).into_bytes());
             if i % 5 == 0 {
-                pixel_data.extend(format!("{} {} {} {} {} {} {} {} {} {} {} {} {} {} {}\n",
-                                          pixel_data_string[0],
-                                          pixel_data_string[1],
-                                          pixel_data_string[2],
-                                          pixel_data_string[3],
-                                          pixel_data_string[4],
-                                          pixel_data_string[5],
-                                          pixel_data_string[6],
-                                          pixel_data_string[7],
-                                          pixel_data_string[8],
-                                          pixel_data_string[9],
-                                          pixel_data_string[10],
-                                          pixel_data_string[11],
-                                          pixel_data_string[12],
-                                          pixel_data_string[13],
-                                          pixel_data_string[14]).into_bytes());
-                pixel_data_string.clear();
+                pixel_data.extend(String::from("\n").into_bytes());
+            } else {
+                pixel_data.extend(String::from(" ").into_bytes());
             }
             i += 1;
         }
