@@ -48,38 +48,35 @@ impl Canvas {
         for y in 0..self.height {
             for x in 0..self.width {
                 let pixel = self.pixel_at(x, y);
-                let color = pixel.clamp(0.0, 1.0);
+                let clamp_color = pixel.clamp(0.0, 1.0);
 
-                let red: u8 = (color.red * 255.).round() as u8;
-                let green: u8 = (color.green * 255.).round() as u8;
-                let blue: u8 = (color.blue * 255.).round() as u8;
+                let red: u8 = (clamp_color.red * 255.).round() as u8;
+                let green: u8 = (clamp_color.green * 255.).round() as u8;
+                let blue: u8 = (clamp_color.blue * 255.).round() as u8;
 
-                let mut data = format!("{} {} {}", red, green, blue);
-                total_caracteres_in_line += data.chars().count() as u8;
+                let mut data:String = String::from("");
 
-                println!("{}", data);
+                for (i, color) in [red, green, blue].iter().enumerate() {
+                    data = format!("{}", color);
 
-                if total_caracteres_in_line + 2 < limit_caracteres_in_line {
-                    println!("{}", total_caracteres_in_line);
-
-                    let is_last_column: bool = x == self.width - 1;
-                    if is_last_column {
-                        data = format!("{}", data);
+                    total_caracteres_in_line += data.chars().count() as u8;
+                    if total_caracteres_in_line + 2 >= limit_caracteres_in_line {
+                        //hit the line character limit: add a line break
+                        data = format!("{}\n", data);
+                        total_caracteres_in_line = 0;
                     } else {
-                        data = format!("{} ", data);
-                        total_caracteres_in_line += 1;
+                        let is_last_column: bool = x == self.width - 1;
+                        if is_last_column && i == 2{
+                            data = format!("{}\n", data);
+                            total_caracteres_in_line = 0;
+                        } else {
+                            data = format!("{} ", data);
+                            total_caracteres_in_line += 1;
+                        }
                     }
-                } else {
-                    data = format!("{}\n", data);
-                    println!("Espaco limite");
-                    total_caracteres_in_line = 0;
+                    pixel_data.extend(data.into_bytes());
                 }
-
-                pixel_data.extend(data.into_bytes());
             }
-            pixel_data.extend(String::from("\n").into_bytes());
-            println!("Espaco linha");
-            total_caracteres_in_line = 0;
         }
         pixel_data
     }
