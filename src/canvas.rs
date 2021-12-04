@@ -42,21 +42,44 @@ impl Canvas {
     //https://github.com/lopossumi/Rust-Output-Image
     fn create_ppm_pixel_data(&self) -> Vec<u8> {
         let mut pixel_data: Vec<u8> = Vec::new();
-        let mut i = 1;
-        for pixel in self.pixels.iter() {
-            let color = pixel.clamp(0.0, 1.0);
+        let mut total_caracteres_in_line: u8 = 0;
+        let limit_caracteres_in_line: u8 = 69;
 
-            let red: u8 = (color.red * 255.).round() as u8;
-            let green: u8 = (color.green * 255.).round() as u8;
-            let blue: u8 = (color.blue * 255.).round() as u8;
+        for y in 0..self.height {
+            for x in 0..self.width {
+                let pixel = self.pixel_at(x, y);
+                let color = pixel.clamp(0.0, 1.0);
 
-            pixel_data.extend(format!("{} {} {}", red, green, blue).into_bytes());
-            if i % 5 == 0 {
-                pixel_data.extend(String::from("\n").into_bytes());
-            } else {
-                pixel_data.extend(String::from(" ").into_bytes());
+                let red: u8 = (color.red * 255.).round() as u8;
+                let green: u8 = (color.green * 255.).round() as u8;
+                let blue: u8 = (color.blue * 255.).round() as u8;
+
+                let mut data = format!("{} {} {}", red, green, blue);
+                total_caracteres_in_line += data.chars().count() as u8;
+
+                println!("{}", data);
+
+                if total_caracteres_in_line + 2 < limit_caracteres_in_line {
+                    println!("{}", total_caracteres_in_line);
+
+                    let is_last_column: bool = x == self.width - 1;
+                    if is_last_column {
+                        data = format!("{}", data);
+                    } else {
+                        data = format!("{} ", data);
+                        total_caracteres_in_line += 1;
+                    }
+                } else {
+                    data = format!("{}\n", data);
+                    println!("Espaco limite");
+                    total_caracteres_in_line = 0;
+                }
+
+                pixel_data.extend(data.into_bytes());
             }
-            i += 1;
+            pixel_data.extend(String::from("\n").into_bytes());
+            println!("Espaco linha");
+            total_caracteres_in_line = 0;
         }
         pixel_data
     }
@@ -135,6 +158,34 @@ mod tests_canvas {
         255 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n\
         0 0 0 0 0 0 0 128 0 0 0 0 0 0 0\n\
         0 0 0 0 0 0 0 0 0 0 0 0 0 0 255\n"
+        ).into_bytes();
+
+        let mut expected_result = Vec::new();
+        expected_result.extend(header);
+        expected_result.extend(data);
+
+        assert_eq!(expected_result, result);
+    }
+
+    #[test]
+    fn splitting_long_lines_in_ppm() {
+        let mut canvas = Canvas::new(10, 2);
+        let color = Color::new(1.0, 0.8, 0.6);
+
+        for x in 0..canvas.width {
+            for y in 0..canvas.height {
+                canvas.set_pixel_color(x,y, color);
+            }
+        }
+
+        let result = canvas.to_ppm();
+
+        let header = String::from("P3\n10 2\n255\n").into_bytes();
+        let data = String::from("\
+        255 204 153 255 204 153 255 204 153 255 204 153 255 204 153 255 204\n\
+        153 255 204 153 255 204 153 255 204 153 255 204 153\n\
+        255 204 153 255 204 153 255 204 153 255 204 153 255 204 153 255 204\n\
+        153 255 204 153 255 204 153 255 204 153 255 204 153\n"
         ).into_bytes();
 
         let mut expected_result = Vec::new();
