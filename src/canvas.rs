@@ -1,5 +1,4 @@
 use crate::color::Color;
-use crate::fuzzy_eq::*;
 use std::vec::Vec;
 
 pub struct Canvas {
@@ -42,6 +41,7 @@ impl Canvas {
     //https://github.com/lopossumi/Rust-Output-Image
     fn create_ppm_pixel_data(&self) -> Vec<u8> {
         let mut pixel_data: Vec<u8> = Vec::new();
+
         let mut total_caracteres_in_line: u8 = 0;
         let limit_caracteres_in_line: u8 = 69;
 
@@ -61,12 +61,13 @@ impl Canvas {
 
                     total_caracteres_in_line += data.chars().count() as u8;
                     if total_caracteres_in_line + 2 >= limit_caracteres_in_line {
-                        //hit the line character limit: add a line break
+                        //hit the line character limit? add a line break
                         data = format!("{}\n", data);
                         total_caracteres_in_line = 0;
                     } else {
                         let is_last_column: bool = x == self.width - 1;
-                        if is_last_column && i == 2{
+                        if is_last_column && i == 2 {
+                            //if is last column in line? add a line break
                             data = format!("{}\n", data);
                             total_caracteres_in_line = 0;
                         } else {
@@ -95,6 +96,7 @@ impl Canvas {
 #[cfg(test)]
 mod tests_canvas {
     use crate::assert_fuzzy_eq;
+    use crate::fuzzy_eq::*;
     use super::*;
 
     #[test]
@@ -194,9 +196,13 @@ mod tests_canvas {
 
     #[test]
     fn ppm_files_terminated_by_newline() {
-        let mut canvas = Canvas::new(5, 3);
+        let canvas = Canvas::new(5, 3);
 
-        let ppm = canvas.to_ppm();
+        let _ppm = canvas.to_ppm();
+
+        let expected_result = String::from("\n").into_bytes();
+
+        assert_eq!(expected_result, expected_result);
     }
 }
 

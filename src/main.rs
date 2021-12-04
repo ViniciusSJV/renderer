@@ -1,4 +1,3 @@
-#[macro_use]
 use std::fs::write;
 
 mod fuzzy_eq;
