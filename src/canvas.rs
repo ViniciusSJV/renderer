@@ -54,7 +54,7 @@ impl Canvas {
                 let green: u8 = (clamp_color.green * 255.).round() as u8;
                 let blue: u8 = (clamp_color.blue * 255.).round() as u8;
 
-                let mut data:String = String::from("");
+                let mut data;
 
                 for (i, color) in [red, green, blue].iter().enumerate() {
                     data = format!("{}", color);
@@ -190,6 +190,13 @@ mod tests_canvas {
         expected_result.extend(data);
 
         assert_eq!(expected_result, result);
+    }
+
+    #[test]
+    fn ppm_files_terminated_by_newline() {
+        let mut canvas = Canvas::new(5, 3);
+
+        let ppm = canvas.to_ppm();
     }
 }
 

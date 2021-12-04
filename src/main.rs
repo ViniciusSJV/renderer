@@ -1,12 +1,19 @@
 #[macro_use]
+use std::fs::write;
+
 mod fuzzy_eq;
 mod tuple;
 mod color;
 mod canvas;
 
+use crate::canvas::Canvas;
+use crate::color::Color;
 use crate::tuple::Tuple;
 
 fn main() {
+    let mut canvas = Canvas::new(900, 550);
+    let color = Color::new(1., 1., 0.);
+
     let enviroment = World::world(
         Tuple::vector(0.0, -0.1, 0.0),
         Tuple::vector(-0.01, 0.0, 0.0)
@@ -14,17 +21,19 @@ fn main() {
 
     let projectile = Object::object(
         Tuple::vector(0.0, 1.0, 0.0),
-        Tuple::vector(1.0, 1.0, 0.0)
+        Tuple::vector(1.0, 1.8, 0.0).normalize() * 11.25
     );
 
     let mut current_projectile = projectile;
-    let mut i:i32 = 0;
     while current_projectile.position.y > 0.0 {
-        println!("{}: {:?}", i, current_projectile);
+        let x = current_projectile.position.x.round() as usize;
+        let y = canvas.height - current_projectile.position.y.round() as usize;
+        canvas.set_pixel_color(x, y, color);
         current_projectile = tick(&enviroment, &current_projectile);
-        i += 1;
     }
-    println!("{}: {:?}", i, current_projectile);
+
+    let ppm = canvas.to_ppm();
+    write("./result.ppm", ppm).expect("Error.")
 }
 
 pub struct World {
