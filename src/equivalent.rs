@@ -1,25 +1,25 @@
 const EPSILON: f64 = 0.00001;
 
-pub trait FuzzyEq<T: Clone> {
-    fn fuzzy_eq(&self, other: T) -> bool;
+pub trait Equivalence<T: Clone> {
+    fn equivalent(&self, other: T) -> bool;
 
-    fn fuzzy_ne(&self, other: T) -> bool {
-        !self.fuzzy_eq(other)
+    fn not_equivalent(&self, other: T) -> bool {
+        !self.equivalent(other)
     }
 }
 
-impl FuzzyEq<f64> for f64 {
-    fn fuzzy_eq(&self, other: f64) -> bool {
+impl Equivalence<f64> for f64 {
+    fn equivalent(&self, other: f64) -> bool {
         (*self - other).abs() < EPSILON
     }
 }
 
 #[macro_export]
-macro_rules! assert_fuzzy_eq {
+macro_rules! assert_equivalent {
   ($left:expr, $right:expr $(,)?) => {{
     match (&$left, $right) {
       (left_val, right_val) => {
-        if left_val.fuzzy_ne(right_val) {
+        if left_val.not_equivalent(right_val) {
           panic!(
             "asserting fuzzy equality. {:?} is not fuzzy equal to {:?}",
             left_val, right_val
@@ -35,7 +35,7 @@ macro_rules! assert_fuzzy_ne {
   ($left:expr, $right:expr $(,)?) => {{
     match (&$left, $right) {
       (left_val, right_val) => {
-        if left_val.fuzzy_eq(right_val) {
+        if left_val.equivalent(right_val) {
           panic!(
             "asserting fuzzy in-equality. {:?} is fuzzy equal to {:?}",
             left_val, right_val

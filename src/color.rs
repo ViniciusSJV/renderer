@@ -1,5 +1,5 @@
 use std::ops;
-use crate::fuzzy_eq::*;
+use crate::equivalent::*;
 
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub struct Color {
@@ -26,11 +26,11 @@ impl Color {
     }
 }
 
-impl FuzzyEq<Color> for Color {
-    fn fuzzy_eq(&self, other: Self) -> bool {
-        self.red.fuzzy_eq(other.red)
-            && self.green.fuzzy_eq(other.green)
-            && self.blue.fuzzy_eq(other.blue)
+impl Equivalence<Color> for Color {
+    fn equivalent(&self, other: Self) -> bool {
+        self.red.equivalent(other.red)
+            && self.green.equivalent(other.green)
+            && self.blue.equivalent(other.blue)
     }
 }
 
@@ -84,16 +84,16 @@ impl ops::Mul for Color {
 
 #[cfg(test)]
 mod tests_color {
-    use crate::assert_fuzzy_eq;
+    use crate::assert_equivalent;
     use super::*;
 
     #[test]
     fn color_does_fill_properties() {
         let point = Color::new(-0.5, 0.4, 1.7);
 
-        assert_fuzzy_eq!(point.red, -0.5);
-        assert_fuzzy_eq!(point.green, 0.4);
-        assert_fuzzy_eq!(point.blue, 1.7);
+        assert_equivalent!(point.red, -0.5);
+        assert_equivalent!(point.green, 0.4);
+        assert_equivalent!(point.blue, 1.7);
     }
 
     #[test]
@@ -103,7 +103,7 @@ mod tests_color {
 
         let color_expected = Color::new(1.6, 0.7, 1.0);
 
-        assert_fuzzy_eq!(color_1 + color_2, color_expected);
+        assert_equivalent!(color_1 + color_2, color_expected);
     }
 
     #[test]
@@ -113,7 +113,7 @@ mod tests_color {
 
         let color_expected = Color::new(0.2, 0.5, 0.5);
 
-        assert_fuzzy_eq!(color_1 - color_2, color_expected);
+        assert_equivalent!(color_1 - color_2, color_expected);
     }
 
     #[test]
@@ -122,7 +122,7 @@ mod tests_color {
         let scarlar = 2.;
         let color_expected = Color::new(0.4, 0.6, 0.8);
 
-        assert_fuzzy_eq!(color * scarlar, color_expected);
+        assert_equivalent!(color * scarlar, color_expected);
     }
 
     #[test]
@@ -132,7 +132,7 @@ mod tests_color {
 
         let color_expected = Color::new(0.9, 0.2, 0.04);
 
-        assert_fuzzy_eq!(color_1 * color_2, color_expected);
+        assert_equivalent!(color_1 * color_2, color_expected);
     }
 
     #[test]
@@ -142,7 +142,7 @@ mod tests_color {
         let expected_result = Color::new(1.0, 0.0, 0.8);
         let actual_result = color.clamp(0.0, 1.0);
 
-        assert_fuzzy_eq!(actual_result, expected_result);
+        assert_equivalent!(actual_result, expected_result);
     }
 
 }

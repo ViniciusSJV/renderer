@@ -1,6 +1,6 @@
 use std::fs::write;
 
-mod fuzzy_eq;
+mod equivalent;
 mod tuple;
 mod color;
 mod canvas;

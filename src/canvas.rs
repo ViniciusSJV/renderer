@@ -95,8 +95,8 @@ impl Canvas {
 
 #[cfg(test)]
 mod tests_canvas {
-    use crate::assert_fuzzy_eq;
-    use crate::fuzzy_eq::*;
+    use crate::assert_equivalent;
+    use crate::equivalent::*;
     use super::*;
 
     #[test]
@@ -108,7 +108,7 @@ mod tests_canvas {
 
         for x in 0..canvas.width {
             for y in 0..canvas.height {
-                assert_fuzzy_eq!(canvas.get_pixel(x, y), Color::black())
+                assert_equivalent!(canvas.get_pixel(x, y), Color::black())
             }
         }
     }
@@ -122,7 +122,7 @@ mod tests_canvas {
 
         let expected_color = Color::new(1.0, 0.0, 0.0);
 
-        assert_fuzzy_eq!(expected_color, canvas.get_pixel(2, 3));
+        assert_equivalent!(expected_color, canvas.get_pixel(2, 3));
     }
 
     #[test]

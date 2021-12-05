@@ -1,5 +1,5 @@
 use std::ops;
-use crate::fuzzy_eq::*;
+use crate::equivalent::*;
 
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub struct Tuple {
@@ -23,20 +23,20 @@ impl Tuple {
     }
 
     pub fn is_vector(&self) -> bool {
-        self.w.fuzzy_eq(0.0)
+        self.w.equivalent(0.0)
     }
 
     pub fn is_point(&self) -> bool {
-        self.w.fuzzy_eq(1.0)
+        self.w.equivalent(1.0)
     }
 }
 
-impl FuzzyEq<Tuple> for Tuple {
-    fn fuzzy_eq(&self, other: Self) -> bool {
-        self.x.fuzzy_eq(other.x)
-            && self.y.fuzzy_eq(other.y)
-            && self.z.fuzzy_eq(other.z)
-            && self.w.fuzzy_eq(other.w)
+impl Equivalence<Tuple> for Tuple {
+    fn equivalent(&self, other: Self) -> bool {
+        self.x.equivalent(other.x)
+            && self.y.equivalent(other.y)
+            && self.z.equivalent(other.z)
+            && self.w.equivalent(other.w)
     }
 }
 
@@ -136,27 +136,27 @@ impl Tuple {
 
 #[cfg(test)]
 mod tests_tuple {
-    use crate::assert_fuzzy_eq;
+    use crate::assert_equivalent;
     use super::*;
 
     #[test]
     fn points_does_fill_properties() {
         let point = Tuple::point(4.3, 4.2, 3.1);
 
-        assert_fuzzy_eq!(point.x, 4.3);
-        assert_fuzzy_eq!(point.y, 4.2);
-        assert_fuzzy_eq!(point.z, 3.1);
-        assert_fuzzy_eq!(point.w, 1.);
+        assert_equivalent!(point.x, 4.3);
+        assert_equivalent!(point.y, 4.2);
+        assert_equivalent!(point.z, 3.1);
+        assert_equivalent!(point.w, 1.);
     }
 
     #[test]
     fn vector_does_fill_properties() {
         let vector = Tuple::vector(1.4, 8.9, 5.1);
 
-        assert_fuzzy_eq!(vector.x, 1.4);
-        assert_fuzzy_eq!(vector.y, 8.9);
-        assert_fuzzy_eq!(vector.z, 5.1);
-        assert_fuzzy_eq!(vector.w, 0.);
+        assert_equivalent!(vector.x, 1.4);
+        assert_equivalent!(vector.y, 8.9);
+        assert_equivalent!(vector.z, 5.1);
+        assert_equivalent!(vector.w, 0.);
     }
 
     #[test]
@@ -178,7 +178,7 @@ mod tests_tuple {
 
         let tuple_expected = Tuple::new(1.0, 1.0, 6.0, 1.0);
 
-        assert_fuzzy_eq!(tuple_1 + tuple_2, tuple_expected);
+        assert_equivalent!(tuple_1 + tuple_2, tuple_expected);
     }
 
     #[test]
@@ -188,7 +188,7 @@ mod tests_tuple {
 
         let vector_expected = Tuple::vector(-2.,-4.,-6.);
 
-        assert_fuzzy_eq!(point_1 - point_2, vector_expected);
+        assert_equivalent!(point_1 - point_2, vector_expected);
         assert!((point_1 - point_2).is_vector())
     }
 
@@ -199,7 +199,7 @@ mod tests_tuple {
 
         let point_expected = Tuple::point(-2.,-4.,-6.);
 
-        assert_fuzzy_eq!(point - vector, point_expected);
+        assert_equivalent!(point - vector, point_expected);
         assert!((point - vector).is_point())
     }
 
@@ -210,7 +210,7 @@ mod tests_tuple {
 
         let expected_vector = Tuple::vector(-2.,-4.,-6.);
 
-        assert_fuzzy_eq!(vector_1 - vector_2, expected_vector);
+        assert_equivalent!(vector_1 - vector_2, expected_vector);
         assert!((vector_1 - vector_2).is_vector())
     }
 
@@ -221,7 +221,7 @@ mod tests_tuple {
 
         let expected_vector = Tuple::vector(-1.,2.,-3.);
 
-        assert_fuzzy_eq!(vector_1 - vector_2, expected_vector);
+        assert_equivalent!(vector_1 - vector_2, expected_vector);
     }
 
     #[test]
@@ -229,7 +229,7 @@ mod tests_tuple {
         let tuple = Tuple::new(1., -2., 3., -4.);
         let neg_tuple = Tuple::new(-1., 2., -3., 4.);
 
-        assert_fuzzy_eq!(-tuple, neg_tuple);
+        assert_equivalent!(-tuple, neg_tuple);
     }
 
     #[test]
@@ -238,7 +238,7 @@ mod tests_tuple {
         let scarlar = 3.5;
         let expected_tuple = Tuple::new(3.5, -7., 10.5, -14.);
 
-        assert_fuzzy_eq!(tuple * scarlar, expected_tuple);
+        assert_equivalent!(tuple * scarlar, expected_tuple);
     }
 
     #[test]
@@ -247,7 +247,7 @@ mod tests_tuple {
         let fraction = 0.5;
         let expected_tuple = Tuple::new(0.5, -1., 1.5, -2.);
 
-        assert_fuzzy_eq!(tuple * fraction, expected_tuple);
+        assert_equivalent!(tuple * fraction, expected_tuple);
     }
 
     #[test]
@@ -256,7 +256,7 @@ mod tests_tuple {
         let scarlar = 2.0;
         let expected_tuple = Tuple::new(0.5, -1., 1.5, -2.);
 
-        assert_fuzzy_eq!(tuple / scarlar, expected_tuple);
+        assert_equivalent!(tuple / scarlar, expected_tuple);
     }
 
     #[test]
@@ -267,11 +267,11 @@ mod tests_tuple {
         let vec_4 = Tuple::vector(1.,2.,3.);
         let vec_5 = Tuple::vector(-1.,-2.,-3.);
 
-        assert_fuzzy_eq!(vec_1.length(), 1.);
-        assert_fuzzy_eq!(vec_2.length(), 1.);
-        assert_fuzzy_eq!(vec_3.length(), 1.);
-        assert_fuzzy_eq!(vec_4.length(), (14. as f64).sqrt());
-        assert_fuzzy_eq!(vec_5.length(), (14. as f64).sqrt());
+        assert_equivalent!(vec_1.length(), 1.);
+        assert_equivalent!(vec_2.length(), 1.);
+        assert_equivalent!(vec_3.length(), 1.);
+        assert_equivalent!(vec_4.length(), (14. as f64).sqrt());
+        assert_equivalent!(vec_5.length(), (14. as f64).sqrt());
     }
 
     #[test]
@@ -282,9 +282,9 @@ mod tests_tuple {
         let vec_2 = Tuple::vector(1.,2.,3.);
         let vec_2_expected = Tuple::vector(0.26726,0.53452,0.80178);
 
-        assert_fuzzy_eq!(vec_1.normalize(), vec_1_expected);
+        assert_equivalent!(vec_1.normalize(), vec_1_expected);
         assert!(vec_1.normalize().is_vector());
-        assert_fuzzy_eq!(vec_2.normalize(), vec_2_expected);
+        assert_equivalent!(vec_2.normalize(), vec_2_expected);
         assert!(vec_2.normalize().is_vector());
     }
 
@@ -292,7 +292,7 @@ mod tests_tuple {
     fn get_magnitude_from_vector_normilize() {
         let vector = Tuple::vector(1.,2.,3.);
 
-        assert_fuzzy_eq!(vector.normalize().length(), 1.);
+        assert_equivalent!(vector.normalize().length(), 1.);
     }
 
     #[test]
@@ -300,7 +300,7 @@ mod tests_tuple {
         let vector_1 = Tuple::vector(1.,2.,3.);
         let vector_2 = Tuple::vector(2.,3.,4.);
 
-        assert_fuzzy_eq!(vector_1.dot(vector_2), 20.);
+        assert_equivalent!(vector_1.dot(vector_2), 20.);
     }
 
     #[test]
@@ -311,8 +311,8 @@ mod tests_tuple {
         let vector_1_expected = Tuple::vector(-1.,2.,-1.);
         let vector_2_expected = Tuple::vector(1.,-2.,1.);
 
-        assert_fuzzy_eq!(vector_1.cross(vector_2), vector_1_expected);
-        assert_fuzzy_eq!(vector_2.cross(vector_1), vector_2_expected);
+        assert_equivalent!(vector_1.cross(vector_2), vector_1_expected);
+        assert_equivalent!(vector_2.cross(vector_1), vector_2_expected);
 
         assert!(vector_1.is_vector());
         assert!(vector_2.is_vector());
