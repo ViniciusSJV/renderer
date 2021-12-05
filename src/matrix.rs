@@ -3,39 +3,39 @@
 use std::ops;
 use crate::equivalent::*;
 
-type Mat2 = [[f64; 2]; 2];
-type Mat3 = [[f64; 3]; 3];
-type Mat4 = [[f64; 4]; 4];
+type ArrayMat2 = [[f64; 2]; 2];
+type ArrayMat3 = [[f64; 3]; 3];
+type ArrayMat4 = [[f64; 4]; 4];
 
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub struct Matrix2 {
-    pub data: Mat2
+    pub data: ArrayMat2
 }
 
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub struct Matrix3 {
-    pub data: Mat3
+    pub data: ArrayMat3
 }
 
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub struct Matrix4 {
-    pub data: Mat4
+    pub data: ArrayMat4
 }
 
 impl Matrix2 {
-    pub fn new(data: Mat2) -> Self {
+    pub fn new(data: ArrayMat2) -> Self {
         Matrix2{data}
     }
 }
 
 impl Matrix3 {
-    pub fn new(data: Mat3) -> Self {
+    pub fn new(data: ArrayMat3) -> Self {
         Matrix3{data}
     }
 }
 
 impl Matrix4 {
-    pub fn new(data: Mat4) -> Self {
+    pub fn new(data: ArrayMat4) -> Self {
         Matrix4{data}
     }
 }
@@ -90,22 +90,31 @@ impl Equivalence<Matrix4> for Matrix4 {
     }
 }
 
-//https://www.todamateria.com.br/multiplicacao-de-matrizes/
-impl ops::Mul<Matrix4> for Matrix4 {
+impl ops::Mul for Matrix4 {
     type Output = Self;
 
-    fn mul(self, other: Matrix4) -> Matrix4 {
-        Matrix4::new(other.data);
+    fn mul(self, other: Matrix4) -> Self {
+        let mut mat4 = Matrix4::new([[0.0; 4]; 4]);
+        for row in 0..4 {
+            for colunm in 0..4 {
+                mat4.data[row][colunm] = self.data[row][0] * other.data[0][colunm] +
+                    self.data[row][1] * other.data[1][colunm] +
+                    self.data[row][2] * other.data[2][colunm] +
+                    self.data[row][3] * other.data[3][colunm];
+            }
+        }
+        mat4
     }
 }
 
 #[cfg(test)]
 mod tests_tuple {
+    use crate::assert_equivalent;
     use super::*;
 
     #[test]
     fn constructing_matrix_2_x_2 () {
-        let data: Mat2 = [
+        let data: ArrayMat2 = [
             [-3.0, 5.0],
             [1.0, -2.0]
         ];
@@ -120,7 +129,7 @@ mod tests_tuple {
 
     #[test]
     fn constructing_matrix_3_x_3 () {
-        let data: Mat3 = [
+        let data: ArrayMat3 = [
             [-3.0, 5.0, 0.0],
             [1.0, -2.0, -7.0],
             [0.0, 1.0, 1.0]
@@ -135,7 +144,7 @@ mod tests_tuple {
 
     #[test]
     fn constructing_matrix_4_x_4 () {
-        let data: Mat4 = [
+        let data: ArrayMat4 = [
             [1.0, 2.0, 3.0, 4.0],
             [5.5, 6.5, 7.5, 8.5],
             [9.0, 10.0, 11.0, 12.0],
@@ -155,14 +164,14 @@ mod tests_tuple {
 
     #[test]
     fn matrix_equality_identical_matrices () {
-        let data_1: Mat4 = [
+        let data_1: ArrayMat4 = [
             [1.0, 2.0, 3.0, 4.0],
             [5.0, 6.0, 7.0, 8.0],
             [9.0, 8.0, 7.0, 6.0],
             [5.0, 4.0, 3.0, 2.0]
         ];
 
-        let data_2: Mat4 = [
+        let data_2: ArrayMat4 = [
             [1.0, 2.0, 3.0, 4.0],
             [5.0, 6.0, 7.0, 8.0],
             [9.0, 8.0, 7.0, 6.0],
@@ -178,14 +187,14 @@ mod tests_tuple {
 
     #[test]
     fn matrix_equality_different_matrices () {
-        let data_1: Mat4 = [
+        let data_1: ArrayMat4 = [
             [1.0, 2.0, 3.0, 4.0],
             [5.0, 6.0, 7.0, 8.0],
             [9.0, 8.0, 7.0, 6.0],
             [5.0, 4.0, 3.0, 2.0]
         ];
 
-        let data_2: Mat4 = [
+        let data_2: ArrayMat4 = [
             [2.0, 3.0, 4.0, 5.0],
             [6.0, 7.0, 8.0, 9.0],
             [8.0, 7.0, 6.0, 5.0],
@@ -197,5 +206,35 @@ mod tests_tuple {
 
         assert_eq!(mat4_1.equivalent(mat4_2), false);
         assert!(mat4_1.not_equivalent(mat4_2));
+    }
+
+    #[test]
+    fn multiply_matrices () {
+        let data_1: ArrayMat4 = [
+            [1.0, 2.0, 3.0, 4.0],
+            [5.0, 6.0, 7.0, 8.0],
+            [9.0, 8.0, 7.0, 6.0],
+            [5.0, 4.0, 3.0, 2.0]
+        ];
+
+        let data_2: ArrayMat4 = [
+            [-2.0, 1.0, 2.0, 3.0],
+            [3.0, 2.0, 1.0, -1.0],
+            [4.0, 3.0, 6.0, 5.0],
+            [1.0, 2.0, 7.0, 8.0]
+        ];
+
+        let result: ArrayMat4 = [
+            [20., 22.0, 50.0, 48.0],
+            [44.0, 54.0, 114.0, 108.0],
+            [40.0, 58.0, 110.0, 102.0],
+            [16.0, 26.0, 46.0, 42.0]
+        ];
+
+        let mat4_1: Matrix4 = Matrix4::new(data_1);
+        let mat4_2: Matrix4 = Matrix4::new(data_2);
+        let mat4_result: Matrix4 = Matrix4::new(result);
+
+        assert_equivalent!(mat4_1 * mat4_2, mat4_result);
     }
 }

@@ -21,7 +21,7 @@ macro_rules! assert_equivalent {
       (left_val, right_val) => {
         if left_val.not_equivalent(right_val) {
           panic!(
-            "asserting fuzzy equality. {:?} is not fuzzy equal to {:?}",
+            "asserting equality. {:?} is not equivalent to {:?}",
             left_val, right_val
           );
         }
@@ -37,7 +37,7 @@ macro_rules! assert_fuzzy_ne {
       (left_val, right_val) => {
         if left_val.equivalent(right_val) {
           panic!(
-            "asserting fuzzy in-equality. {:?} is fuzzy equal to {:?}",
+            "asserting in-equality. {:?} is equivalent equal to {:?}",
             left_val, right_val
           );
         }
