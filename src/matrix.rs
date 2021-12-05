@@ -23,19 +23,19 @@ pub struct Matrix4 {
 }
 
 impl Matrix2 {
-    pub fn new(data: Mat2) -> Matrix2 {
+    pub fn new(data: Mat2) -> Self {
         Matrix2{data}
     }
 }
 
 impl Matrix3 {
-    pub fn new(data: Mat3) -> Matrix3 {
+    pub fn new(data: Mat3) -> Self {
         Matrix3{data}
     }
 }
 
 impl Matrix4 {
-    pub fn new(data: Mat4) -> Matrix4 {
+    pub fn new(data: Mat4) -> Self {
         Matrix4{data}
     }
 }
@@ -94,7 +94,7 @@ impl Equivalence<Matrix4> for Matrix4 {
 impl ops::Mul<Matrix4> for Matrix4 {
     type Output = Self;
 
-    fn mul(self, other: Matrix4) -> Self {
+    fn mul(self, other: Matrix4) -> Matrix4 {
         Matrix4::new(other.data);
     }
 }
@@ -196,5 +196,6 @@ mod tests_tuple {
         let mat4_2: Matrix4 = Matrix4::new(data_2);
 
         assert_eq!(mat4_1.equivalent(mat4_2), false);
+        assert!(mat4_1.not_equivalent(mat4_2));
     }
 }
