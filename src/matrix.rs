@@ -114,12 +114,10 @@ mod tests_tuple {
 
     #[test]
     fn constructing_matrix_2_x_2 () {
-        let data: ArrayMat2 = [
+        let mat2: Matrix2 = Matrix2::new([
             [-3.0, 5.0],
             [1.0, -2.0]
-        ];
-
-        let mat2: Matrix2 = Matrix2::new(data);
+        ]);
 
         assert_eq!(mat2.data[0][0], -3.0);
         assert_eq!(mat2.data[0][1], 5.0);
@@ -129,13 +127,11 @@ mod tests_tuple {
 
     #[test]
     fn constructing_matrix_3_x_3 () {
-        let data: ArrayMat3 = [
+        let mat3: Matrix3 = Matrix3::new([
             [-3.0, 5.0, 0.0],
             [1.0, -2.0, -7.0],
             [0.0, 1.0, 1.0]
-        ];
-
-        let mat3: Matrix3 = Matrix3::new(data);
+        ]);
 
         assert_eq!(mat3.data[0][0], -3.0);
         assert_eq!(mat3.data[1][1], -2.0);
@@ -144,14 +140,12 @@ mod tests_tuple {
 
     #[test]
     fn constructing_matrix_4_x_4 () {
-        let data: ArrayMat4 = [
+        let mat4: Matrix4 = Matrix4::new([
             [1.0, 2.0, 3.0, 4.0],
             [5.5, 6.5, 7.5, 8.5],
             [9.0, 10.0, 11.0, 12.0],
             [13.5, 14.5, 15.5, 16.5]
-        ];
-
-        let mat4: Matrix4 = Matrix4::new(data);
+        ]);
 
         assert_eq!(mat4.data[0][0], 1.0);
         assert_eq!(mat4.data[0][3], 4.0);
@@ -164,22 +158,18 @@ mod tests_tuple {
 
     #[test]
     fn matrix_equality_identical_matrices () {
-        let data_1: ArrayMat4 = [
+        let mat4_1: Matrix4 = Matrix4::new([
             [1.0, 2.0, 3.0, 4.0],
             [5.0, 6.0, 7.0, 8.0],
             [9.0, 8.0, 7.0, 6.0],
             [5.0, 4.0, 3.0, 2.0]
-        ];
-
-        let data_2: ArrayMat4 = [
+        ]);
+        let mat4_2: Matrix4 = Matrix4::new([
             [1.0, 2.0, 3.0, 4.0],
             [5.0, 6.0, 7.0, 8.0],
             [9.0, 8.0, 7.0, 6.0],
             [5.0, 4.0, 3.0, 2.0]
-        ];
-
-        let mat4_1: Matrix4 = Matrix4::new(data_1);
-        let mat4_2: Matrix4 = Matrix4::new(data_2);
+        ]);
 
         assert_eq!(mat4_1.equivalent(mat4_2), true);
         assert!(mat4_1.equivalent(mat4_2));
@@ -187,22 +177,18 @@ mod tests_tuple {
 
     #[test]
     fn matrix_equality_different_matrices () {
-        let data_1: ArrayMat4 = [
+        let mat4_1: Matrix4 = Matrix4::new([
             [1.0, 2.0, 3.0, 4.0],
             [5.0, 6.0, 7.0, 8.0],
             [9.0, 8.0, 7.0, 6.0],
             [5.0, 4.0, 3.0, 2.0]
-        ];
-
-        let data_2: ArrayMat4 = [
+        ]);
+        let mat4_2: Matrix4 = Matrix4::new([
             [2.0, 3.0, 4.0, 5.0],
             [6.0, 7.0, 8.0, 9.0],
             [8.0, 7.0, 6.0, 5.0],
             [4.0, 3.0, 2.0, 1.0]
-        ];
-
-        let mat4_1: Matrix4 = Matrix4::new(data_1);
-        let mat4_2: Matrix4 = Matrix4::new(data_2);
+        ]);
 
         assert_eq!(mat4_1.equivalent(mat4_2), false);
         assert!(mat4_1.not_equivalent(mat4_2));
@@ -210,30 +196,24 @@ mod tests_tuple {
 
     #[test]
     fn multiply_matrices () {
-        let data_1: ArrayMat4 = [
+        let mat4_1: Matrix4 = Matrix4::new([
             [1.0, 2.0, 3.0, 4.0],
             [5.0, 6.0, 7.0, 8.0],
             [9.0, 8.0, 7.0, 6.0],
             [5.0, 4.0, 3.0, 2.0]
-        ];
-
-        let data_2: ArrayMat4 = [
+        ]);
+        let mat4_2: Matrix4 = Matrix4::new([
             [-2.0, 1.0, 2.0, 3.0],
             [3.0, 2.0, 1.0, -1.0],
             [4.0, 3.0, 6.0, 5.0],
             [1.0, 2.0, 7.0, 8.0]
-        ];
-
-        let result: ArrayMat4 = [
+        ]);
+        let mat4_result: Matrix4 = Matrix4::new([
             [20., 22.0, 50.0, 48.0],
             [44.0, 54.0, 114.0, 108.0],
             [40.0, 58.0, 110.0, 102.0],
             [16.0, 26.0, 46.0, 42.0]
-        ];
-
-        let mat4_1: Matrix4 = Matrix4::new(data_1);
-        let mat4_2: Matrix4 = Matrix4::new(data_2);
-        let mat4_result: Matrix4 = Matrix4::new(result);
+        ]);
 
         assert_equivalent!(mat4_1 * mat4_2, mat4_result);
     }
