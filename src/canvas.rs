@@ -16,7 +16,7 @@ impl Canvas {
         }
     }
 
-    pub fn pixel_at(&self, x: usize, y: usize) -> Color {
+    pub fn get_pixel(&self, x: usize, y: usize) -> Color {
         self.pixels[self.get_pixel_index(x, y)]
     }
 
@@ -47,7 +47,7 @@ impl Canvas {
 
         for y in 0..self.height {
             for x in 0..self.width {
-                let pixel = self.pixel_at(x, y);
+                let pixel = self.get_pixel(x, y);
                 let clamp_color = pixel.clamp(0.0, 1.0);
 
                 let red: u8 = (clamp_color.red * 255.).round() as u8;
@@ -108,7 +108,7 @@ mod tests_canvas {
 
         for x in 0..canvas.width {
             for y in 0..canvas.height {
-                assert_fuzzy_eq!(canvas.pixel_at(x, y), Color::black())
+                assert_fuzzy_eq!(canvas.get_pixel(x, y), Color::black())
             }
         }
     }
@@ -122,7 +122,7 @@ mod tests_canvas {
 
         let expected_color = Color::new(1.0, 0.0, 0.0);
 
-        assert_fuzzy_eq!(expected_color, canvas.pixel_at(2, 3));
+        assert_fuzzy_eq!(expected_color, canvas.get_pixel(2, 3));
     }
 
     #[test]

@@ -4,6 +4,7 @@ mod fuzzy_eq;
 mod tuple;
 mod color;
 mod canvas;
+mod matrix;
 
 use crate::canvas::Canvas;
 use crate::color::Color;
