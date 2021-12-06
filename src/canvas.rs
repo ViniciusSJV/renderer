@@ -38,7 +38,6 @@ impl Canvas {
         return header;
     }
 
-    //https://github.com/lopossumi/Rust-Output-Image
     fn create_ppm_pixel_data(&self) -> Vec<u8> {
         let mut pixel_data: Vec<u8> = Vec::new();
 

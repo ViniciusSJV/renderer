@@ -2,6 +2,7 @@
 
 use std::ops;
 use crate::equivalent::*;
+use crate::Tuple;
 
 type ArrayMat2 = [[f64; 2]; 2];
 type ArrayMat3 = [[f64; 3]; 3];
@@ -26,6 +27,12 @@ impl Matrix2 {
     pub fn new(data: ArrayMat2) -> Self {
         Matrix2{data}
     }
+
+    pub fn determinant(&self) -> f64 {
+        let determinant: f64 = (self.data[0][0] * self.data[1][1]) -
+            (self.data[0][1] * self.data[1][0]);
+        determinant
+    }
 }
 
 impl Matrix3 {
@@ -37,6 +44,26 @@ impl Matrix3 {
 impl Matrix4 {
     pub fn new(data: ArrayMat4) -> Self {
         Matrix4{data}
+    }
+
+    pub fn identity() -> Self {
+        let mat4_identity = Matrix4::new([
+            [1., 0., 0., 0.],
+            [0., 1., 0., 0.],
+            [0., 0., 1., 0.],
+            [0., 0., 0., 1.]
+        ]);
+        mat4_identity
+    }
+
+    pub fn transpose(&self) -> Self {
+        let mut mat4 = Matrix4::new([[0.0; 4]; 4]);
+        for row in 0..4 {
+            for colunm in 0..4 {
+                mat4.data[colunm][row] = self.data[row][colunm];
+            }
+        }
+        mat4
     }
 }
 
@@ -107,8 +134,21 @@ impl ops::Mul for Matrix4 {
     }
 }
 
+impl ops::Mul<Tuple> for Matrix4 {
+    type Output = Tuple;
+
+    fn mul(self, tuple: Tuple) -> Tuple {
+        Tuple {
+            x: self.data[0][0] * tuple.x + self.data[0][1] * tuple.y + self.data[0][2] * tuple.z + self.data[0][3] * tuple.w,
+            y: self.data[1][0] * tuple.x + self.data[1][1] * tuple.y + self.data[1][2] * tuple.z + self.data[1][3] * tuple.w,
+            z: self.data[2][0] * tuple.x + self.data[2][1] * tuple.y + self.data[2][2] * tuple.z + self.data[2][3] * tuple.w,
+            w: self.data[3][0] * tuple.x + self.data[3][1] * tuple.y + self.data[3][2] * tuple.z + self.data[3][3] * tuple.w,
+        }
+    }
+}
+
 #[cfg(test)]
-mod tests_tuple {
+mod tests_matrix {
     use crate::assert_equivalent;
     use super::*;
 
@@ -216,5 +256,81 @@ mod tests_tuple {
         ]);
 
         assert_equivalent!(mat4_1 * mat4_2, mat4_result);
+    }
+
+    #[test]
+    fn multiply_matrix_by_a_tuple () {
+        let mat4: Matrix4 = Matrix4::new([
+            [1.0, 2.0, 3.0, 4.0],
+            [2.0, 4.0, 4.0, 2.0],
+            [8.0, 6.0, 4.0, 1.0],
+            [0.0, 0.0, 0.0, 1.0]
+        ]);
+        let tuple: Tuple = Tuple::new(1., 2., 3., 1.);
+
+        let result: Tuple = Tuple::new(18., 24., 33., 1.);
+
+        assert_equivalent!(mat4 * tuple, result);
+    }
+
+    #[test]
+    fn multiply_a_matrix_by_the_identity_matrix() {
+        let mat4 = Matrix4::new([
+            [0.0, 1., 2., 4.],
+            [1., 2., 4., 8.],
+            [2., 4., 8., 16.],
+            [4., 8., 16., 32.]
+        ]);
+
+        let identity = Matrix4::identity();
+
+        assert_equivalent!(mat4 * identity, mat4);
+    }
+
+    #[test]
+    fn multiply_a_matrix_identity_the_tuple() {
+        let tuple = Tuple::new(1., 2., 3., 4.);
+
+        let identity = Matrix4::identity();
+
+        assert_equivalent!(identity * tuple, tuple);
+    }
+
+    #[test]
+    fn transposing_a_matrix() {
+        let mat4 = Matrix4::new([
+            [0.0, 9., 3., 0.],
+            [9., 8., 0., 8.],
+            [1., 8., 5., 3.],
+            [0., 0., 5., 8.]
+        ]);
+
+        let result = mat4.transpose();
+
+        let expected_result = Matrix4::new([
+            [0.0, 9., 1., 0.],
+            [9., 8., 8., 0.],
+            [3., 0., 5., 5.],
+            [0.,8. , 3., 8.]
+        ]);
+
+        assert_equivalent!(result, expected_result);
+    }
+
+    #[test]
+    fn trasnpose_indentity_matrix() {
+        let identity = Matrix4::identity();
+
+        assert_equivalent!(identity, identity.transpose());
+    }
+
+    #[test]
+    fn calculating_the_determinant_of_a_2_x_2_matrix() {
+        let mat2 = Matrix2::new([
+            [1., 5.],
+            [-3., 2.]
+        ]);
+
+        assert_equivalent!(mat2.determinant(), 17.);
     }
 }

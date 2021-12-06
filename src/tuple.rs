@@ -260,7 +260,7 @@ mod tests_tuple {
     }
 
     #[test]
-    fn get_magnitude_from_vectors() {
+    fn get_length_from_vectors() {
         let vec_1 = Tuple::vector(1.,0.,0.);
         let vec_2 = Tuple::vector(0.,1.,0.);
         let vec_3 = Tuple::vector(0.,0.,1.);
@@ -289,7 +289,7 @@ mod tests_tuple {
     }
 
     #[test]
-    fn get_magnitude_from_vector_normilize() {
+    fn get_length_from_vector_normilize() {
         let vector = Tuple::vector(1.,2.,3.);
 
         assert_equivalent!(vector.normalize().length(), 1.);
