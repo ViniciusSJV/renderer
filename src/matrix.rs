@@ -39,6 +39,37 @@ impl Matrix3 {
     pub fn new(data: ArrayMat3) -> Self {
         Matrix3{data}
     }
+
+    //TODO -> Refactore-me
+    pub fn sub_matrix(&self, row: usize, colunm: usize) -> Matrix2 {
+        if (row > 2) || (colunm > 2) {
+            panic!("Invalid index from Matrix 3. 0 <> 2")
+        }
+
+        let mut mat2 = Matrix2::new([[0.0; 2]; 2]);
+        let mut mat2_row;
+        let mut mat2_column;
+        let mut count: i8 = 0;
+        for _row  in 0..3 {
+            if _row == row { continue; }
+            for _colunm in 0..3 {
+                if _colunm == colunm { continue; }
+                match count {
+                    0 => (mat2_row = 0, mat2_column = 0),
+                    1 => (mat2_row = 0, mat2_column = 1),
+                    2 => (mat2_row = 1, mat2_column = 0),
+                    _ => (mat2_row = 1, mat2_column = 1)
+                };
+                mat2.data[mat2_row][mat2_column] = self.data[_row][_colunm];
+                count += 1;
+            }
+        }
+        mat2
+    }
+
+    pub fn minor(&self, row: usize, colunm: usize) -> f64{
+        self.sub_matrix(row, colunm).determinant()
+    }
 }
 
 impl Matrix4 {
@@ -47,7 +78,7 @@ impl Matrix4 {
     }
 
     pub fn identity() -> Self {
-        let mat4_identity = Matrix4::new([
+        let mat4_identity: Matrix4 = Matrix4::new([
             [1., 0., 0., 0.],
             [0., 1., 0., 0.],
             [0., 0., 1., 0.],
@@ -57,13 +88,47 @@ impl Matrix4 {
     }
 
     pub fn transpose(&self) -> Self {
-        let mut mat4 = Matrix4::new([[0.0; 4]; 4]);
+        let mut mat4: Matrix4 = Matrix4::new([[0.0; 4]; 4]);
         for row in 0..4 {
             for colunm in 0..4 {
                 mat4.data[colunm][row] = self.data[row][colunm];
             }
         }
         mat4
+    }
+
+    //TODO -> Refactore-me
+    pub fn sub_matrix(&self, row: usize, colunm: usize) -> Matrix3 {
+        if (row > 3) || (colunm > 3) {
+            panic!("Invalid index from Matrix 4. 0 <> 3")
+        }
+
+        let mut mat3 = Matrix3::new([[0.0; 3]; 3]);
+        let mut mat3_row;
+        let mut mat3_column;
+        let mut count: i8 = 0;
+        for _row  in 0..4 {
+            if _row == row { continue; }
+            for _colunm in 0..4 {
+                if _colunm == colunm { continue; }
+                match count {
+                    0 => (mat3_row = 0, mat3_column = 0),
+                    1 => (mat3_row = 0, mat3_column = 1),
+                    2 => (mat3_row = 0, mat3_column = 2),
+
+                    3 => (mat3_row = 1, mat3_column = 0),
+                    4 => (mat3_row = 1, mat3_column = 1),
+                    5 => (mat3_row = 1, mat3_column = 2),
+
+                    6 => (mat3_row = 2, mat3_column = 0),
+                    7 => (mat3_row = 2, mat3_column = 1),
+                    _ => (mat3_row = 2, mat3_column = 2)
+                };
+                mat3.data[mat3_row][mat3_column] = self.data[_row][_colunm];
+                count += 1;
+            }
+        }
+        mat3
     }
 }
 
@@ -121,7 +186,7 @@ impl ops::Mul for Matrix4 {
     type Output = Self;
 
     fn mul(self, other: Matrix4) -> Self {
-        let mut mat4 = Matrix4::new([[0.0; 4]; 4]);
+        let mut mat4: Matrix4 = Matrix4::new([[0.0; 4]; 4]);
         for row in 0..4 {
             for colunm in 0..4 {
                 mat4.data[row][colunm] = self.data[row][0] * other.data[0][colunm] +
@@ -275,39 +340,39 @@ mod tests_matrix {
 
     #[test]
     fn multiply_a_matrix_by_the_identity_matrix() {
-        let mat4 = Matrix4::new([
+        let mat4: Matrix4 = Matrix4::new([
             [0.0, 1., 2., 4.],
             [1., 2., 4., 8.],
             [2., 4., 8., 16.],
             [4., 8., 16., 32.]
         ]);
 
-        let identity = Matrix4::identity();
+        let identity: Matrix4 = Matrix4::identity();
 
         assert_equivalent!(mat4 * identity, mat4);
     }
 
     #[test]
     fn multiply_a_matrix_identity_the_tuple() {
-        let tuple = Tuple::new(1., 2., 3., 4.);
+        let tuple:Tuple = Tuple::new(1., 2., 3., 4.);
 
-        let identity = Matrix4::identity();
+        let identity: Matrix4 = Matrix4::identity();
 
         assert_equivalent!(identity * tuple, tuple);
     }
 
     #[test]
     fn transposing_a_matrix() {
-        let mat4 = Matrix4::new([
+        let mat4: Matrix4 = Matrix4::new([
             [0.0, 9., 3., 0.],
             [9., 8., 0., 8.],
             [1., 8., 5., 3.],
             [0., 0., 5., 8.]
         ]);
 
-        let result = mat4.transpose();
+        let result: Matrix4 = mat4.transpose();
 
-        let expected_result = Matrix4::new([
+        let expected_result: Matrix4 = Matrix4::new([
             [0.0, 9., 1., 0.],
             [9., 8., 8., 0.],
             [3., 0., 5., 5.],
@@ -318,19 +383,71 @@ mod tests_matrix {
     }
 
     #[test]
-    fn trasnpose_indentity_matrix() {
-        let identity = Matrix4::identity();
+    fn transpose_identity_matrix() {
+        let identity: Matrix4 = Matrix4::identity();
 
         assert_equivalent!(identity, identity.transpose());
     }
 
     #[test]
     fn calculating_the_determinant_of_a_2_x_2_matrix() {
-        let mat2 = Matrix2::new([
+        let mat2: Matrix2 = Matrix2::new([
             [1., 5.],
             [-3., 2.]
         ]);
 
         assert_equivalent!(mat2.determinant(), 17.);
+    }
+
+    #[test]
+    fn submatrix_of_mat3_is_a_mat2() {
+        let mat3: Matrix3 = Matrix3::new([
+            [1.,5.,0.],
+            [-3., 2., 7.],
+            [0., 6., -3.]
+        ]);
+
+        let result: Matrix2 = mat3.sub_matrix(0, 2);
+
+        let expected_result: Matrix2 = Matrix2::new([
+            [-3., 2.],
+            [0., 6.]
+        ]);
+
+        assert_equivalent!(result, expected_result)
+    }
+
+    #[test]
+    fn submatrix_of_mat4_is_a_mat3() {
+        let mat4: Matrix4 = Matrix4::new([
+            [-6., 1., 1., 6.],
+            [-8., 5., 8., 6.],
+            [-1., 0., 8., 2.],
+            [-7., 1., -1., 1.]
+        ]);
+
+        let result: Matrix3 = mat4.sub_matrix(2, 1);
+
+        let expected_result: Matrix3 = Matrix3::new([
+            [-6., 1., 6.],
+            [-8., 8., 6.],
+            [-7., -1., 1.]
+        ]);
+
+        assert_equivalent!(result, expected_result)
+    }
+
+    #[test]
+    fn calculating_a_minor_of_mat3() {
+        let mat3 = Matrix3::new([
+            [3., 5., 0.],
+            [2., -1., -7.],
+            [6., -1., 5.]
+        ]);
+
+        let mat2 = mat3.sub_matrix(1, 0);
+
+        assert_equivalent!(mat2.determinant(), 25.);
+        assert_equivalent!(mat3.minor(1, 0), 25.);
     }
 }
