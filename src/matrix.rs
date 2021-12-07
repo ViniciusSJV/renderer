@@ -40,28 +40,24 @@ impl Matrix3 {
         Matrix3{data}
     }
 
-    //TODO -> Refactore-me
     pub fn sub_matrix(&self, row: usize, colunm: usize) -> Matrix2 {
         if (row > 2) || (colunm > 2) {
             panic!("Invalid index from Matrix 3. 0 <> 2")
         }
 
         let mut mat2 = Matrix2::new([[0.0; 2]; 2]);
-        let mut mat2_row;
-        let mut mat2_column;
-        let mut count: i8 = 0;
+        let mut mat2_row = 0;
+        let mut mat2_column= 0;
         for _row  in 0..3 {
             if _row == row { continue; }
             for _colunm in 0..3 {
                 if _colunm == colunm { continue; }
-                match count {
-                    0 => (mat2_row = 0, mat2_column = 0),
-                    1 => (mat2_row = 0, mat2_column = 1),
-                    2 => (mat2_row = 1, mat2_column = 0),
-                    _ => (mat2_row = 1, mat2_column = 1)
-                };
                 mat2.data[mat2_row][mat2_column] = self.data[_row][_colunm];
-                count += 1;
+                mat2_column += 1;
+                if mat2_column > 1 {
+                    mat2_row += 1;
+                    mat2_column = 0;
+                }
             }
         }
         mat2
@@ -97,35 +93,24 @@ impl Matrix4 {
         mat4
     }
 
-    //TODO -> Refactore-me
     pub fn sub_matrix(&self, row: usize, colunm: usize) -> Matrix3 {
         if (row > 3) || (colunm > 3) {
             panic!("Invalid index from Matrix 4. 0 <> 3")
         }
 
         let mut mat3 = Matrix3::new([[0.0; 3]; 3]);
-        let mut mat3_row;
-        let mut mat3_column;
-        let mut count: i8 = 0;
+        let mut mat3_row= 0;
+        let mut mat3_column = 0;
         for _row  in 0..4 {
             if _row == row { continue; }
             for _colunm in 0..4 {
                 if _colunm == colunm { continue; }
-                match count {
-                    0 => (mat3_row = 0, mat3_column = 0),
-                    1 => (mat3_row = 0, mat3_column = 1),
-                    2 => (mat3_row = 0, mat3_column = 2),
-
-                    3 => (mat3_row = 1, mat3_column = 0),
-                    4 => (mat3_row = 1, mat3_column = 1),
-                    5 => (mat3_row = 1, mat3_column = 2),
-
-                    6 => (mat3_row = 2, mat3_column = 0),
-                    7 => (mat3_row = 2, mat3_column = 1),
-                    _ => (mat3_row = 2, mat3_column = 2)
-                };
                 mat3.data[mat3_row][mat3_column] = self.data[_row][_colunm];
-                count += 1;
+                mat3_column += 1;
+                if mat3_column > 2 {
+                    mat3_row += 1;
+                    mat3_column = 0;
+                }
             }
         }
         mat3
