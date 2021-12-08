@@ -66,6 +66,22 @@ impl Matrix3 {
     pub fn minor(&self, row: usize, colunm: usize) -> f64{
         self.sub_matrix(row, colunm).determinant()
     }
+
+    pub fn cofactor(&self, row: usize, colunm: usize) -> f64 {
+        let minor: f64 = self.minor(row, colunm);
+        if (row + colunm) % 2 == 0 {
+            minor
+        } else {
+            -minor
+        }
+    }
+
+    pub fn determinant(&self) -> f64 {
+        let determinant: f64 = (self.data[0][0] * self.cofactor(0, 0)) +
+            (self.data[0][1] * self.cofactor(0, 1)) +
+            (self.data[0][2] * self.cofactor(0, 2));
+        determinant
+    }
 }
 
 impl Matrix4 {
@@ -114,6 +130,44 @@ impl Matrix4 {
             }
         }
         mat3
+    }
+
+    pub fn minor(&self, row: usize, colunm: usize) -> f64{
+        self.sub_matrix(row, colunm).determinant()
+    }
+
+    pub fn cofactor(&self, row: usize, colunm: usize) -> f64 {
+        let minor: f64 = self.minor(row, colunm);
+        if (row + colunm) % 2 == 0 {
+            minor
+        } else {
+            -minor
+        }
+    }
+
+    pub fn determinant(&self) -> f64 {
+        let determinant: f64 = (self.data[0][0] * self.cofactor(0, 0)) +
+            (self.data[0][1] * self.cofactor(0, 1)) +
+            (self.data[0][2] * self.cofactor(0, 2)) +
+            (self.data[0][3] * self.cofactor(0, 3));
+        determinant
+    }
+
+    pub fn is_invertible(&self) -> bool {
+        self.determinant().not_equivalent(0.0)
+    }
+
+    pub fn inverse(&self) -> Self {
+        if !self.is_invertible() {
+            panic!("Its is not invertible")
+        }
+        let mut mat4_reverse: Matrix4 = Matrix4::new([[0.0; 4];4]);
+        for row  in 0..4 {
+            for colunm in 0..4 {
+                mat4_reverse.data[colunm][row] = self.cofactor(row, colunm) / self.determinant();
+            }
+        }
+        mat4_reverse
     }
 }
 
@@ -203,7 +257,7 @@ mod tests_matrix {
     use super::*;
 
     #[test]
-    fn constructing_matrix_2_x_2 () {
+    fn constructing_mat2 () {
         let mat2: Matrix2 = Matrix2::new([
             [-3.0, 5.0],
             [1.0, -2.0]
@@ -216,7 +270,7 @@ mod tests_matrix {
     }
 
     #[test]
-    fn constructing_matrix_3_x_3 () {
+    fn constructing_mat3 () {
         let mat3: Matrix3 = Matrix3::new([
             [-3.0, 5.0, 0.0],
             [1.0, -2.0, -7.0],
@@ -229,7 +283,7 @@ mod tests_matrix {
     }
 
     #[test]
-    fn constructing_matrix_4_x_4 () {
+    fn constructing_mat4 () {
         let mat4: Matrix4 = Matrix4::new([
             [1.0, 2.0, 3.0, 4.0],
             [5.5, 6.5, 7.5, 8.5],
@@ -375,7 +429,7 @@ mod tests_matrix {
     }
 
     #[test]
-    fn calculating_the_determinant_of_a_2_x_2_matrix() {
+    fn calculating_the_determinant_of_a_mat2() {
         let mat2: Matrix2 = Matrix2::new([
             [1., 5.],
             [-3., 2.]
@@ -434,5 +488,161 @@ mod tests_matrix {
 
         assert_equivalent!(mat2.determinant(), 25.);
         assert_equivalent!(mat3.minor(1, 0), 25.);
+    }
+
+    #[test]
+    fn calculating_a_cofactor_of_a_mat3() {
+        let mat3: Matrix3 = Matrix3::new([
+            [3., 5., 0.],
+            [2., -1., -7.],
+            [6., -1., 5.]
+        ]);
+
+        assert_equivalent!(mat3.minor(0, 0), -12.);
+        assert_equivalent!(mat3.cofactor(0, 0), -12.);
+        assert_equivalent!(mat3.minor(1, 0), 25.);
+        assert_equivalent!(mat3.cofactor(1, 0), -25.);
+    }
+
+    #[test]
+    fn calculating_the_determinant_of_mat3() {
+        let mat3: Matrix3 = Matrix3::new([
+            [1., 2., 6.],
+            [-5., 8., -4.],
+            [2., 6., 4.]
+        ]);
+
+        assert_equivalent!(mat3.cofactor(0, 0), 56.);
+        assert_equivalent!(mat3.cofactor(0, 1), 12.);
+        assert_equivalent!(mat3.cofactor(0, 2), -46.);
+        assert_equivalent!(mat3.determinant(), -196.)
+    }
+
+    #[test]
+    fn calculating_the_determinant_of_mat4() {
+        let mat4: Matrix4 = Matrix4::new([
+            [-2., -8., 3., 5.],
+            [-3., 1., 7., 3.],
+            [1., 2., -9., 6.],
+            [-6., 7., 7., -9.]
+        ]);
+
+        assert_equivalent!(mat4.cofactor(0, 0), 690.);
+        assert_equivalent!(mat4.cofactor(0, 1), 447.);
+        assert_equivalent!(mat4.cofactor(0, 2), 210.);
+        assert_equivalent!(mat4.cofactor(0, 3), 51.);
+        assert_equivalent!(mat4.determinant(), -4071.)
+    }
+
+    #[test]
+    fn is_invertible_mat4() {
+        let mat4: Matrix4 = Matrix4::new([
+            [6., 4., 4., 4.],
+            [5., 5., 7., 6.],
+            [4., -9., 3., -7.],
+            [9., 1., 7., -6.]
+        ]);
+
+        assert_equivalent!(mat4.determinant(), -2120.);
+        assert!(mat4.is_invertible());
+    }
+
+    #[test]
+    fn is_not_invertible_mat4() {
+        let mat4: Matrix4 = Matrix4::new([
+            [-4., 2., -2., -3.],
+            [9., 6., 2., 6.],
+            [0., -5., 1., -5.],
+            [0., 0., 0., 0.]
+        ]);
+
+        assert_equivalent!(mat4.determinant(), 0.);
+        assert!(!mat4.is_invertible());
+    }
+
+    #[test]
+    fn calculating_the_inverse_of_mat4() {
+        let mat4: Matrix4 = Matrix4::new([
+            [-5., 2., 6., -8.],
+            [1., -5., 1., 8.],
+            [7., 7., -6., -7.],
+            [1., -3., 7., 4.]
+        ]);
+
+        let mat4_inverse = mat4.inverse();
+        let mat4_inverse_result: Matrix4 = Matrix4::new([
+            [0.21805, 0.45113, 0.24060, -0.04511],
+            [-0.80827, -1.45677, -0.44361, 0.52068],
+            [-0.07895, -0.22368, -0.05263, 0.19737],
+            [-0.52256, -0.81391, -0.30075, 0.30639]
+        ]);
+
+        assert_equivalent!(mat4.determinant(), 532.);
+        assert_equivalent!(mat4.cofactor(2, 3), -160.);
+        assert_equivalent!(mat4_inverse.data[3][2], -160./532.);
+        assert_equivalent!(mat4.cofactor(3, 2), 105.);
+        assert_equivalent!(mat4_inverse.data[2][3], 105./532.);
+        assert_equivalent!(mat4_inverse, mat4_inverse_result);
+    }
+
+    #[test]
+    fn calculating_the_inverse_of_another_mat4() {
+        let mat4: Matrix4 = Matrix4::new([
+            [8., -5., 9., 2.],
+            [7., 5., 6., 1.],
+            [-6., 0., 9., 6.],
+            [-3., 0., -9., -4.]
+        ]);
+
+        let mat4_inverse = mat4.inverse();
+        let mat4_inverse_result: Matrix4 = Matrix4::new([
+            [-0.15385, -0.15385, -0.28205, -0.53846],
+            [-0.07692, 0.12308, 0.02564, 0.03077],
+            [0.35897, 0.35897, 0.43590, 0.92308],
+            [-0.69231, -0.69231, -0.76923, -1.92308]
+        ]);
+
+        assert_equivalent!(mat4_inverse, mat4_inverse_result);
+    }
+
+    #[test]
+    fn calculating_the_inverse_of_third_mat4() {
+        let mat4: Matrix4 = Matrix4::new([
+            [9., 3., 0., 9.],
+            [-5., -2., -6., -3.],
+            [-4., 9., 6., 4.],
+            [-7., 6., 6., 2.]
+        ]);
+
+        let mat4_inverse = mat4.inverse();
+        let mat4_inverse_result: Matrix4 = Matrix4::new([
+            [-0.04074, -0.07778, 0.14444, -0.22222],
+            [-0.07778, 0.03333, 0.36667, -0.33333],
+            [-0.02901, -0.14630, -0.10926, 0.12963],
+            [0.17778, 0.06667, -0.26667, 0.33333]
+        ]);
+
+        assert_equivalent!(mat4_inverse, mat4_inverse_result);
+    }
+
+    #[test]
+    fn multiplying_a_product_by_its_inverse() {
+        let a: Matrix4 = Matrix4::new([
+            [3., -9., 7., 3.],
+            [3., -8., 2., -9.],
+            [-4., 4., 4., 1.],
+            [-7., 6., 6., 2.]
+        ]);
+
+        let b: Matrix4 = Matrix4::new([
+            [8., 2., 2., 2.],
+            [3., -1., 7., 0.],
+            [7., 0., 5., 4.],
+            [6., -2., 0., 5.]
+        ]);
+
+        let c: Matrix4 = a * b;
+
+        assert_equivalent!(c * b.inverse(), a);
     }
 }
