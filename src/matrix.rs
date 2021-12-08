@@ -1,8 +1,7 @@
-//https://docs.rs/cgmath/0.12.0/cgmath/struct.Matrix<4>.html
-
 use std::ops;
 use crate::equivalent::*;
 use crate::Tuple;
+use std::f64::consts::PI;
 
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub struct Matrix<const D: usize> {
@@ -125,6 +124,49 @@ impl Matrix<4> {
         }
     }
 
+    pub fn translation(x: f64, y: f64, z: f64) -> Self {
+        let mut mat4: Matrix<4> = Self::identity();
+        mat4.data[0][3] = x;
+        mat4.data[1][3] = y;
+        mat4.data[2][3] = z;
+        mat4
+    }
+
+    pub fn scaling(x: f64, y: f64, z: f64) -> Self {
+        let mut mat4: Matrix<4> = Self::identity();
+        mat4.data[0][0] = x;
+        mat4.data[1][1] = y;
+        mat4.data[2][2] = z;
+        mat4
+    }
+
+    pub fn rotation_x(radians: f64) -> Self {
+        let mut mat4: Matrix<4> = Self::identity();
+        mat4.data[1][1] = radians.cos();
+        mat4.data[1][2] = -radians.sin();
+        mat4.data[2][1] = radians.sin();
+        mat4.data[2][2] = radians.cos();
+        mat4
+    }
+
+    pub fn rotation_y(radians: f64) -> Self {
+        let mut mat4: Matrix<4> = Self::identity();
+        mat4.data[0][0] = radians.cos();
+        mat4.data[0][2] = radians.sin();
+        mat4.data[2][0] = -radians.sin();
+        mat4.data[2][2] = radians.cos();
+        mat4
+    }
+
+    pub fn rotation_z(radians: f64) -> Self {
+        let mut mat4: Matrix<4> = Self::identity();
+        mat4.data[0][0] = radians.cos();
+        mat4.data[0][1] = -radians.sin();
+        mat4.data[1][0] = radians.sin();
+        mat4.data[1][1] = radians.cos();
+        mat4
+    }
+
     pub fn determinant(&self) -> f64 {
         let determinant: f64 = (self.data[0][0] * self.cofactor(0, 0)) +
             (self.data[0][1] * self.cofactor(0, 1)) +
@@ -142,7 +184,7 @@ impl Matrix<4> {
             panic!("Its is not invertible")
         }
         let mut mat4_reverse: Matrix<4> = Matrix::from([[0.0; 4];4]);
-        let determinant = self.determinant();
+        let determinant: f64 = self.determinant();
         for row  in 0..4 {
             for colunm in 0..4 {
                 mat4_reverse.data[colunm][row] = self.cofactor(row, colunm) / determinant;
@@ -625,5 +667,125 @@ mod tests_matrix {
         let c: Matrix<4> = a * b;
 
         assert_equivalent!(c * b.inverse(), a);
+    }
+
+    #[test]
+    fn multiplying_by_a_matrix() {
+        let mat4_transform = Matrix::translation(5., -3., 2.);
+        let point = Tuple::point(-3., 4., 5.);
+
+        let expected_result = Tuple::point(2., 1., 7.);
+
+        assert_equivalent!(mat4_transform * point, expected_result);
+    }
+
+    #[test]
+    fn multiplying_by_the_invert_of_a_matrix_translation() {
+        let mat4_transform = Matrix::translation(5., -3., 2.);
+        let mat4_transform_invert = mat4_transform.inverse();
+        let point = Tuple::point(-3., 4., 5.);
+
+        let expected_result = Tuple::point(-8., 7., 3.);
+
+        assert_equivalent!(mat4_transform_invert * point, expected_result);
+    }
+
+    #[test]
+    fn translation_does_no_affect_vectors() {
+        let mat4_transform = Matrix::translation(5., -3., 2.);
+        let vec = Tuple::vector(-3., 4., 5.);
+
+        assert_equivalent!(mat4_transform * vec, vec);
+    }
+
+    #[test]
+    fn a_scaling_matrix_applied_to_a_point() {
+        let mat4_transform = Matrix::scaling(2., 3., 4.);
+        let point = Tuple::point(-4., 6., 8.);
+
+        let expected_result = Tuple::point(-8., 18., 32.);
+
+        assert_equivalent!(mat4_transform * point, expected_result);
+    }
+
+    #[test]
+    fn a_scaling_matrix_applied_to_a_vector() {
+        let mat4_transform = Matrix::scaling(2., 3., 4.);
+        let vec = Tuple::vector(-4., 6., 8.);
+
+        let expected_result = Tuple::vector(-8., 18., 32.);
+
+        assert_equivalent!(mat4_transform * vec, expected_result);
+    }
+
+    #[test]
+    fn multiplying_by_the_invert_of_a_scaling_matrix() {
+        let mat4_transform = Matrix::scaling(2., 3., 4.);
+        let mat4_transform_invert = mat4_transform.inverse();
+        let vec = Tuple::vector(-4., 6., 8.);
+
+        let expected_result = Tuple::vector(-2., 2., 2.);
+
+        assert_equivalent!(mat4_transform_invert * vec, expected_result);
+    }
+
+    #[test]
+    fn reflaction_is_scaling_by_a_negative_value() {
+        let mat4_transform = Matrix::scaling(-1., 1., 1.);
+        let point = Tuple::point(2., 3., 4.);
+
+        let expected_result = Tuple::point(-2., 3., 4.);
+
+        assert_equivalent!(mat4_transform * point, expected_result);
+    }
+
+    #[test]
+    fn rotating_a_point_around_the_x_axis() {
+        let point = Tuple::point(0., 1., 0.);
+        let half_quarter = Matrix::rotation_x(PI / 4.);
+        let full_quarter = Matrix::rotation_x(PI / 2.);
+
+        let expected_result_1 = Tuple::point(0., f64::from(2.).sqrt() / 2., f64::from(2.).sqrt() / 2.);
+        let expected_result_2 = Tuple::point(0., 0., 1.);
+
+        assert_equivalent!(half_quarter * point, expected_result_1);
+        assert_equivalent!(full_quarter * point, expected_result_2);
+    }
+
+    #[test]
+    fn the_inverse_of_an_x_rotation_rotates_in_the_opposite_direction() {
+        let point = Tuple::point(0., 1., 0.);
+        let half_quarter = Matrix::rotation_x(PI / 4.);
+        let half_quarter_inverse = half_quarter.inverse();
+
+        let expected_result = Tuple::point(0., f64::from(2.).sqrt() / 2., -f64::from(2.).sqrt() / 2.);
+
+        assert_equivalent!(half_quarter_inverse * point, expected_result);
+    }
+
+    #[test]
+    fn rotating_a_point_around_the_y_axis() {
+        let point = Tuple::point(0., 0., 1.);
+        let half_quarter = Matrix::rotation_y(PI / 4.);
+        let full_quarter = Matrix::rotation_y(PI / 2.);
+
+        let expected_result_1 = Tuple::point(f64::from(2.).sqrt() / 2., 0.,f64::from(2.).sqrt() / 2.);
+        let expected_result_2 = Tuple::point(1., 0., 0.);
+
+        assert_equivalent!(half_quarter * point, expected_result_1);
+        assert_equivalent!(full_quarter * point, expected_result_2);
+    }
+
+    #[test]
+    fn rotating_a_point_around_the_z_axis() {
+        let point = Tuple::point(0., 1., 0.);
+        let half_quarter = Matrix::rotation_z(PI / 4.);
+        let full_quarter = Matrix::rotation_z(PI / 2.);
+
+        let expected_result_1 = Tuple::point(-f64::from(2.).sqrt() / 2.,f64::from(2.).sqrt() / 2., 0.);
+        let expected_result_2 = Tuple::point(-1., 0., 0.);
+
+        assert_equivalent!(half_quarter * point, expected_result_1);
+        assert_equivalent!(full_quarter * point, expected_result_2);
     }
 }
