@@ -8,7 +8,7 @@ mod matrix;
 
 use crate::canvas::Canvas;
 use crate::color::Color;
-use crate::matrix::Matrix4;
+use crate::matrix::{Matrix};
 use crate::tuple::Tuple;
 
 fn main() {
@@ -17,12 +17,12 @@ fn main() {
 }
 
 fn cap3() {
-    let mat4_identity: Matrix4 = Matrix4::identity();
+    let mat4_identity: Matrix<4> = Matrix::identity();
 
     println!("Mat4 identity: {:?}", mat4_identity);
     println!("Mat4 identity inverse: {:?}", mat4_identity.inverse());
 
-    let mat4: Matrix4 = Matrix4::new([
+    let mat4: Matrix<4> = Matrix::from([
         [-6., 1., 1., 6.],
         [-8., 5., 8., 6.],
         [-1., 0., 8., 2.],
