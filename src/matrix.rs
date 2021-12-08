@@ -162,9 +162,10 @@ impl Matrix4 {
             panic!("Its is not invertible")
         }
         let mut mat4_reverse: Matrix4 = Matrix4::new([[0.0; 4];4]);
+        let determinant = self.determinant();
         for row  in 0..4 {
             for colunm in 0..4 {
-                mat4_reverse.data[colunm][row] = self.cofactor(row, colunm) / self.determinant();
+                mat4_reverse.data[colunm][row] = self.cofactor(row, colunm) / determinant;
             }
         }
         mat4_reverse
