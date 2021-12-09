@@ -13,14 +13,14 @@ use crate::matrix::{Matrix};
 use crate::tuple::Tuple;
 
 fn main() {
-    //cap1_cap2();
-    //cap3();
+    cap1_cap2();
+    cap3();
     cap4();
 }
 
 fn cap4() {
     let mut canvas = Canvas::new(1000, 1000);
-    let color = Color::new(1., 1., 0.);
+    let color_white = Color::new(1., 1., 1.);
 
     let origin = Tuple::point(1000./2., 1000./2., 0.);
     let transf_origin = Matrix::translation(origin);
@@ -34,7 +34,7 @@ fn cap4() {
 
         let x = point_rotate.x.round() as usize;
         let y = canvas.height - point_rotate.y.round() as usize;
-        canvas.set_pixel_color(x, y, color);
+        canvas.set_pixel_color(x, y, color_white);
     }
 
     let ppm = canvas.to_ppm();
