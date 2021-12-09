@@ -1,4 +1,4 @@
-use std::f64::consts::PI;
+use std::f64::consts::TAU;
 use std::fs::write;
 
 mod equivalent;
@@ -27,7 +27,7 @@ fn cap4() {
 
     for h in 0..12 {
         let r = 300.;
-        let transf_rotate_z = Matrix::rotation_z(2. * PI / 12. * (h as f64));
+        let transf_rotate_z = Matrix::rotation_z(TAU / 12. * (h as f64));
         let point = Tuple::point(0., r, 0.);
 
         let point_rotate = transf_origin * transf_rotate_z * point;
