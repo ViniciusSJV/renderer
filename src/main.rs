@@ -1,3 +1,4 @@
+use std::f64::consts::PI;
 use std::fs::write;
 
 mod equivalent;
@@ -12,8 +13,32 @@ use crate::matrix::{Matrix};
 use crate::tuple::Tuple;
 
 fn main() {
-    cap1_cap2();
-    cap3();
+    //cap1_cap2();
+    //cap3();
+    cap4();
+}
+
+fn cap4() {
+    let mut canvas = Canvas::new(1000, 1000);
+    let color = Color::new(1., 1., 0.);
+
+    let origin = Tuple::point(1000./2., 1000./2., 0.);
+    let transf_origin = Matrix::translation(origin);
+
+    for h in 0..12 {
+        let r = 300.;
+        let transf_rotate_z = Matrix::rotation_z(2. * PI / 12. * (h as f64));
+        let point = Tuple::point(0., r, 0.);
+
+        let point_rotate = transf_origin * transf_rotate_z * point;
+
+        let x = point_rotate.x.round() as usize;
+        let y = canvas.height - point_rotate.y.round() as usize;
+        canvas.set_pixel_color(x, y, color);
+    }
+
+    let ppm = canvas.to_ppm();
+    write("./result-2.ppm", ppm).expect("Error.")
 }
 
 fn cap3() {

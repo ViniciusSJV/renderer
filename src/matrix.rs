@@ -1,7 +1,8 @@
 use std::ops;
+use std::f64::consts::PI;
+
 use crate::equivalent::*;
 use crate::Tuple;
-use std::f64::consts::PI;
 
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub struct Matrix<const D: usize> {
@@ -124,19 +125,19 @@ impl Matrix<4> {
         }
     }
 
-    pub fn translation(x: f64, y: f64, z: f64) -> Self {
+    pub fn translation(tuple: Tuple) -> Self {
         let mut mat4: Matrix<4> = Self::identity();
-        mat4.data[0][3] = x;
-        mat4.data[1][3] = y;
-        mat4.data[2][3] = z;
+        mat4.data[0][3] = tuple.x;
+        mat4.data[1][3] = tuple.y;
+        mat4.data[2][3] = tuple.z;
         mat4
     }
 
-    pub fn scaling(x: f64, y: f64, z: f64) -> Self {
+    pub fn scaling(tuple: Tuple) -> Self {
         let mut mat4: Matrix<4> = Self::identity();
-        mat4.data[0][0] = x;
-        mat4.data[1][1] = y;
-        mat4.data[2][2] = z;
+        mat4.data[0][0] = tuple.x;
+        mat4.data[1][1] = tuple.y;
+        mat4.data[2][2] = tuple.z;
         mat4
     }
 
@@ -164,6 +165,17 @@ impl Matrix<4> {
         mat4.data[0][1] = -radians.sin();
         mat4.data[1][0] = radians.sin();
         mat4.data[1][1] = radians.cos();
+        mat4
+    }
+
+    pub fn shearing(xy: f64, xz: f64, yx: f64, yz: f64, zx: f64, zy: f64) -> Self {
+        let mut mat4: Matrix<4> = Self::identity();
+        mat4.data[0][1] = xy;
+        mat4.data[0][2] = xz;
+        mat4.data[1][0] = yx;
+        mat4.data[1][2] = yz;
+        mat4.data[2][0] = zx;
+        mat4.data[2][1] = zy;
         mat4
     }
 
@@ -671,7 +683,7 @@ mod tests_matrix {
 
     #[test]
     fn multiplying_by_a_matrix() {
-        let mat4_transform = Matrix::translation(5., -3., 2.);
+        let mat4_transform = Matrix::translation(Tuple::vector(5., -3., 2.));
         let point = Tuple::point(-3., 4., 5.);
 
         let expected_result = Tuple::point(2., 1., 7.);
@@ -681,7 +693,7 @@ mod tests_matrix {
 
     #[test]
     fn multiplying_by_the_invert_of_a_matrix_translation() {
-        let mat4_transform = Matrix::translation(5., -3., 2.);
+        let mat4_transform = Matrix::translation(Tuple::vector(5., -3., 2.));
         let mat4_transform_invert = mat4_transform.inverse();
         let point = Tuple::point(-3., 4., 5.);
 
@@ -692,7 +704,7 @@ mod tests_matrix {
 
     #[test]
     fn translation_does_no_affect_vectors() {
-        let mat4_transform = Matrix::translation(5., -3., 2.);
+        let mat4_transform = Matrix::translation(Tuple::vector(5., -3., 2.));
         let vec = Tuple::vector(-3., 4., 5.);
 
         assert_equivalent!(mat4_transform * vec, vec);
@@ -700,7 +712,7 @@ mod tests_matrix {
 
     #[test]
     fn a_scaling_matrix_applied_to_a_point() {
-        let mat4_transform = Matrix::scaling(2., 3., 4.);
+        let mat4_transform = Matrix::scaling(Tuple::vector(2., 3., 4.));
         let point = Tuple::point(-4., 6., 8.);
 
         let expected_result = Tuple::point(-8., 18., 32.);
@@ -710,7 +722,7 @@ mod tests_matrix {
 
     #[test]
     fn a_scaling_matrix_applied_to_a_vector() {
-        let mat4_transform = Matrix::scaling(2., 3., 4.);
+        let mat4_transform = Matrix::scaling(Tuple::vector(2., 3., 4.));
         let vec = Tuple::vector(-4., 6., 8.);
 
         let expected_result = Tuple::vector(-8., 18., 32.);
@@ -720,7 +732,7 @@ mod tests_matrix {
 
     #[test]
     fn multiplying_by_the_invert_of_a_scaling_matrix() {
-        let mat4_transform = Matrix::scaling(2., 3., 4.);
+        let mat4_transform = Matrix::scaling(Tuple::vector(2., 3., 4.));
         let mat4_transform_invert = mat4_transform.inverse();
         let vec = Tuple::vector(-4., 6., 8.);
 
@@ -731,7 +743,7 @@ mod tests_matrix {
 
     #[test]
     fn reflaction_is_scaling_by_a_negative_value() {
-        let mat4_transform = Matrix::scaling(-1., 1., 1.);
+        let mat4_transform = Matrix::scaling(Tuple::vector(-1., 1., 1.));
         let point = Tuple::point(2., 3., 4.);
 
         let expected_result = Tuple::point(-2., 3., 4.);
@@ -787,5 +799,88 @@ mod tests_matrix {
 
         assert_equivalent!(half_quarter * point, expected_result_1);
         assert_equivalent!(full_quarter * point, expected_result_2);
+    }
+
+    #[test]
+    fn a_sharing_transformation_moves_x_in_proportion_to_y() {
+        let mat4_transform = Matrix::shearing(1., 0., 0., 0., 0., 0.);
+        let point = Tuple::point(2., 3., 4.);
+
+        let expected_result = Tuple::point(5., 3., 4.);
+
+        assert_equivalent!(mat4_transform * point, expected_result)
+    }
+
+    #[test]
+    fn a_sharing_transformation_moves_x_in_proportion_to_z() {
+        let mat4_transform = Matrix::shearing(0., 1., 0., 0., 0., 0.);
+        let point = Tuple::point(2., 3., 4.);
+
+        let expected_result = Tuple::point(6., 3., 4.);
+
+        assert_equivalent!(mat4_transform * point, expected_result)
+    }
+
+    #[test]
+    fn a_sharing_transformation_moves_y_in_proportion_to_x() {
+        let mat4_transform = Matrix::shearing(0., 0., 1., 0., 0., 0.);
+        let point = Tuple::point(2., 3., 4.);
+
+        let expected_result = Tuple::point(2., 5., 4.);
+
+        assert_equivalent!(mat4_transform * point, expected_result)
+    }
+
+    #[test]
+    fn a_sharing_transformation_moves_y_in_proportion_to_z() {
+        let mat4_transform = Matrix::shearing(0., 0., 0., 1., 0., 0.);
+        let point = Tuple::point(2., 3., 4.);
+
+        let expected_result = Tuple::point(2., 7., 4.);
+
+        assert_equivalent!(mat4_transform * point, expected_result)
+    }
+
+    #[test]
+    fn a_sharing_transformation_moves_z_in_proportion_to_x() {
+        let mat4_transform = Matrix::shearing(0., 0., 0., 0., 1., 0.);
+        let point = Tuple::point(2., 3., 4.);
+
+        let expected_result = Tuple::point(2., 3., 6.);
+
+        assert_equivalent!(mat4_transform * point, expected_result)
+    }
+
+    #[test]
+    fn a_sharing_transformation_moves_z_in_proportion_to_y() {
+        let mat4_transform = Matrix::shearing(0., 0., 0., 0., 0., 1.);
+        let point = Tuple::point(2., 3., 4.);
+
+        let expected_result = Tuple::point(2., 3., 7.);
+
+        assert_equivalent!(mat4_transform * point, expected_result)
+    }
+
+    #[test]
+    fn individual_transformation_are_applied_in_sequence() {
+        let point = Tuple::point(1.,0.,1.);
+        let rotation_x = Matrix::rotation_x(PI / 2.);
+        let scale = Matrix::scaling(Tuple::vector(5.,5.,5.));
+        let translate = Matrix::translation(Tuple::vector(10.,5.,7.));
+
+        let point_2 = rotation_x * point;
+        let expected_result_1 = Tuple::point(1.,-1.,0.);
+
+        assert_equivalent!(point_2, expected_result_1);
+
+        let point_3 = scale * point_2;
+        let expected_result_2 = Tuple::point(5.,-5.,0.);
+
+        assert_equivalent!(point_3, expected_result_2);
+
+        let point_4 = translate * point_3;
+        let expected_result_3 = Tuple::point(15.,0.,7.);
+
+        assert_equivalent!(point_4, expected_result_3);
     }
 }
