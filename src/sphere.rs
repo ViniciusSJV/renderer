@@ -17,6 +17,9 @@ impl Sphere {
     }
 
     pub fn normal(&self, point: Tuple) -> Tuple {
+        if !point.is_point() {
+            panic!("Normal is only to Tuple::point")
+        }
         (point - Tuple::point(0., 0., 0.)).normalize()
     }
 
