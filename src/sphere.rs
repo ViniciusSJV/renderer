@@ -149,4 +149,19 @@ mod tests_sphere {
         assert_eq!(xs.data[0].t, 3.);
         assert_eq!(xs.data[1].t, 7.);
     }
+
+    #[test]
+    fn intersecting_a_translated_sphere_with_a_ray() {
+        let ray = Ray::new(
+            Tuple::point(0., 0., -5.),
+            Tuple::vector(0., 0., 1.)
+        );
+        let mut sphere = Sphere::new(Tuple::point(0., 0., 0.));
+        let translation = Matrix::translation(Tuple::vector(5., 0., 0.));
+
+        sphere.transform(translation);
+        let xs = sphere.intersect(ray);
+
+        assert_eq!(xs.data.len(), 0);
+    }
 }

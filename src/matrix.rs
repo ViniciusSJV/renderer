@@ -1,5 +1,4 @@
 use std::ops;
-use std::f64::consts::PI;
 
 use crate::equivalent::*;
 use crate::Tuple;
@@ -288,6 +287,7 @@ impl ops::Mul<Tuple> for Matrix<4> {
 
 #[cfg(test)]
 mod tests_matrix {
+    use std::f64::consts::PI;
     use crate::assert_equivalent;
     use super::*;
 

@@ -1,4 +1,4 @@
-use std::f64::consts::TAU;
+use std::f64::consts::{PI, TAU};
 use std::fs::write;
 
 mod equivalent;
@@ -14,12 +14,52 @@ mod object;
 use crate::canvas::Canvas;
 use crate::color::Color;
 use crate::matrix::{Matrix};
+use crate::ray::Ray;
+use crate::sphere::Sphere;
 use crate::tuple::Tuple;
 
 fn main() {
     cap1_cap2();
     cap3();
     cap4();
+    cap5();
+}
+
+fn cap5() {
+    let wall_z = 10.;
+    let wall_size = 7.;
+    let canvas_pixel = 500;
+    let pixel_size = wall_size / (canvas_pixel as f64);
+    let half = wall_size / 2.;
+
+    let mut canvas = Canvas::new(canvas_pixel, canvas_pixel);
+    let red = Color::new(1., 0., 0.);
+    let mut sphere = Sphere::new(Tuple::point(0., 0., 0.));
+    let ray_origin = Tuple::point(0., 0., -5.);
+
+    for y in 0..canvas_pixel {
+        let world_y = half - pixel_size * (y as f64);
+        for x in 0..canvas_pixel {
+            let world_x = -half + pixel_size * (x as f64);
+
+            let position = Tuple::point(world_x, world_y, wall_z);
+
+            let ray = Ray::new(ray_origin, (position - ray_origin).normalize());
+
+            sphere.transform(Matrix::rotation_z(PI / 4.) * Matrix::scaling(Tuple::vector(0.5, 1., 1.)));
+
+            let xs = sphere.intersect(ray);
+
+            if xs.hit() != None {
+                canvas.set_pixel_color(x, y, red);
+            }
+        }
+    }
+
+    let ppm = canvas.to_ppm();
+    write("./result-3.ppm", ppm).expect("Error.")
+
+
 }
 
 fn cap4() {
