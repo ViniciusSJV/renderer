@@ -46,7 +46,7 @@ fn cap5() {
 
             let ray = Ray::new(ray_origin, (position - ray_origin).normalize());
 
-            sphere.transform(Matrix::rotation_z(PI / 4.) * Matrix::scaling(Tuple::vector(0.5, 1., 1.)));
+            sphere.set_transform(Matrix::rotation_z(PI / 4.) * Matrix::scaling(Tuple::vector(0.5, 1., 1.)));
 
             let xs = sphere.intersect(ray);
 

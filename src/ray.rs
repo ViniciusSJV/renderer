@@ -18,7 +18,7 @@ impl Ray {
         self.origin + self.direction * t
     }
 
-    pub fn transform(&self, m: Matrix<4>) -> Self {
+    pub fn set_transform(&self, m: Matrix<4>) -> Self {
         Ray {
             origin: m * self.origin,
             direction: m * self.direction,
@@ -61,7 +61,7 @@ mod tests_ray {
         let ray = Ray::new(Tuple::point(1., 2., 3.), Tuple::vector(0., 1., 0.));
         let translation = Matrix::translation(Tuple::vector(3., 4., 5.));
 
-        let ray_transform = ray.transform(translation);
+        let ray_transform = ray.set_transform(translation);
 
         assert_equivalent!(ray_transform.origin, Tuple::point(4., 6., 8.), );
         assert_equivalent!(ray_transform.direction, Tuple::vector(0., 1., 0.));
@@ -71,7 +71,7 @@ mod tests_ray {
     fn scaling_a_ray() {
         let ray = Ray::new(Tuple::point(1., 2., 3.), Tuple::vector(0., 1., 0.));
         let scaling = Matrix::scaling(Tuple::vector(2., 3., 4.));
-        let r2_scaling = ray.transform(scaling);
+        let r2_scaling = ray.set_transform(scaling);
 
         assert_equivalent!(r2_scaling.origin, Tuple::point(2., 6., 12.), );
         assert_equivalent!(r2_scaling.direction, Tuple::vector(0., 3., 0.));

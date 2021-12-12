@@ -12,19 +12,23 @@ impl Sphere {
         Sphere { origin, transform }
     }
 
-    pub fn transform(&mut self, transform: Matrix<4>) {
+    pub fn set_transform(&mut self, transform: Matrix<4>) {
         self.transform = transform
     }
 
-    pub fn normal(&self, point: Tuple) -> Tuple {
+    pub fn normal_at(&self, point: Tuple) -> Tuple {
         if !point.is_point() {
             panic!("Normal is only to Tuple::point")
         }
-        (point - Tuple::point(0., 0., 0.)).normalize()
+        let object_point = self.transform.inverse() * point;
+        let object_normal = object_point - Tuple::point(0., 0., 0.);
+        let mut world_normal = self.transform.inverse().transpose() * object_normal;
+        world_normal.w = 0.;
+        world_normal.normalize()
     }
 
     pub fn intersect(&self, ray: Ray) -> Intersections {
-        let ray_2 = ray.transform(self.transform.inverse());
+        let ray_2 = ray.set_transform(self.transform.inverse());
         let sphere_to_ray = ray_2.origin - self.origin;
         let a = ray_2.direction.dot(ray_2.direction);
         let b = 2. * ray_2.direction.dot(sphere_to_ray);
@@ -47,6 +51,7 @@ impl Sphere {
 
 #[cfg(test)]
 mod tests_sphere {
+    use std::f64::consts::PI;
     use crate::assert_equivalent;
     use crate::equivalent::Equivalence;
     use super::*;
@@ -135,7 +140,7 @@ mod tests_sphere {
     fn changing_a_sphere_transformation() {
         let mut sphere = Sphere::new(Tuple::point(0., 0., 0.));
         let translation = Matrix::translation(Tuple::vector(2., 3.,4.));
-        sphere.transform(translation);
+        sphere.set_transform(translation);
 
         assert_eq!(sphere.transform, translation);
     }
@@ -149,7 +154,7 @@ mod tests_sphere {
         let mut sphere = Sphere::new(Tuple::point(0., 0., 0.));
         let scaling = Matrix::scaling(Tuple::vector(2., 2., 2.));
 
-        sphere.transform(scaling);
+        sphere.set_transform(scaling);
         let xs = sphere.intersect(ray);
 
         assert_eq!(xs.data.len(), 2);
@@ -166,7 +171,7 @@ mod tests_sphere {
         let mut sphere = Sphere::new(Tuple::point(0., 0., 0.));
         let translation = Matrix::translation(Tuple::vector(5., 0., 0.));
 
-        sphere.transform(translation);
+        sphere.set_transform(translation);
         let xs = sphere.intersect(ray);
 
         assert_eq!(xs.data.len(), 0);
@@ -175,7 +180,7 @@ mod tests_sphere {
     #[test]
     fn the_normal_on_a_sphere_at_a_point_on_the_x_axis() {
         let sphere = Sphere::new(Tuple::point(0., 0., 0.));
-        let normal = sphere.normal(Tuple::point(1., 0., 0.));
+        let normal = sphere.normal_at(Tuple::point(1., 0., 0.));
 
         assert_equivalent!(normal, Tuple::vector(1., 0., 0.));
     }
@@ -183,7 +188,7 @@ mod tests_sphere {
     #[test]
     fn the_normal_on_a_sphere_at_a_point_on_the_y_axis() {
         let sphere = Sphere::new(Tuple::point(0., 0., 0.));
-        let normal = sphere.normal(Tuple::point(0., 1., 0.));
+        let normal = sphere.normal_at(Tuple::point(0., 1., 0.));
 
         assert_equivalent!(normal, Tuple::vector(0., 1., 0.));
     }
@@ -191,7 +196,7 @@ mod tests_sphere {
     #[test]
     fn the_normal_on_a_sphere_at_a_point_on_the_z_axis() {
         let sphere = Sphere::new(Tuple::point(0., 0., 0.));
-        let normal = sphere.normal(Tuple::point(0., 0., 1.));
+        let normal = sphere.normal_at(Tuple::point(0., 0., 1.));
 
         assert_equivalent!(normal, Tuple::vector(0., 0., 1.));
     }
@@ -199,7 +204,7 @@ mod tests_sphere {
     #[test]
     fn the_normal_on_a_sphere_at_a_nonaxial_point() {
         let sphere = Sphere::new(Tuple::point(0., 0., 0.));
-        let normal = sphere.normal(Tuple::point((3. as f64).sqrt() / 3., (3. as f64).sqrt() / 3., (3. as f64).sqrt() / 3.));
+        let normal = sphere.normal_at(Tuple::point((3. as f64).sqrt() / 3., (3. as f64).sqrt() / 3., (3. as f64).sqrt() / 3.));
 
         assert_equivalent!(normal, Tuple::vector((3. as f64).sqrt() / 3., (3. as f64).sqrt() / 3., (3. as f64).sqrt() / 3.));
     }
@@ -207,8 +212,31 @@ mod tests_sphere {
     #[test]
     fn the_normal_is_a_normalized_vector() {
         let sphere = Sphere::new(Tuple::point(0., 0., 0.));
-        let normal = sphere.normal(Tuple::point((3. as f64).sqrt() / 3., (3. as f64).sqrt() / 3., (3. as f64).sqrt() / 3.));
+        let normal = sphere.normal_at(Tuple::point((3. as f64).sqrt() / 3., (3. as f64).sqrt() / 3., (3. as f64).sqrt() / 3.));
 
         assert_equivalent!(normal, normal.normalize());
+    }
+
+    #[test]
+    fn computing_the_normal_on_a_translated_sphere() {
+        let mut sphere = Sphere::new(Tuple::point(0., 0., 0.));
+        sphere.set_transform(Matrix::translation(Tuple::vector(0., 1., 0.)));
+
+        let normal = sphere.normal_at(Tuple::point(0., 1.70711, -0.70711));
+
+        assert_equivalent!(normal, Tuple::vector(0., 0.70711, -0.70711));
+    }
+
+    #[test]
+    fn computing_the_normal_on_a_transformed_sphere() {
+        let mut sphere = Sphere::new(Tuple::point(0., 0., 0.));
+        sphere.set_transform(
+            Matrix::scaling(Tuple::vector(1., 0.5, 1.)) *
+            Matrix::rotation_z(PI/5.)
+        );
+
+        let normal = sphere.normal_at(Tuple::point(0., (2. as f64).sqrt() / 2., -(2. as f64).sqrt() / 2.));
+
+        assert_equivalent!(normal, Tuple::vector(0., 0.97014, -0.24254));
     }
 }
