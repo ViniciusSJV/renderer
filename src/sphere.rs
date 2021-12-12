@@ -16,6 +16,10 @@ impl Sphere {
         self.transform = transform
     }
 
+    pub fn normal(&self, point: Tuple) -> Tuple {
+        (point - Tuple::point(0., 0., 0.)).normalize()
+    }
+
     pub fn intersect(&self, ray: Ray) -> Intersections {
         let ray_2 = ray.transform(self.transform.inverse());
         let sphere_to_ray = ray_2.origin - self.origin;
@@ -40,9 +44,9 @@ impl Sphere {
 
 #[cfg(test)]
 mod tests_sphere {
-    use crate::ray::Ray;
-    use crate::sphere::Sphere;
-    use crate::{Matrix, Tuple};
+    use crate::assert_equivalent;
+    use crate::equivalent::Equivalence;
+    use super::*;
 
     #[test]
     fn a_ray_intersection_sphere_at_two_points() {
@@ -163,5 +167,45 @@ mod tests_sphere {
         let xs = sphere.intersect(ray);
 
         assert_eq!(xs.data.len(), 0);
+    }
+
+    #[test]
+    fn the_normal_on_a_sphere_at_a_point_on_the_x_axis() {
+        let sphere = Sphere::new(Tuple::point(0., 0., 0.));
+        let normal = sphere.normal(Tuple::point(1., 0., 0.));
+
+        assert_equivalent!(normal, Tuple::vector(1., 0., 0.));
+    }
+
+    #[test]
+    fn the_normal_on_a_sphere_at_a_point_on_the_y_axis() {
+        let sphere = Sphere::new(Tuple::point(0., 0., 0.));
+        let normal = sphere.normal(Tuple::point(0., 1., 0.));
+
+        assert_equivalent!(normal, Tuple::vector(0., 1., 0.));
+    }
+
+    #[test]
+    fn the_normal_on_a_sphere_at_a_point_on_the_z_axis() {
+        let sphere = Sphere::new(Tuple::point(0., 0., 0.));
+        let normal = sphere.normal(Tuple::point(0., 0., 1.));
+
+        assert_equivalent!(normal, Tuple::vector(0., 0., 1.));
+    }
+
+    #[test]
+    fn the_normal_on_a_sphere_at_a_nonaxial_point() {
+        let sphere = Sphere::new(Tuple::point(0., 0., 0.));
+        let normal = sphere.normal(Tuple::point((3. as f64).sqrt() / 3., (3. as f64).sqrt() / 3., (3. as f64).sqrt() / 3.));
+
+        assert_equivalent!(normal, Tuple::vector((3. as f64).sqrt() / 3., (3. as f64).sqrt() / 3., (3. as f64).sqrt() / 3.));
+    }
+
+    #[test]
+    fn the_normal_is_a_normalized_vector() {
+        let sphere = Sphere::new(Tuple::point(0., 0., 0.));
+        let normal = sphere.normal(Tuple::point((3. as f64).sqrt() / 3., (3. as f64).sqrt() / 3., (3. as f64).sqrt() / 3.));
+
+        assert_equivalent!(normal, normal.normalize());
     }
 }
