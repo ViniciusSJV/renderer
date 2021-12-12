@@ -24,3 +24,21 @@ impl Intersectable for Object {
         }
     }
 }
+
+#[cfg(test)]
+mod tests_object {
+    use crate::intersection::Intersection;
+    use crate::object::Object;
+    use crate::sphere::Sphere;
+    use crate::Tuple;
+
+    #[test]
+    pub fn an_intersection_encapsulate_t_and_object() {
+        let sphere = Sphere::new(Tuple::point(0., 0., 0.));
+        let object = Object::from(sphere);
+        let intersect = Intersection::new(3.5, object);
+
+        assert_eq!(intersect.t, 3.5);
+        assert_eq!(intersect.object, Object::from(sphere));
+    }
+}

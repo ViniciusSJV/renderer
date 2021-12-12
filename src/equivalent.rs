@@ -31,7 +31,7 @@ macro_rules! assert_equivalent {
 }
 
 #[macro_export]
-macro_rules! assert_fuzzy_ne {
+macro_rules! not_equivalent {
   ($left:expr, $right:expr $(,)?) => {{
     match (&$left, $right) {
       (left_val, right_val) => {

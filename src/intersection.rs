@@ -18,18 +18,18 @@ pub struct Intersections {
 }
 
 impl Intersections {
-    pub fn new(intersections: Vec<Intersection>) -> Self {
-        Intersections { data: intersections}
+    pub fn new(mut intersections: Vec<Intersection>) -> Self {
+        intersections.sort_unstable_by(|a, b| a.t.partial_cmp(&b.t).unwrap());
+        Intersections { data: intersections }
     }
 
     pub fn hit(&self) -> Option<Intersection> {
-        let mut hit = None;
         for intersection in self.data.iter() {
             if intersection.t > 0.0 {
-                hit = Some(*intersection);
+                return Some(*intersection);
             }
         }
-        hit
+        None
     }
 }
 
@@ -39,16 +39,6 @@ mod tests_intersection {
     use crate::ray::Ray;
     use crate::sphere::Sphere;
     use crate::Tuple;
-
-    #[test]
-    pub fn an_intersection_encapsulate_t_and_object() {
-        let sphere = Sphere::new(Tuple::point(0., 0., 0.));
-        let object = Object::from(sphere);
-        let intersect = Intersection::new(3.5,  object);
-
-        assert_eq!(intersect.t, 3.5);
-        assert_eq!(intersect.object, Object::from(sphere));
-    }
 
     #[test]
     pub fn aggregating_intersection() {
