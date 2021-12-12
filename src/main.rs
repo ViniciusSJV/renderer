@@ -6,6 +6,10 @@ mod tuple;
 mod color;
 mod canvas;
 mod matrix;
+mod ray;
+mod sphere;
+mod intersection;
+mod object;
 
 use crate::canvas::Canvas;
 use crate::color::Color;
@@ -67,7 +71,7 @@ fn cap1_cap2() {
         Tuple::vector(-0.01, 0.0, 0.0)
     );
 
-    let projectile = Object::object(
+    let projectile = ObjectWorld::object(
         Tuple::vector(0.0, 1.0, 0.0),
         Tuple::vector(1.0, 1.8, 0.0).normalize() * 11.25
     );
@@ -90,14 +94,14 @@ pub struct World {
 }
 
 #[derive(Debug)]
-pub struct Object {
+pub struct ObjectWorld {
     position: Tuple,
     velocity: Tuple,
 }
 
-impl Object {
+impl ObjectWorld {
     pub fn object(position: Tuple, velocity: Tuple) -> Self{
-        Object{ position, velocity }
+        ObjectWorld{ position, velocity }
     }
 }
 
@@ -107,8 +111,8 @@ impl World {
     }
 }
 
-pub fn tick (world: &World, object: &Object) -> Object{
-    Object::object(
+pub fn tick (world: &World, object: &ObjectWorld) -> ObjectWorld{
+    ObjectWorld::object(
         object.position + object.velocity,
         object.velocity + world.gravity + world.wind
     )
