@@ -1,15 +1,17 @@
 use crate::ray::Ray;
 use crate::{Matrix, Tuple};
 use crate::intersection::{Intersection, Intersections};
+use crate::materials::Material;
 use crate::object::Object;
 
 #[derive(Debug, PartialEq, Clone, Copy)]
-pub struct Sphere { pub origin: Tuple, pub transform: Matrix<4>}
+pub struct Sphere { pub origin: Tuple, pub material: Material, pub transform: Matrix<4>}
 
 impl Sphere {
     pub fn new(origin: Tuple) -> Self {
         let transform = Matrix::identity();
-        Sphere { origin, transform }
+        let material = Material::phong();
+        Sphere { origin, material, transform }
     }
 
     pub fn set_transform(&mut self, transform: Matrix<4>) {
@@ -42,8 +44,8 @@ impl Sphere {
             let t1 = (-b - discriminant.sqrt()) / (2. * a);
             let t2 = (-b + discriminant.sqrt()) / (2. * a);
             Intersections::new(vec![
-                Intersection::new(t1, Object::from(*self)),
-                Intersection::new(t2, Object::from(*self))
+                Intersection::new(t1, Object::from(*self), ray),
+                Intersection::new(t2, Object::from(*self), ray)
             ])
         }
     }
@@ -54,6 +56,7 @@ mod tests_sphere {
     use std::f64::consts::PI;
     use crate::assert_equivalent;
     use crate::equivalent::Equivalence;
+    use crate::materials::Material;
     use super::*;
 
     #[test]
@@ -238,5 +241,23 @@ mod tests_sphere {
         let normal = sphere.normal_at(Tuple::point(0., (2. as f64).sqrt() / 2., -(2. as f64).sqrt() / 2.));
 
         assert_equivalent!(normal, Tuple::vector(0., 0.97014, -0.24254));
+    }
+
+    #[test]
+    fn a_sphere_has_default_material() {
+        let sphere = Sphere::new(Tuple::point(0., 0., 0.));
+
+        assert_eq!(sphere.material, Material::phong());
+    }
+
+    #[test]
+    fn a_sphere_may_be_assigned_a_material() {
+        let mut sphere = Sphere::new(Tuple::point(0., 0., 0.));
+        let mut material = Material::phong();
+        material.ambient = 1.;
+
+        sphere.material = material;
+
+        assert_eq!(sphere.material, material);
     }
 }

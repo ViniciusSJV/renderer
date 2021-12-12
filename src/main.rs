@@ -10,10 +10,15 @@ mod ray;
 mod sphere;
 mod intersection;
 mod object;
+mod lights;
+mod materials;
 
 use crate::canvas::Canvas;
 use crate::color::Color;
+use crate::intersection::Intersection;
+use crate::lights::Light;
 use crate::matrix::{Matrix};
+use crate::object::Object;
 use crate::ray::Ray;
 use crate::sphere::Sphere;
 use crate::tuple::Tuple;
@@ -23,6 +28,53 @@ fn main() {
     cap3();
     cap4();
     cap5();
+    cap6();
+}
+
+fn cap6() {
+    let wall_z = 10.;
+    let wall_size = 7.;
+    let canvas_pixel = 500;
+    let pixel_size = wall_size / (canvas_pixel as f64);
+    let half = wall_size / 2.;
+
+    let mut canvas = Canvas::new(canvas_pixel, canvas_pixel);
+
+    let mut sphere = Sphere::new(Tuple::point(0., 0., 0.));
+    sphere.material.color = Color::new(1., 0.2, 1.);
+    let ray_origin = Tuple::point(0., 0., -5.);
+
+    let light = Light::point_light(
+        Tuple::point(-10., 10., -10.),
+        Color::white()
+    );
+
+    for y in 0..canvas_pixel {
+        let world_y = half - pixel_size * (y as f64);
+        for x in 0..canvas_pixel {
+            let world_x = -half + pixel_size * (x as f64);
+
+            let position = Tuple::point(world_x, world_y, wall_z);
+
+            let ray = Ray::new(ray_origin, (position - ray_origin).normalize());
+
+            let xs = sphere.intersect(ray);
+
+            if xs.hit() != None {
+                let hit = xs.hit().unwrap();
+
+                let point = hit.ray.position(hit.t);
+                let normal = hit.object.normal_at(point);
+                let eye = -hit.ray.direction;
+
+                let color = hit.object.material().lighting(light, point, eye, normal);
+                canvas.set_pixel_color(x, y, color);
+            }
+        }
+    }
+
+    let ppm = canvas.to_ppm();
+    write("./result-4.ppm", ppm).expect("Error.")
 }
 
 fn cap5() {
@@ -58,13 +110,11 @@ fn cap5() {
 
     let ppm = canvas.to_ppm();
     write("./result-3.ppm", ppm).expect("Error.")
-
-
 }
 
 fn cap4() {
     let mut canvas = Canvas::new(1000, 1000);
-    let color_white = Color::new(1., 1., 1.);
+    let color_white = Color::white();
 
     let origin = Tuple::point(1000./2., 1000./2., 0.);
     let transf_origin = Matrix::translation(origin);

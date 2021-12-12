@@ -17,6 +17,10 @@ impl Color {
         Color::new(0.0, 0.0, 0.0)
     }
 
+    pub fn white() -> Self {
+        Color::new(1.0, 1.0, 1.0)
+    }
+
     pub fn clamp(&self, lower_bound: f64, upper_bound: f64) -> Color {
         Color::new(
             self.red.min(upper_bound).max(lower_bound),

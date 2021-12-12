@@ -1,14 +1,16 @@
 use crate::object::Object;
+use crate::Ray;
 
-#[derive(Debug, PartialEq, Copy, Clone)]
+#[derive(PartialEq, Copy, Clone, Debug)]
 pub struct Intersection {
     pub t: f64,
+    pub ray: Ray,
     pub object: Object
 }
 
 impl Intersection {
-    pub fn new(t: f64, object: Object) -> Self {
-        Intersection { t, object }
+    pub fn new(t: f64, object: Object, ray: Ray) -> Self {
+        Intersection { t, ray, object }
     }
 }
 
@@ -44,8 +46,10 @@ mod tests_intersection {
     pub fn aggregating_intersection() {
         let sphere = Sphere::new(Tuple::point(0., 0., 0.));
 
-        let intersect1 = Intersection::new(1.,  Object::from(sphere));
-        let intersect2 = Intersection::new(2.,  Object::from(sphere));
+        let ray = Ray::new(Tuple::point(1.0, 1.0, 1.0), Tuple::vector(0.0, 0.0, 1.0));
+
+        let intersect1 = Intersection::new(1.,  Object::from(sphere), ray);
+        let intersect2 = Intersection::new(2.,  Object::from(sphere), ray);
 
         let intersections = Intersections::new(vec![intersect1, intersect2]);
 
@@ -69,8 +73,10 @@ mod tests_intersection {
     fn the_hit_when_all_intersection_have_positive_t() {
         let sphere = Sphere::new(Tuple::point(0., 0., 0.));
 
-        let intersect1 = Intersection::new(1.,  Object::from(sphere));
-        let intersect2 = Intersection::new(2.,  Object::from(sphere));
+        let ray = Ray::new(Tuple::point(1.0, 1.0, 1.0), Tuple::vector(0.0, 0.0, 1.0));
+
+        let intersect1 = Intersection::new(1.,  Object::from(sphere), ray);
+        let intersect2 = Intersection::new(2.,  Object::from(sphere), ray);
 
         let intersections = Intersections::new(vec![intersect2, intersect1]);
 
@@ -81,8 +87,10 @@ mod tests_intersection {
     fn the_hit_when_some_intersection_have_negative_t() {
         let sphere = Sphere::new(Tuple::point(0., 0., 0.));
 
-        let intersect1 = Intersection::new(-1.,  Object::from(sphere));
-        let intersect2 = Intersection::new(1.,  Object::from(sphere));
+        let ray = Ray::new(Tuple::point(1.0, 1.0, 1.0), Tuple::vector(0.0, 0.0, 1.0));
+
+        let intersect1 = Intersection::new(-1.,  Object::from(sphere), ray);
+        let intersect2 = Intersection::new(1.,  Object::from(sphere), ray);
 
         let intersections = Intersections::new(vec![intersect2, intersect1]);
 
@@ -93,8 +101,10 @@ mod tests_intersection {
     fn the_hit_when_all_intersection_have_negative_t() {
         let sphere = Sphere::new(Tuple::point(0., 0., 0.));
 
-        let intersect1 = Intersection::new(-2.,  Object::from(sphere));
-        let intersect2 = Intersection::new(-1.,  Object::from(sphere));
+        let ray = Ray::new(Tuple::point(1.0, 1.0, 1.0), Tuple::vector(0.0, 0.0, 1.0));
+
+        let intersect1 = Intersection::new(-2.,  Object::from(sphere), ray);
+        let intersect2 = Intersection::new(-1.,  Object::from(sphere), ray);
 
         let intersections = Intersections::new(vec![intersect2, intersect1]);
 
@@ -105,10 +115,12 @@ mod tests_intersection {
     fn the_hit_is_always_the_have_lowest_nonnegative_intersection() {
         let sphere = Sphere::new(Tuple::point(0., 0., 0.));
 
-        let intersect1 = Intersection::new(5.,  Object::from(sphere));
-        let intersect2 = Intersection::new(7.,  Object::from(sphere));
-        let intersect3 = Intersection::new(-3.,  Object::from(sphere));
-        let intersect4 = Intersection::new(2.,  Object::from(sphere));
+        let ray = Ray::new(Tuple::point(1.0, 1.0, 1.0), Tuple::vector(0.0, 0.0, 1.0));
+
+        let intersect1 = Intersection::new(5.,  Object::from(sphere), ray);
+        let intersect2 = Intersection::new(7.,  Object::from(sphere), ray);
+        let intersect3 = Intersection::new(-3.,  Object::from(sphere), ray);
+        let intersect4 = Intersection::new(2.,  Object::from(sphere), ray);
 
         let intersections = Intersections::new(vec![intersect1, intersect2, intersect3, intersect4]);
 
