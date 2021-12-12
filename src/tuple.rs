@@ -29,6 +29,13 @@ impl Tuple {
     pub fn is_point(&self) -> bool {
         self.w.equivalent(1.0)
     }
+
+    pub fn reflect(&self, normal: Tuple) -> Tuple {
+        if !normal.is_vector() {
+            panic!("Invalid args. normal = Tuple::vector");
+        }
+        *self - normal * 2. * self.dot(normal)
+    }
 }
 
 impl Equivalence<Tuple> for Tuple {
@@ -316,5 +323,25 @@ mod tests_tuple {
 
         assert!(vector_1.is_vector());
         assert!(vector_2.is_vector());
+    }
+
+    #[test]
+    fn reflecting_a_vector_approaching_af_45_deg() {
+        let v = Tuple::vector(1., -1., 0.);
+        let n = Tuple::vector(0., 1., 0.);
+
+        let r = v.reflect(n);
+
+        assert_equivalent!(r, Tuple::vector(1., 1., 0.));
+    }
+
+    #[test]
+    fn reflecting_a_vector_off_a_slanted_surface() {
+        let v = Tuple::vector(0., -1., 0.);
+        let n = Tuple::vector((2. as f64).sqrt() / 2., (2. as f64).sqrt() / 2., 0.);
+
+        let r = v.reflect(n);
+
+        assert_equivalent!(r, Tuple::vector(1., 0., 0.));
     }
 }
