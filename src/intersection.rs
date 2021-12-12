@@ -1,14 +1,14 @@
 use crate::object::Object;
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Copy, Clone)]
 pub struct Intersection {
     pub t: f64,
     pub object: Object
 }
 
 impl Intersection {
-    pub fn new(t: f64, object: Object) -> Self{
-        Intersection {t, object}
+    pub fn new(t: f64, object: Object) -> Self {
+        Intersection { t, object }
     }
 }
 
@@ -20,6 +20,16 @@ pub struct Intersections {
 impl Intersections {
     pub fn new(intersections: Vec<Intersection>) -> Self {
         Intersections { data: intersections}
+    }
+
+    pub fn hit(&self) -> Option<Intersection> {
+        let mut hit = None;
+        for intersection in self.data.iter() {
+            if intersection.t > 0.0 {
+                hit = Some(*intersection);
+            }
+        }
+        hit
     }
 }
 
@@ -63,5 +73,55 @@ mod tests_intersection {
         assert_eq!(xs.data.len(), 2);
         assert_eq!(xs.data[0].object, Object::from(sphere));
         assert_eq!(xs.data[1].object, Object::from(sphere));
+    }
+
+    #[test]
+    fn the_hit_when_all_intersection_have_positive_t() {
+        let sphere = Sphere::new(Tuple::point(0., 0., 0.));
+
+        let intersect1 = Intersection::new(1.,  Object::from(sphere));
+        let intersect2 = Intersection::new(2.,  Object::from(sphere));
+
+        let intersections = Intersections::new(vec![intersect2, intersect1]);
+
+        assert_eq!(intersections.hit(), Some(intersect1));
+    }
+
+    #[test]
+    fn the_hit_when_some_intersection_have_negative_t() {
+        let sphere = Sphere::new(Tuple::point(0., 0., 0.));
+
+        let intersect1 = Intersection::new(-1.,  Object::from(sphere));
+        let intersect2 = Intersection::new(1.,  Object::from(sphere));
+
+        let intersections = Intersections::new(vec![intersect2, intersect1]);
+
+        assert_eq!(intersections.hit(), Some(intersect2));
+    }
+
+    #[test]
+    fn the_hit_when_all_intersection_have_negative_t() {
+        let sphere = Sphere::new(Tuple::point(0., 0., 0.));
+
+        let intersect1 = Intersection::new(-2.,  Object::from(sphere));
+        let intersect2 = Intersection::new(-1.,  Object::from(sphere));
+
+        let intersections = Intersections::new(vec![intersect2, intersect1]);
+
+        assert_eq!(intersections.hit(), None);
+    }
+
+    #[test]
+    fn the_hit_is_always_the_have_lowest_nonnegative_intersection() {
+        let sphere = Sphere::new(Tuple::point(0., 0., 0.));
+
+        let intersect1 = Intersection::new(5.,  Object::from(sphere));
+        let intersect2 = Intersection::new(7.,  Object::from(sphere));
+        let intersect3 = Intersection::new(-3.,  Object::from(sphere));
+        let intersect4 = Intersection::new(2.,  Object::from(sphere));
+
+        let intersections = Intersections::new(vec![intersect1, intersect2, intersect3, intersect4]);
+
+        assert_eq!(intersections.hit(), Some(intersect4));
     }
 }
