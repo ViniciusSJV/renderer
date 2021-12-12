@@ -1,7 +1,7 @@
 use crate::intersection::Intersections;
 use crate::ray::Ray;
 use crate::sphere::Sphere;
-use crate::{Intersection, Matrix, Tuple};
+use crate::{Matrix, Tuple};
 use crate::materials::Material;
 
 #[derive(Debug, PartialEq, Clone, Copy)]

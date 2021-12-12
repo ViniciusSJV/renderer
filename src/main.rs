@@ -15,10 +15,8 @@ mod materials;
 
 use crate::canvas::Canvas;
 use crate::color::Color;
-use crate::intersection::Intersection;
 use crate::lights::Light;
 use crate::matrix::{Matrix};
-use crate::object::Object;
 use crate::ray::Ray;
 use crate::sphere::Sphere;
 use crate::tuple::Tuple;
