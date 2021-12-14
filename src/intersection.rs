@@ -182,12 +182,12 @@ mod tests_intersection {
         let s = Object::from(Sphere::default());
         let i = Intersection::new(4., s, ray);
 
-        let comsps = i.prepare_computations();
+        let compss = i.prepare_computations();
 
-        assert_eq!(comsps.t, i.t);
-        assert_eq!(comsps.point, Tuple::point(0., 0., -1.));
-        assert_eq!(comsps.eye_v, Tuple::vector(0., 0., -1.));
-        assert_eq!(comsps.normal_v, Tuple::vector(0., 0., -1.));
+        assert_eq!(compss.t, i.t);
+        assert_eq!(compss.point, Tuple::point(0., 0., -1.));
+        assert_eq!(compss.eye_v, Tuple::vector(0., 0., -1.));
+        assert_eq!(compss.normal_v, Tuple::vector(0., 0., -1.));
     }
 
     #[test]
@@ -197,8 +197,8 @@ mod tests_intersection {
         let s = Object::from(Sphere::default());
         let i = Intersection::new(4., s, ray);
 
-        let comsps = i.prepare_computations();
+        let compss = i.prepare_computations();
 
-        assert!(!comsps.inside);
+        assert!(!compss.inside);
     }
 }

@@ -23,10 +23,10 @@ impl World {
         Intersections::new(xs)
     }
 
-    pub fn shade_hit(self, comsp: Computations) -> Color {
+    pub fn shade_hit(self, comps: Computations) -> Color {
         let mut final_color = Color::black();
         for &light in self.lights.iter() {
-            let color = comsp.object.material().lighting(light, comsp.point, comsp.eye_v, comsp.normal_v);
+            let color = comps.object.material().lighting(light, comps.point, comps.eye_v, comps.normal_v);
             final_color = final_color + color;
         }
         final_color
@@ -36,8 +36,8 @@ impl World {
         let xs = self.intersect_world(ray);
         if xs.hit() != None {
             let hit = xs.hit().unwrap();
-            let c = hit.prepare_computations();
-            self.shade_hit(c)
+            let comps = hit.prepare_computations();
+            self.shade_hit(comps)
         } else {
             Color::black()
         }
@@ -146,8 +146,8 @@ mod tests_world {
         let s = w.objects[0];
         let i =  Intersection::new(4., s, ray);
 
-        let comsp = i.prepare_computations();
-        let color = w.shade_hit(comsp);
+        let comps = i.prepare_computations();
+        let color = w.shade_hit(comps);
 
         assert_equivalent!(color, Color::new(0.38066, 0.47583, 0.2855));
     }
@@ -161,8 +161,8 @@ mod tests_world {
         let s = w.objects[1];
         let i =  Intersection::new(0.5, s, ray);
 
-        let comsp = i.prepare_computations();
-        let color = w.shade_hit(comsp);
+        let comps = i.prepare_computations();
+        let color = w.shade_hit(comps);
 
         assert_equivalent!(color, Color::new(0.90498, 0.90498, 0.90498));
     }
