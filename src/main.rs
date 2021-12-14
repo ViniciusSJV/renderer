@@ -16,6 +16,7 @@ mod intersection;
 mod object;
 mod lights;
 mod materials;
+mod world;
 
 use crate::canvas::Canvas;
 use crate::color::Color;

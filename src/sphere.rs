@@ -14,6 +14,10 @@ impl Sphere {
         Sphere { origin, material, transform }
     }
 
+    pub fn set_material(&mut self, material: Material) {
+        self.material = material
+    }
+
     pub fn set_transform(&mut self, transform: Matrix<4>) {
         self.transform = transform
     }
@@ -48,6 +52,12 @@ impl Sphere {
                 Intersection::new(t2, Object::from(*self), ray)
             ])
         }
+    }
+}
+
+impl Default for Sphere {
+    fn default() -> Self {
+        Sphere::new(Tuple::point(0., 0., 0.))
     }
 }
 
