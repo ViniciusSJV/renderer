@@ -5,32 +5,19 @@ use itertools::Itertools;
 use rayon::prelude::*;
 use std::sync::Mutex;
 
-mod equivalent;
-mod tuple;
-mod color;
-mod canvas;
-mod matrix;
-mod ray;
-mod sphere;
-mod intersection;
-mod object;
-mod lights;
-mod materials;
-mod world;
-
-use crate::canvas::Canvas;
-use crate::color::Color;
-use crate::lights::Light;
-use crate::matrix::{Matrix};
-use crate::ray::Ray;
-use crate::sphere::Sphere;
-use crate::tuple::Tuple;
+use renderer::canvas::Canvas;
+use renderer::color::Color;
+use renderer::lights::Light;
+use renderer::matrix::{Matrix};
+use renderer::ray::Ray;
+use renderer::sphere::Sphere;
+use renderer::tuple::Tuple;
 
 fn main() {
-    //cap1_cap2();
-    //cap3();
-    //cap4();
-    //cap5();
+    cap1_cap2();
+    cap3();
+    cap4();
+    cap5();
     cap6();
 }
 

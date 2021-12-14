@@ -1,4 +1,4 @@
-const EPSILON: f64 = 0.00001;
+use crate::EPSILON;
 
 pub trait Equivalence<T: Clone> {
     fn equivalent(&self, other: T) -> bool;

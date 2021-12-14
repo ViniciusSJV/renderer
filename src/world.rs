@@ -1,4 +1,4 @@
-use crate::Light;
+use crate::lights::Light;
 use crate::object::Object;
 
 #[derive(Debug, PartialEq, Clone)]
@@ -24,9 +24,13 @@ impl Default for World {
 
 #[cfg(test)]
 mod tests_world {
-    use crate::{Color, Light, Matrix, Sphere, Tuple};
+    use crate::color::Color;
+    use crate::lights::Light;
     use crate::materials::Material;
+    use crate::matrix::Matrix;
     use crate::object::Object;
+    use crate::sphere::Sphere;
+    use crate::tuple::Tuple;
     use crate::world::World;
 
     fn create_default_world() -> World {

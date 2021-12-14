@@ -1,5 +1,6 @@
-use crate::{Color, Tuple};
+use crate::color::Color;
 use crate::lights::Light;
+use crate::tuple::Tuple;
 
 #[derive(Debug, PartialEq, Clone, Copy)]
 pub struct Material {
@@ -56,7 +57,7 @@ impl Material {
 
 #[cfg(test)]
 mod tests_lights {
-    use crate::{assert_equivalent, Tuple};
+    use crate::assert_equivalent;
     use crate::equivalent::Equivalence;
     use crate::lights::Light;
     use super::*;

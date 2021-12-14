@@ -1,8 +1,9 @@
 use crate::ray::Ray;
-use crate::{Matrix, Tuple};
 use crate::intersection::{Intersection, Intersections};
 use crate::materials::Material;
+use crate::matrix::Matrix;
 use crate::object::Object;
+use crate::tuple::Tuple;
 
 #[derive(Debug, PartialEq, Clone, Copy)]
 pub struct Sphere { pub origin: Tuple, pub material: Material, pub transform: Matrix<4>}
@@ -64,6 +65,7 @@ impl Default for Sphere {
 #[cfg(test)]
 mod tests_sphere {
     use std::f64::consts::PI;
+    use std::f64::consts::FRAC_1_SQRT_2;
     use crate::assert_equivalent;
     use crate::equivalent::Equivalence;
     use crate::materials::Material;
@@ -235,7 +237,7 @@ mod tests_sphere {
         let mut sphere = Sphere::new(Tuple::point(0., 0., 0.));
         sphere.set_transform(Matrix::translation(Tuple::vector(0., 1., 0.)));
 
-        let normal = sphere.normal_at(Tuple::point(0., 1.70711, -0.70711));
+        let normal = sphere.normal_at(Tuple::point(0., 1.70711, -FRAC_1_SQRT_2));
 
         assert_equivalent!(normal, Tuple::vector(0., 0.70711, -0.70711));
     }

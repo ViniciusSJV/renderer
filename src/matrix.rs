@@ -1,7 +1,7 @@
 use std::ops;
 
 use crate::equivalent::*;
-use crate::Tuple;
+use crate::tuple::Tuple;
 
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub struct Matrix<const D: usize> {

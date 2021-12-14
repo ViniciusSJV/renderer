@@ -1,4 +1,5 @@
-use crate::{Matrix, Tuple};
+use crate::matrix::Matrix;
+use crate::tuple::Tuple;
 
 #[derive(PartialEq, Clone, Copy, Debug)]
 pub struct Ray {
@@ -18,7 +19,7 @@ impl Ray {
         self.origin + self.direction * t
     }
 
-    pub fn set_transform(&self, m: Matrix<4>) -> Self {
+    pub fn set_transform(self, m: Matrix<4>) -> Self {
         Ray {
             origin: m * self.origin,
             direction: m * self.direction,
@@ -28,9 +29,11 @@ impl Ray {
 
 #[cfg(test)]
 mod tests_ray {
+    use crate::assert_equivalent;
     use crate::ray::Ray;
-    use crate::{assert_equivalent, Matrix, Tuple};
     use crate::equivalent::Equivalence;
+    use crate::matrix::Matrix;
+    use crate::tuple::Tuple;
 
     #[test]
     fn creating_and_querying_a_ray() {

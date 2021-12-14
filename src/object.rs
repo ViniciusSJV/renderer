@@ -1,8 +1,9 @@
 use crate::intersection::Intersections;
 use crate::ray::Ray;
 use crate::sphere::Sphere;
-use crate::{Matrix, Tuple};
 use crate::materials::Material;
+use crate::matrix::Matrix;
+use crate::tuple::Tuple;
 
 #[derive(Debug, PartialEq, Clone, Copy)]
 pub enum Object {
@@ -46,7 +47,8 @@ mod tests_object {
     use crate::intersection::Intersection;
     use crate::object::Object;
     use crate::sphere::Sphere;
-    use crate::{Ray, Tuple};
+    use crate::ray::Ray;
+    use crate::tuple::Tuple;
 
     #[test]
     pub fn an_intersection_encapsulate_t_and_object() {

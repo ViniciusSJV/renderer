@@ -1,5 +1,5 @@
 use crate::object::Object;
-use crate::Ray;
+use crate::ray::Ray;
 
 #[derive(PartialEq, Copy, Clone, Debug)]
 pub struct Intersection {
@@ -40,7 +40,7 @@ mod tests_intersection {
     use crate::intersection::{Intersection, Intersections, Object};
     use crate::ray::Ray;
     use crate::sphere::Sphere;
-    use crate::Tuple;
+    use crate::tuple::Tuple;
 
     #[test]
     pub fn aggregating_intersection() {
