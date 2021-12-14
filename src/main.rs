@@ -1,6 +1,10 @@
 use std::f64::consts::{PI, TAU};
 use std::fs::write;
 
+use itertools::Itertools;
+use rayon::prelude::*;
+use std::sync::Mutex;
+
 mod equivalent;
 mod tuple;
 mod color;
@@ -22,10 +26,10 @@ use crate::sphere::Sphere;
 use crate::tuple::Tuple;
 
 fn main() {
-    cap1_cap2();
-    cap3();
-    cap4();
-    cap5();
+    //cap1_cap2();
+    //cap3();
+    //cap4();
+    //cap5();
     cap6();
 }
 
@@ -36,7 +40,7 @@ fn cap6() {
     let pixel_size = wall_size / (canvas_pixel as f64);
     let half = wall_size / 2.;
 
-    let mut canvas = Canvas::new(canvas_pixel, canvas_pixel);
+    let canvas_mutex = Mutex::new(Canvas::new(canvas_pixel, canvas_pixel));
 
     let mut sphere = Sphere::new(Tuple::point(0., 0., 0.));
     sphere.material.color = Color::new(1., 0.2, 1.);
@@ -47,30 +51,34 @@ fn cap6() {
         Color::white()
     );
 
-    for y in 0..canvas_pixel {
+    (0..canvas_pixel)
+    .cartesian_product(0..canvas_pixel)
+    .par_bridge()
+    .for_each(|(x, y)| {
+        let world_x = -half + pixel_size * (x as f64);
         let world_y = half - pixel_size * (y as f64);
-        for x in 0..canvas_pixel {
-            let world_x = -half + pixel_size * (x as f64);
 
-            let position = Tuple::point(world_x, world_y, wall_z);
+        let position = Tuple::point(world_x, world_y, wall_z);
 
-            let ray = Ray::new(ray_origin, (position - ray_origin).normalize());
+        let ray = Ray::new(ray_origin, (position - ray_origin).normalize());
 
-            let xs = sphere.intersect(ray);
+        let xs = sphere.intersect(ray);
 
-            if xs.hit() != None {
-                let hit = xs.hit().unwrap();
+        if xs.hit() != None {
+            let hit = xs.hit().unwrap();
 
-                let point = hit.ray.position(hit.t);
-                let normal = hit.object.normal_at(point);
-                let eye = -hit.ray.direction;
+            let point = hit.ray.position(hit.t);
+            let normal = hit.object.normal_at(point);
+            let eye = -hit.ray.direction;
 
-                let color = hit.object.material().lighting(light, point, eye, normal);
-                canvas.set_pixel_color(x, y, color);
-            }
+            let color = hit.object.material().lighting(light, point, eye, normal);
+
+            let mut canvas = canvas_mutex.lock().unwrap();
+            canvas.set_pixel_color(x, y, color);
         }
-    }
+    });
 
+    let canvas = canvas_mutex.lock().unwrap();
     let ppm = canvas.to_ppm();
     write("./result-4.ppm", ppm).expect("Error.")
 }
