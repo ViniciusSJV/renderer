@@ -1,5 +1,8 @@
+use crate::color::Color;
+use crate::intersection::{Computations, Intersections};
 use crate::lights::Light;
 use crate::object::Object;
+use crate::ray::Ray;
 
 #[derive(Debug, PartialEq, Clone)]
 pub struct World {
@@ -10,6 +13,34 @@ pub struct World {
 impl World {
     pub fn new(objects: Vec<Object>, lights: Vec<Light>) -> Self {
         World { objects, lights }
+    }
+
+    pub fn intersect_world(&self, ray: Ray) -> Intersections {
+        let mut xs = vec![];
+        for object in self.objects.iter() {
+            xs.extend(object.intersect(ray));
+        }
+        Intersections::new(xs)
+    }
+
+    pub fn shade_hit(self, comsp: Computations) -> Color {
+        let mut final_color = Color::black();
+        for &light in self.lights.iter() {
+            let color = comsp.object.material().lighting(light, comsp.point, comsp.eye_v, comsp.normal_v);
+            final_color = final_color + color;
+        }
+        final_color
+    }
+
+    pub fn color_at(self, ray: Ray) -> Color {
+        let xs = self.intersect_world(ray);
+        if xs.hit() != None {
+            let hit = xs.hit().unwrap();
+            let c = hit.prepare_computations();
+            self.shade_hit(c)
+        } else {
+            Color::black()
+        }
     }
 }
 
@@ -24,11 +55,15 @@ impl Default for World {
 
 #[cfg(test)]
 mod tests_world {
+    use crate::assert_equivalent;
+    use crate::equivalent::*;
     use crate::color::Color;
+    use crate::intersection::Intersection;
     use crate::lights::Light;
     use crate::materials::Material;
     use crate::matrix::Matrix;
     use crate::object::Object;
+    use crate::ray::Ray;
     use crate::sphere::Sphere;
     use crate::tuple::Tuple;
     use crate::world::World;
@@ -81,12 +116,63 @@ mod tests_world {
 
         let world = create_default_world();
 
-        assert_eq!(2, world.objects.len());
-        assert_eq!(1, world.lights.len());
+        assert_eq!(world.objects.len(), 2);
+        assert_eq!(world.lights.len(), 1);
 
         assert!(world.objects.contains(&s1));
         assert!(world.objects.contains(&s2));
 
         assert!(world.lights.contains(&light));
+    }
+
+    #[test]
+    fn intersect_a_world_with_a_ray() {
+        let w = create_default_world();
+        let ray = Ray::new(Tuple::point(0., 0., -5.), Tuple::vector(0., 0., 1.));
+
+        let xs = w.intersect_world(ray);
+
+        assert_eq!(xs.data.len(), 4);
+        assert_eq!(xs.data[0].t, 4.);
+        assert_eq!(xs.data[1].t, 4.5);
+        assert_eq!(xs.data[2].t, 5.5);
+        assert_eq!(xs.data[3].t, 6.);
+    }
+
+    #[test]
+    fn shading_an_intersection() {
+        let w = create_default_world();
+        let ray = Ray::new(Tuple::point(0., 0., -5.), Tuple::vector(0., 0., 1.));
+        let s = w.objects[0];
+        let i =  Intersection::new(4., s, ray);
+
+        let comsp = i.prepare_computations();
+        let color = w.shade_hit(comsp);
+
+        assert_equivalent!(color, Color::new(0.38066, 0.47583, 0.2855));
+    }
+
+    #[test]
+    fn shading_an_intersection_from_the_inside() {
+        let mut w = create_default_world();
+        w.lights[0] = Light::point_light(Tuple::point(0., 0.25, 0.), Color::new(1., 1., 1.));
+
+        let ray = Ray::new(Tuple::point(0., 0., 0.), Tuple::vector(0., 0., 1.));
+        let s = w.objects[1];
+        let i =  Intersection::new(0.5, s, ray);
+
+        let comsp = i.prepare_computations();
+        let color = w.shade_hit(comsp);
+
+        assert_equivalent!(color, Color::new(0.90498, 0.90498, 0.90498));
+    }
+
+    #[test]
+    fn the_color_when_a_ray_missing() {
+        let w = create_default_world();
+        let ray = Ray::new(Tuple::point(0., 0., -5.), Tuple::vector(0., 1., 0.));
+        let color = w.color_at(ray);
+
+        assert_equivalent!(color, Color::new(0., 0., 0.));
     }
 }

@@ -1,5 +1,40 @@
 use crate::object::Object;
 use crate::ray::Ray;
+use crate::tuple::Tuple;
+
+#[derive(PartialEq, Copy, Clone, Debug)]
+pub struct Computations {
+    pub t: f64,
+    pub object: Object,
+    pub point: Tuple,
+    pub eye_v: Tuple,
+    pub normal_v: Tuple,
+    pub inside: bool
+}
+
+impl From<Intersection> for Computations {
+    fn from(intersection: Intersection) -> Self {
+        let t = intersection.t;
+        let object = intersection.object;
+        let point = intersection.ray.position(intersection.t);
+        let eye_v = -intersection.ray.direction;
+        let mut normal_v = intersection.object.normal_at(point);
+        let mut inside = false;
+        if normal_v.dot(eye_v) < 0. {
+            inside = true;
+            normal_v = -normal_v;
+        }
+        Computations {
+            t,
+            object,
+            point,
+            eye_v,
+            normal_v,
+            inside
+        }
+    }
+}
+
 
 #[derive(PartialEq, Copy, Clone, Debug)]
 pub struct Intersection {
@@ -11,6 +46,10 @@ pub struct Intersection {
 impl Intersection {
     pub fn new(t: f64, object: Object, ray: Ray) -> Self {
         Intersection { t, ray, object }
+    }
+
+    pub fn prepare_computations(self) -> Computations {
+        Computations::from(self)
     }
 }
 
@@ -32,6 +71,15 @@ impl Intersections {
             }
         }
         None
+    }
+}
+
+impl IntoIterator for Intersections {
+    type Item = Intersection;
+    type IntoIter = std::vec::IntoIter<Self::Item>;
+
+    fn into_iter(self) -> Self::IntoIter {
+        self.data.into_iter()
     }
 }
 
@@ -125,5 +173,32 @@ mod tests_intersection {
         let intersections = Intersections::new(vec![intersect1, intersect2, intersect3, intersect4]);
 
         assert_eq!(intersections.hit(), Some(intersect4));
+    }
+
+    #[test]
+    fn precomputing_the_state_of_an_intersection() {
+        let ray = Ray::new(Tuple::point(0., 0., -5.), Tuple::vector(0., 0., 1.));
+
+        let s = Object::from(Sphere::default());
+        let i = Intersection::new(4., s, ray);
+
+        let comsps = i.prepare_computations();
+
+        assert_eq!(comsps.t, i.t);
+        assert_eq!(comsps.point, Tuple::point(0., 0., -1.));
+        assert_eq!(comsps.eye_v, Tuple::vector(0., 0., -1.));
+        assert_eq!(comsps.normal_v, Tuple::vector(0., 0., -1.));
+    }
+
+    #[test]
+    fn the_hit_when_an_intersection_occurs_on_the_outside() {
+        let ray = Ray::new(Tuple::point(0., 0., -5.), Tuple::vector(0., 0., 1.));
+
+        let s = Object::from(Sphere::default());
+        let i = Intersection::new(4., s, ray);
+
+        let comsps = i.prepare_computations();
+
+        assert!(!comsps.inside);
     }
 }
