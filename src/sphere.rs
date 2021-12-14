@@ -18,11 +18,11 @@ impl Sphere {
         self.transform = transform
     }
 
-    pub fn normal_at(&self, point: Tuple) -> Tuple {
-        if !point.is_point() {
+    pub fn normal_at(&self, world_point: Tuple) -> Tuple {
+        if !world_point.is_point() {
             panic!("Normal is only to Tuple::point")
         }
-        let object_point = self.transform.inverse() * point;
+        let object_point = self.transform.inverse() * world_point;
         let object_normal = object_point - self.origin;
         let mut world_normal = self.transform.inverse().transpose() * object_normal;
         world_normal.w = 0.;
