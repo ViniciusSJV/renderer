@@ -23,7 +23,7 @@ impl Sphere {
             panic!("Normal is only to Tuple::point")
         }
         let object_point = self.transform.inverse() * point;
-        let object_normal = object_point - Tuple::point(0., 0., 0.);
+        let object_normal = object_point - self.origin;
         let mut world_normal = self.transform.inverse().transpose() * object_normal;
         world_normal.w = 0.;
         world_normal.normalize()
