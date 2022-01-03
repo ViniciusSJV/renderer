@@ -175,4 +175,37 @@ mod tests_world {
 
         assert_equivalent!(color, Color::new(0., 0., 0.));
     }
+
+    #[test]
+    fn the_color_when_a_ray_hits() {
+        let w = create_default_world();
+        let ray = Ray::new(Tuple::point(0., 0., -5.), Tuple::vector(0., 0., 1.));
+        let color = w.color_at(ray);
+
+        assert_equivalent!(color, Color::new(0.38066, 0.47583, 0.2855));
+    }
+
+    #[test]
+    fn the_color_with_an_intersection_behind_the_ray() {
+        let mut w = create_default_world();
+
+        let mut outer: Object = w.objects[0];
+        let mut outer_material = outer.material();
+        outer_material.ambient = 1.;
+        outer.set_material(outer_material);
+
+        let mut inner: Object = w.objects[1];
+        let mut inner_material = inner.material();
+        inner_material.ambient = 1.;
+        inner.set_material(inner_material);
+
+        w.objects[0] = outer;
+        w.objects[1] = inner;
+
+        let ray = Ray::new(Tuple::point(0., 0., 0.75), Tuple::vector(0., 0., -1.));
+
+        let color = w.color_at(ray);
+
+        assert_equivalent!(color, inner.material().color);
+    }
 }

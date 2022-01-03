@@ -129,10 +129,6 @@ impl Tuple {
     }
 
     pub fn cross(&self, other: Self) -> Self {
-        if !self.is_vector() || !other.is_vector() {
-            panic!("Cross product can only be calculated for two vectors.");
-        }
-
         Tuple::vector(
             self.y * other.z - self.z * other.y,
             self.z * other.x - self.x * other.z,

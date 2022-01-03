@@ -42,6 +42,20 @@ impl Object {
     }
 }
 
+impl Object {
+    pub fn set_material(&mut self, material: Material) {
+        match *self {
+            Object::Sphere(ref mut sphere) => sphere.material = material,
+        }
+    }
+
+    pub fn set_transform(&mut self, transform: Matrix<4>) {
+        match *self {
+            Object::Sphere(ref mut sphere) => sphere.transform = transform,
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests_object {
     use crate::intersection::Intersection;
