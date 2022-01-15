@@ -13,3 +13,4 @@ pub mod lights;
 pub mod materials;
 pub mod world;
 pub mod transformations;
+pub mod camera;

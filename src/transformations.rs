@@ -1,7 +1,7 @@
 use crate::matrix::Matrix;
 use crate::tuple::Tuple;
 
-trait Transform {
+pub trait Transform {
     fn view_transform(self, to: Tuple, up: Tuple) -> Matrix<4>;
 }
 
