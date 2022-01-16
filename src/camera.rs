@@ -47,7 +47,7 @@ impl Camera {
         }
     }
 
-    pub fn set_transform(mut self, transform: Matrix<4>) -> Self {
+    pub fn with_transform(mut self, transform: Matrix<4>) -> Self {
         self.transform = transform;
         self
     }
@@ -158,7 +158,7 @@ mod tests_camera {
 
     #[test]
     fn constructing_a_ray_when_the_camera_is_transformed() {
-        let c = Camera::new(201, 101, PI/2.).set_transform(
+        let c = Camera::new(201, 101, PI/2.).with_transform(
             Matrix::rotation_y(PI/4.) * Matrix::translation(Tuple::vector(0., -2., 5.))
         );
 
@@ -195,7 +195,7 @@ mod tests_camera {
         let to  = Tuple::point(0., 0., 0.);
         let up = Tuple::vector(0., 1., 0.);
 
-        let camera = Camera::new(11, 11, PI/2.).set_transform(
+        let camera = Camera::new(11, 11, PI/2.).with_transform(
             from.view_transform(to, up)
         );
 
