@@ -1,4 +1,6 @@
+use std::sync::{Mutex};
 use itertools::Itertools;
+use rayon::iter::{ParallelBridge, ParallelIterator};
 use crate::canvas::Canvas;
 use crate::equivalent::Equivalence;
 use crate::matrix::Matrix;
@@ -66,18 +68,21 @@ impl Camera {
         Ray::new(origin, direction)
     }
 
-    pub fn render(self, world: World) -> Canvas {
-        let mut canvas = Canvas::new(self.horizontal_size, self.vertical_size);
+    pub fn render<'a>(self, world: World) -> Canvas {
+        let canvas_mutex = Mutex::new(Canvas::new(self.horizontal_size, self.vertical_size));
 
         (0..self.horizontal_size)
             .cartesian_product(0..self.vertical_size)
+            .par_bridge()
             .for_each(|(x, y)| {
                 let ray = self.ray_from_pixel(x, y);
-                let color = world.color_at(ray);
+                let color = world.clone().color_at(ray);
 
-                // @FIXME: move occurs because `world` has type `World`, which does not implement the `Copy` trait
+                let mut canvas = canvas_mutex.lock().unwrap();
                 canvas.set_pixel_color(x, y, color);
             });
+
+        let canvas = canvas_mutex.into_inner().unwrap();
         canvas
     }
 }
@@ -186,13 +191,11 @@ mod tests_camera {
     #[test]
     fn rendering_a_world_with_a_camera() {
         let w = create_default_world();
-
-        let c = Camera::new(11, 11, PI/2.);
         let from = Tuple::point(0., 0., -5.);
         let to  = Tuple::point(0., 0., 0.);
         let up = Tuple::vector(0., 1., 0.);
 
-        c.set_transform(
+        let c = Camera::new(11, 11, PI/2.).set_transform(
             from.view_transform(to, up)
         );
 
