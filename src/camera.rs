@@ -70,18 +70,15 @@ impl Camera {
 
     pub fn render(self, world: World) -> Canvas {
         let canvas_mutex = Mutex::new(Canvas::new(self.horizontal_size, self.vertical_size));
-
         (0..self.horizontal_size)
             .cartesian_product(0..self.vertical_size)
             .par_bridge()
             .for_each(|(x, y)| {
                 let ray = self.ray_from_pixel(x, y);
                 let color = world.clone().color_at(ray);
-
                 let mut canvas = canvas_mutex.lock().unwrap();
                 canvas.set_pixel_color(x, y, color);
             });
-
         let canvas = canvas_mutex.into_inner().unwrap();
         canvas
     }
@@ -201,6 +198,6 @@ mod tests_camera {
 
         let canvas = camera.render(world);
 
-        assert_equivalent!(canvas.get_pixel(5, 5), Color::new(0.38066, 0.47583, 0.2855));
+        assert_equivalent!(canvas.get_pixel_color(5, 5), Color::new(0.38066, 0.47583, 0.2855));
     }
 }

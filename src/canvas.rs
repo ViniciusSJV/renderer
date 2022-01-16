@@ -16,7 +16,7 @@ impl Canvas {
         }
     }
 
-    pub fn get_pixel(&self, x: usize, y: usize) -> Color {
+    pub fn get_pixel_color(&self, x: usize, y: usize) -> Color {
         self.pixels[self.get_pixel_index(x, y)]
     }
 
@@ -46,7 +46,7 @@ impl Canvas {
 
         for y in 0..self.height {
             for x in 0..self.width {
-                let pixel = self.get_pixel(x, y);
+                let pixel = self.get_pixel_color(x, y);
                 let clamp_color = pixel.clamp(0.0, 1.0);
 
                 let red: u8 = (clamp_color.red * 255.).round() as u8;
@@ -107,7 +107,7 @@ mod tests_canvas {
 
         for x in 0..canvas.width {
             for y in 0..canvas.height {
-                assert_equivalent!(canvas.get_pixel(x, y), Color::black())
+                assert_equivalent!(canvas.get_pixel_color(x, y), Color::black())
             }
         }
     }
@@ -121,7 +121,7 @@ mod tests_canvas {
 
         let expected_color = Color::new(1.0, 0.0, 0.0);
 
-        assert_equivalent!(expected_color, canvas.get_pixel(2, 3));
+        assert_equivalent!(expected_color, canvas.get_pixel_color(2, 3));
     }
 
     #[test]
