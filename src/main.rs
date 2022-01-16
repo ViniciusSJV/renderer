@@ -83,7 +83,7 @@ fn cap7() {
     let canvas = camera.render(world);
 
     let ppm = canvas.to_ppm();
-    write("./cap7.ppm", ppm).expect("Error.")
+    write("./cap8.ppm", ppm).expect("Error.")
 }
 
 fn cap6() {
@@ -124,7 +124,7 @@ fn cap6() {
             let normal = hit.object.normal_at(point);
             let eye = -hit.ray.direction;
 
-            let color = hit.object.material().lighting(light, point, eye, normal);
+            let color = hit.object.material().lighting(light, point, eye, normal, true);
 
             let mut canvas = canvas_mutex.lock().unwrap();
             canvas.set_pixel_color(x, y, color);

@@ -22,7 +22,7 @@ impl Material {
         }
     }
 
-    pub fn lighting(&self, light: Light, point: Tuple, eye_vector: Tuple, normal_vector: Tuple) -> Color {
+    pub fn lighting(&self, light: Light, point: Tuple, eye_vector: Tuple, normal_vector: Tuple, in_shadow: bool) -> Color {
         if !point.is_point() || !eye_vector.is_vector() || !normal_vector.is_vector() {
             panic!("Invalid args. point = Tuple::point, eye_vector = Tuple::vector, normal_vector = Tuple::vector")
         }
@@ -33,7 +33,11 @@ impl Material {
         let effective_color = self.color * light.intensity;
         let light_vector = (light.position - point).normalize();
 
-        let ambient = effective_color * self.ambient;
+        let ambient_light = effective_color * self.ambient;
+
+        if in_shadow {
+            return ambient_light;
+        }
 
         let light_dot_normal = light_vector.dot(normal_vector);
         if light_dot_normal < 0. {
@@ -51,7 +55,7 @@ impl Material {
                 specular = light.intensity * self.specular * factor;
             }
         }
-        ambient + difuse + specular
+        ambient_light + difuse + specular
     }
 }
 
@@ -86,7 +90,7 @@ mod tests_lights {
             Color::white()
         );
 
-        let result = material.lighting(light, position, eye_vector, normal_v);
+        let result = material.lighting(light, position, eye_vector, normal_v, false);
 
         assert_equivalent!(result, Color::new(1.9, 1.9, 1.9));
     }
@@ -104,7 +108,7 @@ mod tests_lights {
             Color::white()
         );
 
-        let result = material.lighting(light, position, eye_vector, normal_v);
+        let result = material.lighting(light, position, eye_vector, normal_v, false);
 
         assert_equivalent!(result, Color::new(1.0, 1.0, 1.0));
     }
@@ -122,7 +126,7 @@ mod tests_lights {
             Color::white()
         );
 
-        let result = material.lighting(light, position, eye_vector, normal_v);
+        let result = material.lighting(light, position, eye_vector, normal_v, false);
 
         assert_equivalent!(result, Color::new(0.7364, 0.7364, 0.7364));
     }
@@ -140,7 +144,7 @@ mod tests_lights {
             Color::white()
         );
 
-        let result = material.lighting(light, position, eye_vector, normal_v);
+        let result = material.lighting(light, position, eye_vector, normal_v, false);
 
         assert_equivalent!(result, Color::new(1.6364, 1.6364, 1.6364));
     }
@@ -158,8 +162,24 @@ mod tests_lights {
             Color::white()
         );
 
-        let result = material.lighting(light, position, eye_vector, normal_v);
+        let result = material.lighting(light, position, eye_vector, normal_v, false);
 
         assert_equivalent!(result, Color::new(0.1, 0.1, 0.1));
+    }
+
+    #[test]
+    fn lighting_with_the_surface_in_shadow() {
+        let material = Material::phong();
+        let position = Tuple::point(0.,0.,0.);
+
+        let eye_v =Tuple::vector(0., 0., -1.);
+        let normal_v = Tuple::vector(0., 0., -1.);
+
+        let light = Light::point_light(Tuple::point(0., 0., -10.), Color::new(1., 1., 1.));
+        let in_shadow = true;
+
+        let result = material.lighting(light, position, eye_v, normal_v, in_shadow);
+
+        assert_eq!(result, Color::new(0.1, 0.1, 0.1));
     }
 }

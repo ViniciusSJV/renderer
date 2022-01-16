@@ -1,3 +1,4 @@
+use crate::EPSILON;
 use crate::object::Object;
 use crate::ray::Ray;
 use crate::tuple::Tuple;
@@ -7,6 +8,7 @@ pub struct Computations {
     pub t: f64,
     pub object: Object,
     pub point: Tuple,
+    pub over_point: Tuple,
     pub eye_v: Tuple,
     pub normal_v: Tuple,
     pub inside: bool
@@ -28,6 +30,7 @@ impl From<Intersection> for Computations {
             t,
             object,
             point,
+            over_point: point + normal_v * EPSILON,
             eye_v,
             normal_v,
             inside
@@ -85,7 +88,9 @@ impl IntoIterator for Intersections {
 
 #[cfg(test)]
 mod tests_intersection {
+    use crate::EPSILON;
     use crate::intersection::{Intersection, Intersections, Object};
+    use crate::matrix::Matrix;
     use crate::ray::Ray;
     use crate::sphere::Sphere;
     use crate::tuple::Tuple;
@@ -200,5 +205,19 @@ mod tests_intersection {
         let compss = i.prepare_computations();
 
         assert!(!compss.inside);
+    }
+
+    #[test]
+    fn the_hit_should_offset_the_point() {
+        let ray = Ray::new(Tuple::point(0., 0., -5.), Tuple::vector(0., 0., 1.));
+
+        let mut shape = Sphere::default();
+        shape.transform = Matrix::translation(Tuple::vector(0., 0., 1.));
+
+        let intersection = Intersection::new(5., Object::from(shape), ray);
+        let comps = intersection.prepare_computations();
+
+        assert!(comps.over_point.z < -EPSILON/2.);
+        assert!(comps.point.z > comps.over_point.z);
     }
 }
