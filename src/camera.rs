@@ -190,16 +190,16 @@ mod tests_camera {
 
     #[test]
     fn rendering_a_world_with_a_camera() {
-        let w = create_default_world();
+        let world = create_default_world();
         let from = Tuple::point(0., 0., -5.);
         let to  = Tuple::point(0., 0., 0.);
         let up = Tuple::vector(0., 1., 0.);
 
-        let c = Camera::new(11, 11, PI/2.).set_transform(
+        let camera = Camera::new(11, 11, PI/2.).set_transform(
             from.view_transform(to, up)
         );
 
-        let canvas = c.render(w);
+        let canvas = camera.render(world);
 
         assert_equivalent!(canvas.get_pixel(5, 5), Color::new(0.38066, 0.47583, 0.2855));
     }
