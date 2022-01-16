@@ -1,6 +1,6 @@
 use std::sync::{Mutex};
 use itertools::Itertools;
-use rayon::iter::{ParallelBridge, ParallelIterator};
+use rayon::prelude::*;
 use crate::canvas::Canvas;
 use crate::equivalent::Equivalence;
 use crate::matrix::Matrix;
@@ -68,7 +68,7 @@ impl Camera {
         Ray::new(origin, direction)
     }
 
-    pub fn render<'a>(self, world: World) -> Canvas {
+    pub fn render(self, world: World) -> Canvas {
         let canvas_mutex = Mutex::new(Canvas::new(self.horizontal_size, self.vertical_size));
 
         (0..self.horizontal_size)
