@@ -1,5 +1,5 @@
 use crate::EPSILON;
-use crate::object::Object;
+use crate::object::{Intersectable, Object};
 use crate::ray::Ray;
 use crate::tuple::Tuple;
 
@@ -91,6 +91,7 @@ mod tests_intersection {
     use crate::EPSILON;
     use crate::intersection::{Intersection, Intersections, Object};
     use crate::matrix::Matrix;
+    use crate::object::Intersectable;
     use crate::ray::Ray;
     use crate::sphere::Sphere;
     use crate::tuple::Tuple;

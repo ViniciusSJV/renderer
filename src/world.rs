@@ -1,7 +1,7 @@
 use crate::color::Color;
 use crate::intersection::{Computations, Intersections};
 use crate::lights::Light;
-use crate::object::Object;
+use crate::object::{Intersectable, Object};
 use crate::ray::Ray;
 use crate::tuple::Tuple;
 
@@ -35,16 +35,18 @@ impl World {
     }
 
     pub fn is_shadowed(self, point: Tuple) -> bool {
-        let shadow_vector : Tuple = self.lights[0].position - point;
-        let distance = shadow_vector.length();
-        let direction = shadow_vector.normalize();
+        for &light in self.lights.iter() {
+            let shadow_vector : Tuple = light.position - point;
+            let distance = shadow_vector.length();
+            let direction = shadow_vector.normalize();
 
-        let shadow_ray  = Ray::new(point, direction);
-        let intersections = self.intersect_world(shadow_ray);
+            let shadow_ray  = Ray::new(point, direction);
+            let intersections = self.intersect_world(shadow_ray);
 
-        if let Some(hit) = intersections.hit() {
-            if hit.t < distance {
-                return true;
+            if let Some(hit) = intersections.hit() {
+                if hit.t < distance {
+                    return true;
+                }
             }
         }
         false
@@ -80,7 +82,7 @@ mod tests_world {
     use crate::lights::Light;
     use crate::materials::Material;
     use crate::matrix::Matrix;
-    use crate::object::Object;
+    use crate::object::{Intersectable, Object};
     use crate::ray::Ray;
     use crate::sphere::Sphere;
     use crate::tuple::Tuple;

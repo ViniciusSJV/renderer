@@ -2,7 +2,7 @@ use crate::ray::Ray;
 use crate::intersection::{Intersection, Intersections};
 use crate::materials::Material;
 use crate::matrix::Matrix;
-use crate::object::Object;
+use crate::object::{Intersectable, Object};
 use crate::tuple::Tuple;
 
 #[derive(Debug, PartialEq, Clone, Copy)]
@@ -14,31 +14,19 @@ impl Sphere {
         let material = Material::phong();
         Sphere { origin, material, transform }
     }
+}
 
-    pub fn set_material(&mut self, material: Material) {
-        self.material = material
+impl Default for Sphere {
+    fn default() -> Self {
+        Sphere::new(Tuple::point(0., 0., 0.))
     }
+}
 
-    pub fn set_transform(&mut self, transform: Matrix<4>) {
-        self.transform = transform
-    }
-
-    pub fn normal_at(&self, world_point: Tuple) -> Tuple {
-        if !world_point.is_point() {
-            panic!("Normal is only to Tuple::point")
-        }
-        let object_point = self.transform.inverse() * world_point;
-        let object_normal = object_point - self.origin;
-        let mut world_normal = self.transform.inverse().transpose() * object_normal;
-        world_normal.w = 0.;
-        world_normal.normalize()
-    }
-
-    pub fn intersect(&self, ray: Ray) -> Intersections {
-        let ray_2 = ray.set_transform(self.transform.inverse());
-        let sphere_to_ray = ray_2.origin - self.origin;
-        let a = ray_2.direction.dot(ray_2.direction);
-        let b = 2. * ray_2.direction.dot(sphere_to_ray);
+impl Intersectable for Sphere {
+    fn local_intersect(&self, local_ray: Ray, original_ray: Ray) -> Intersections {
+        let sphere_to_ray = local_ray.origin - self.origin;
+        let a = local_ray.direction.dot(local_ray.direction);
+        let b = 2. * local_ray.direction.dot(sphere_to_ray);
         let c = sphere_to_ray.dot(sphere_to_ray) - 1.;
 
         let discriminant = b.powi(2) - 4. * a * c;
@@ -49,16 +37,30 @@ impl Sphere {
             let t1 = (-b - discriminant.sqrt()) / (2. * a);
             let t2 = (-b + discriminant.sqrt()) / (2. * a);
             Intersections::new(vec![
-                Intersection::new(t1, Object::from(*self), ray),
-                Intersection::new(t2, Object::from(*self), ray)
+                Intersection::new(t1, Object::from(*self), original_ray),
+                Intersection::new(t2, Object::from(*self), original_ray)
             ])
         }
     }
-}
 
-impl Default for Sphere {
-    fn default() -> Self {
-        Sphere::new(Tuple::point(0., 0., 0.))
+    fn local_normal_at(&self, local_point: Tuple) -> Tuple {
+        (local_point - self.origin).normalize()
+    }
+
+    fn material(&self) -> Material {
+        self.material
+    }
+
+    fn transform(&self) -> Matrix<4> {
+        self.transform
+    }
+
+    fn set_material(&mut self, material: Material) {
+        self.material = material
+    }
+
+    fn set_transform(&mut self, transform: Matrix<4>) {
+        self.transform = transform
     }
 }
 

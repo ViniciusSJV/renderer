@@ -14,3 +14,4 @@ pub mod materials;
 pub mod world;
 pub mod transformations;
 pub mod camera;
+pub mod plane;

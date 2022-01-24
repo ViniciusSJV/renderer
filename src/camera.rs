@@ -100,7 +100,7 @@ mod tests_camera {
     use crate::color::Color;
     use crate::lights::Light;
     use crate::materials::Material;
-    use crate::object::Object;
+    use crate::object::{Intersectable, Object};
     use crate::sphere::Sphere;
     use crate::transformations::Transform;
     use crate::tuple::Tuple;
