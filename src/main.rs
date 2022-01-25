@@ -20,12 +20,12 @@ use renderer::tuple::Tuple;
 use renderer::world::World;
 
 fn main() {
-    cap1_cap2();
-    cap3();
-    cap4();
-    cap5();
-    cap6();
-    cap7();
+    //cap1_cap2();
+    //cap3();
+    //cap4();
+    //cap5();
+    //cap6();
+    //cap7();
     cap9();
 }
 
