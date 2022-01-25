@@ -6,15 +6,25 @@ use crate::tuple::Tuple;
 pub trait Incuse {
     fn color_a(&self) -> Color;
     fn color_b(&self) -> Color;
+    fn transform(&self) -> Matrix<4>;
     fn set_pattern_transform(&mut self, transform: Matrix<4>);
-    fn color_at(&self, point: Tuple) -> Color;
-    fn color_at_object(&self, object: Object, world_point: Tuple) -> Color;
+
+    fn color_at_object(&self, object: Object, world_point: Tuple) -> Color {
+        let obj_point = object.transform().inverse() * world_point;
+        let pattern_point = self.transform().inverse() * obj_point;
+        self.color_at(pattern_point)
+    }
+
+    fn color_at(&self, point: Tuple) -> Color {
+        Color::new(point.x, point.y, point.z)
+    }
 }
 
 #[derive(Debug, PartialEq, Clone, Copy)]
 pub enum Patterns {
     Stripe(Stripe),
-    Gradient(Gradient)
+    Gradient(Gradient),
+    Ring(Ring)
 }
 
 #[derive(Debug, PartialEq, Clone, Copy)]
@@ -67,6 +77,31 @@ impl Gradient {
     }
 }
 
+#[derive(Debug, PartialEq, Clone, Copy)]
+pub struct Ring {
+    color_a: Color,
+    color_b: Color,
+    transform: Matrix<4>
+}
+
+impl Default for Ring {
+    fn default() -> Self {
+        Ring::new(Color::white(), Color::black())
+    }
+}
+
+impl From<Ring> for Patterns {
+    fn from(ring: Ring) -> Self {
+        Patterns::Ring(ring)
+    }
+}
+
+impl Ring {
+    pub fn new(color_a: Color, color_b: Color) -> Self {
+        Ring { color_a, color_b, transform: Matrix::identity() }
+    }
+}
+
 impl Incuse for Stripe {
     fn color_a(&self) -> Color {
         self.color_a
@@ -74,6 +109,10 @@ impl Incuse for Stripe {
 
     fn color_b(&self) -> Color {
         self.color_b
+    }
+
+    fn transform(&self) -> Matrix<4> {
+        self.transform
     }
 
     fn set_pattern_transform(&mut self, transform: Matrix<4>) {
@@ -88,12 +127,6 @@ impl Incuse for Stripe {
             self.color_b
         }
     }
-
-    fn color_at_object(&self, object: Object, world_point: Tuple) -> Color {
-        let obj_point = object.transform().inverse() * world_point;
-        let pattern_point = self.transform.inverse() * obj_point;
-        self.color_at(pattern_point)
-    }
 }
 
 impl Incuse for Gradient {
@@ -105,16 +138,45 @@ impl Incuse for Gradient {
         self.color_b
     }
 
+    fn transform(&self) -> Matrix<4> {
+        self.transform
+    }
+
     fn set_pattern_transform(&mut self, transform: Matrix<4>) {
         self.transform = transform
     }
 
     fn color_at(&self, point: Tuple) -> Color {
-        todo!()
+        let distance = self.color_b - self.color_a;
+        let fraction = point.x - point.x.floor();
+
+        self.color_a + distance * fraction
+    }
+}
+
+impl Incuse for Ring {
+    fn color_a(&self) -> Color {
+        self.color_a
     }
 
-    fn color_at_object(&self, object: Object, world_point: Tuple) -> Color {
-        todo!()
+    fn color_b(&self) -> Color {
+        self.color_b
+    }
+
+    fn transform(&self) -> Matrix<4> {
+        self.transform
+    }
+
+    fn set_pattern_transform(&mut self, transform: Matrix<4>) {
+        self.transform = transform
+    }
+
+    fn color_at(&self, point: Tuple) -> Color {
+        if (point.x.powi(2) + point.z.powi(2)).sqrt().floor() as usize % 2 == 0 {
+            self.color_a
+        } else {
+            self.color_b
+        }
     }
 }
 
@@ -123,6 +185,7 @@ impl Incuse for Patterns {
         match *self {
             Patterns::Stripe(ref stripe) => stripe.color_a,
             Patterns::Gradient(ref gradient) => gradient.color_a,
+            Patterns::Ring(ref ring) => ring.color_a,
         }
     }
 
@@ -130,20 +193,15 @@ impl Incuse for Patterns {
         match *self {
             Patterns::Stripe(ref stripe) => stripe.color_b,
             Patterns::Gradient(ref gradient) => gradient.color_b,
+            Patterns::Ring(ref ring) => ring.color_b,
         }
     }
 
-    fn color_at(&self, point: Tuple) -> Color {
+    fn transform(&self) -> Matrix<4> {
         match *self {
-            Patterns::Stripe(ref stripe) => stripe.color_at(point),
-            Patterns::Gradient(ref gradient) => gradient.color_at(point)
-        }
-    }
-
-    fn color_at_object(&self, object: Object, world_point: Tuple) -> Color {
-        match *self {
-            Patterns::Stripe(ref stripe) => stripe.color_at_object(object, world_point),
-            Patterns::Gradient(ref gradient) => gradient.color_at_object(object, world_point)
+            Patterns::Stripe(ref stripe) => stripe.transform,
+            Patterns::Gradient(ref gradient) => gradient.transform,
+            Patterns::Ring(ref ring) => ring.transform,
         }
     }
 
@@ -151,6 +209,23 @@ impl Incuse for Patterns {
         match *self {
             Patterns::Stripe(ref mut stripe) => stripe.set_pattern_transform(transform),
             Patterns::Gradient(ref mut gradient) => gradient.set_pattern_transform(transform),
+            Patterns::Ring(ref mut ring) => ring.set_pattern_transform(transform),
+        }
+    }
+
+    fn color_at_object(&self, object: Object, world_point: Tuple) -> Color {
+        match *self {
+            Patterns::Stripe(ref stripe) => stripe.color_at_object(object, world_point),
+            Patterns::Gradient(ref gradient) => gradient.color_at_object(object, world_point),
+            Patterns::Ring(ref ring) => ring.color_at_object(object, world_point),
+        }
+    }
+
+    fn color_at(&self, point: Tuple) -> Color {
+        match *self {
+            Patterns::Stripe(ref stripe) => stripe.color_at(point),
+            Patterns::Gradient(ref gradient) => gradient.color_at(point),
+            Patterns::Ring(ref ring) => ring.color_at(point),
         }
     }
 }
@@ -160,7 +235,7 @@ mod tests_patterns {
     use crate::color::Color;
     use crate::matrix::Matrix;
     use crate::object::{Intersectable, Object};
-    use crate::patterns::{Incuse, Patterns, Stripe};
+    use crate::patterns::{Gradient, Incuse, Patterns, Ring, Stripe};
     use crate::sphere::Sphere;
     use crate::tuple::Tuple;
 
@@ -249,6 +324,36 @@ mod tests_patterns {
         p.set_pattern_transform(Matrix::translation(Tuple::point(1., 2., 3.)));
 
         assert_eq!(p.transform, Matrix::translation(Tuple::point(1., 2., 3.)));
+    }
+
+    #[test]
+    fn a_gradient_linearly_interpolates_between_colors() {
+        let pattern = Patterns::from(Gradient::new(Color::white(), Color::black()));
+
+        let color1 = pattern.color_at(Tuple::point(0.,0., 0.));
+        let color2 = pattern.color_at(Tuple::point(0.25,0., 0.));
+        let color3 = pattern.color_at(Tuple::point(0.5,0., 0.));
+        let color4 = pattern.color_at(Tuple::point(0.75,0., 0.));
+
+        assert_eq!(color1, Color::white());
+        assert_eq!(color2, Color::new(0.75,0.75,0.75));
+        assert_eq!(color3, Color::new(0.5,0.5,0.5));
+        assert_eq!(color4, Color::new(0.25, 0.25, 0.25));
+    }
+
+    #[test]
+    fn a_ring_should_extend_in_both_x_and_z() {
+        let pattern = Patterns::from(Ring::new(Color::white(), Color::black()));
+
+        let color1 = pattern.color_at(Tuple::point(0.,0., 0.));
+        let color2 = pattern.color_at(Tuple::point(1.,0., 0.));
+        let color3 = pattern.color_at(Tuple::point(0.,0., 1.));
+        let color4 = pattern.color_at(Tuple::point(0.708,0., 0.708));
+
+        assert_eq!(color1, Color::white());
+        assert_eq!(color2, Color::black());
+        assert_eq!(color3, Color::black());
+        assert_eq!(color4, Color::black());
     }
 
 }
