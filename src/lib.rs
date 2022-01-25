@@ -15,3 +15,4 @@ pub mod world;
 pub mod transformations;
 pub mod camera;
 pub mod plane;
+pub mod patterns;

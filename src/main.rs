@@ -26,7 +26,7 @@ fn main() {
     //cap5();
     //cap6();
     //cap7();
-    cap9();
+    //cap9();
 }
 
 fn cap9() {
@@ -176,7 +176,7 @@ fn cap6() {
             let normal = hit.object.normal_at(point);
             let eye = -hit.ray.direction;
 
-            let color = hit.object.material().lighting(light, point, eye, normal, true);
+            let color = hit.object.material().lighting(hit.object, light, point, eye, normal, true);
 
             let mut canvas = canvas_mutex.lock().unwrap();
             canvas.set_pixel_color(x, y, color);

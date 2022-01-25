@@ -28,7 +28,7 @@ impl World {
         let mut final_color = Color::black();
         let shadowed = self.clone().is_shadowed(comps.over_point);
         for &light in self.lights.iter() {
-            let color = comps.object.material().lighting(light, comps.point, comps.eye_v, comps.normal_v, shadowed);
+            let color = comps.object.material().lighting(comps.object, light, comps.point, comps.eye_v, comps.normal_v, shadowed);
             final_color = final_color + color;
         }
         final_color
