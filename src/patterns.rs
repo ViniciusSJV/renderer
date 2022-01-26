@@ -15,16 +15,15 @@ pub trait Incuse {
         self.color_at(pattern_point)
     }
 
-    fn color_at(&self, point: Tuple) -> Color {
-        Color::new(point.x, point.y, point.z)
-    }
+    fn color_at(&self, point: Tuple) -> Color;
 }
 
 #[derive(Debug, PartialEq, Clone, Copy)]
 pub enum Patterns {
     Stripe(Stripe),
-    Gradient(Gradient),
-    Ring(Ring)
+    LinearGradient(LinearGradient),
+    Ring(Ring),
+    Checkers(Checkers)
 }
 
 #[derive(Debug, PartialEq, Clone, Copy)]
@@ -53,27 +52,27 @@ impl Stripe {
 }
 
 #[derive(Debug, PartialEq, Clone, Copy)]
-pub struct Gradient {
+pub struct LinearGradient {
     color_a: Color,
     color_b: Color,
     transform: Matrix<4>
 }
 
-impl Default for Gradient {
+impl Default for LinearGradient {
     fn default() -> Self {
-        Gradient::new(Color::white(), Color::black())
+        LinearGradient::new(Color::white(), Color::black())
     }
 }
 
-impl From<Gradient> for Patterns {
-    fn from(gradient: Gradient) -> Self {
-        Patterns::Gradient(gradient)
+impl From<LinearGradient> for Patterns {
+    fn from(linear_gradient: LinearGradient) -> Self {
+        Patterns::LinearGradient(linear_gradient)
     }
 }
 
-impl Gradient {
+impl LinearGradient {
     pub fn new(color_a: Color, color_b: Color) -> Self {
-        Gradient { color_a, color_b, transform: Matrix::identity() }
+        LinearGradient { color_a, color_b, transform: Matrix::identity() }
     }
 }
 
@@ -102,6 +101,31 @@ impl Ring {
     }
 }
 
+#[derive(Debug, PartialEq, Clone, Copy)]
+pub struct Checkers {
+    color_a: Color,
+    color_b: Color,
+    transform: Matrix<4>
+}
+
+impl Default for Checkers {
+    fn default() -> Self {
+        Checkers::new(Color::white(), Color::black())
+    }
+}
+
+impl From<Checkers> for Patterns {
+    fn from(checkers: Checkers) -> Self {
+        Patterns::Checkers(checkers)
+    }
+}
+
+impl Checkers {
+    pub fn new(color_a: Color, color_b: Color) -> Self {
+        Checkers { color_a, color_b, transform: Matrix::identity() }
+    }
+}
+
 impl Incuse for Stripe {
     fn color_a(&self) -> Color {
         self.color_a
@@ -121,7 +145,7 @@ impl Incuse for Stripe {
 
     fn color_at(&self, point: Tuple) -> Color {
         let x = point.x;
-        if x.floor().abs() as usize % 2 == 0 {
+        if x.floor().abs() % 2. == 0. {
             self.color_a
         } else {
             self.color_b
@@ -129,7 +153,7 @@ impl Incuse for Stripe {
     }
 }
 
-impl Incuse for Gradient {
+impl Incuse for LinearGradient {
     fn color_a(&self) -> Color {
         self.color_a
     }
@@ -149,7 +173,6 @@ impl Incuse for Gradient {
     fn color_at(&self, point: Tuple) -> Color {
         let distance = self.color_b - self.color_a;
         let fraction = point.x - point.x.floor();
-
         self.color_a + distance * fraction
     }
 }
@@ -172,7 +195,33 @@ impl Incuse for Ring {
     }
 
     fn color_at(&self, point: Tuple) -> Color {
-        if (point.x.powi(2) + point.z.powi(2)).sqrt().floor() as usize % 2 == 0 {
+        if (point.x.powi(2) + point.z.powi(2)).sqrt().floor() % 2. == 0. {
+            self.color_a
+        } else {
+            self.color_b
+        }
+    }
+}
+
+impl Incuse for Checkers {
+    fn color_a(&self) -> Color {
+        self.color_a
+    }
+
+    fn color_b(&self) -> Color {
+        self.color_b
+    }
+
+    fn transform(&self) -> Matrix<4> {
+        self.transform
+    }
+
+    fn set_pattern_transform(&mut self, transform: Matrix<4>) {
+        self.transform = transform
+    }
+
+    fn color_at(&self, point: Tuple) -> Color {
+        if (point.x.floor() + point.y.floor() + point.z.floor()) % 2. == 0. {
             self.color_a
         } else {
             self.color_b
@@ -184,48 +233,54 @@ impl Incuse for Patterns {
     fn color_a(&self) -> Color {
         match *self {
             Patterns::Stripe(ref stripe) => stripe.color_a,
-            Patterns::Gradient(ref gradient) => gradient.color_a,
+            Patterns::LinearGradient(ref linear_gradient) => linear_gradient.color_a,
             Patterns::Ring(ref ring) => ring.color_a,
+            Patterns::Checkers(ref checkers) => checkers.color_a,
         }
     }
 
     fn color_b(&self) -> Color {
         match *self {
             Patterns::Stripe(ref stripe) => stripe.color_b,
-            Patterns::Gradient(ref gradient) => gradient.color_b,
+            Patterns::LinearGradient(ref linear_gradient) => linear_gradient.color_b,
             Patterns::Ring(ref ring) => ring.color_b,
+            Patterns::Checkers(ref checkers) => checkers.color_b,
         }
     }
 
     fn transform(&self) -> Matrix<4> {
         match *self {
             Patterns::Stripe(ref stripe) => stripe.transform,
-            Patterns::Gradient(ref gradient) => gradient.transform,
+            Patterns::LinearGradient(ref linear_gradient) => linear_gradient.transform,
             Patterns::Ring(ref ring) => ring.transform,
+            Patterns::Checkers(ref checkers) => checkers.transform,
         }
     }
 
     fn set_pattern_transform(&mut self, transform: Matrix<4>) {
         match *self {
             Patterns::Stripe(ref mut stripe) => stripe.set_pattern_transform(transform),
-            Patterns::Gradient(ref mut gradient) => gradient.set_pattern_transform(transform),
+            Patterns::LinearGradient(ref mut linear_gradient) => linear_gradient.set_pattern_transform(transform),
             Patterns::Ring(ref mut ring) => ring.set_pattern_transform(transform),
+            Patterns::Checkers(ref mut checkers) => checkers.set_pattern_transform(transform),
         }
     }
 
     fn color_at_object(&self, object: Object, world_point: Tuple) -> Color {
         match *self {
             Patterns::Stripe(ref stripe) => stripe.color_at_object(object, world_point),
-            Patterns::Gradient(ref gradient) => gradient.color_at_object(object, world_point),
+            Patterns::LinearGradient(ref linear_gradient) => linear_gradient.color_at_object(object, world_point),
             Patterns::Ring(ref ring) => ring.color_at_object(object, world_point),
+            Patterns::Checkers(ref checkers) => checkers.color_at_object(object, world_point),
         }
     }
 
     fn color_at(&self, point: Tuple) -> Color {
         match *self {
             Patterns::Stripe(ref stripe) => stripe.color_at(point),
-            Patterns::Gradient(ref gradient) => gradient.color_at(point),
+            Patterns::LinearGradient(ref linear_gradient) => linear_gradient.color_at(point),
             Patterns::Ring(ref ring) => ring.color_at(point),
+            Patterns::Checkers(ref checkers) => checkers.color_at(point),
         }
     }
 }
@@ -235,7 +290,7 @@ mod tests_patterns {
     use crate::color::Color;
     use crate::matrix::Matrix;
     use crate::object::{Intersectable, Object};
-    use crate::patterns::{Gradient, Incuse, Patterns, Ring, Stripe};
+    use crate::patterns::{Checkers, LinearGradient, Incuse, Patterns, Ring, Stripe};
     use crate::sphere::Sphere;
     use crate::tuple::Tuple;
 
@@ -328,7 +383,7 @@ mod tests_patterns {
 
     #[test]
     fn a_gradient_linearly_interpolates_between_colors() {
-        let pattern = Patterns::from(Gradient::new(Color::white(), Color::black()));
+        let pattern = Patterns::from(LinearGradient::new(Color::white(), Color::black()));
 
         let color1 = pattern.color_at(Tuple::point(0.,0., 0.));
         let color2 = pattern.color_at(Tuple::point(0.25,0., 0.));
@@ -354,6 +409,45 @@ mod tests_patterns {
         assert_eq!(color2, Color::black());
         assert_eq!(color3, Color::black());
         assert_eq!(color4, Color::black());
+    }
+
+    #[test]
+    fn checkers_should_repeat_in_x() {
+        let pattern = Patterns::from(Checkers::new(Color::white(), Color::black()));
+
+        let color1 = pattern.color_at(Tuple::point(0.,0., 0.));
+        let color2 = pattern.color_at(Tuple::point(0.99,0., 0.));
+        let color3 = pattern.color_at(Tuple::point(1.01,0., 0.));
+
+        assert_eq!(color1, Color::white());
+        assert_eq!(color2, Color::white());
+        assert_eq!(color3, Color::black());
+    }
+
+    #[test]
+    fn checkers_should_repeat_in_y() {
+        let pattern = Patterns::from(Checkers::new(Color::white(), Color::black()));
+
+        let color1 = pattern.color_at(Tuple::point(0.,0., 0.));
+        let color2 = pattern.color_at(Tuple::point(0.,0.99, 0.));
+        let color3 = pattern.color_at(Tuple::point(0.,1.01, 0.));
+
+        assert_eq!(color1, Color::white());
+        assert_eq!(color2, Color::white());
+        assert_eq!(color3, Color::black());
+    }
+
+    #[test]
+    fn checkers_should_repeat_in_z() {
+        let pattern = Patterns::from(Checkers::new(Color::white(), Color::black()));
+
+        let color1 = pattern.color_at(Tuple::point(0.,0., 0.));
+        let color2 = pattern.color_at(Tuple::point(0.,0., 0.99));
+        let color3 = pattern.color_at(Tuple::point(0.,0., 1.01));
+
+        assert_eq!(color1, Color::white());
+        assert_eq!(color2, Color::white());
+        assert_eq!(color3, Color::black());
     }
 
 }

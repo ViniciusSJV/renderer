@@ -36,7 +36,7 @@ impl Intersectable for Plane {
     }
 
     fn local_normal_at(&self, _world_point: Tuple) -> Tuple {
-        Tuple::vector(0., 1., 0.,)
+        Tuple::vector(0., 1., 0.)
     }
 
     fn material(&self) -> Material {
