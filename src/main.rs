@@ -34,13 +34,12 @@ fn main() {
 fn cap10() {
     let mut material = Material::phong();
     material.specular = 0.;
-    let mut pattern1 = Ring::new(Color::new(1., 0., 0., ), Color::new(0., 1., 0.));
-    material.pattern = Option::from(Patterns::from(pattern1));
-
-    //@TODO fix bug when adding Pattern Checkers in a plane
-    //let mut pattern1 = Checkers::new(Color::new(1., 0., 0., ), Color::new(0., 1., 0.));
-    //pattern1.set_pattern_transform(Matrix::translation(Tuple::vector(-0.5, 1., 0.5)));
+    //let mut pattern1 = Ring::new(Color::new(1., 0., 0., ), Color::new(0., 1., 0.));
     //material.pattern = Option::from(Patterns::from(pattern1));
+
+    let mut pattern1 = Checkers::new(Color::new(1., 0., 0., ), Color::new(0., 1., 0.));
+    pattern1.set_pattern_transform(Matrix::translation(Tuple::vector(-0.5, 1., 0.5)));
+    material.pattern = Option::from(Patterns::from(pattern1));
 
     let mut floor = Plane::default();
     floor.set_material(material);
@@ -49,8 +48,8 @@ fn cap10() {
     middle.transform = Matrix::translation(Tuple::vector(-0.5, 1., 0.5));
     middle.material.specular = 0.3;
     middle.material.diffuse = 0.7;
-    let mut pattern2 = Checkers::new(Color::new(0.2, 0.8, 0.6, ), Color::new(0., 1., 0.));
-    pattern2.set_pattern_transform(middle.transform);
+    let mut pattern2 = Ring::new(Color::new(0.2, 0.8, 0.6, ), Color::new(0., 1., 0.));
+    pattern2.set_pattern_transform(Matrix::translation(Tuple::vector(2.5, 2.5, 2.5)) * Matrix::scaling(Tuple::vector(0.5, 0.5, 0.5)));
     middle.material.pattern = Option::from(Patterns::from(pattern2));
 
 
@@ -66,8 +65,7 @@ fn cap10() {
     left.transform = Matrix::translation(Tuple::vector(-1.5, 0.33, -0.75)) * Matrix::scaling(Tuple::vector(0.33, 0.33, 0.33));
     left.material.specular = 0.3;
     left.material.diffuse = 0.7;
-    let mut pattern4 = LinearGradient::default();
-    pattern4.set_pattern_transform(Matrix::translation(Tuple::vector(1.5, 1.5, 1.5)));
+    let mut pattern4 = LinearGradient::new(Color::new(0.06, 0.1, 0.5), Color::white());
     left.material.pattern = Option::from(Patterns::from(pattern4));
 
     let light = Light::point_light(Tuple::point(-10., 10., -10.), Color::new(1., 1., 1.));
