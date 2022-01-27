@@ -11,6 +11,7 @@ pub struct Computations {
     pub over_point: Tuple,
     pub eye_v: Tuple,
     pub normal_v: Tuple,
+    pub reflect_v: Tuple,
     pub inside: bool
 }
 
@@ -33,6 +34,7 @@ impl From<Intersection> for Computations {
             over_point: point + normal_v * EPSILON,
             eye_v,
             normal_v,
+            reflect_v: intersection.ray.direction.reflect(normal_v),
             inside
         }
     }
@@ -92,6 +94,7 @@ mod tests_intersection {
     use crate::intersection::{Intersection, Intersections, Object};
     use crate::matrix::Matrix;
     use crate::object::Intersectable;
+    use crate::plane::Plane;
     use crate::ray::Ray;
     use crate::sphere::Sphere;
     use crate::tuple::Tuple;
@@ -220,5 +223,15 @@ mod tests_intersection {
 
         assert!(comps.over_point.z < -EPSILON/2.);
         assert!(comps.point.z > comps.over_point.z);
+    }
+
+    #[test]
+    fn precomputing_the_reflection_vector() {
+        let shape = Plane::default();
+        let ray = Ray::new(Tuple::point(0., 1., -1.), Tuple::vector(0., -f64::from(2.).sqrt() / 2., f64::from(2.).sqrt() / 2.));
+        let intersection = Intersection::new(f64::from(2.).sqrt(), Object::from(shape), ray);
+        let comps = intersection.prepare_computations();
+
+        assert_eq!(comps.reflect_v, Tuple::vector(0., f64::from(2.).sqrt() / 2., f64::from(2.).sqrt() / 2.));
     }
 }

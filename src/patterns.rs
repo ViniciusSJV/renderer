@@ -171,12 +171,12 @@ impl Incuse for LinearGradient {
     }
 
     fn color_at(&self, point: Tuple) -> Color {
-        // another way
-        //self.color_a + ((self.color_b - self.color_a) * point.x)
+        self.color_a + ((self.color_b - self.color_a) * point.x)
 
-        let distance = self.color_b - self.color_a;
-        let fraction = (point.x + 1.) * 0.5;
-        self.color_a + distance * fraction
+        // another way
+        //let distance = self.color_b - self.color_a;
+        //let fraction = (point.x + 1.) * 0.5;
+        //self.color_a + distance * fraction
     }
 }
 

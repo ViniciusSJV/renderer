@@ -28,7 +28,7 @@ fn main() {
     //cap6();
     //cap7();
     //cap9();
-    cap10();
+    //cap10();
 }
 
 fn cap10() {

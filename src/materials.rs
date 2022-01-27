@@ -11,7 +11,22 @@ pub struct Material {
     pub diffuse: f64,
     pub specular: f64,
     pub shininess: f64,
+    pub reflective: f64,
     pub pattern: Option<Patterns>
+}
+
+impl Default for Material {
+    fn default() -> Self {
+        Material {
+            color: Color::black(),
+            ambient: 0.,
+            diffuse: 0.,
+            specular: 0.,
+            shininess: 0.,
+            reflective: 0.,
+            pattern: None
+        }
+    }
 }
 
 impl Material {
@@ -22,6 +37,7 @@ impl Material {
             diffuse: 0.9,
             specular: 0.9,
             shininess: 200.0,
+            reflective: 0.,
             pattern: None
         }
     }
@@ -211,5 +227,11 @@ mod tests_lights {
 
         assert_eq!(c1, Color::white());
         assert_eq!(c2, Color::black());
+    }
+
+    #[test]
+    fn reflectivity_for_the_default_material() {
+        let material = Material::default();
+        assert_eq!(material.reflective, 0.);
     }
 }
