@@ -45,7 +45,7 @@ impl Camera {
             half_width,
             half_height,
             pixel_size,
-            remaining: 0
+            remaining: 4
         }
     }
 
