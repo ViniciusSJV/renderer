@@ -8,3 +8,4 @@ edition = "2021"
 [dependencies]
 rayon = "1.5"
 itertools = "0.10.2"
+png = "0.16.8"

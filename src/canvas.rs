@@ -90,6 +90,34 @@ impl Canvas {
         ppm.extend(pixel_data);
         ppm
     }
+
+    fn to_rgba32(&self) -> Vec<u8> {
+        let mut pixel_data: Vec<u8> = Vec::new();
+        for pixel in self.pixels.iter() {
+            let clamp_color = pixel.clamp(0.0, 1.0);
+            let red: u8 = (clamp_color.red * 255.0).round() as u8;
+            let green: u8 = (clamp_color.green * 255.0).round() as u8;
+            let blue: u8 = (clamp_color.blue * 255.0).round() as u8;
+            let alfa: u8 = 255;
+
+            pixel_data.push(red);
+            pixel_data.push(green);
+            pixel_data.push(blue);
+            pixel_data.push(alfa);
+        }
+        pixel_data
+    }
+
+    pub fn to_png(&self) -> Vec<u8> {
+        let mut pixel_data = Vec::new();
+        let mut encoder = png::Encoder::new(&mut pixel_data, self.width as u32, self.height as u32);
+        encoder.set_color(png::ColorType::RGBA);
+        encoder.set_depth(png::BitDepth::Eight);
+        let mut writer = encoder.write_header().unwrap();
+        writer.write_image_data(&self.to_rgba32()).unwrap();
+        drop(writer);
+        pixel_data
+    }
 }
 
 #[cfg(test)]
