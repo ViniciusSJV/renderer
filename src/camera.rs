@@ -17,7 +17,7 @@ pub struct Camera {
     half_width: f64,
     half_height: f64,
     pixel_size: f64,
-    recursion_limit: usize
+    recursion_limit: u8
 }
 
 impl Camera {

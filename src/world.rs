@@ -24,7 +24,7 @@ impl World {
         Intersections::new(xs)
     }
 
-    pub fn shade_hit(self, comps: Computations, remaining: usize) -> Color {
+    pub fn shade_hit(self, comps: Computations, remaining: u8) -> Color {
         let mut surface = Color::black();
         let shadowed = self.clone().is_shadowed(comps.over_point);
         for &light in self.lights.iter() {
@@ -35,7 +35,7 @@ impl World {
         surface + reflected
     }
 
-    pub fn reflected_color(self, comps: Computations, remaining: usize) -> Color {
+    pub fn reflected_color(self, comps: Computations, remaining: u8) -> Color {
         if remaining <= 0 {
             return Color::black();
         }
@@ -66,7 +66,7 @@ impl World {
         false
     }
 
-    pub fn color_at(self, ray: Ray, remaining: usize) -> Color {
+    pub fn color_at(self, ray: Ray, remaining: u8) -> Color {
         let xs = self.intersect_world(ray);
         if xs.hit() != None {
             let hit = xs.hit().unwrap();
