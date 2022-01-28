@@ -7,7 +7,7 @@ use crate::plane::Plane;
 use crate::tuple::Tuple;
 
 pub trait Intersectable {
-    fn local_intersect(&self, local_ray: Ray, original_ray: Ray) -> Intersections;
+    fn local_intersect(&self, local_ray: Ray) -> Intersections;
     fn local_normal_at(&self, world_point: Tuple) -> Tuple;
     fn material(&self) -> Material;
     fn transform(&self) -> Matrix<4>;
@@ -16,7 +16,7 @@ pub trait Intersectable {
 
     fn intersect(&self, original_ray: Ray) -> Intersections {
         let local_ray = original_ray.set_transform(self.transform().inverse());
-        self.local_intersect(local_ray, original_ray)
+        self.local_intersect(local_ray)
     }
 
     fn normal_at(&self, point: Tuple) -> Tuple {
@@ -47,10 +47,10 @@ impl From<Plane> for Object {
 }
 
 impl Intersectable for Object {
-    fn local_intersect(&self, local_ray: Ray, original_ray: Ray) -> Intersections {
+    fn local_intersect(&self, local_ray: Ray) -> Intersections {
         match *self {
-            Object::Sphere(ref sphere) => sphere.local_intersect(local_ray, original_ray),
-            Object::Plane(ref plane) => plane.local_intersect(local_ray, original_ray),
+            Object::Sphere(ref sphere) => sphere.local_intersect(local_ray),
+            Object::Plane(ref plane) => plane.local_intersect(local_ray),
         }
     }
 
@@ -95,7 +95,6 @@ mod tests_object {
     use crate::intersection::Intersection;
     use crate::object::Object;
     use crate::sphere::Sphere;
-    use crate::ray::Ray;
     use crate::tuple::Tuple;
 
     #[test]
@@ -103,9 +102,7 @@ mod tests_object {
         let sphere = Sphere::new(Tuple::point(0., 0., 0.));
         let object = Object::from(sphere);
 
-        let ray = Ray::new(Tuple::point(1.0, 1.0, 1.0), Tuple::vector(0.0, 0.0, 1.0));
-
-        let intersect = Intersection::new(3.5, object, ray);
+        let intersect = Intersection::new(3.5, object);
 
         assert_eq!(intersect.t, 3.5);
         assert_eq!(intersect.object, Object::from(sphere));

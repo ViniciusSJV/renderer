@@ -17,7 +17,7 @@ pub struct Camera {
     half_width: f64,
     half_height: f64,
     pixel_size: f64,
-    recursion_limit: u8
+    maximum_recursive_depth: u8
 }
 
 impl Camera {
@@ -45,7 +45,7 @@ impl Camera {
             half_width,
             half_height,
             pixel_size,
-            recursion_limit: 4
+            maximum_recursive_depth: 4
         }
     }
 
@@ -77,7 +77,7 @@ impl Camera {
             .par_bridge()
             .for_each(|(x, y)| {
                 let ray = self.ray_from_pixel(x, y);
-                let color = world.clone().color_at(ray, self.recursion_limit);
+                let color = world.clone().color_at(ray, self.maximum_recursive_depth);
                 let mut canvas = canvas_mutex.lock().unwrap();
                 canvas.set_pixel_color(x, y, color);
             });

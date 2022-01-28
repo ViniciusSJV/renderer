@@ -12,21 +12,9 @@ pub struct Material {
     pub specular: f64,
     pub shininess: f64,
     pub reflective: f64,
+    pub transparency: f64,
+    pub reflactive_index: f64,
     pub pattern: Option<Patterns>
-}
-
-impl Default for Material {
-    fn default() -> Self {
-        Material {
-            color: Color::black(),
-            ambient: 0.,
-            diffuse: 0.,
-            specular: 0.,
-            shininess: 0.,
-            reflective: 0.,
-            pattern: None
-        }
-    }
 }
 
 impl Material {
@@ -38,8 +26,17 @@ impl Material {
             specular: 0.9,
             shininess: 200.0,
             reflective: 0.,
+            transparency: 0.,
+            reflactive_index: 1.,
             pattern: None
         }
+    }
+
+    pub fn glass() -> Self {
+        let mut material = Material::phong();
+        material.transparency = 1.;
+        material.reflactive_index = 1.5;
+        material
     }
 
     pub fn lighting(&self, object: Object, light: Light, point: Tuple, eye_vector: Tuple, normal_vector: Tuple, in_shadow: bool) -> Color {
@@ -231,7 +228,14 @@ mod tests_lights {
 
     #[test]
     fn reflectivity_for_the_default_material() {
-        let material = Material::default();
+        let material = Material::phong();
         assert_eq!(material.reflective, 0.);
+    }
+
+    #[test]
+    fn transparency_and_refractive_index_for_the_default_material() {
+        let material = Material::phong();
+        assert_eq!(material.transparency, 0.);
+        assert_eq!(material.reflactive_index, 1.);
     }
 }

@@ -65,7 +65,7 @@ fn cap10() {
     left.transform = Matrix::translation(Tuple::vector(-1.5, 0.33, -0.75)) * Matrix::scaling(Tuple::vector(0.33, 0.33, 0.33));
     left.material.specular = 0.3;
     left.material.diffuse = 0.7;
-    let mut pattern4 = LinearGradient::new(Color::new(0.06, 0.1, 0.5), Color::white());
+    let pattern4 = LinearGradient::new(Color::new(0.06, 0.1, 0.5), Color::white());
     left.material.pattern = Option::from(Patterns::from(pattern4));
 
     let light = Light::point_light(Tuple::point(-10., 10., -10.), Color::new(1., 1., 1.));
@@ -234,9 +234,9 @@ fn cap6() {
         if xs.hit() != None {
             let hit = xs.hit().unwrap();
 
-            let point = hit.ray.position(hit.t);
+            let point = ray.position(hit.t);
             let normal = hit.object.normal_at(point);
-            let eye = -hit.ray.direction;
+            let eye = -ray.direction;
 
             let color = hit.object.material().lighting(hit.object, light, point, eye, normal, true);
 

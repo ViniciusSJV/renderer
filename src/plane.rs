@@ -24,13 +24,13 @@ impl Default for Plane {
 }
 
 impl Intersectable for Plane {
-    fn local_intersect(&self, local_ray: Ray, original_ray: Ray) -> Intersections {
+    fn local_intersect(&self, local_ray: Ray) -> Intersections {
         if local_ray.direction.y.abs() < EPSILON {
             Intersections::new(vec![])
         } else {
             let t = -local_ray.origin.y / local_ray.direction.y;
             Intersections::new(vec![
-                Intersection::new(t,  Object::from(*self), original_ray)
+                Intersection::new(t,  Object::from(*self))
             ])
         }
     }

@@ -14,6 +14,12 @@ impl Sphere {
         let material = Material::phong();
         Sphere { origin, material, transform }
     }
+
+    pub fn grass() -> Self {
+        let transform = Matrix::identity();
+        let material = Material::glass();
+        Sphere { origin: Tuple::point(0., 0., 0.), material, transform }
+    }
 }
 
 impl Default for Sphere {
@@ -23,7 +29,7 @@ impl Default for Sphere {
 }
 
 impl Intersectable for Sphere {
-    fn local_intersect(&self, local_ray: Ray, original_ray: Ray) -> Intersections {
+    fn local_intersect(&self, local_ray: Ray) -> Intersections {
         let sphere_to_ray = local_ray.origin - self.origin;
         let a = local_ray.direction.dot(local_ray.direction);
         let b = 2. * local_ray.direction.dot(sphere_to_ray);
@@ -37,8 +43,8 @@ impl Intersectable for Sphere {
             let t1 = (-b - discriminant.sqrt()) / (2. * a);
             let t2 = (-b + discriminant.sqrt()) / (2. * a);
             Intersections::new(vec![
-                Intersection::new(t1, Object::from(*self), original_ray),
-                Intersection::new(t2, Object::from(*self), original_ray)
+                Intersection::new(t1, Object::from(*self)),
+                Intersection::new(t2, Object::from(*self))
             ])
         }
     }
@@ -273,5 +279,13 @@ mod tests_sphere {
         sphere.material = material;
 
         assert_eq!(sphere.material, material);
+    }
+
+    #[test]
+    fn a_helper_for_producing_a_sphere_with_a_glassy_material() {
+        let sphere = Sphere::grass();
+        assert_eq!(sphere.transform(), Matrix::identity());
+        assert_eq!(sphere.material.transparency, 1.0);
+        assert_eq!(sphere.material.reflactive_index, 1.5);
     }
 }
