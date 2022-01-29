@@ -61,10 +61,13 @@ impl Intersection {
     pub fn prepare_computations(self, ray: Ray, xs: &mut Intersections) -> Computations {
         let mut comps = Computations::from(self, ray);
         for intersect in xs.data.iter() {
-            if xs.containers.is_empty() {
-                comps.n1 = 1.0;
-            } else {
-                comps.n1 = xs.containers.last().unwrap().material().reflactive_index;
+
+            if intersect == &self {
+                if xs.containers.is_empty() {
+                    comps.n1 = 1.0;
+                } else {
+                    comps.n1 = xs.containers.last().unwrap().material().reflactive_index;
+                }
             }
 
             if xs.containers.contains(&intersect.object) {
@@ -82,6 +85,7 @@ impl Intersection {
                 }
                 break;
             }
+
         }
         comps
     }
@@ -282,6 +286,7 @@ mod tests_intersection {
 
         //TODO fix the bug and make pass
         let mut xs = Intersections::new(vec![intersect1, intersect2, intersect3, intersect4, intersect5, intersect6]);
+
         let comp0 = xs.data[0].prepare_computations(ray, &mut xs);
         let comp1 = xs.data[1].prepare_computations(ray, &mut xs);
         let comp2 = xs.data[2].prepare_computations(ray, &mut xs);
