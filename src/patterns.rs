@@ -15,7 +15,9 @@ pub trait Incuse {
         self.color_at(pattern_point)
     }
 
-    fn color_at(&self, point: Tuple) -> Color;
+    fn color_at(&self, point: Tuple) -> Color {
+        Color::new(point.x, point.y, point.z)
+    }
 }
 
 #[derive(Debug, PartialEq, Clone, Copy)]
@@ -23,7 +25,8 @@ pub enum Patterns {
     Stripe(Stripe),
     LinearGradient(LinearGradient),
     Ring(Ring),
-    Checkers(Checkers)
+    Checkers(Checkers),
+    DefaultPattern(DefaultPattern),
 }
 
 #[derive(Debug, PartialEq, Clone, Copy)]
@@ -123,6 +126,31 @@ impl From<Checkers> for Patterns {
 impl Checkers {
     pub fn new(color_a: Color, color_b: Color) -> Self {
         Checkers { color_a, color_b, transform: Matrix::identity() }
+    }
+}
+
+#[derive(Debug, PartialEq, Clone, Copy)]
+pub struct DefaultPattern {
+    color_a: Color,
+    color_b: Color,
+    transform: Matrix<4>
+}
+
+impl Default for DefaultPattern {
+    fn default() -> Self {
+        DefaultPattern::new(Color::white(), Color::black())
+    }
+}
+
+impl From<DefaultPattern> for Patterns {
+    fn from(default_pattern: DefaultPattern) -> Self {
+        Patterns::DefaultPattern(default_pattern)
+    }
+}
+
+impl DefaultPattern {
+    pub fn new(color_a: Color, color_b: Color) -> Self {
+        DefaultPattern { color_a, color_b, transform: Matrix::identity() }
     }
 }
 
@@ -232,6 +260,24 @@ impl Incuse for Checkers {
     }
 }
 
+impl Incuse for DefaultPattern {
+    fn color_a(&self) -> Color {
+        self.color_a
+    }
+
+    fn color_b(&self) -> Color {
+        self.color_b
+    }
+
+    fn transform(&self) -> Matrix<4> {
+        self.transform
+    }
+
+    fn set_pattern_transform(&mut self, transform: Matrix<4>) {
+        self.transform = transform
+    }
+}
+
 impl Incuse for Patterns {
     fn color_a(&self) -> Color {
         match *self {
@@ -239,6 +285,7 @@ impl Incuse for Patterns {
             Patterns::LinearGradient(ref linear_gradient) => linear_gradient.color_a,
             Patterns::Ring(ref ring) => ring.color_a,
             Patterns::Checkers(ref checkers) => checkers.color_a,
+            Patterns::DefaultPattern(ref default_pattern) => default_pattern.color_a,
         }
     }
 
@@ -248,6 +295,7 @@ impl Incuse for Patterns {
             Patterns::LinearGradient(ref linear_gradient) => linear_gradient.color_b,
             Patterns::Ring(ref ring) => ring.color_b,
             Patterns::Checkers(ref checkers) => checkers.color_b,
+            Patterns::DefaultPattern(ref default_pattern) => default_pattern.color_b,
         }
     }
 
@@ -257,6 +305,7 @@ impl Incuse for Patterns {
             Patterns::LinearGradient(ref linear_gradient) => linear_gradient.transform,
             Patterns::Ring(ref ring) => ring.transform,
             Patterns::Checkers(ref checkers) => checkers.transform,
+            Patterns::DefaultPattern(ref default_pattern) => default_pattern.transform,
         }
     }
 
@@ -266,6 +315,7 @@ impl Incuse for Patterns {
             Patterns::LinearGradient(ref mut linear_gradient) => linear_gradient.set_pattern_transform(transform),
             Patterns::Ring(ref mut ring) => ring.set_pattern_transform(transform),
             Patterns::Checkers(ref mut checkers) => checkers.set_pattern_transform(transform),
+            Patterns::DefaultPattern(ref mut default_pattern) => default_pattern.set_pattern_transform(transform),
         }
     }
 
@@ -275,6 +325,7 @@ impl Incuse for Patterns {
             Patterns::LinearGradient(ref linear_gradient) => linear_gradient.color_at_object(object, world_point),
             Patterns::Ring(ref ring) => ring.color_at_object(object, world_point),
             Patterns::Checkers(ref checkers) => checkers.color_at_object(object, world_point),
+            Patterns::DefaultPattern(ref default_pattern) => default_pattern.color_at_object(object, world_point),
         }
     }
 
@@ -284,6 +335,7 @@ impl Incuse for Patterns {
             Patterns::LinearGradient(ref linear_gradient) => linear_gradient.color_at(point),
             Patterns::Ring(ref ring) => ring.color_at(point),
             Patterns::Checkers(ref checkers) => checkers.color_at(point),
+            Patterns::DefaultPattern(ref default_pattern) => default_pattern.color_at(point),
         }
     }
 }

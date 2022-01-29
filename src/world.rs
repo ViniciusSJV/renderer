@@ -31,8 +31,9 @@ impl World {
             let color = comps.object.material().lighting(comps.object, light, comps.over_point, comps.eye_v, comps.normal_v, shadowed);
             surface = surface + color;
         }
-        let reflected = self.reflected_color(comps, remaining);
-        surface + reflected
+        let reflected = self.clone().reflected_color(comps, remaining);
+        let refracted = self.clone().refracted_color(comps, remaining);
+        surface + reflected + refracted
     }
 
     pub fn reflected_color(self, comps: Computations, remaining: u8) -> Color {
@@ -48,7 +49,18 @@ impl World {
         if comps.object.material().transparency == 0. || remaining <= 0 {
             return Color::black();
         }
-        Color::white()
+
+        let n_ratio = comps.n1 / comps.n2;
+        let cos_i = comps.eye_v.dot(comps.normal_v);
+        let sin2_t = n_ratio.powi(2) * (1. - cos_i.powi(2));
+        if sin2_t > 1. {
+            return Color::black();
+        }
+
+        let cos_t = (1.0 - sin2_t).sqrt();
+        let direction = comps.normal_v * (n_ratio * cos_i - cos_t) - comps.eye_v * n_ratio;
+        let refract_ray = Ray::new(comps.under_point, direction);
+        self.color_at(refract_ray, remaining - 1) * comps.object.material().transparency
     }
 
     pub fn is_shadowed(self, point: Tuple) -> bool {
@@ -98,6 +110,7 @@ mod tests_world {
     use crate::lights::Light;
     use crate::materials::Material;
     use crate::matrix::Matrix;
+    use crate::patterns::{DefaultPattern, Patterns};
     use crate::plane::Plane;
     use crate::sphere::Sphere;
     use super::*;
@@ -426,5 +439,82 @@ mod tests_world {
         let color = world.refracted_color(comp, 0);
 
         assert_equivalent!(color, Color::black());
+    }
+
+    #[test]
+    fn the_refracted_color_under_total_internal_reflection() {
+        let world = create_default_world();
+        let mut shape: Object = world.objects[0];
+        let mut material = Material::phong();
+        material.transparency = 1.0;
+        material.reflactive_index = 1.5;
+        shape.set_material(material);
+
+        let ray = Ray::new(Tuple::point(0., 0., f64::from(2.).sqrt() / 2.), Tuple::vector(0., 1., 0.));
+
+        let intersect1 = Intersection::new(-f64::from(2.).sqrt() / 2.,  shape);
+        let intersect2 = Intersection::new(f64::from(2.).sqrt() / 2.,  shape);
+        let mut xs = Intersections::new(vec![intersect1, intersect2]);
+
+        let comp = xs.data[1].prepare_computations(ray, &mut xs);
+        let color = world.refracted_color(comp, 5);
+
+        assert_equivalent!(color, Color::black());
+    }
+
+    #[test]
+    fn the_refracted_color_with_a_refracted_ray() {
+        let world = create_default_world();
+        let mut a: Object = world.objects[0];
+        let mut material_a = a.material();
+        material_a.ambient = 1.;
+        material_a.pattern = Option::from(Patterns::from(DefaultPattern::default()));
+        a.set_material(material_a);
+
+        let mut b: Object = world.objects[0];
+        let mut material_b = b.material();
+        material_b.transparency = 1.;
+        material_b.reflactive_index = 1.5;
+        b.set_material(material_b);
+
+        let ray = Ray::new(Tuple::point(0., 0., 0.1), Tuple::vector(0., 1., 0.));
+
+        let intersect1 = Intersection::new(-0.9899,  Object::from(a));
+        let intersect2 = Intersection::new(-0.4899,  Object::from(b));
+        let intersect3 = Intersection::new(0.4899,  Object::from(b));
+        let intersect4 = Intersection::new(0.9899,  Object::from(a));
+
+        let mut xs = Intersections::new(vec![intersect1, intersect2, intersect3, intersect4]);
+        let comp = xs.data[2].prepare_computations(ray, &mut xs);
+
+        let color = world.refracted_color(comp, 5);
+        assert_equivalent!(color, Color::new(0.08, 0.1, 0.06));
+    }
+
+    #[test]
+    fn shade_hit_with_a_transparent_material() {
+        let mut world = create_default_world();
+        let mut floor = Plane::default();
+        floor.set_transform(Matrix::translation(Tuple::vector(0., -1., 0.)));
+        floor.material.transparency = 0.5;
+        floor.material.reflactive_index = 1.5;
+
+        world.objects.push(Object::from(floor));
+
+        let mut ball = Sphere::default();
+        ball.material.color = Color::new(1., 0., 0.);
+        ball.material.ambient = 0.5;
+        ball.set_transform(Matrix::translation(Tuple::vector(0., -3.5, -0.5)));
+
+        world.objects.push(Object::from(ball));
+
+        let ray = Ray::new(Tuple::point(0., 0., -3.), Tuple::vector(0., -f64::from(2.).sqrt() / 2., f64::from(2.).sqrt() / 2.));
+
+        let intersect = Intersection::new(f64::from(2.).sqrt(),  Object::from(floor));
+        let mut xs = Intersections::new(vec![intersect]);
+
+        let comp = xs.data[0].prepare_computations(ray, &mut xs);
+        let color = world.shade_hit(comp, 5);
+        assert_equivalent!(color, Color::new(0.93642, 0.68642, 0.68642));
     }
 }
