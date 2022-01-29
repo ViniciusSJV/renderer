@@ -9,10 +9,10 @@ pub struct Computations {
     pub object: Object,
     pub point: Tuple,
     pub over_point: Tuple,
+    pub under_point: Tuple,
     pub eye_v: Tuple,
     pub normal_v: Tuple,
     pub reflect_v: Tuple,
-    pub under_point: Tuple,
     pub n1: f64,
     pub n2: f64,
     pub inside: bool
@@ -35,10 +35,10 @@ impl Computations {
             object,
             point,
             over_point: point + normal_v * EPSILON,
+            under_point: point - normal_v * EPSILON,
             eye_v,
             normal_v,
             reflect_v: ray.direction.reflect(normal_v),
-            under_point: Tuple::vector(0., 0., 0.),
             n1: 0.,
             n2: 0.,
             inside
@@ -58,7 +58,7 @@ impl Intersection {
         Intersection { t, object }
     }
 
-    pub fn prepare_computations(self, ray: Ray, mut xs: Intersections) -> Computations {
+    pub fn prepare_computations(self, ray: Ray, xs: &mut Intersections) -> Computations {
         let mut comps = Computations::from(self, ray);
         for intersect in xs.data.iter() {
             if xs.containers.is_empty() {
@@ -80,6 +80,7 @@ impl Intersection {
                 } else {
                     comps.n2 = xs.containers.last().unwrap().material().reflactive_index;
                 }
+                break;
             }
         }
         comps
@@ -209,8 +210,8 @@ mod tests_intersection {
 
         let s = Object::from(Sphere::default());
         let intersect = Intersection::new(4., s);
-        let xs = Intersections::new(vec![intersect]);
-        let comps = intersect.prepare_computations(ray, xs);
+        let mut xs = Intersections::new(vec![intersect]);
+        let comps = intersect.prepare_computations(ray, &mut xs);
 
         assert_eq!(comps.t, intersect.t);
         assert_eq!(comps.point, Tuple::point(0., 0., -1.));
@@ -224,8 +225,8 @@ mod tests_intersection {
 
         let s = Object::from(Sphere::default());
         let intersect = Intersection::new(4., s);
-        let xs = Intersections::new(vec![intersect]);
-        let comps = intersect.prepare_computations(ray, xs);
+        let mut xs = Intersections::new(vec![intersect]);
+        let comps = intersect.prepare_computations(ray, &mut xs);
 
         assert!(!comps.inside);
     }
@@ -238,8 +239,8 @@ mod tests_intersection {
         shape.transform = Matrix::translation(Tuple::vector(0., 0., 1.));
 
         let intersection = Intersection::new(5., Object::from(shape));
-        let xs = Intersections::new(vec![intersection]);
-        let comps = intersection.prepare_computations(ray, xs);
+        let mut xs = Intersections::new(vec![intersection]);
+        let comps = intersection.prepare_computations(ray, &mut xs);
 
         assert!(comps.over_point.z < -EPSILON/2.);
         assert!(comps.point.z > comps.over_point.z);
@@ -250,8 +251,8 @@ mod tests_intersection {
         let shape = Plane::default();
         let ray = Ray::new(Tuple::point(0., 1., -1.), Tuple::vector(0., -f64::from(2.).sqrt() / 2., f64::from(2.).sqrt() / 2.));
         let intersection = Intersection::new(f64::from(2.).sqrt(), Object::from(shape));
-        let xs = Intersections::new(vec![intersection]);
-        let comps = intersection.prepare_computations(ray, xs);
+        let mut xs = Intersections::new(vec![intersection]);
+        let comps = intersection.prepare_computations(ray, &mut xs);
 
         assert_eq!(comps.reflect_v, Tuple::vector(0., f64::from(2.).sqrt() / 2., f64::from(2.).sqrt() / 2.));
     }
@@ -280,13 +281,13 @@ mod tests_intersection {
         let intersect6 = Intersection::new(6.,  Object::from(a));
 
         //TODO fix the bug and make pass
-        let xs = Intersections::new(vec![intersect1, intersect2, intersect3, intersect4, intersect5, intersect6]);
-        let comp0 = xs.data[0].prepare_computations(ray, xs);
-        let comp1 = xs.data[1].prepare_computations(ray, xs);
-        let comp2 = xs.data[2].prepare_computations(ray, xs);
-        let comp3 = xs.data[3].prepare_computations(ray, xs);
-        let comp4 = xs.data[4].prepare_computations(ray, xs);
-        let comp5 = xs.data[5].prepare_computations(ray, xs);
+        let mut xs = Intersections::new(vec![intersect1, intersect2, intersect3, intersect4, intersect5, intersect6]);
+        let comp0 = xs.data[0].prepare_computations(ray, &mut xs);
+        let comp1 = xs.data[1].prepare_computations(ray, &mut xs);
+        let comp2 = xs.data[2].prepare_computations(ray, &mut xs);
+        let comp3 = xs.data[3].prepare_computations(ray, &mut xs);
+        let comp4 = xs.data[4].prepare_computations(ray, &mut xs);
+        let comp5 = xs.data[5].prepare_computations(ray, &mut xs);
 
         assert_eq!(comp0.n1, 1.0);
         assert_eq!(comp0.n2, 1.5);
