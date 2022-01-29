@@ -67,17 +67,14 @@ impl Intersection {
                 } else {
                     comps.n1 = xs.containers.last().unwrap().material().reflactive_index;
                 }
-            }
-            if intersect == &self {
+
                 if xs.containers.contains(&intersect.object) {
                     let index = xs.containers.iter().position(|x| *x == intersect.object).unwrap();
                     xs.containers.remove(index);
                 } else {
                     xs.containers.push(intersect.object);
                 }
-            }
 
-            if intersect == &self {
                 if xs.containers.is_empty() {
                     comps.n2 = 1.0;
                 } else {
