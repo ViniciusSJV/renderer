@@ -36,16 +36,19 @@ impl World {
     }
 
     pub fn reflected_color(self, comps: Computations, remaining: u8) -> Color {
-        if remaining <= 0 {
-            return Color::black();
-        }
-
-        if comps.object.material().reflective == 0. {
+        if comps.object.material().reflective == 0. || remaining <= 0 {
             return Color::black()
         }
         let reflect_ray = Ray::new(comps.over_point, comps.reflect_v);
         let color = self.color_at(reflect_ray, remaining - 1);
         color * comps.object.material().reflective
+    }
+
+    pub fn refracted_color(self, comps: Computations, remaining: u8) -> Color {
+        if comps.object.material().transparency == 0. || remaining <= 0 {
+            return Color::black();
+        }
+        Color::white()
     }
 
     pub fn is_shadowed(self, point: Tuple) -> bool {
@@ -385,6 +388,42 @@ mod tests_world {
         let mut xs = Intersections::new(vec![intersection]);
         let comps = intersection.prepare_computations(ray, &mut xs);
         let color = world.reflected_color(comps, 0);
+
+        assert_equivalent!(color, Color::black());
+    }
+
+    #[test]
+    fn the_refracted_color_with_an_opaque_surface() {
+        let world = create_default_world();
+        let shape = world.objects[0];
+
+        let ray = Ray::new(Tuple::point(0., 0., -5.), Tuple::vector(0., 0., 1.));
+
+        let intersect1 = Intersection::new(4.,  shape);
+        let intersect2 = Intersection::new(6.,  shape);
+        let mut xs = Intersections::new(vec![intersect1, intersect2]);
+        let comp = xs.data[0].prepare_computations(ray, &mut xs);
+        let color = world.refracted_color(comp, 5);
+
+        assert_equivalent!(color, Color::black());
+    }
+
+    #[test]
+    fn the_refracted_color_at_the_maximum_recursive_depth() {
+        let world = create_default_world();
+        let mut shape: Object = world.objects[0];
+        let mut material = Material::phong();
+        material.transparency = 1.0;
+        material.reflactive_index = 1.5;
+        shape.set_material(material);
+
+        let ray = Ray::new(Tuple::point(0., 0., -5.), Tuple::vector(0., 0., 1.));
+
+        let intersect1 = Intersection::new(4.,  shape);
+        let intersect2 = Intersection::new(6.,  shape);
+        let mut xs = Intersections::new(vec![intersect1, intersect2]);
+        let comp = xs.data[0].prepare_computations(ray, &mut xs);
+        let color = world.refracted_color(comp, 0);
 
         assert_equivalent!(color, Color::black());
     }

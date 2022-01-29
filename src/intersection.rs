@@ -61,7 +61,6 @@ impl Intersection {
     pub fn prepare_computations(self, ray: Ray, xs: &mut Intersections) -> Computations {
         let mut comps = Computations::from(self, ray);
         for intersect in xs.data.iter() {
-
             if intersect == &self {
                 if xs.containers.is_empty() {
                     comps.n1 = 1.0;
@@ -69,12 +68,13 @@ impl Intersection {
                     comps.n1 = xs.containers.last().unwrap().material().reflactive_index;
                 }
             }
-
-            if xs.containers.contains(&intersect.object) {
-                let index = xs.containers.iter().position(|x| *x == intersect.object).unwrap();
-                xs.containers.remove(index);
-            } else {
-                xs.containers.push(intersect.object);
+            if intersect == &self {
+                if xs.containers.contains(&intersect.object) {
+                    let index = xs.containers.iter().position(|x| *x == intersect.object).unwrap();
+                    xs.containers.remove(index);
+                } else {
+                    xs.containers.push(intersect.object);
+                }
             }
 
             if intersect == &self {
@@ -85,7 +85,6 @@ impl Intersection {
                 }
                 break;
             }
-
         }
         comps
     }
@@ -125,7 +124,7 @@ impl IntoIterator for Intersections {
 #[cfg(test)]
 mod tests_intersection {
     use crate::EPSILON;
-    use crate::intersection::{Intersection, Intersections, Object};
+    use crate::intersection::{Computations, Intersection, Intersections, Object};
     use crate::matrix::Matrix;
     use crate::object::Intersectable;
     use crate::plane::Plane;
@@ -284,9 +283,7 @@ mod tests_intersection {
         let intersect5 = Intersection::new(5.25,  Object::from(c));
         let intersect6 = Intersection::new(6.,  Object::from(a));
 
-        //TODO fix the bug and make pass
         let mut xs = Intersections::new(vec![intersect1, intersect2, intersect3, intersect4, intersect5, intersect6]);
-
         let comp0 = xs.data[0].prepare_computations(ray, &mut xs);
         let comp1 = xs.data[1].prepare_computations(ray, &mut xs);
         let comp2 = xs.data[2].prepare_computations(ray, &mut xs);
@@ -311,5 +308,21 @@ mod tests_intersection {
 
         assert_eq!(comp5.n1, 1.5);
         assert_eq!(comp5.n2, 1.0);
+    }
+
+    #[test]
+    fn the_under_point_is_offset_below_the_surface() {
+        let ray = Ray::new(Tuple::point(0., 0., -5.), Tuple::vector(0., 0., 1.));
+
+        let mut shape = Sphere::grass();
+        shape.set_transform(Matrix::translation(Tuple::vector(0., 0., 1.0)));
+
+        let intersect = Intersection::new(5.,  Object::from(shape));
+        let mut xs = Intersections::new(vec![intersect]);
+
+        let comp: Computations = xs.data[0].prepare_computations(ray, &mut xs);
+
+        assert!(comp.under_point.z > EPSILON/2.);
+        assert!(comp.point.z < comp.under_point.z);
     }
 }
