@@ -45,8 +45,8 @@ fn cap11() {
     wall.set_material(material);
 
     let mut a = Sphere::grass();
-    a.material.specular = 1.;
-    a.material.diffuse = 0.15;
+    a.material.specular = 0.1;
+    a.material.diffuse = 0.1;
     a.material.reflective = 1.0;
     a.material.transparency = 1.0;
     a.material.reflactive_index = 1.5;
@@ -57,13 +57,13 @@ fn cap11() {
     b.material.specular = 0.3;
     b.material.diffuse = 0.7;
     b.material.color = Color::new(0., 1., 0.);
-    b.transform = Matrix::translation(Tuple::vector(0.33, 1., 4.5)) * Matrix::scaling(Tuple::vector(0.5, 0.5, 0.5));
+    b.transform = Matrix::translation(Tuple::vector(0.33, 0.5, 4.5)) * Matrix::scaling(Tuple::vector(0.5, 0.5, 0.5));
 
     let mut c = Sphere::default();
     c.material.specular = 0.3;
     c.material.diffuse = 0.7;
     c.material.color = Color::new(0., 0., 1.);
-    c.transform = Matrix::translation(Tuple::vector(-1.5, 1., 3.)) * Matrix::scaling(Tuple::vector(0.5, 0.5, 0.5));
+    c.transform = Matrix::translation(Tuple::vector(-1.5, 0.5, 3.)) * Matrix::scaling(Tuple::vector(0.5, 0.5, 0.5));
 
     let light = Light::point_light(Tuple::point(-10., 10., -10.), Color::new(1., 1., 1.));
 
