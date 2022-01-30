@@ -35,7 +35,7 @@ impl Material {
     pub fn glass() -> Self {
         let mut material = Material::phong();
         material.transparency = 1.;
-        material.reflactive_index = 1.5;
+        material.reflactive_index = 1.52;
         material
     }
 

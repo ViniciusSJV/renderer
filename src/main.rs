@@ -29,6 +29,51 @@ fn main() {
     //cap7();
     //cap9();
     //cap10();
+    //cap11();
+}
+
+fn cap11() {
+    let mut material = Material::phong();
+    material.specular = 0.;
+    let mut pattern1 = Checkers::default();
+    material.pattern = Option::from(Patterns::from(pattern1));
+
+    let mut floor = Plane::default();
+    floor.set_material(material);
+
+    let mut wall = Plane::default();
+    wall.set_transform(Matrix::translation(Tuple::vector(0., 0., 10.)) * Matrix::rotation_x(PI/2.));
+    wall.set_material(material);
+
+    let mut a = Sphere::grass();
+    a.transform = Matrix::translation(Tuple::vector(1.8, 1., 1.5));
+
+    let mut b = Sphere::default();
+    b.material.reflective = 1.;
+    b.material.specular = 0.3;
+    b.material.diffuse = 0.7;
+    b.transform = Matrix::translation(Tuple::vector(-1.8, 1., 1.5));
+
+    let light = Light::point_light(Tuple::point(-10., 10., -10.), Color::new(1., 1., 1.));
+
+    let obj1 = Object::from(a);
+    let obj2 = Object::from(b);
+    let obj3 = Object::from(wall);
+    let obj4 = Object::from(floor);
+
+    let world = World::new(vec![obj1, obj2, obj3, obj4], vec![light]);
+
+    let from = Tuple::point(0., 1.5, -5.);
+    let to  = Tuple::point(0., 1., 0.);
+    let up = Tuple::vector(0., 1., 0.);
+    let camera = Camera::new(1000, 500, PI/3.).with_transform(
+        from.view_transform(to, up)
+    );
+
+    let canvas = camera.render(world);
+
+    let png = canvas.to_png();
+    write("./cap11-reflection-and-refraction.png", png).expect("Error.")
 }
 
 fn cap10() {
