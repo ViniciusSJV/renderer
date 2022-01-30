@@ -82,10 +82,10 @@ impl World {
     }
 
     pub fn color_at(self, ray: Ray, remaining: u8) -> Color {
-        let mut xs = self.intersect_world(ray);
+        let xs = self.intersect_world(ray);
         if xs.hit() != None {
             let hit = xs.hit().unwrap();
-            let comps = hit.prepare_computations(ray, &mut xs);
+            let comps = hit.prepare_computations(ray, &xs);
             self.shade_hit(comps, remaining)
         } else {
             Color::black()
@@ -192,8 +192,8 @@ mod tests_world {
         let ray = Ray::new(Tuple::point(0., 0., -5.), Tuple::vector(0., 0., 1.));
         let s = w.objects[0];
         let intersection =  Intersection::new(4., s);
-        let mut xs = Intersections::new(vec![intersection]);
-        let comps = intersection.prepare_computations(ray, &mut xs);
+        let xs = Intersections::new(vec![intersection]);
+        let comps = intersection.prepare_computations(ray, &xs);
         let color = w.shade_hit(comps, 4);
 
         assert_equivalent!(color, Color::new(0.38066, 0.47583, 0.2855));
@@ -207,8 +207,8 @@ mod tests_world {
         let ray = Ray::new(Tuple::point(0., 0., 0.), Tuple::vector(0., 0., 1.));
         let s = w.objects[1];
         let intersection =  Intersection::new(0.5, s);
-        let mut xs = Intersections::new(vec![intersection]);
-        let comps = intersection.prepare_computations(ray, &mut xs);
+        let xs = Intersections::new(vec![intersection]);
+        let comps = intersection.prepare_computations(ray, &xs);
         let color = w.shade_hit(comps, 4);
 
         assert_equivalent!(color, Color::new(0.90498, 0.90498, 0.90498));
@@ -303,8 +303,8 @@ mod tests_world {
         let ray = Ray::new(Tuple::point(0., 0., 5.), Tuple::vector(0., 0., 1.));
 
         let intersection = Intersection::new(4., Object::from(s2));
-        let mut xs = Intersections::new(vec![intersection]);
-        let comps = intersection.prepare_computations(ray, &mut xs);
+        let xs = Intersections::new(vec![intersection]);
+        let comps = intersection.prepare_computations(ray, &xs);
         let color = world.shade_hit(comps, 4);
 
         assert_eq!(color, Color::new(0.1, 0.1, 0.1));
@@ -320,8 +320,8 @@ mod tests_world {
         world.objects[1] = Object::from(shape);
 
         let intersection = Intersection::new(1., Object::from(shape));
-        let mut xs = Intersections::new(vec![intersection]);
-        let comps = intersection.prepare_computations(ray, &mut xs);
+        let xs = Intersections::new(vec![intersection]);
+        let comps = intersection.prepare_computations(ray, &xs);
         let color = world.reflected_color(comps, 4);
 
         assert_eq!(color, Color::new(0., 0., 0.));
@@ -339,8 +339,8 @@ mod tests_world {
         let ray = Ray::new(Tuple::point(0., 0., -3.), Tuple::vector(0., -f64::from(2.).sqrt() / 2., f64::from(2.).sqrt() / 2.));
 
         let intersection = Intersection::new(f64::from(2.).sqrt(), Object::from(plane));
-        let mut xs = Intersections::new(vec![intersection]);
-        let comps = intersection.prepare_computations(ray, &mut xs);
+        let xs = Intersections::new(vec![intersection]);
+        let comps = intersection.prepare_computations(ray, &xs);
         let color = world.reflected_color(comps, 4);
 
         assert_equivalent!(color, Color::new(0.19033, 0.23791, 0.14274));
@@ -358,8 +358,8 @@ mod tests_world {
         let ray = Ray::new(Tuple::point(0., 0., -3.), Tuple::vector(0., -f64::from(2.).sqrt() / 2., f64::from(2.).sqrt() / 2.));
 
         let intersection = Intersection::new(f64::from(2.).sqrt(), Object::from(plane));
-        let mut xs = Intersections::new(vec![intersection]);
-        let comps = intersection.prepare_computations(ray, &mut xs);
+        let xs = Intersections::new(vec![intersection]);
+        let comps = intersection.prepare_computations(ray, &xs);
         let color = world.shade_hit(comps, 4);
 
         assert_equivalent!(color, Color::new(0.87675, 0.92434, 0.82917));
@@ -398,8 +398,8 @@ mod tests_world {
         let ray = Ray::new(Tuple::point(0., 0., -3.), Tuple::vector(0., -f64::from(2.).sqrt() / 2., f64::from(2.).sqrt() / 2.));
 
         let intersection = Intersection::new(f64::from(2.).sqrt(), Object::from(plane));
-        let mut xs = Intersections::new(vec![intersection]);
-        let comps = intersection.prepare_computations(ray, &mut xs);
+        let xs = Intersections::new(vec![intersection]);
+        let comps = intersection.prepare_computations(ray, &xs);
         let color = world.reflected_color(comps, 0);
 
         assert_equivalent!(color, Color::black());
@@ -414,8 +414,8 @@ mod tests_world {
 
         let intersect1 = Intersection::new(4.,  shape);
         let intersect2 = Intersection::new(6.,  shape);
-        let mut xs = Intersections::new(vec![intersect1, intersect2]);
-        let comp = xs.data[0].prepare_computations(ray, &mut xs);
+        let xs = Intersections::new(vec![intersect1, intersect2]);
+        let comp = xs.data[0].prepare_computations(ray, &xs);
         let color = world.refracted_color(comp, 5);
 
         assert_equivalent!(color, Color::black());
@@ -434,8 +434,8 @@ mod tests_world {
 
         let intersect1 = Intersection::new(4.,  shape);
         let intersect2 = Intersection::new(6.,  shape);
-        let mut xs = Intersections::new(vec![intersect1, intersect2]);
-        let comp = xs.data[0].prepare_computations(ray, &mut xs);
+        let xs = Intersections::new(vec![intersect1, intersect2]);
+        let comp = xs.data[0].prepare_computations(ray, &xs);
         let color = world.refracted_color(comp, 0);
 
         assert_equivalent!(color, Color::black());
@@ -454,9 +454,9 @@ mod tests_world {
 
         let intersect1 = Intersection::new(-f64::from(2.).sqrt() / 2.,  shape);
         let intersect2 = Intersection::new(f64::from(2.).sqrt() / 2.,  shape);
-        let mut xs = Intersections::new(vec![intersect1, intersect2]);
+        let xs = Intersections::new(vec![intersect1, intersect2]);
 
-        let comp = xs.data[1].prepare_computations(ray, &mut xs);
+        let comp = xs.data[1].prepare_computations(ray, &xs);
         let color = world.refracted_color(comp, 5);
 
         assert_equivalent!(color, Color::black());
@@ -484,8 +484,8 @@ mod tests_world {
         let intersect3 = Intersection::new(0.4899,  Object::from(b));
         let intersect4 = Intersection::new(0.9899,  Object::from(a));
 
-        let mut xs = Intersections::new(vec![intersect1, intersect2, intersect3, intersect4]);
-        let comp = xs.data[2].prepare_computations(ray, &mut xs);
+        let xs = Intersections::new(vec![intersect1, intersect2, intersect3, intersect4]);
+        let comp = xs.data[2].prepare_computations(ray, &xs);
 
         let color = world.refracted_color(comp, 5);
         assert_equivalent!(color, Color::new(0.08, 0.1, 0.06));
@@ -511,9 +511,9 @@ mod tests_world {
         let ray = Ray::new(Tuple::point(0., 0., -3.), Tuple::vector(0., -f64::from(2.).sqrt() / 2., f64::from(2.).sqrt() / 2.));
 
         let intersect = Intersection::new(f64::from(2.).sqrt(),  Object::from(floor));
-        let mut xs = Intersections::new(vec![intersect]);
+        let xs = Intersections::new(vec![intersect]);
 
-        let comp = xs.data[0].prepare_computations(ray, &mut xs);
+        let comp = xs.data[0].prepare_computations(ray, &xs);
         let color = world.shade_hit(comp, 5);
         assert_equivalent!(color, Color::new(0.93642, 0.68642, 0.68642));
     }

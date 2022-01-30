@@ -29,7 +29,7 @@ fn main() {
     //cap7();
     //cap9();
     //cap10();
-    //cap11();
+    cap11();
 }
 
 fn cap11() {
@@ -45,36 +45,45 @@ fn cap11() {
     wall.set_transform(Matrix::translation(Tuple::vector(0., 0., 10.)) * Matrix::rotation_x(PI/2.));
     wall.set_material(material);
 
-    //TODO Is something wrong with the glass material
     let mut a = Sphere::grass();
-    a.transform = Matrix::translation(Tuple::vector(1.8, 1., 1.5));
+    a.material.specular = 0.;
+    a.material.diffuse = 0.;
+    a.transform = Matrix::translation(Tuple::vector(0., 1., -0.5));
 
     let mut b = Sphere::default();
     b.material.reflective = 1.;
     b.material.specular = 0.3;
     b.material.diffuse = 0.7;
-    b.transform = Matrix::translation(Tuple::vector(-1.8, 1., 1.5));
+    b.material.color = Color::new(0., 1., 0.);
+    b.transform = Matrix::translation(Tuple::vector(0.33, 1., 4.5)) * Matrix::scaling(Tuple::vector(0.5, 0.5, 0.5));
+
+    let mut c = Sphere::default();
+    c.material.specular = 0.3;
+    c.material.diffuse = 0.7;
+    c.material.color = Color::new(0., 0., 1.);
+    c.transform = Matrix::translation(Tuple::vector(-1.5, 1., 3.)) * Matrix::scaling(Tuple::vector(0.5, 0.5, 0.5));
 
     let light = Light::point_light(Tuple::point(-10., 10., -10.), Color::new(1., 1., 1.));
 
     let obj1 = Object::from(a);
     let obj2 = Object::from(b);
-    let obj3 = Object::from(wall);
-    let obj4 = Object::from(floor);
+    let obj3 = Object::from(c);
+    let obj4 = Object::from(wall);
+    let obj5 = Object::from(floor);
 
-    let world = World::new(vec![obj1, obj2, obj3, obj4], vec![light]);
+    let world = World::new(vec![obj1, obj2, obj3, obj4, obj5], vec![light]);
 
     let from = Tuple::point(0., 1.5, -5.);
     let to  = Tuple::point(0., 1., 0.);
     let up = Tuple::vector(0., 1., 0.);
-    let camera = Camera::new(1000, 500, PI/3.).with_transform(
+    let camera = Camera::new(2048, 1080, PI/3.).with_transform(
         from.view_transform(to, up)
     );
 
     let canvas = camera.render(world);
 
     let png = canvas.to_png();
-    write("./cap11-reflection-and-refraction.png", png).expect("Error.")
+    write("./cap11-refraction.png", png).expect("Error.")
 }
 
 fn cap10() {
