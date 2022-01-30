@@ -45,6 +45,7 @@ fn cap11() {
     wall.set_transform(Matrix::translation(Tuple::vector(0., 0., 10.)) * Matrix::rotation_x(PI/2.));
     wall.set_material(material);
 
+    //TODO Is something wrong with the glass material
     let mut a = Sphere::grass();
     a.transform = Matrix::translation(Tuple::vector(1.8, 1., 1.5));
 
