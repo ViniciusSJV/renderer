@@ -33,6 +33,13 @@ impl World {
         }
         let reflected = self.clone().reflected_color(comps, remaining);
         let refracted = self.clone().refracted_color(comps, remaining);
+
+        let material = comps.object.material();
+        if material.reflective > 0. && material.transparency > 0. {
+            let reflectance = comps.schlick();
+            return surface + reflected * reflectance + refracted * (1. - reflectance);
+        }
+
         surface + reflected + refracted
     }
 
@@ -516,5 +523,33 @@ mod tests_world {
         let comp = xs.data[0].prepare_computations(ray, &xs);
         let color = world.shade_hit(comp, 5);
         assert_equivalent!(color, Color::new(0.93642, 0.68642, 0.68642));
+    }
+
+    #[test]
+    fn shade_hit_with_a_reflective_or_transparent_material() {
+        let mut world = create_default_world();
+        let mut floor = Plane::default();
+        floor.set_transform(Matrix::translation(Tuple::vector(0., -1., 0.)));
+        floor.material.reflective = 0.5;
+        floor.material.transparency = 0.5;
+        floor.material.reflactive_index = 1.5;
+
+        world.objects.push(Object::from(floor));
+
+        let mut ball = Sphere::default();
+        ball.material.color = Color::new(1., 0., 0.);
+        ball.material.ambient = 0.5;
+        ball.set_transform(Matrix::translation(Tuple::vector(0., -3.5, -0.5)));
+
+        world.objects.push(Object::from(ball));
+
+        let ray = Ray::new(Tuple::point(0., 0., -3.), Tuple::vector(0., -f64::from(2.).sqrt() / 2., f64::from(2.).sqrt() / 2.));
+
+        let intersect = Intersection::new(f64::from(2.).sqrt(),  Object::from(floor));
+        let xs = Intersections::new(vec![intersect]);
+
+        let comp = xs.data[0].prepare_computations(ray, &xs);
+        let color = world.shade_hit(comp, 5);
+        assert_equivalent!(color, Color::new(0.93391, 0.69643, 0.69243));
     }
 }

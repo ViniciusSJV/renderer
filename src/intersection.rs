@@ -45,12 +45,8 @@ impl Computations {
         }
     }
 
-    fn schlick(self) -> f64 {
+    pub fn schlick(self) -> f64 {
         let mut cos = self.eye_v.dot(self.normal_v);
-
-        println!("n1 identity: {:?}", self.n1);
-        println!("n2 identity: {:?}", self.n2);
-
         if self.n1 > self.n2 {
             let n = self.n1 / self.n2;
             let sin2_t = n.powi(2) * (1.0 - cos.powi(2));

@@ -34,7 +34,6 @@ fn main() {
 
 fn cap11() {
     let mut material = Material::phong();
-    material.specular = 0.;
     let mut pattern1 = Checkers::default();
     material.pattern = Option::from(Patterns::from(pattern1));
 
@@ -46,12 +45,15 @@ fn cap11() {
     wall.set_material(material);
 
     let mut a = Sphere::grass();
-    a.material.specular = 0.;
-    a.material.diffuse = 0.;
+    a.material.specular = 1.;
+    a.material.diffuse = 0.15;
+    a.material.reflective = 1.0;
+    a.material.transparency = 1.0;
+    a.material.reflactive_index = 1.5;
+    a.material.shininess = 300.;
     a.transform = Matrix::translation(Tuple::vector(0., 1., -0.5));
 
     let mut b = Sphere::default();
-    b.material.reflective = 1.;
     b.material.specular = 0.3;
     b.material.diffuse = 0.7;
     b.material.color = Color::new(0., 1., 0.);
@@ -83,7 +85,7 @@ fn cap11() {
     let canvas = camera.render(world);
 
     let png = canvas.to_png();
-    write("./cap11-refraction.png", png).expect("Error.")
+    write("./cap11-final-fresnel-effect.png", png).expect("Error.")
 }
 
 fn cap10() {
