@@ -26,11 +26,8 @@ impl World {
 
     pub fn shade_hit(self, comps: Computations, remaining: u8) -> Color {
         let mut surface = Color::black();
-        //TODO What happens if I have two light sources in opposite directions on the X axis, like (-10, 10, 0) and (10, 10, 0)?
-        // Shadows that receive light directly should be softer.
-        // Implement this in the future
-        let shadowed = self.clone().is_shadowed(comps.over_point);
         for &light in self.lights.iter() {
+            let shadowed = self.clone().is_shadowed(comps.over_point, light);
             let color = comps.object.material().lighting(comps.object, light, comps.over_point, comps.eye_v, comps.normal_v, shadowed);
             surface = surface + color;
         }
@@ -73,19 +70,17 @@ impl World {
         self.color_at(refract_ray, remaining - 1) * comps.object.material().transparency
     }
 
-    pub fn is_shadowed(self, point: Tuple) -> bool {
-        for &light in self.lights.iter() {
-            let shadow_vector : Tuple = light.position - point;
-            let distance = shadow_vector.length();
-            let direction = shadow_vector.normalize();
+    pub fn is_shadowed(self, point: Tuple, light: Light) -> bool {
+        let shadow_vector : Tuple = light.position - point;
+        let distance = shadow_vector.length();
+        let direction = shadow_vector.normalize();
 
-            let shadow_ray  = Ray::new(point, direction);
-            let intersections = self.intersect_world(shadow_ray);
+        let shadow_ray  = Ray::new(point, direction);
+        let intersections = self.intersect_world(shadow_ray);
 
-            if let Some(hit) = intersections.hit() {
-                if hit.t < distance {
-                    return true;
-                }
+        if let Some(hit) = intersections.hit() {
+            if hit.t < distance {
+                return true;
             }
         }
         false
@@ -270,32 +265,32 @@ mod tests_world {
     fn there_is_no_shadow_when_nothing_is_collinear_with_point_and_light() {
         let world = create_default_world();
         let p = Tuple::point(0., 10., 0.);
-
-        assert_eq!(world.is_shadowed(p), false);
+        let light = world.lights[0];
+        assert_eq!(world.is_shadowed(p, light), false);
     }
 
     #[test]
     fn the_shadow_when_an_object_is_between_the_point_and_the_light() {
         let world = create_default_world();
         let p = Tuple::point(10., -10., 10.);
-
-        assert!(world.is_shadowed(p));
+        let light = world.lights[0];
+        assert!(world.is_shadowed(p, light));
     }
 
     #[test]
     fn the_is_no_shadow_when_an_object_is_behind_the_light() {
         let world = create_default_world();
         let p = Tuple::point(-20., 20., -20.);
-
-        assert_eq!(world.is_shadowed(p), false);
+        let light = world.lights[0];
+        assert_eq!(world.is_shadowed(p, light), false);
     }
 
     #[test]
     fn the_is_no_shadow_when_an_object_is_behind_the_point() {
         let world = create_default_world();
         let p = Tuple::point(-2., 2., -2.);
-
-        assert_eq!(world.is_shadowed(p), false);
+        let light = world.lights[0];
+        assert_eq!(world.is_shadowed(p, light), false);
     }
 
     #[test]
