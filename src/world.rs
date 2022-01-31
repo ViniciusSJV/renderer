@@ -26,6 +26,9 @@ impl World {
 
     pub fn shade_hit(self, comps: Computations, remaining: u8) -> Color {
         let mut surface = Color::black();
+        //TODO What happens if I have two light sources in opposite directions on the X axis, like (-10, 10, 0) and (10, 10, 0)?
+        // Shadows that receive light directly should be softer.
+        // Implement this in the future
         let shadowed = self.clone().is_shadowed(comps.over_point);
         for &light in self.lights.iter() {
             let color = comps.object.material().lighting(comps.object, light, comps.over_point, comps.eye_v, comps.normal_v, shadowed);
