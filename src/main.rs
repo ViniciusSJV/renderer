@@ -45,7 +45,6 @@ fn cap11() {
     wall.set_material(material);
 
     let mut a = Sphere::grass();
-    a.material.color = Color::new(0., 0.8, 0.0);
     a.material.specular = 0.1;
     a.material.diffuse = 0.8;
     a.material.shininess = 300.;
