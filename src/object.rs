@@ -4,6 +4,7 @@ use crate::sphere::Sphere;
 use crate::materials::Material;
 use crate::matrix::Matrix;
 use crate::plane::Plane;
+use crate::cube::Cube;
 use crate::tuple::Tuple;
 
 pub trait Intersectable {
@@ -31,7 +32,8 @@ pub trait Intersectable {
 #[derive(Debug, PartialEq, Clone, Copy)]
 pub enum Object {
     Sphere(Sphere),
-    Plane(Plane)
+    Plane(Plane),
+    Cube(Cube)
 }
 
 impl From<Sphere> for Object {
@@ -46,11 +48,18 @@ impl From<Plane> for Object {
     }
 }
 
+impl From<Cube> for Object {
+    fn from(cube: Cube) -> Self {
+        Object::Cube(cube)
+    }
+}
+
 impl Intersectable for Object {
     fn local_intersect(&self, local_ray: Ray) -> Intersections {
         match *self {
             Object::Sphere(ref sphere) => sphere.local_intersect(local_ray),
             Object::Plane(ref plane) => plane.local_intersect(local_ray),
+            Object::Cube(ref cube) => cube.local_intersect(local_ray),
         }
     }
 
@@ -58,6 +67,7 @@ impl Intersectable for Object {
         match *self {
             Object::Sphere(ref sphere) => sphere.local_normal_at(point),
             Object::Plane(ref plane) => plane.local_normal_at(point),
+            Object::Cube(ref cube) => cube.local_normal_at(point),
         }
     }
 
@@ -65,6 +75,7 @@ impl Intersectable for Object {
         match *self {
             Object::Sphere(ref sphere) => sphere.material,
             Object::Plane(ref plane) => plane.material,
+            Object::Cube(ref cube) => cube.material,
         }
     }
 
@@ -72,6 +83,7 @@ impl Intersectable for Object {
         match *self {
             Object::Sphere(ref sphere) => sphere.transform,
             Object::Plane(ref plane) => plane.transform,
+            Object::Cube(ref cube) => cube.transform,
         }
     }
 
@@ -79,6 +91,7 @@ impl Intersectable for Object {
         match *self {
             Object::Sphere(ref mut sphere) => sphere.material = material,
             Object::Plane(ref mut plane) => plane.material = material,
+            Object::Cube(ref mut cube) => cube.material = material,
         }
     }
 
@@ -86,6 +99,7 @@ impl Intersectable for Object {
         match *self {
             Object::Sphere(ref mut sphere) => sphere.transform = transform,
             Object::Plane(ref mut plane) => plane.transform = transform,
+            Object::Cube(ref mut cube) => cube.transform = transform,
         }
     }
 }

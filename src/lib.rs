@@ -16,3 +16,4 @@ pub mod transformations;
 pub mod camera;
 pub mod plane;
 pub mod patterns;
+pub mod cube;
