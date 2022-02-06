@@ -9,7 +9,7 @@ use renderer::lights::Light;
 use renderer::materials::Material;
 use renderer::matrix::Matrix;
 use renderer::object::{Intersectable, Object};
-use renderer::patterns::{Checkers, Incuse, Patterns, Ring};
+use renderer::patterns::{Checkers, Incuse, Patterns, Stripe};
 use renderer::plane::Plane;
 use renderer::transformations::Transform;
 use renderer::tuple::Tuple;
@@ -42,7 +42,7 @@ fn main() {
     let mut c = Cube::default();
     c.material.specular = 0.3;
     c.material.diffuse = 0.7;
-    let mut ring = Ring::new(Color::new(0.6, 0., 0.4), Color::new(0., 0.5, 0.2));
+    let mut ring = Stripe::new(Color::new(0.6, 0., 0.4), Color::new(0., 0.5, 0.2));
     ring.set_pattern_transform(Matrix::scaling(Tuple::vector(0.1, 0.1, 0.1)));
     c.material.pattern = Option::from(Patterns::from(ring));
     c.transform = Matrix::translation(Tuple::vector(2.5, 0.5, 6.)) * Matrix::scaling(Tuple::vector(0.5, 1.5, 0.5));
