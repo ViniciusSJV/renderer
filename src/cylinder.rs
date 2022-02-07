@@ -10,7 +10,7 @@ use crate::equivalent::Equivalence;
 
 #[derive(Debug, PartialEq, Clone, Copy)]
 pub struct Cylinder {
-    pub origin: Tuple, pub material: Material, pub transform: Matrix<4>, pub minimum: f64, pub maximum: f64, closed: bool
+    pub origin: Tuple, pub material: Material, pub transform: Matrix<4>, pub minimum: f64, pub maximum: f64, pub closed: bool
 }
 
 impl Cylinder {

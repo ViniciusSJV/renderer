@@ -10,7 +10,7 @@ use crate::equivalent::Equivalence;
 
 #[derive(Debug, PartialEq, Clone, Copy)]
 pub struct Cone {
-    pub origin: Tuple, pub material: Material, pub transform: Matrix<4>, pub minimum: f64, pub maximum: f64, closed: bool
+    pub origin: Tuple, pub material: Material, pub transform: Matrix<4>, pub minimum: f64, pub maximum: f64, pub closed: bool
 }
 
 impl Cone {
@@ -24,9 +24,10 @@ impl Cone {
 
     fn check_cap(self, ray: Ray, t: f64) -> bool {
         let x = ray.origin.x + t * ray.direction.x;
+        let y = ray.origin.y + t * ray.direction.y;
         let z = ray.origin.z + t * ray.direction.z;
 
-        (x.powi(2) + z.powi(2)) <= (ray.origin.y + t * ray.direction.y).abs()
+        (x.powi(2) + z.powi(2)) <= y.abs()
     }
 
     fn intersect_caps(&self, ray: Ray, xs: &mut Intersections) {
