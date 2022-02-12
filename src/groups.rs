@@ -4,8 +4,6 @@ use std::ops::Index;
 use crate::matrix::Matrix;
 use crate::object::Object;
 
-// GROUPS
-
 #[derive(Debug, PartialEq, Clone)]
 pub struct Groups {
     data: Vec<Object>,
@@ -56,61 +54,6 @@ impl Groups {
         self.data.is_empty()
     }
 }
-
-// GROUPS
-
-// PARENT
-
-#[derive(Debug, PartialEq, Clone)]
-pub struct Parent {
-    data: Vec<Object>
-}
-
-impl Default for Parent {
-    fn default() -> Self {
-        Parent::from(vec![])
-    }
-}
-
-impl IntoIterator for Parent {
-    type Item = Object;
-    type IntoIter = std::vec::IntoIter<Self::Item>;
-
-    fn into_iter(self) -> Self::IntoIter {
-        self.data.into_iter()
-    }
-}
-
-impl From<Vec<Object>> for Parent {
-    fn from(v: Vec<Object>) -> Self {
-        Self::new(v)
-    }
-}
-
-impl Index<usize> for Parent {
-    type Output = Object;
-    fn index(&self, index: usize) -> &Self::Output {
-        &self.data[index]
-    }
-}
-
-impl Parent {
-    fn new(data: Vec<Object>) -> Self {
-        Parent {
-            data
-        }
-    }
-
-    pub fn len(&self) -> usize {
-        self.data.len()
-    }
-
-    pub fn is_empty(&self) -> bool {
-        self.data.is_empty()
-    }
-}
-
-// PARENT
 
 #[cfg(test)]
 mod tests_groups {
