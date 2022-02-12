@@ -1,4 +1,5 @@
 use crate::color::Color;
+use crate::equivalent::Equivalence;
 use crate::intersection::{Computations, Intersections};
 use crate::lights::Light;
 use crate::object::{Intersectable, Object};
@@ -44,7 +45,7 @@ impl World {
     }
 
     pub fn reflected_color(self, comps: Computations, remaining: u8) -> Color {
-        if comps.object.material().reflective == 0. || remaining <= 0 {
+        if (comps.object.material().reflective).equivalent(0.) || remaining <= 0 {
             return Color::black()
         }
         let reflect_ray = Ray::new(comps.over_point, comps.reflect_v);
@@ -53,7 +54,7 @@ impl World {
     }
 
     pub fn refracted_color(self, comps: Computations, remaining: u8) -> Color {
-        if comps.object.material().transparency == 0. || remaining <= 0 {
+        if (comps.object.material().transparency).equivalent(0.) || remaining <= 0 {
             return Color::black();
         }
 

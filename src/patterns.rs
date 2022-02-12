@@ -1,4 +1,5 @@
 use crate::color::Color;
+use crate::equivalent::Equivalence;
 use crate::matrix::Matrix;
 use crate::object::{Intersectable, Object};
 use crate::tuple::Tuple;
@@ -173,7 +174,7 @@ impl Incuse for Stripe {
 
     fn color_at(&self, point: Tuple) -> Color {
         let x = point.x;
-        if x.floor().abs() % 2. == 0. {
+        if (x.floor() % 2.).equivalent(0.) {
             self.color_a
         } else {
             self.color_b
@@ -226,7 +227,7 @@ impl Incuse for Ring {
     }
 
     fn color_at(&self, point: Tuple) -> Color {
-        if (point.x.powi(2) + point.z.powi(2)).sqrt().floor() % 2. == 0. {
+        if ((point.x.powi(2) + point.z.powi(2)).sqrt().floor() % 2.).equivalent(0.) {
             self.color_a
         } else {
             self.color_b
@@ -252,7 +253,7 @@ impl Incuse for Checkers {
     }
 
     fn color_at(&self, point: Tuple) -> Color {
-        if (point.x.floor() + point.y.floor() + point.z.floor()) % 2. == 0. {
+        if ((point.x.floor() + point.y.floor() + point.z.floor()) % 2.).equivalent(0.) {
             self.color_a
         } else {
             self.color_b
