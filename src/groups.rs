@@ -1,4 +1,4 @@
-// @TODO: Find an implementation way to prevent the "field does not implement `Copy`" error for type Vec
+// @TODO: Find an implementation way to prevent the "field does not implement `Copy`" error for type Vec using a bidirectional tree structure
 
 use std::ops::Index;
 use crate::matrix::Matrix;
