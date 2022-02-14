@@ -6,7 +6,7 @@ use crate::object::Object;
 
 #[derive(Debug, PartialEq, Clone)]
 pub struct Groups {
-    data: Vec<Object>,
+    pub children: Vec<Object>,
     pub transform: Matrix<4>
 }
 
@@ -17,15 +17,15 @@ impl Default for Groups {
 }
 
 impl From<Vec<Object>> for Groups {
-    fn from(v: Vec<Object>) -> Self {
-        Self::new(v)
+    fn from(children: Vec<Object>) -> Self {
+        Self::new(children)
     }
 }
 
 impl Index<usize> for Groups {
     type Output = Object;
     fn index(&self, index: usize) -> &Self::Output {
-        &self.data[index]
+        &self.children[index]
     }
 }
 
@@ -34,24 +34,20 @@ impl IntoIterator for Groups {
     type IntoIter = std::vec::IntoIter<Self::Item>;
 
     fn into_iter(self) -> Self::IntoIter {
-        self.data.into_iter()
+        self.children.into_iter()
     }
 }
 
 impl Groups {
-    fn new(data: Vec<Object>) -> Self {
+    fn new(children: Vec<Object>) -> Self {
         Groups {
-            data,
+            children,
             transform: Matrix::identity()
         }
     }
 
     pub fn len(&self) -> usize {
-        self.data.len()
-    }
-
-    pub fn is_empty(&self) -> bool {
-        self.data.is_empty()
+        self.children.len()
     }
 }
 

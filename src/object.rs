@@ -7,6 +7,7 @@ use crate::matrix::Matrix;
 use crate::plane::Plane;
 use crate::cube::Cube;
 use crate::cylinder::Cylinder;
+use crate::triangle::Triangle;
 use crate::tuple::Tuple;
 
 pub trait Intersectable {
@@ -37,7 +38,8 @@ pub enum Object {
     Plane(Plane),
     Cube(Cube),
     Cylinder(Cylinder),
-    Cone(Cone)
+    Cone(Cone),
+    Triangle(Triangle)
 }
 
 impl From<Sphere> for Object {
@@ -70,6 +72,12 @@ impl From<Cone> for Object {
     }
 }
 
+impl From<Triangle> for Object {
+    fn from(triangle: Triangle) -> Self {
+        Object::Triangle(triangle)
+    }
+}
+
 impl Intersectable for Object {
     fn local_intersect(&self, local_ray: Ray) -> Intersections {
         match *self {
@@ -78,6 +86,7 @@ impl Intersectable for Object {
             Object::Cube(ref cube) => cube.local_intersect(local_ray),
             Object::Cylinder(ref cylinder) => cylinder.local_intersect(local_ray),
             Object::Cone(ref cone) => cone.local_intersect(local_ray),
+            Object::Triangle(ref triangle) => triangle.local_intersect(local_ray),
         }
     }
 
@@ -88,6 +97,7 @@ impl Intersectable for Object {
             Object::Cube(ref cube) => cube.local_normal_at(point),
             Object::Cylinder(ref cylinder) => cylinder.local_normal_at(point),
             Object::Cone(ref cone) => cone.local_normal_at(point),
+            Object::Triangle(ref triangle) => triangle.local_normal_at(point),
         }
     }
 
@@ -98,6 +108,7 @@ impl Intersectable for Object {
             Object::Cube(ref cube) => cube.material,
             Object::Cylinder(ref cylinder) => cylinder.material,
             Object::Cone(ref cone) => cone.material,
+            Object::Triangle(ref triangle) => triangle.material,
         }
     }
 
@@ -108,6 +119,7 @@ impl Intersectable for Object {
             Object::Cube(ref cube) => cube.transform,
             Object::Cylinder(ref cylinder) => cylinder.transform,
             Object::Cone(ref cone) => cone.transform,
+            Object::Triangle(ref triangle) => triangle.transform,
         }
     }
 
@@ -118,6 +130,7 @@ impl Intersectable for Object {
             Object::Cube(ref mut cube) => cube.material = material,
             Object::Cylinder(ref mut cylinder) => cylinder.material = material,
             Object::Cone(ref mut cone) => cone.material = material,
+            Object::Triangle(ref mut triangle) => triangle.material = material,
         }
     }
 
@@ -128,6 +141,7 @@ impl Intersectable for Object {
             Object::Cube(ref mut cube) => cube.transform = transform,
             Object::Cylinder(ref mut cylinder) => cylinder.transform = transform,
             Object::Cone(ref mut cone) => cone.transform = transform,
+            Object::Triangle(ref mut triangle) => triangle.transform = transform,
         }
     }
 }
