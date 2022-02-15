@@ -27,7 +27,7 @@ fn main() {
     wall.set_transform(Matrix::translation(Tuple::vector(0., 0., 10.)) * Matrix::rotation_x(PI/2.));
     wall.set_material(material);
 
-    let mut a = Sphere::grass();
+    let mut a = Sphere::grass(1.);
     a.material.specular = 0.1;
     a.material.diffuse = 0.8;
     a.material.shininess = 300.;

@@ -155,7 +155,7 @@ mod tests_object {
 
     #[test]
     pub fn an_intersection_encapsulate_t_and_object() {
-        let sphere = Sphere::new(Tuple::point(0., 0., 0.));
+        let sphere = Sphere::new(Tuple::point(0., 0., 0.), 1.);
         let object = Object::from(sphere);
 
         let intersect = Intersection::new(3.5, object);

@@ -149,7 +149,7 @@ mod tests_intersection {
 
     #[test]
     pub fn aggregating_intersection() {
-        let sphere = Sphere::new(Tuple::point(0., 0., 0.));
+        let sphere = Sphere::new(Tuple::point(0., 0., 0.), 1.);
 
         let intersect1 = Intersection::new(1.,  Object::from(sphere));
         let intersect2 = Intersection::new(2.,  Object::from(sphere));
@@ -164,7 +164,7 @@ mod tests_intersection {
     #[test]
     fn intersect_sets_the_object_on_the_intersection() {
         let ray = Ray::new(Tuple::point(0., 0., -5.), Tuple::vector(0., 0., 1.));
-        let sphere = Sphere::new(Tuple::point(0., 0., 0.));
+        let sphere = Sphere::new(Tuple::point(0., 0., 0.), 1.);
 
         let xs = sphere.intersect(ray);
         assert_eq!(xs.data.len(), 2);
@@ -174,7 +174,7 @@ mod tests_intersection {
 
     #[test]
     fn the_hit_when_all_intersection_have_positive_t() {
-        let sphere = Sphere::new(Tuple::point(0., 0., 0.));
+        let sphere = Sphere::new(Tuple::point(0., 0., 0.), 1.);
 
         let intersect1 = Intersection::new(1.,  Object::from(sphere));
         let intersect2 = Intersection::new(2.,  Object::from(sphere));
@@ -186,7 +186,7 @@ mod tests_intersection {
 
     #[test]
     fn the_hit_when_some_intersection_have_negative_t() {
-        let sphere = Sphere::new(Tuple::point(0., 0., 0.));
+        let sphere = Sphere::new(Tuple::point(0., 0., 0.), 1.);
 
         let intersect1 = Intersection::new(-1.,  Object::from(sphere));
         let intersect2 = Intersection::new(1.,  Object::from(sphere));
@@ -198,7 +198,7 @@ mod tests_intersection {
 
     #[test]
     fn the_hit_when_all_intersection_have_negative_t() {
-        let sphere = Sphere::new(Tuple::point(0., 0., 0.));
+        let sphere = Sphere::new(Tuple::point(0., 0., 0.), 1.);
 
         let intersect1 = Intersection::new(-2.,  Object::from(sphere));
         let intersect2 = Intersection::new(-1.,  Object::from(sphere));
@@ -210,7 +210,7 @@ mod tests_intersection {
 
     #[test]
     fn the_hit_is_always_the_have_lowest_nonnegative_intersection() {
-        let sphere = Sphere::new(Tuple::point(0., 0., 0.));
+        let sphere = Sphere::new(Tuple::point(0., 0., 0.), 1.);
 
         let intersect1 = Intersection::new(5.,  Object::from(sphere));
         let intersect2 = Intersection::new(7.,  Object::from(sphere));
@@ -277,15 +277,15 @@ mod tests_intersection {
 
     #[test]
     fn finding_n1_and_n2_at_various_intersections() {
-        let mut a = Sphere::grass();
+        let mut a = Sphere::grass(1.);
         a.set_transform(Matrix::scaling(Tuple::vector(2., 2., 2.)));
         a.material.reflactive_index = 1.5;
 
-        let mut b = Sphere::grass();
+        let mut b = Sphere::grass(1.);
         b.set_transform(Matrix::translation(Tuple::vector(0., 0., -0.25)));
         b.material.reflactive_index = 2.;
 
-        let mut c = Sphere::grass();
+        let mut c = Sphere::grass(1.);
         c.set_transform(Matrix::translation(Tuple::vector(0., 0., 0.25)));
         c.material.reflactive_index = 2.5;
 
@@ -329,7 +329,7 @@ mod tests_intersection {
     fn the_under_point_is_offset_below_the_surface() {
         let ray = Ray::new(Tuple::point(0., 0., -5.), Tuple::vector(0., 0., 1.));
 
-        let mut shape = Sphere::grass();
+        let mut shape = Sphere::grass(1.);
         shape.set_transform(Matrix::translation(Tuple::vector(0., 0., 1.0)));
 
         let intersect = Intersection::new(5.,  Object::from(shape));
@@ -342,7 +342,7 @@ mod tests_intersection {
 
     #[test]
     fn the_schlick_approximation_under_total_internal_reflection() {
-        let shape = Sphere::grass();
+        let shape = Sphere::grass(1.);
         let ray = Ray::new(Tuple::point(0., 0., f64::from(2.).sqrt() / 2.), Tuple::vector(0., 1., 0.));
         let intersect1 = Intersection::new(-f64::from(2.).sqrt() / 2.,  Object::from(shape));
         let intersect2 = Intersection::new(f64::from(2.).sqrt() / 2.,  Object::from(shape));
@@ -355,7 +355,7 @@ mod tests_intersection {
 
     #[test]
     fn the_schlick_approximation_with_a_perpendicular_viewing_angle() {
-        let shape = Sphere::grass();
+        let shape = Sphere::grass(1.);
         let ray = Ray::new(Tuple::point(0., 0., 0.), Tuple::vector(0., 1., 0.));
 
         let intersect1 = Intersection::new(-1.,  Object::from(shape));
@@ -369,7 +369,7 @@ mod tests_intersection {
 
     #[test]
     fn the_schlick_approximation_with_small_angle_and_n2_larger_n1() {
-        let shape = Sphere::grass();
+        let shape = Sphere::grass(1.);
         let ray = Ray::new(Tuple::point(0., 0.99, -2.), Tuple::vector(0., 0., 1.));
 
         let intersect1 = Intersection::new(1.8589,  Object::from(shape));

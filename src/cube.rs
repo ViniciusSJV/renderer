@@ -9,19 +9,19 @@ use crate::tuple::Tuple;
 
 #[derive(Debug, PartialEq, Clone, Copy)]
 pub struct Cube {
-    pub origin: Tuple, pub material: Material, pub transform: Matrix<4>
+    pub origin: Tuple, pub material: Material, pub transform: Matrix<4>, pub radius: Tuple
 }
 
 impl Cube {
-    pub fn new(origin: Tuple) -> Self {
+    pub fn new(origin: Tuple, radius: Tuple) -> Self {
         let transform = Matrix::identity();
         let material = Material::phong();
-        Cube { origin, material, transform }
+        Cube { origin, material, transform, radius }
     }
 
-    fn check_axis(self, origin: f64, direction: f64) -> (f64, f64) {
-        let tmin_numerator = -1. - origin;
-        let tmax_numerator = 1. - origin;
+    fn check_axis(self, origin: f64, direction: f64, radius: f64) -> (f64, f64) {
+        let tmin_numerator = -radius - origin;
+        let tmax_numerator = radius - origin;
 
         let mut tmin;
         let mut tmax;
@@ -44,15 +44,15 @@ impl Cube {
 
 impl Default for Cube {
     fn default() -> Self {
-        Cube::new(Tuple::point(0., 0., 0.))
+        Cube::new(Tuple::point(0., 0., 0.), Tuple::point(1., 1., 1.))
     }
 }
 
 impl Intersectable for Cube {
     fn local_intersect(&self, local_ray: Ray) -> Intersections {
-        let (xt_min, xt_max) = self.check_axis(local_ray.origin.x, local_ray.direction.x);
-        let (yt_min, yt_max) = self.check_axis(local_ray.origin.y, local_ray.direction.y);
-        let (zt_min, zt_max) = self.check_axis(local_ray.origin.z, local_ray.direction.z);
+        let (xt_min, xt_max) = self.check_axis(local_ray.origin.x, local_ray.direction.x, self.radius.x);
+        let (yt_min, yt_max) = self.check_axis(local_ray.origin.y, local_ray.direction.y, self.radius.y);
+        let (zt_min, zt_max) = self.check_axis(local_ray.origin.z, local_ray.direction.z, self.radius.z);
 
         let arr_min = vec![xt_min, yt_min, zt_min];
         let arr_max = vec![xt_max, yt_max, zt_max];

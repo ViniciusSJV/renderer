@@ -19,7 +19,7 @@ fn main() {
 
     let mut canvas = Canvas::new(canvas_pixel, canvas_pixel);
     let red = Color::new(1., 0., 0.);
-    let mut sphere = Sphere::new(Tuple::point(0., 0., 0.));
+    let mut sphere = Sphere::new(Tuple::point(0., 0., 0.), 1.);
     let ray_origin = Tuple::point(0., 0., -5.);
 
     for y in 0..canvas_pixel {

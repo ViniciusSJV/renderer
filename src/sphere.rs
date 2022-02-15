@@ -6,25 +6,25 @@ use crate::object::{Intersectable, Object};
 use crate::tuple::Tuple;
 
 #[derive(Debug, PartialEq, Clone, Copy)]
-pub struct Sphere { pub origin: Tuple, pub material: Material, pub transform: Matrix<4>}
+pub struct Sphere { pub origin: Tuple, pub material: Material, pub transform: Matrix<4>, pub radius: f64}
 
 impl Sphere {
-    pub fn new(origin: Tuple) -> Self {
+    pub fn new(origin: Tuple, radius: f64) -> Self {
         let transform = Matrix::identity();
         let material = Material::phong();
-        Sphere { origin, material, transform }
+        Sphere { origin, material, transform, radius }
     }
 
-    pub fn grass() -> Self {
+    pub fn grass(radius: f64) -> Self {
         let transform = Matrix::identity();
         let material = Material::glass();
-        Sphere { origin: Tuple::point(0., 0., 0.), material, transform }
+        Sphere { origin: Tuple::point(0., 0., 0.), material, transform, radius }
     }
 }
 
 impl Default for Sphere {
     fn default() -> Self {
-        Sphere::new(Tuple::point(0., 0., 0.))
+        Sphere::new(Tuple::point(0., 0., 0.), 1.)
     }
 }
 
@@ -33,7 +33,7 @@ impl Intersectable for Sphere {
         let sphere_to_ray = local_ray.origin - self.origin;
         let a = local_ray.direction.dot(local_ray.direction);
         let b = 2. * local_ray.direction.dot(sphere_to_ray);
-        let c = sphere_to_ray.dot(sphere_to_ray) - 1.;
+        let c = sphere_to_ray.dot(sphere_to_ray) - self.radius;
 
         let discriminant = b.powi(2) - 4. * a * c;
 
@@ -86,7 +86,7 @@ mod tests_sphere {
             Tuple::vector(0., 0., 1.)
         );
 
-        let sphere = Sphere::new(Tuple::point(0., 0., 0.));
+        let sphere = Sphere::new(Tuple::point(0., 0., 0.), 1.);
         let xs = sphere.intersect(ray);
 
         assert_eq!(xs.data.len(), 2);
@@ -101,7 +101,7 @@ mod tests_sphere {
             Tuple::vector(0., 0., 1.)
         );
 
-        let sphere = Sphere::new(Tuple::point(0., 0., 0.));
+        let sphere = Sphere::new(Tuple::point(0., 0., 0.), 1.);
         let xs = sphere.intersect(ray);
 
         assert_eq!(xs.data.len(), 2);
@@ -116,7 +116,7 @@ mod tests_sphere {
             Tuple::vector(0., 0., 1.)
         );
 
-        let sphere = Sphere::new(Tuple::point(0., 0., 0.));
+        let sphere = Sphere::new(Tuple::point(0., 0., 0.), 1.);
         let xs = sphere.intersect(ray);
 
         assert_eq!(xs.data.len(), 0);
@@ -129,7 +129,7 @@ mod tests_sphere {
             Tuple::vector(0., 0., 1.)
         );
 
-        let sphere = Sphere::new(Tuple::point(0., 0., 0.));
+        let sphere = Sphere::new(Tuple::point(0., 0., 0.), 1.);
         let xs = sphere.intersect(ray);
 
         assert_eq!(xs.data.len(), 2);
@@ -144,7 +144,7 @@ mod tests_sphere {
             Tuple::vector(0., 0., 1.)
         );
 
-        let sphere = Sphere::new(Tuple::point(0., 0., 0.));
+        let sphere = Sphere::new(Tuple::point(0., 0., 0.), 1.);
         let xs = sphere.intersect(ray);
 
         assert_eq!(xs.data.len(), 2);
@@ -154,14 +154,14 @@ mod tests_sphere {
 
     #[test]
     fn a_sphere_default_transformation() {
-        let sphere = Sphere::new(Tuple::point(0., 0., 0.));
+        let sphere = Sphere::new(Tuple::point(0., 0., 0.), 1.);
 
         assert_eq!(sphere.transform, Matrix::identity());
     }
 
     #[test]
     fn changing_a_sphere_transformation() {
-        let mut sphere = Sphere::new(Tuple::point(0., 0., 0.));
+        let mut sphere = Sphere::new(Tuple::point(0., 0., 0.), 1.);
         let translation = Matrix::translation(Tuple::vector(2., 3.,4.));
         sphere.set_transform(translation);
 
@@ -174,7 +174,7 @@ mod tests_sphere {
             Tuple::point(0., 0., -5.),
             Tuple::vector(0., 0., 1.)
         );
-        let mut sphere = Sphere::new(Tuple::point(0., 0., 0.));
+        let mut sphere = Sphere::new(Tuple::point(0., 0., 0.), 1.);
         let scaling = Matrix::scaling(Tuple::vector(2., 2., 2.));
 
         sphere.set_transform(scaling);
@@ -191,7 +191,7 @@ mod tests_sphere {
             Tuple::point(0., 0., -5.),
             Tuple::vector(0., 0., 1.)
         );
-        let mut sphere = Sphere::new(Tuple::point(0., 0., 0.));
+        let mut sphere = Sphere::new(Tuple::point(0., 0., 0.), 1.);
         let translation = Matrix::translation(Tuple::vector(5., 0., 0.));
 
         sphere.set_transform(translation);
@@ -202,7 +202,7 @@ mod tests_sphere {
 
     #[test]
     fn the_normal_on_a_sphere_at_a_point_on_the_x_axis() {
-        let sphere = Sphere::new(Tuple::point(0., 0., 0.));
+        let sphere = Sphere::new(Tuple::point(0., 0., 0.), 1.);
         let normal = sphere.normal_at(Tuple::point(1., 0., 0.));
 
         assert_equivalent!(normal, Tuple::vector(1., 0., 0.));
@@ -210,7 +210,7 @@ mod tests_sphere {
 
     #[test]
     fn the_normal_on_a_sphere_at_a_point_on_the_y_axis() {
-        let sphere = Sphere::new(Tuple::point(0., 0., 0.));
+        let sphere = Sphere::new(Tuple::point(0., 0., 0.), 1.);
         let normal = sphere.normal_at(Tuple::point(0., 1., 0.));
 
         assert_equivalent!(normal, Tuple::vector(0., 1., 0.));
@@ -218,7 +218,7 @@ mod tests_sphere {
 
     #[test]
     fn the_normal_on_a_sphere_at_a_point_on_the_z_axis() {
-        let sphere = Sphere::new(Tuple::point(0., 0., 0.));
+        let sphere = Sphere::new(Tuple::point(0., 0., 0.), 1.);
         let normal = sphere.normal_at(Tuple::point(0., 0., 1.));
 
         assert_equivalent!(normal, Tuple::vector(0., 0., 1.));
@@ -226,7 +226,7 @@ mod tests_sphere {
 
     #[test]
     fn the_normal_on_a_sphere_at_a_nonaxial_point() {
-        let sphere = Sphere::new(Tuple::point(0., 0., 0.));
+        let sphere = Sphere::new(Tuple::point(0., 0., 0.), 1.);
         let normal = sphere.normal_at(Tuple::point((3. as f64).sqrt() / 3., (3. as f64).sqrt() / 3., (3. as f64).sqrt() / 3.));
 
         assert_equivalent!(normal, Tuple::vector((3. as f64).sqrt() / 3., (3. as f64).sqrt() / 3., (3. as f64).sqrt() / 3.));
@@ -234,7 +234,7 @@ mod tests_sphere {
 
     #[test]
     fn the_normal_is_a_normalized_vector() {
-        let sphere = Sphere::new(Tuple::point(0., 0., 0.));
+        let sphere = Sphere::new(Tuple::point(0., 0., 0.), 1.);
         let normal = sphere.normal_at(Tuple::point((3. as f64).sqrt() / 3., (3. as f64).sqrt() / 3., (3. as f64).sqrt() / 3.));
 
         assert_equivalent!(normal, normal.normalize());
@@ -242,7 +242,7 @@ mod tests_sphere {
 
     #[test]
     fn computing_the_normal_on_a_translated_sphere() {
-        let mut sphere = Sphere::new(Tuple::point(0., 0., 0.));
+        let mut sphere = Sphere::new(Tuple::point(0., 0., 0.), 1.);
         sphere.set_transform(Matrix::translation(Tuple::vector(0., 1., 0.)));
 
         let normal = sphere.normal_at(Tuple::point(0., 1.70711, -FRAC_1_SQRT_2));
@@ -252,7 +252,7 @@ mod tests_sphere {
 
     #[test]
     fn computing_the_normal_on_a_transformed_sphere() {
-        let mut sphere = Sphere::new(Tuple::point(0., 0., 0.));
+        let mut sphere = Sphere::new(Tuple::point(0., 0., 0.), 1.);
         sphere.set_transform(
             Matrix::scaling(Tuple::vector(1., 0.5, 1.)) *
             Matrix::rotation_z(PI/5.)
@@ -265,14 +265,14 @@ mod tests_sphere {
 
     #[test]
     fn a_sphere_has_default_material() {
-        let sphere = Sphere::new(Tuple::point(0., 0., 0.));
+        let sphere = Sphere::new(Tuple::point(0., 0., 0.), 1.);
 
         assert_eq!(sphere.material, Material::phong());
     }
 
     #[test]
     fn a_sphere_may_be_assigned_a_material() {
-        let mut sphere = Sphere::new(Tuple::point(0., 0., 0.));
+        let mut sphere = Sphere::new(Tuple::point(0., 0., 0.), 1.);
         let mut material = Material::phong();
         material.ambient = 1.;
 
@@ -283,7 +283,7 @@ mod tests_sphere {
 
     #[test]
     fn a_helper_for_producing_a_sphere_with_a_glassy_material() {
-        let sphere = Sphere::grass();
+        let sphere = Sphere::grass(1.);
         assert_eq!(sphere.transform(), Matrix::identity());
         assert_eq!(sphere.material.transparency, 1.0);
         assert_eq!(sphere.material.reflactive_index, 1.5);

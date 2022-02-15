@@ -21,7 +21,7 @@ fn main() {
 
     let canvas_mutex = Mutex::new(Canvas::new(canvas_pixel, canvas_pixel));
 
-    let mut sphere = Sphere::new(Tuple::point(0., 0., 0.));
+    let mut sphere = Sphere::new(Tuple::point(0., 0., 0.), 1.);
     sphere.material.color = Color::new(1., 0.2, 1.);
     let ray_origin = Tuple::point(0., 0., -5.);
 
