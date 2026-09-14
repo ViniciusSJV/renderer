@@ -36,3 +36,9 @@ The ray tracer challenge. By Jamis Buck.
 ![Chapter 12](https://github.com/ViniciusSJV/renderer/blob/master/cap12.png?raw=true)
 
 ![Chapter 13](https://github.com/ViniciusSJV/renderer/blob/master/cap13.png?raw=true)
+
+![Chapter 14](https://github.com/ViniciusSJV/renderer/blob/master/cap14.png?raw=true)
+
+![Chapter 15](https://github.com/ViniciusSJV/renderer/blob/master/cap15-groups.png?raw=true)
+
+![Chapter 15](https://github.com/ViniciusSJV/renderer/blob/master/cap15.png?raw=true)
