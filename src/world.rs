@@ -5,22 +5,27 @@ use crate::lights::Light;
 use crate::object::{Intersectable, Object};
 use crate::ray::Ray;
 use crate::tuple::Tuple;
+use crate::groups::Groups;
 
 #[derive(Debug, PartialEq, Clone)]
 pub struct World {
     pub objects: Vec<Object>,
+    pub groups: Vec<Groups>,
     pub lights: Vec<Light>,
 }
 
 impl World {
     pub fn new(objects: Vec<Object>, lights: Vec<Light>) -> Self {
-        World { objects, lights }
+        World { objects, groups: vec![], lights }
     }
 
     pub fn intersect_world(&self, ray: Ray) -> Intersections {
         let mut xs = vec![];
         for object in self.objects.iter() {
             xs.extend(object.intersect(ray));
+        }
+        for group in self.groups.iter() {
+            xs.extend(group.intersect(ray));
         }
         Intersections::new(xs)
     }
@@ -103,6 +108,7 @@ impl Default for World {
     fn default() -> Self {
         World {
             objects: vec![],
+            groups: vec![],
             lights: vec![],
         }
     }

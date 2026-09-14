@@ -1,4 +1,5 @@
 use crate::cone::Cone;
+use crate::bounds::Bounds;
 use crate::intersection::Intersections;
 use crate::ray::Ray;
 use crate::sphere::Sphere;
@@ -17,6 +18,13 @@ pub trait Intersectable {
     fn transform(&self) -> Matrix<4>;
     fn set_material(&mut self, material: Material);
     fn set_transform(&mut self, transform: Matrix<4>);
+
+    fn bounds(&self) -> Bounds {
+        Bounds::new(
+            Tuple::point(-1., -1., -1.),
+            Tuple::point(1., 1., 1.),
+        ).transformed(self.transform())
+    }
 
     fn intersect(&self, original_ray: Ray) -> Intersections {
         let local_ray = original_ray.set_transform(self.transform().inverse());
@@ -142,6 +150,26 @@ impl Intersectable for Object {
             Object::Cylinder(ref mut cylinder) => cylinder.transform = transform,
             Object::Cone(ref mut cone) => cone.transform = transform,
             Object::Triangle(ref mut triangle) => triangle.transform = transform,
+        }
+    }
+
+    fn bounds(&self) -> Bounds {
+        match *self {
+            Object::Triangle(ref triangle) => {
+                let mut bounds = Bounds::empty();
+                bounds.add_point(triangle.p1);
+                bounds.add_point(triangle.p2);
+                bounds.add_point(triangle.p3);
+                bounds.transformed(triangle.transform)
+            }
+            Object::Sphere(ref sphere) => Bounds::new(
+                Tuple::point(-sphere.radius, -sphere.radius, -sphere.radius),
+                Tuple::point(sphere.radius, sphere.radius, sphere.radius),
+            ).transformed(sphere.transform),
+            _ => Bounds::new(
+                Tuple::point(-1., -1., -1.),
+                Tuple::point(1., 1., 1.),
+            ).transformed(self.transform()),
         }
     }
 }

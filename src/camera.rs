@@ -54,6 +54,11 @@ impl Camera {
         self
     }
 
+    pub fn with_maximum_recursive_depth(mut self, depth: u8) -> Self {
+        self.maximum_recursive_depth = depth;
+        self
+    }
+
     pub fn ray_from_pixel(self, x: usize, y: usize) -> Ray {
         let offset_x = (0.5 + x as f64) * self.pixel_size;
         let offset_y = (0.5 + y as f64) * self.pixel_size;

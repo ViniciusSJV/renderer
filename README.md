@@ -18,8 +18,8 @@ The ray tracer challenge. By Jamis Buck.
 - [x] Chapter 11 - Reflection and Refraction
 - [x] Chapter 12 - Cubes
 - [x] Chapter 13 - Cylinders
-- [ ] Chapter 14 - Groups
-- [ ] Chapter 15 - Triangles
+- [x] Chapter 14 - Groups
+- [x] Chapter 15 - Triangles
 - [ ] Chapter 16 - Constructive Solid Geometry (CSG)
 - [ ] Chapter 17 - Next Steps
 
