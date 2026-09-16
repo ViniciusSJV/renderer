@@ -1,0 +1,55 @@
+{
+  "id": "mutex-pixels-distintos",
+  "sources": [
+    {
+      "id": "S1",
+      "kind": "pseudocode",
+      "executed": false,
+      "lines": [
+        "M é um único mutex que protege uma imagem inteira.",
+        "A imagem tem pelo menos 21 pixels.",
+        "As tarefas A e B podem executar concorrentemente.",
+        "Tarefa A: adquirir M; escrever vermelho no pixel 10; liberar M.",
+        "Tarefa B: adquirir M; escrever azul no pixel 20; liberar M."
+      ]
+    }
+  ],
+  "facts": [
+    {
+      "id": "F1",
+      "statement": "A tarefa A escreve no pixel 10.",
+      "source_id": "S1",
+      "line": 4
+    },
+    {
+      "id": "F2",
+      "statement": "A tarefa B escreve no pixel 20.",
+      "source_id": "S1",
+      "line": 5
+    },
+    {
+      "id": "F3",
+      "statement": "A tarefa A adquire M antes da escrita e libera M depois dela.",
+      "source_id": "S1",
+      "line": 4
+    },
+    {
+      "id": "F4",
+      "statement": "A tarefa B escreve no pixel 999.",
+      "source_id": "S1",
+      "line": 5
+    },
+    {
+      "id": "F5",
+      "statement": "M é um único mutex que protege a imagem inteira.",
+      "source_id": "S1",
+      "line": 1
+    }
+  ],
+  "unknowns": [
+    "Ordem efetiva de execução das tarefas.",
+    "Ocorrência de espera pela aquisição de M.",
+    "Duração da espera e das operações.",
+    "Impacto de M no tempo total."
+  ]
+}

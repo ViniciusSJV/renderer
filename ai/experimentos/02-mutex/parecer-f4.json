@@ -1,0 +1,26 @@
+{
+  "id": "P1",
+  "kind": "llm_review",
+  "evidence_file": "evidencias-afirmacao-incorreta.json",
+  "fact_id": "F4",
+  "original_statement": "A tarefa B escreve no pixel 999.",
+  "evaluated_statement": "Na operação de escrita mostrada em S1:5, a tarefa B escreve no pixel 999.",
+  "scope_note": "O parecer avalia a reformulação com escopo explícito, não o texto original sem essa delimitação.",
+  "source": {
+    "id": "S1",
+    "line": 5,
+    "excerpt": "Tarefa B: adquirir M; escrever azul no pixel 20; liberar M."
+  },
+  "model": "renderer-analyst",
+  "base_model": "qwen2.5-coder:14b",
+  "collection_method": "Resposta copiada manualmente da conversa com o Qwen no Ollama; sem captura automática da execução ou do histórico completo.",
+  "prompt": "Avalie somente a operação explicitamente mostrada no trecho.\n\nAfirmação F4:\nNa operação de escrita mostrada em S1:5, a tarefa B escreve no pixel 999.\n\nS1:5:\nTarefa B: adquirir M; escrever azul no pixel 20; liberar M.\n\nEscolha um único resultado: SUSTENTA, CONTRADIZ ou INSUFICIENTE.\nJustifique em uma frase, sem avaliar afirmações alternativas.",
+  "response": "**CONTRADIZ**\nJustificativa: O trecho S1:5 especifica que a tarefa B escreve azul no pixel 20, o que contradiz a afirmação de\nque a tarefa B escreve no pixel 999.",
+  "verdict": "CONTRADIZ",
+  "justification": "O trecho S1:5 especifica que a tarefa B escreve azul no pixel 20, o que contradiz a afirmação de que a tarefa B escreve no pixel 999.",
+  "limitations": [
+    "Parecer do modelo, não prova automática de correção semântica.",
+    "O validador Rust atual não lê nem valida este formato de parecer.",
+    "Versão efetiva do modelo e parâmetros da execução não foram capturados."
+  ]
+}

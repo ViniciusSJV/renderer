@@ -152,5 +152,5 @@ O próximo exercício será um validador de evidências em Rust. Ele verificará
 identificadores únicos, fontes existentes e linhas dentro dos limites.
 Testaremos também entradas com ID duplicado, fonte inexistente e linha inválida.
 Conjuntos e mapas serão uma oportunidade para estudar custo de consulta e memória.
-Esse programa ainda não foi implementado. Sua validação será estrutural;
-a correção das deduções continuará exigindo análise do conteúdo.
+Essa implementação está na [Aula 3 — O Bibliotecário em Rust](03-bibliotecario-em-rust.md).
+Sua validação é estrutural; a correção das deduções continua exigindo análise do conteúdo.

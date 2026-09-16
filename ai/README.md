@@ -70,20 +70,26 @@ não fornecida: A antes de B. Uma referência existente pode acompanhar uma
 dedução que ela não sustenta.
 
 Essas avaliações são manuais e descrevem as respostas examinadas. Não provam
-confiabilidade geral nem superioridade do JSON sobre texto livre. Não rodamos
+confiabilidade geral nem superioridade do JSON sobre texto livre. Nas aulas 1 e 2, não rodamos
 testes Rust ou benchmarks do renderer e não medimos latência do Qwen.
+
+Na [Aula 3](aulas/03-bibliotecario-em-rust.md), construímos o Bibliotecário em
+[src/bin/validate_evidence.rs](../src/bin/validate_evidence.rs). Ele lê o JSON,
+confere IDs únicos, encontra fontes e verifica linhas. Referências inválidas
+resultam em código de saída 1. Ao fim da implementação, os 21 testes do binário
+passaram; não fizemos benchmark nem executamos a suíte completa do renderer.
+
+Também registramos um parecer do Qwen e implementamos a conferência de sua
+associação à ficha e ao trecho. O julgamento permanece uma análise do modelo;
+o programa não verifica sua correção semântica. A comunicação com o Ollama
+continua manual. A aula documenta os comandos e os experimentos reproduzíveis.
 
 ## Ponto de retomada
 
-Paramos antes de implementar o primeiro validador de evidências em Rust.
-O próximo exercício será:
+O exemplo do mutex está concluído para esta etapa. A próxima aula usará
+`src/camera.rs` como primeira obra real: carregar o arquivo e criar uma ficha
+manual sobre uma operação, conferindo o trecho e seu contexto.
 
-1. Explicar validação estrutural e suas diferenças em relação à análise de significado.
-2. Ler o JSON e verificar IDs únicos, fontes existentes e linhas válidas.
-3. Testar entradas válidas, IDs duplicados, fontes inexistentes e linhas inválidas.
-4. Contar os casos aceitos e rejeitados corretamente.
-5. Explicar o algoritmo, as estruturas de dados e os limites do resultado.
-
-Usaremos conjuntos e mapas como oportunidade de estudar consultas e memória.
-Ainda não há validador Rust nem Graph Engine implementado. O renderer permanece
-sem alterações nesta etapa; a próxima aula começa pelo conceito antes do código.
+Continuaremos ponto a ponto, com a analogia do Bibliotecário: obras, fichas,
+trechos e notas de revisão. Ainda faltam versionamento das fontes, extração
+automática e integração com o Ollama; cada passo será estudado separadamente.
