@@ -1,0 +1,29 @@
+Registro de execução — teste das componentes de um vetor
+Comando: cargo test --offline --lib tuple::tests_tuple::vector_does_fill_properties -- --exact
+Diretório de execução: /workspaces/renderer-local
+Início UTC: 2026-09-17T02:06:33.984295+00:00
+Fim UTC: 2026-09-17T02:06:35.345977+00:00
+Commit HEAD: 870cebbd10be9afaa3029ebbd533e5fec04f511e
+Árvore de trabalho limpa: False
+Nota: HEAD identifica a base; havia alterações locais. Não é uma captura completa do ambiente.
+Rust: rustc 1.98.1 (48a229cea 2026-09-01)
+SHA-256 src/tuple.rs: 99385e2ca2803661609d6fd740c1e3434e53fe19165c0a8ab862b37693dd1916
+SHA-256 Cargo.toml: 2deb10990c45692ca544f50b5218ec9d22e04a46e2a6acd8b764c24fae0adb18
+SHA-256 Cargo.lock: c9864babf8ff8c29db7696256d1721c97c37e87d09454d85f30599591508d374
+Código de término: 0
+
+Estado Git antes da execução:
+ M Cargo.lock
+ M Cargo.toml
+ M src/bin/validate_evidence.rs
+?? ai/experimentos/03-tuplas/
+
+Saída combinada (stdout e stderr):
+   Compiling renderer v0.1.0 (/workspaces/renderer-local)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.34s
+     Running unittests src/lib.rs (target/debug/deps/renderer-2682e9ea66618bbb)
+
+running 1 test
+test tuple::tests_tuple::vector_does_fill_properties ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 200 filtered out; finished in 0.00s

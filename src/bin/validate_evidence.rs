@@ -1,6 +1,8 @@
 use serde::Deserialize;
+use sha2::{Digest, Sha256};
 use std::collections::HashSet;
 use std::fs;
+use std::io::Write;
 
 #[derive(Deserialize)]
 struct Fact {
@@ -51,6 +53,126 @@ mod tests {
         ))
         .unwrap();
         (review, evidence)
+    }
+
+    fn version_example() -> Source {
+        Source {
+            id: String::from("SRC_TEST"),
+            path: Some(String::from("exemplo.rs")),
+            sha256: Some(format!("{:x}", Sha256::digest(b"linha original\n"))),
+            lines: vec![String::from("linha original")],
+        }
+    }
+
+    #[test]
+    fn context_zero_and_large_radius_preserve_bounds() {
+        let (mut fact, mut source) = example();
+        source.lines = vec![String::from("a"), String::from("b"), String::from("c")];
+        fact.line = 2;
+        for (radius, expected) in [(0, vec!["b"]), (usize::MAX, vec!["a", "b", "c"])] {
+            let value: serde_json::Value =
+                serde_json::from_str(&selection_json(&fact, &source, radius).unwrap()).unwrap();
+            assert_eq!(
+                value["source"]["context"]["lines"],
+                serde_json::json!(expected)
+            );
+            assert_eq!(value["source"]["context"]["requested_radius"], radius);
+        }
+    }
+
+    #[test]
+    fn same_selection_produces_identical_json() {
+        let (fact, source) = example();
+        assert_eq!(
+            selection_json(&fact, &source, 4).unwrap(),
+            selection_json(&fact, &source, 4).unwrap()
+        );
+    }
+
+    #[test]
+    fn exports_exact_statement_reference_and_excerpt() {
+        let (fact, source) = example();
+        let json = selection_json(&fact, &source, 3).unwrap();
+        let value: serde_json::Value = serde_json::from_str(&json).unwrap();
+        assert_eq!(value["fact_id"], fact.id);
+        assert_eq!(value["statement"], fact.statement);
+        assert_eq!(value["source"]["id"], source.id);
+        assert_eq!(value["source"]["line"], fact.line);
+        assert_eq!(value["source"]["excerpt"], source.lines[0]);
+        assert!(value["source"]["sha256"].is_null());
+    }
+
+    #[test]
+    fn exports_context_with_correct_line_numbers_and_bounds() {
+        let (mut fact, mut source) = example();
+        source.lines = (1..=10).map(|number| format!("linha {}", number)).collect();
+
+        for (line, expected_start, expected_end) in [(1, 1, 4), (5, 2, 8), (10, 7, 10)] {
+            fact.line = line;
+            let value: serde_json::Value =
+                serde_json::from_str(&selection_json(&fact, &source, 3).unwrap()).unwrap();
+            let context = &value["source"]["context"];
+            assert_eq!(context["start_line"], expected_start);
+            assert_eq!(context["end_line"], expected_end);
+            let expected: Vec<String> = (expected_start..=expected_end)
+                .map(|number| format!("linha {}", number))
+                .collect();
+            assert_eq!(context["lines"], serde_json::json!(expected));
+            assert_eq!(value["source"]["line"], line);
+            assert_eq!(value["source"]["excerpt"], format!("linha {}", line));
+        }
+    }
+
+    #[test]
+    fn does_not_export_invalid_reference() {
+        let (mut fact, source) = example();
+        fact.line = 0;
+        assert!(selection_json(&fact, &source, 3).is_err());
+    }
+
+    #[test]
+    fn finds_requested_fact_after_another_fact() {
+        let (first, _) = example();
+        let (mut second, _) = example();
+        second.id = String::from("F2");
+        second.statement = String::from("Segunda ficha.");
+        let facts = vec![first, second];
+        assert_eq!(find_fact(&facts, "F2").unwrap().statement, "Segunda ficha.");
+        assert!(find_fact(&facts, "F9").is_none());
+        assert!(find_fact(&[], "F2").is_none());
+    }
+
+    #[test]
+    fn accepts_matching_source_content() {
+        assert_eq!(
+            validate_source_content(&version_example(), b"linha original\n"),
+            Ok(())
+        );
+    }
+
+    #[test]
+    fn rejects_changed_file_bytes() {
+        assert!(validate_source_content(&version_example(), b"linha alterada\n").is_err());
+    }
+
+    #[test]
+    fn rejects_tampered_snapshot_with_matching_hash() {
+        let mut source = version_example();
+        source.lines[0] = String::from("outro texto");
+        assert!(validate_source_content(&source, b"linha original\n").is_err());
+    }
+
+    #[test]
+    fn requires_complete_version_metadata() {
+        let mut source = version_example();
+        source.path = None;
+        assert!(validate_source_version(&source).is_err());
+    }
+
+    #[test]
+    fn preserves_sources_without_version_metadata() {
+        let (_, source) = example();
+        assert_eq!(validate_source_version(&source), Ok(()));
     }
 
     #[test]
@@ -150,6 +272,8 @@ mod tests {
 
     fn example() -> (Fact, Source) {
         let source = Source {
+            path: None,
+            sha256: None,
             id: String::from("S1"),
             lines: vec![String::from("Um trecho da obra.")],
         };
@@ -190,10 +314,14 @@ mod tests {
     fn accepts_unique_source_ids() {
         let sources = vec![
             Source {
+                path: None,
+                sha256: None,
                 id: String::from("S1"),
                 lines: vec![],
             },
             Source {
+                path: None,
+                sha256: None,
                 id: String::from("S2"),
                 lines: vec![],
             },
@@ -205,14 +333,20 @@ mod tests {
     fn rejects_duplicate_source_ids_with_different_content() {
         let sources = vec![
             Source {
+                path: None,
+                sha256: None,
                 id: String::from("S1"),
                 lines: vec![String::from("Primeira obra.")],
             },
             Source {
+                path: None,
+                sha256: None,
                 id: String::from("S2"),
                 lines: vec![],
             },
             Source {
+                path: None,
+                sha256: None,
                 id: String::from("S1"),
                 lines: vec![String::from("Outra obra.")],
             },
@@ -233,6 +367,8 @@ mod tests {
         let (_, source) = example();
         let sources = vec![
             Source {
+                path: None,
+                sha256: None,
                 id: String::from("S2"),
                 lines: vec![],
             },
@@ -292,6 +428,8 @@ mod tests {
 
 #[derive(Deserialize)]
 struct Source {
+    path: Option<String>,
+    sha256: Option<String>,
     id: String,
     lines: Vec<String>,
 }
@@ -318,6 +456,15 @@ fn validate_fact_ids(facts: &[Fact]) -> Result<(), String> {
     }
 
     Ok(())
+}
+
+fn find_fact<'a>(facts: &'a [Fact], fact_id: &str) -> Option<&'a Fact> {
+    for fact in facts {
+        if fact.id == fact_id {
+            return Some(fact);
+        }
+    }
+    None
 }
 
 fn find_source<'a>(sources: &'a [Source], source_id: &str) -> Option<&'a Source> {
@@ -398,7 +545,119 @@ fn validate_review(review: &Review, facts: &[Fact], sources: &[Source]) -> Resul
     Ok(())
 }
 
+fn validate_source_content(source: &Source, bytes: &[u8]) -> Result<(), String> {
+    let expected = match &source.sha256 {
+        Some(hash) => hash,
+        None => return Err(format!("{}: SHA-256 ausente.", source.id)),
+    };
+    let actual = format!("{:x}", Sha256::digest(bytes));
+    if actual != *expected {
+        return Err(format!(
+            "{}: o arquivo atual difere da edição registrada (SHA-256 diferente).",
+            source.id
+        ));
+    }
+    let text = std::str::from_utf8(bytes)
+        .map_err(|error| format!("{}: conteúdo não é UTF-8: {}", source.id, error))?;
+    if !text.lines().eq(source.lines.iter().map(String::as_str)) {
+        return Err(format!(
+            "{}: as linhas do dossiê diferem das linhas do arquivo.",
+            source.id
+        ));
+    }
+    Ok(())
+}
+
+fn validate_source_version(source: &Source) -> Result<(), String> {
+    match (&source.path, &source.sha256) {
+        (None, None) => Ok(()),
+        (Some(path), Some(_)) => {
+            let bytes = fs::read(path).map_err(|error| {
+                format!("{}: não foi possível ler {}: {}", source.id, path, error)
+            })?;
+            validate_source_content(source, &bytes)
+        }
+        _ => Err(format!(
+            "{}: path e sha256 devem ser informados juntos.",
+            source.id
+        )),
+    }
+}
+
+fn selection_json(fact: &Fact, source: &Source, radius: usize) -> Result<String, String> {
+    validate_reference(fact, source)?;
+    let index = fact.line - 1;
+    let start = index.saturating_sub(radius);
+    let end = fact.line.saturating_add(radius).min(source.lines.len());
+    let selection = serde_json::json!({
+        "fact_id": fact.id,
+        "statement": fact.statement,
+        "source": {
+            "id": source.id,
+            "path": source.path,
+            "sha256": source.sha256,
+            "line": fact.line,
+            "excerpt": source.lines[index],
+            "context": {
+                "requested_radius": radius,
+                "start_line": start + 1,
+                "end_line": end,
+                "lines": &source.lines[start..end]
+            }
+        },
+        "scope": "Uma ficha, sua linha de referência e linhas vizinhas conforme requested_radius. Janela textual que pode cortar funções; significado da afirmação não validado."
+    });
+    serde_json::to_string_pretty(&selection).map_err(|error| error.to_string())
+}
+
 fn main() {
+    let arguments: Vec<String> = std::env::args().collect();
+    let mut radius = 3;
+    let mut output_path: Option<&str> = None;
+    let selected_id = if arguments.get(2).map(String::as_str) == Some("--fact") {
+        let id = arguments
+            .get(3)
+            .filter(|id| !id.starts_with("--"))
+            .unwrap_or_else(|| {
+                eprintln!("Informe o ID após --fact.");
+                std::process::exit(1);
+            });
+        let mut position = 4;
+        let mut context_seen = false;
+        while position < arguments.len() {
+            let value = arguments
+                .get(position + 1)
+                .filter(|v| !v.starts_with("--"))
+                .unwrap_or_else(|| {
+                    eprintln!("Falta um valor após {}.", arguments[position]);
+                    std::process::exit(1);
+                });
+            match arguments[position].as_str() {
+                "--context" if !context_seen => {
+                    radius = value.parse::<usize>().unwrap_or_else(|_| {
+                        eprintln!(
+                            "--context exige um inteiro não negativo representável como usize."
+                        );
+                        std::process::exit(1);
+                    });
+                    context_seen = true;
+                }
+                "--output" if output_path.is_none() => output_path = Some(value.as_str()),
+                _ => {
+                    eprintln!("Opção desconhecida ou repetida: {}", arguments[position]);
+                    std::process::exit(1);
+                }
+            }
+            position += 2;
+        }
+        Some(id.as_str())
+    } else {
+        if arguments.len() > 3 || arguments.get(2).is_some_and(|v| v.starts_with("--")) {
+            eprintln!("Uso: validate_evidence [DOSSIÊ] [PARECER] ou DOSSIÊ --fact ID [--context N] [--output ARQUIVO]");
+            std::process::exit(1);
+        }
+        None
+    };
     let path = match std::env::args().nth(1) {
         Some(argument) => argument,
         None => String::from("ai/experimentos/02-mutex/evidencias.json"),
@@ -440,17 +699,38 @@ fn main() {
         }
     }
 
+    for source in &sources {
+        match validate_source_version(source) {
+            Ok(()) if source.path.is_some() => println!(
+                "{}: arquivo atual e linhas correspondem à edição registrada.",
+                source.id
+            ),
+            Ok(()) => println!(
+                "{}: sem metadados de versão; arquivo externo não conferido.",
+                source.id
+            ),
+            Err(message) => {
+                eprintln!("{}", message);
+                std::process::exit(1);
+            }
+        }
+    }
+
     let mut invalid_references = 0;
 
     for fact in &facts {
-        println!("{}: {}", fact.id, fact.statement);
-        println!("Origem: {}, linha {}", fact.source_id, fact.line);
+        if selected_id.is_none() {
+            println!("{}: {}", fact.id, fact.statement);
+            println!("Origem: {}, linha {}", fact.source_id, fact.line);
+        }
 
         match find_source(&sources, &fact.source_id) {
             Some(source) => match validate_reference(fact, source) {
                 Ok(()) => {
                     let index = fact.line - 1;
-                    println!("Trecho encontrado: {}", source.lines[index]);
+                    if selected_id.is_none() {
+                        println!("Trecho encontrado: {}", source.lines[index]);
+                    }
                 }
                 Err(message) => {
                     eprintln!("{}", message);
@@ -472,6 +752,46 @@ fn main() {
 
     if invalid_references > 0 {
         std::process::exit(1);
+    }
+
+    if let Some(id) = selected_id {
+        let fact = match find_fact(&facts, id) {
+            Some(fact) => fact,
+            None => {
+                eprintln!("Ficha \"{}\" não encontrada.", id);
+                std::process::exit(1);
+            }
+        };
+        // As referências e versões foram conferidas antes da seleção.
+        let source = find_source(&sources, &fact.source_id).expect("A fonte da ficha foi validada");
+        println!("Ficha selecionada: {}", fact.id);
+        println!("Afirmação: {}", fact.statement);
+        println!("Referência: {}, linha {}", source.id, fact.line);
+        if let Some(path) = &source.path {
+            println!("Arquivo: {}", path);
+        }
+        if let Some(hash) = &source.sha256 {
+            println!("SHA-256: {}", hash);
+        }
+        println!("Trecho: {}", source.lines[fact.line - 1]);
+        if let Some(output_path) = output_path {
+            let result = selection_json(fact, source, radius).and_then(|json| {
+                let mut file = fs::OpenOptions::new()
+                    .write(true)
+                    .create_new(true)
+                    .open(output_path)
+                    .map_err(|error| error.to_string())?;
+                writeln!(file, "{}", json).map_err(|error| error.to_string())
+            });
+            match result {
+                Ok(()) => println!("Seleção salva em {}", output_path),
+                Err(error) => {
+                    eprintln!("Não foi possível exportar a seleção: {}", error);
+                    std::process::exit(1);
+                }
+            }
+        }
+        return;
     }
 
     if let Some(review_path) = std::env::args().nth(2) {

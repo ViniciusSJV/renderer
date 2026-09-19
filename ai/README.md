@@ -84,12 +84,25 @@ associação à ficha e ao trecho. O julgamento permanece uma análise do modelo
 o programa não verifica sua correção semântica. A comunicação com o Ollama
 continua manual. A aula documenta os comandos e os experimentos reproduzíveis.
 
+Na [Aula 4](aulas/04-tuplas-codigo-e-evidencias.md), seguimos o livro a partir
+de `src/tuple.rs`, criando uma cópia identificada por hash e fichas manuais.
+O Bibliotecário agora compara arquivos atuais, hashes e linhas copiadas.
+Registramos uma execução do teste do vetor e reunimos duas fontes e sete fichas.
+Os 26 testes do validador passaram ao implementar essa etapa; não houve benchmark.
+
+As consultas ao Qwen mostraram acertos, mas também omissão de referências e
+conclusões além das evidências. A aula registra a avaliação e seus limites.
+
+Na [Aula 5](aulas/05-selecao-e-contexto.md), adicionamos seleção por ID e
+exportação de uma ficha com contexto configurável por `--context`. Os 32 testes
+do binário passaram; duas exportações com os mesmos dados e parâmetros tiveram
+bytes idênticos. A aula registra comandos, artefatos e limites dessa observação.
+
 ## Ponto de retomada
 
-O exemplo do mutex está concluído para esta etapa. A próxima aula usará
-`src/camera.rs` como primeira obra real: carregar o arquivo e criar uma ficha
-manual sobre uma operação, conferindo o trecho e seu contexto.
+A Aula 5 está concluída. O próximo passo é montar uma consulta com pergunta e
+material exportado, sem copiar trechos manualmente. Depois poderemos selecionar
+mais de uma ficha. Mantemos o Modelfile atual e a comunicação manual com o Ollama.
 
-Continuaremos ponto a ponto, com a analogia do Bibliotecário: obras, fichas,
-trechos e notas de revisão. Ainda faltam versionamento das fontes, extração
-automática e integração com o Ollama; cada passo será estudado separadamente.
+Seguimos a ordem do livro, com foco no Graph Engine e sem repetir fundamentos
+já dominados. Ainda não há banco de grafos nem extração automática de afirmações.

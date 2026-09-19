@@ -1,0 +1,31 @@
+Analise somente as evidências fornecidas. Não afirme ter executado o teste.
+
+FONTE SRC_TUPLE — corpo de vector_does_fill_properties:
+    #[test]
+    fn vector_does_fill_properties() {
+        let vector = Tuple::vector(1.4, 8.9, 5.1);
+
+        assert_equivalent!(vector.x, 1.4);
+        assert_equivalent!(vector.y, 8.9);
+        assert_equivalent!(vector.z, 5.1);
+        assert_equivalent!(vector.w, 0.);
+    }
+
+FICHAS SOBRE O CÓDIGO:
+F_VECTOR_TEST_INPUT (SRC_TUPLE:157): O teste vector_does_fill_properties constrói um vetor com os argumentos 1.4, 8.9 e 5.1.
+F_VECTOR_TEST_X (SRC_TUPLE:159): O teste vector_does_fill_properties chama assert_equivalent! para comparar vector.x com 1.4.
+F_VECTOR_TEST_Y (SRC_TUPLE:160): O teste vector_does_fill_properties chama assert_equivalent! para comparar vector.y com 8.9.
+F_VECTOR_TEST_Z (SRC_TUPLE:161): O teste vector_does_fill_properties chama assert_equivalent! para comparar vector.z com 5.1.
+F_VECTOR_TEST_W (SRC_TUPLE:162): O teste vector_does_fill_properties chama assert_equivalent! para comparar vector.w com 0.
+
+F_VECTOR_TEST_PASSED — fonte TEST_VECTOR_1:
+test tuple::tests_tuple::vector_does_fill_properties ... ok
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 200 filtered out
+Código de término registrado: 0.
+
+Responda em até quatro frases:
+1. Quais argumentos são usados e quais comparações aparecem no corpo do teste?
+2. O que o registro de execução acrescenta?
+3. Isso demonstra correção para todas as entradas e operações com vetores?
+Cite os IDs das fichas pertinentes. A implementação de assert_equivalent! não
+foi incluída: não deduza sua tolerância ou seu funcionamento apenas pelo nome.

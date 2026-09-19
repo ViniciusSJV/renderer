@@ -1,0 +1,12 @@
+{
+  "fact_id": "F_VECTOR_TEST_X",
+  "scope": "Uma ficha e uma linha de evidência. Contexto adicional não incluído; significado da afirmação não validado.",
+  "source": {
+    "excerpt": "        assert_equivalent!(vector.x, 1.4);",
+    "id": "SRC_TUPLE",
+    "line": 159,
+    "path": "src/tuple.rs",
+    "sha256": "99385e2ca2803661609d6fd740c1e3434e53fe19165c0a8ab862b37693dd1916"
+  },
+  "statement": "O teste vector_does_fill_properties chama assert_equivalent! para comparar vector.x com 1.4."
+}

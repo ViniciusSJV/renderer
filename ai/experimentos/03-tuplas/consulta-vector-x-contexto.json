@@ -1,0 +1,26 @@
+{
+  "fact_id": "F_VECTOR_TEST_X",
+  "scope": "Uma ficha, sua linha de referência e até três linhas vizinhas de cada lado. Janela textual que pode cortar funções; significado da afirmação não validado.",
+  "source": {
+    "context": {
+      "end_line": 162,
+      "lines": [
+        "    fn vector_does_fill_properties() {",
+        "        let vector = Tuple::vector(1.4, 8.9, 5.1);",
+        "",
+        "        assert_equivalent!(vector.x, 1.4);",
+        "        assert_equivalent!(vector.y, 8.9);",
+        "        assert_equivalent!(vector.z, 5.1);",
+        "        assert_equivalent!(vector.w, 0.);"
+      ],
+      "requested_radius": 3,
+      "start_line": 156
+    },
+    "excerpt": "        assert_equivalent!(vector.x, 1.4);",
+    "id": "SRC_TUPLE",
+    "line": 159,
+    "path": "src/tuple.rs",
+    "sha256": "99385e2ca2803661609d6fd740c1e3434e53fe19165c0a8ab862b37693dd1916"
+  },
+  "statement": "O teste vector_does_fill_properties chama assert_equivalent! para comparar vector.x com 1.4."
+}
