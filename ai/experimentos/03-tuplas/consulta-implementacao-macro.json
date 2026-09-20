@@ -1,0 +1,413 @@
+{
+  "contexts": [
+    {
+      "end_line": 11,
+      "id": "CTX_1",
+      "lines": [
+        "use crate::equivalent::*;",
+        "",
+        "#[derive(Debug, Copy, Clone, PartialEq)]",
+        "pub struct Tuple {",
+        "    pub x: f64,",
+        "    pub y: f64,",
+        "    pub z: f64,",
+        "    pub w: f64,",
+        "}",
+        ""
+      ],
+      "source_id": "SRC_TUPLE",
+      "start_line": 2
+    },
+    {
+      "end_line": 27,
+      "id": "CTX_2",
+      "lines": [
+        "use crate::EPSILON;",
+        "",
+        "pub trait Equivalence<T: Clone> {",
+        "    fn equivalent(&self, other: T) -> bool;",
+        "",
+        "    fn not_equivalent(&self, other: T) -> bool {",
+        "        !self.equivalent(other)",
+        "    }",
+        "}",
+        "",
+        "impl Equivalence<f64> for f64 {",
+        "    fn equivalent(&self, other: f64) -> bool {",
+        "        (*self - other).abs() < EPSILON",
+        "    }",
+        "}",
+        "",
+        "#[macro_export]",
+        "macro_rules! assert_equivalent {",
+        "  ($left:expr, $right:expr $(,)?) => {{",
+        "    match (&$left, $right) {",
+        "      (left_val, right_val) => {",
+        "        if left_val.not_equivalent(right_val) {",
+        "          panic!(",
+        "            \"asserting equality. {:?} is not equivalent to {:?}\",",
+        "            left_val, right_val",
+        "          );",
+        "        }"
+      ],
+      "source_id": "SRC_EQUIVALENT",
+      "start_line": 1
+    },
+    {
+      "end_line": 5,
+      "id": "CTX_3",
+      "lines": [
+        "pub const EPSILON: f64 = 0.00001;",
+        "",
+        "pub mod equivalent;",
+        "pub mod bounds;",
+        "pub mod tuple;"
+      ],
+      "source_id": "SRC_LIB",
+      "start_line": 1
+    }
+  ],
+  "scope": "Fichas na ordem solicitada, cada uma com sua fonte e seus limites. source.context referencia um bloco em contexts e preserva os limites da janela individual. Blocos unem apenas janelas sobrepostas ou adjacentes da mesma fonte. IDs CTX são locais à exportação. A presença conjunta de código e relatório não comprova que a versão do código produziu o resultado registrado.",
+  "selections": [
+    {
+      "authorship": "manual",
+      "evidence_id": "tuplas-com-implementacao-equivalencia",
+      "evidence_unknowns": [
+        "O validador compara o arquivo atual indicado por path com sha256 e lines; não verifica git_commit nem matches_commit.",
+        "Este registro cobre um teste selecionado; não é resultado da suíte completa nem benchmark.",
+        "O validador confere os bytes do registro, mas não reexecuta o teste nem autentica a origem do resultado.",
+        "As novas fontes foram copiadas dos arquivos atuais por leitura estática; não identificam os bytes usados na execução histórica RUN_VECTOR_1.",
+        "A cadeia macro → not_equivalent → equivalent → EPSILON permite interpretar as chamadas para f64; não comprova que o código apresentado produziu o resultado de RUN_VECTOR_1.",
+        "As fichas são afirmações manuais. O Bibliotecário confere referências, hashes e linhas, não a correção semântica das afirmações.",
+        "Nesta etapa não executamos casos novos da macro, não demonstramos correção universal e não medimos desempenho."
+      ],
+      "fact_id": "F_TUPLE_X_F64",
+      "metadata_scope": "Os metadados exportados são declarações do dossiê, não verificações de origem ou execução. O campo legado executed é omitido para rust_source.",
+      "scope": "Uma ficha, sua linha de referência e linhas vizinhas conforme requested_radius. Janela textual que pode cortar funções; significado da afirmação não validado.",
+      "source": {
+        "context": {
+          "context_id": "CTX_1",
+          "end_line": 10,
+          "requested_radius": 4,
+          "start_line": 2
+        },
+        "excerpt": "    pub x: f64,",
+        "execution_scope": "Esta fonte descreve código. Ela não informa se, quando ou com qual resultado o código foi executado; isso requer um registro de execução separado.",
+        "git_commit": "870cebbd10be9afaa3029ebbd533e5fec04f511e",
+        "id": "SRC_TUPLE",
+        "kind": "rust_source",
+        "line": 6,
+        "path": "src/tuple.rs",
+        "sha256": "99385e2ca2803661609d6fd740c1e3434e53fe19165c0a8ab862b37693dd1916"
+      },
+      "statement": "A componente x de Tuple tem tipo f64.",
+      "unknowns_scope": "Declarações do dossiê inteiro, preservadas sem seleção por relevância. Ausência ou lista vazia não demonstram ausência de lacunas."
+    },
+    {
+      "authorship": "manual",
+      "evidence_id": "tuplas-com-implementacao-equivalencia",
+      "evidence_unknowns": [
+        "O validador compara o arquivo atual indicado por path com sha256 e lines; não verifica git_commit nem matches_commit.",
+        "Este registro cobre um teste selecionado; não é resultado da suíte completa nem benchmark.",
+        "O validador confere os bytes do registro, mas não reexecuta o teste nem autentica a origem do resultado.",
+        "As novas fontes foram copiadas dos arquivos atuais por leitura estática; não identificam os bytes usados na execução histórica RUN_VECTOR_1.",
+        "A cadeia macro → not_equivalent → equivalent → EPSILON permite interpretar as chamadas para f64; não comprova que o código apresentado produziu o resultado de RUN_VECTOR_1.",
+        "As fichas são afirmações manuais. O Bibliotecário confere referências, hashes e linhas, não a correção semântica das afirmações.",
+        "Nesta etapa não executamos casos novos da macro, não demonstramos correção universal e não medimos desempenho."
+      ],
+      "fact_id": "F_TUPLE_Y_F64",
+      "metadata_scope": "Os metadados exportados são declarações do dossiê, não verificações de origem ou execução. O campo legado executed é omitido para rust_source.",
+      "scope": "Uma ficha, sua linha de referência e linhas vizinhas conforme requested_radius. Janela textual que pode cortar funções; significado da afirmação não validado.",
+      "source": {
+        "context": {
+          "context_id": "CTX_1",
+          "end_line": 11,
+          "requested_radius": 4,
+          "start_line": 3
+        },
+        "excerpt": "    pub y: f64,",
+        "execution_scope": "Esta fonte descreve código. Ela não informa se, quando ou com qual resultado o código foi executado; isso requer um registro de execução separado.",
+        "git_commit": "870cebbd10be9afaa3029ebbd533e5fec04f511e",
+        "id": "SRC_TUPLE",
+        "kind": "rust_source",
+        "line": 7,
+        "path": "src/tuple.rs",
+        "sha256": "99385e2ca2803661609d6fd740c1e3434e53fe19165c0a8ab862b37693dd1916"
+      },
+      "statement": "A componente y de Tuple tem tipo f64.",
+      "unknowns_scope": "Declarações do dossiê inteiro, preservadas sem seleção por relevância. Ausência ou lista vazia não demonstram ausência de lacunas."
+    },
+    {
+      "authorship": "manual",
+      "evidence_id": "tuplas-com-implementacao-equivalencia",
+      "evidence_unknowns": [
+        "O validador compara o arquivo atual indicado por path com sha256 e lines; não verifica git_commit nem matches_commit.",
+        "Este registro cobre um teste selecionado; não é resultado da suíte completa nem benchmark.",
+        "O validador confere os bytes do registro, mas não reexecuta o teste nem autentica a origem do resultado.",
+        "As novas fontes foram copiadas dos arquivos atuais por leitura estática; não identificam os bytes usados na execução histórica RUN_VECTOR_1.",
+        "A cadeia macro → not_equivalent → equivalent → EPSILON permite interpretar as chamadas para f64; não comprova que o código apresentado produziu o resultado de RUN_VECTOR_1.",
+        "As fichas são afirmações manuais. O Bibliotecário confere referências, hashes e linhas, não a correção semântica das afirmações.",
+        "Nesta etapa não executamos casos novos da macro, não demonstramos correção universal e não medimos desempenho."
+      ],
+      "fact_id": "F_MACRO_OPERANDS",
+      "metadata_scope": "Os metadados exportados são declarações do dossiê, não verificações de origem ou execução. O campo legado executed é omitido para rust_source.",
+      "scope": "Uma ficha, sua linha de referência e linhas vizinhas conforme requested_radius. Janela textual que pode cortar funções; significado da afirmação não validado.",
+      "source": {
+        "context": {
+          "context_id": "CTX_2",
+          "end_line": 24,
+          "requested_radius": 4,
+          "start_line": 16
+        },
+        "excerpt": "    match (&$left, $right) {",
+        "execution_scope": "Esta fonte descreve código. Ela não informa se, quando ou com qual resultado o código foi executado; isso requer um registro de execução separado.",
+        "git_commit": null,
+        "id": "SRC_EQUIVALENT",
+        "kind": "rust_source",
+        "line": 20,
+        "path": "src/equivalent.rs",
+        "sha256": "3d23b2da4c66c846da942b9f5f21be139017c0477c570cc77f65b792d7c83047"
+      },
+      "statement": "A macro assert_equivalent! usa match (&$left, $right) para vincular os operandos.",
+      "unknowns_scope": "Declarações do dossiê inteiro, preservadas sem seleção por relevância. Ausência ou lista vazia não demonstram ausência de lacunas."
+    },
+    {
+      "authorship": "manual",
+      "evidence_id": "tuplas-com-implementacao-equivalencia",
+      "evidence_unknowns": [
+        "O validador compara o arquivo atual indicado por path com sha256 e lines; não verifica git_commit nem matches_commit.",
+        "Este registro cobre um teste selecionado; não é resultado da suíte completa nem benchmark.",
+        "O validador confere os bytes do registro, mas não reexecuta o teste nem autentica a origem do resultado.",
+        "As novas fontes foram copiadas dos arquivos atuais por leitura estática; não identificam os bytes usados na execução histórica RUN_VECTOR_1.",
+        "A cadeia macro → not_equivalent → equivalent → EPSILON permite interpretar as chamadas para f64; não comprova que o código apresentado produziu o resultado de RUN_VECTOR_1.",
+        "As fichas são afirmações manuais. O Bibliotecário confere referências, hashes e linhas, não a correção semântica das afirmações.",
+        "Nesta etapa não executamos casos novos da macro, não demonstramos correção universal e não medimos desempenho."
+      ],
+      "fact_id": "F_MACRO_CONDITION",
+      "metadata_scope": "Os metadados exportados são declarações do dossiê, não verificações de origem ou execução. O campo legado executed é omitido para rust_source.",
+      "scope": "Uma ficha, sua linha de referência e linhas vizinhas conforme requested_radius. Janela textual que pode cortar funções; significado da afirmação não validado.",
+      "source": {
+        "context": {
+          "context_id": "CTX_2",
+          "end_line": 26,
+          "requested_radius": 4,
+          "start_line": 18
+        },
+        "excerpt": "        if left_val.not_equivalent(right_val) {",
+        "execution_scope": "Esta fonte descreve código. Ela não informa se, quando ou com qual resultado o código foi executado; isso requer um registro de execução separado.",
+        "git_commit": null,
+        "id": "SRC_EQUIVALENT",
+        "kind": "rust_source",
+        "line": 22,
+        "path": "src/equivalent.rs",
+        "sha256": "3d23b2da4c66c846da942b9f5f21be139017c0477c570cc77f65b792d7c83047"
+      },
+      "statement": "A macro assert_equivalent! entra no ramo de falha quando left_val.not_equivalent(right_val) retorna true.",
+      "unknowns_scope": "Declarações do dossiê inteiro, preservadas sem seleção por relevância. Ausência ou lista vazia não demonstram ausência de lacunas."
+    },
+    {
+      "authorship": "manual",
+      "evidence_id": "tuplas-com-implementacao-equivalencia",
+      "evidence_unknowns": [
+        "O validador compara o arquivo atual indicado por path com sha256 e lines; não verifica git_commit nem matches_commit.",
+        "Este registro cobre um teste selecionado; não é resultado da suíte completa nem benchmark.",
+        "O validador confere os bytes do registro, mas não reexecuta o teste nem autentica a origem do resultado.",
+        "As novas fontes foram copiadas dos arquivos atuais por leitura estática; não identificam os bytes usados na execução histórica RUN_VECTOR_1.",
+        "A cadeia macro → not_equivalent → equivalent → EPSILON permite interpretar as chamadas para f64; não comprova que o código apresentado produziu o resultado de RUN_VECTOR_1.",
+        "As fichas são afirmações manuais. O Bibliotecário confere referências, hashes e linhas, não a correção semântica das afirmações.",
+        "Nesta etapa não executamos casos novos da macro, não demonstramos correção universal e não medimos desempenho."
+      ],
+      "fact_id": "F_MACRO_PANIC",
+      "metadata_scope": "Os metadados exportados são declarações do dossiê, não verificações de origem ou execução. O campo legado executed é omitido para rust_source.",
+      "scope": "Uma ficha, sua linha de referência e linhas vizinhas conforme requested_radius. Janela textual que pode cortar funções; significado da afirmação não validado.",
+      "source": {
+        "context": {
+          "context_id": "CTX_2",
+          "end_line": 27,
+          "requested_radius": 4,
+          "start_line": 19
+        },
+        "excerpt": "          panic!(",
+        "execution_scope": "Esta fonte descreve código. Ela não informa se, quando ou com qual resultado o código foi executado; isso requer um registro de execução separado.",
+        "git_commit": null,
+        "id": "SRC_EQUIVALENT",
+        "kind": "rust_source",
+        "line": 23,
+        "path": "src/equivalent.rs",
+        "sha256": "3d23b2da4c66c846da942b9f5f21be139017c0477c570cc77f65b792d7c83047"
+      },
+      "statement": "O ramo de falha de assert_equivalent! chama panic!.",
+      "unknowns_scope": "Declarações do dossiê inteiro, preservadas sem seleção por relevância. Ausência ou lista vazia não demonstram ausência de lacunas."
+    },
+    {
+      "authorship": "manual",
+      "evidence_id": "tuplas-com-implementacao-equivalencia",
+      "evidence_unknowns": [
+        "O validador compara o arquivo atual indicado por path com sha256 e lines; não verifica git_commit nem matches_commit.",
+        "Este registro cobre um teste selecionado; não é resultado da suíte completa nem benchmark.",
+        "O validador confere os bytes do registro, mas não reexecuta o teste nem autentica a origem do resultado.",
+        "As novas fontes foram copiadas dos arquivos atuais por leitura estática; não identificam os bytes usados na execução histórica RUN_VECTOR_1.",
+        "A cadeia macro → not_equivalent → equivalent → EPSILON permite interpretar as chamadas para f64; não comprova que o código apresentado produziu o resultado de RUN_VECTOR_1.",
+        "As fichas são afirmações manuais. O Bibliotecário confere referências, hashes e linhas, não a correção semântica das afirmações.",
+        "Nesta etapa não executamos casos novos da macro, não demonstramos correção universal e não medimos desempenho."
+      ],
+      "fact_id": "F_NOT_EQUIVALENT",
+      "metadata_scope": "Os metadados exportados são declarações do dossiê, não verificações de origem ou execução. O campo legado executed é omitido para rust_source.",
+      "scope": "Uma ficha, sua linha de referência e linhas vizinhas conforme requested_radius. Janela textual que pode cortar funções; significado da afirmação não validado.",
+      "source": {
+        "context": {
+          "context_id": "CTX_2",
+          "end_line": 11,
+          "requested_radius": 4,
+          "start_line": 3
+        },
+        "excerpt": "        !self.equivalent(other)",
+        "execution_scope": "Esta fonte descreve código. Ela não informa se, quando ou com qual resultado o código foi executado; isso requer um registro de execução separado.",
+        "git_commit": null,
+        "id": "SRC_EQUIVALENT",
+        "kind": "rust_source",
+        "line": 7,
+        "path": "src/equivalent.rs",
+        "sha256": "3d23b2da4c66c846da942b9f5f21be139017c0477c570cc77f65b792d7c83047"
+      },
+      "statement": "A implementação padrão de not_equivalent nega o resultado de self.equivalent(other).",
+      "unknowns_scope": "Declarações do dossiê inteiro, preservadas sem seleção por relevância. Ausência ou lista vazia não demonstram ausência de lacunas."
+    },
+    {
+      "authorship": "manual",
+      "evidence_id": "tuplas-com-implementacao-equivalencia",
+      "evidence_unknowns": [
+        "O validador compara o arquivo atual indicado por path com sha256 e lines; não verifica git_commit nem matches_commit.",
+        "Este registro cobre um teste selecionado; não é resultado da suíte completa nem benchmark.",
+        "O validador confere os bytes do registro, mas não reexecuta o teste nem autentica a origem do resultado.",
+        "As novas fontes foram copiadas dos arquivos atuais por leitura estática; não identificam os bytes usados na execução histórica RUN_VECTOR_1.",
+        "A cadeia macro → not_equivalent → equivalent → EPSILON permite interpretar as chamadas para f64; não comprova que o código apresentado produziu o resultado de RUN_VECTOR_1.",
+        "As fichas são afirmações manuais. O Bibliotecário confere referências, hashes e linhas, não a correção semântica das afirmações.",
+        "Nesta etapa não executamos casos novos da macro, não demonstramos correção universal e não medimos desempenho."
+      ],
+      "fact_id": "F_F64_EQUIVALENCE",
+      "metadata_scope": "Os metadados exportados são declarações do dossiê, não verificações de origem ou execução. O campo legado executed é omitido para rust_source.",
+      "scope": "Uma ficha, sua linha de referência e linhas vizinhas conforme requested_radius. Janela textual que pode cortar funções; significado da afirmação não validado.",
+      "source": {
+        "context": {
+          "context_id": "CTX_2",
+          "end_line": 15,
+          "requested_radius": 4,
+          "start_line": 7
+        },
+        "excerpt": "impl Equivalence<f64> for f64 {",
+        "execution_scope": "Esta fonte descreve código. Ela não informa se, quando ou com qual resultado o código foi executado; isso requer um registro de execução separado.",
+        "git_commit": null,
+        "id": "SRC_EQUIVALENT",
+        "kind": "rust_source",
+        "line": 11,
+        "path": "src/equivalent.rs",
+        "sha256": "3d23b2da4c66c846da942b9f5f21be139017c0477c570cc77f65b792d7c83047"
+      },
+      "statement": "O arquivo implementa Equivalence<f64> para f64.",
+      "unknowns_scope": "Declarações do dossiê inteiro, preservadas sem seleção por relevância. Ausência ou lista vazia não demonstram ausência de lacunas."
+    },
+    {
+      "authorship": "manual",
+      "evidence_id": "tuplas-com-implementacao-equivalencia",
+      "evidence_unknowns": [
+        "O validador compara o arquivo atual indicado por path com sha256 e lines; não verifica git_commit nem matches_commit.",
+        "Este registro cobre um teste selecionado; não é resultado da suíte completa nem benchmark.",
+        "O validador confere os bytes do registro, mas não reexecuta o teste nem autentica a origem do resultado.",
+        "As novas fontes foram copiadas dos arquivos atuais por leitura estática; não identificam os bytes usados na execução histórica RUN_VECTOR_1.",
+        "A cadeia macro → not_equivalent → equivalent → EPSILON permite interpretar as chamadas para f64; não comprova que o código apresentado produziu o resultado de RUN_VECTOR_1.",
+        "As fichas são afirmações manuais. O Bibliotecário confere referências, hashes e linhas, não a correção semântica das afirmações.",
+        "Nesta etapa não executamos casos novos da macro, não demonstramos correção universal e não medimos desempenho."
+      ],
+      "fact_id": "F_ABSOLUTE_TOLERANCE",
+      "metadata_scope": "Os metadados exportados são declarações do dossiê, não verificações de origem ou execução. O campo legado executed é omitido para rust_source.",
+      "scope": "Uma ficha, sua linha de referência e linhas vizinhas conforme requested_radius. Janela textual que pode cortar funções; significado da afirmação não validado.",
+      "source": {
+        "context": {
+          "context_id": "CTX_2",
+          "end_line": 17,
+          "requested_radius": 4,
+          "start_line": 9
+        },
+        "excerpt": "        (*self - other).abs() < EPSILON",
+        "execution_scope": "Esta fonte descreve código. Ela não informa se, quando ou com qual resultado o código foi executado; isso requer um registro de execução separado.",
+        "git_commit": null,
+        "id": "SRC_EQUIVALENT",
+        "kind": "rust_source",
+        "line": 13,
+        "path": "src/equivalent.rs",
+        "sha256": "3d23b2da4c66c846da942b9f5f21be139017c0477c570cc77f65b792d7c83047"
+      },
+      "statement": "A implementação de equivalent para f64 usa (*self - other).abs() < EPSILON, com comparação estrita.",
+      "unknowns_scope": "Declarações do dossiê inteiro, preservadas sem seleção por relevância. Ausência ou lista vazia não demonstram ausência de lacunas."
+    },
+    {
+      "authorship": "manual",
+      "evidence_id": "tuplas-com-implementacao-equivalencia",
+      "evidence_unknowns": [
+        "O validador compara o arquivo atual indicado por path com sha256 e lines; não verifica git_commit nem matches_commit.",
+        "Este registro cobre um teste selecionado; não é resultado da suíte completa nem benchmark.",
+        "O validador confere os bytes do registro, mas não reexecuta o teste nem autentica a origem do resultado.",
+        "As novas fontes foram copiadas dos arquivos atuais por leitura estática; não identificam os bytes usados na execução histórica RUN_VECTOR_1.",
+        "A cadeia macro → not_equivalent → equivalent → EPSILON permite interpretar as chamadas para f64; não comprova que o código apresentado produziu o resultado de RUN_VECTOR_1.",
+        "As fichas são afirmações manuais. O Bibliotecário confere referências, hashes e linhas, não a correção semântica das afirmações.",
+        "Nesta etapa não executamos casos novos da macro, não demonstramos correção universal e não medimos desempenho."
+      ],
+      "fact_id": "F_EPSILON_IMPORT",
+      "metadata_scope": "Os metadados exportados são declarações do dossiê, não verificações de origem ou execução. O campo legado executed é omitido para rust_source.",
+      "scope": "Uma ficha, sua linha de referência e linhas vizinhas conforme requested_radius. Janela textual que pode cortar funções; significado da afirmação não validado.",
+      "source": {
+        "context": {
+          "context_id": "CTX_2",
+          "end_line": 5,
+          "requested_radius": 4,
+          "start_line": 1
+        },
+        "excerpt": "use crate::EPSILON;",
+        "execution_scope": "Esta fonte descreve código. Ela não informa se, quando ou com qual resultado o código foi executado; isso requer um registro de execução separado.",
+        "git_commit": null,
+        "id": "SRC_EQUIVALENT",
+        "kind": "rust_source",
+        "line": 1,
+        "path": "src/equivalent.rs",
+        "sha256": "3d23b2da4c66c846da942b9f5f21be139017c0477c570cc77f65b792d7c83047"
+      },
+      "statement": "O módulo equivalent importa EPSILON da raiz do crate.",
+      "unknowns_scope": "Declarações do dossiê inteiro, preservadas sem seleção por relevância. Ausência ou lista vazia não demonstram ausência de lacunas."
+    },
+    {
+      "authorship": "manual",
+      "evidence_id": "tuplas-com-implementacao-equivalencia",
+      "evidence_unknowns": [
+        "O validador compara o arquivo atual indicado por path com sha256 e lines; não verifica git_commit nem matches_commit.",
+        "Este registro cobre um teste selecionado; não é resultado da suíte completa nem benchmark.",
+        "O validador confere os bytes do registro, mas não reexecuta o teste nem autentica a origem do resultado.",
+        "As novas fontes foram copiadas dos arquivos atuais por leitura estática; não identificam os bytes usados na execução histórica RUN_VECTOR_1.",
+        "A cadeia macro → not_equivalent → equivalent → EPSILON permite interpretar as chamadas para f64; não comprova que o código apresentado produziu o resultado de RUN_VECTOR_1.",
+        "As fichas são afirmações manuais. O Bibliotecário confere referências, hashes e linhas, não a correção semântica das afirmações.",
+        "Nesta etapa não executamos casos novos da macro, não demonstramos correção universal e não medimos desempenho."
+      ],
+      "fact_id": "F_EPSILON_VALUE",
+      "metadata_scope": "Os metadados exportados são declarações do dossiê, não verificações de origem ou execução. O campo legado executed é omitido para rust_source.",
+      "scope": "Uma ficha, sua linha de referência e linhas vizinhas conforme requested_radius. Janela textual que pode cortar funções; significado da afirmação não validado.",
+      "source": {
+        "context": {
+          "context_id": "CTX_3",
+          "end_line": 5,
+          "requested_radius": 4,
+          "start_line": 1
+        },
+        "excerpt": "pub const EPSILON: f64 = 0.00001;",
+        "execution_scope": "Esta fonte descreve código. Ela não informa se, quando ou com qual resultado o código foi executado; isso requer um registro de execução separado.",
+        "git_commit": null,
+        "id": "SRC_LIB",
+        "kind": "rust_source",
+        "line": 1,
+        "path": "src/lib.rs",
+        "sha256": "8260247e5d2909b648b553a54a118a690e49007aa88b7850c4253597ffdcf78f"
+      },
+      "statement": "A constante EPSILON é declarada como f64 com literal 0.00001.",
+      "unknowns_scope": "Declarações do dossiê inteiro, preservadas sem seleção por relevância. Ausência ou lista vazia não demonstram ausência de lacunas."
+    }
+  ]
+}

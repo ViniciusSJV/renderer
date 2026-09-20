@@ -1,0 +1,147 @@
+{
+  "contexts": [
+    {
+      "end_line": 164,
+      "id": "CTX_1",
+      "lines": [
+        "    #[test]",
+        "    fn vector_does_fill_properties() {",
+        "        let vector = Tuple::vector(1.4, 8.9, 5.1);",
+        "",
+        "        assert_equivalent!(vector.x, 1.4);",
+        "        assert_equivalent!(vector.y, 8.9);",
+        "        assert_equivalent!(vector.z, 5.1);",
+        "        assert_equivalent!(vector.w, 0.);",
+        "    }",
+        ""
+      ],
+      "source_id": "SRC_TUPLE",
+      "start_line": 155
+    },
+    {
+      "end_line": 29,
+      "id": "CTX_2",
+      "lines": [
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.34s",
+        "     Running unittests src/lib.rs (target/debug/deps/renderer-2682e9ea66618bbb)",
+        "",
+        "running 1 test",
+        "test tuple::tests_tuple::vector_does_fill_properties ... ok",
+        "",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 200 filtered out; finished in 0.00s"
+      ],
+      "source_id": "TEST_VECTOR_1",
+      "start_line": 23
+    }
+  ],
+  "scope": "Fichas na ordem solicitada, cada uma com sua fonte e seus limites. source.context referencia um bloco em contexts e preserva os limites da janela individual. Blocos unem apenas janelas sobrepostas ou adjacentes da mesma fonte. IDs CTX são locais à exportação. A presença conjunta de código e relatório não comprova que a versão do código produziu o resultado registrado.",
+  "selections": [
+    {
+      "authorship": "manual",
+      "evidence_id": "tuplas-construtor-vector",
+      "evidence_unknowns": [
+        "O validador compara o arquivo atual indicado por path com sha256 e lines; não verifica git_commit nem matches_commit.",
+        "Este registro cobre um teste selecionado; não é resultado da suíte completa nem benchmark.",
+        "O validador confere os bytes do registro, mas não reexecuta o teste nem autentica a origem do resultado."
+      ],
+      "fact_id": "F_VECTOR_TEST_X",
+      "metadata_scope": "Os metadados exportados são declarações do dossiê, não verificações de origem ou execução. O campo legado executed é omitido para rust_source.",
+      "scope": "Uma ficha, sua linha de referência e linhas vizinhas conforme requested_radius. Janela textual que pode cortar funções; significado da afirmação não validado.",
+      "source": {
+        "context": {
+          "context_id": "CTX_1",
+          "end_line": 163,
+          "requested_radius": 4,
+          "start_line": 155
+        },
+        "excerpt": "        assert_equivalent!(vector.x, 1.4);",
+        "execution_scope": "Esta fonte descreve código. Ela não informa se, quando ou com qual resultado o código foi executado; isso requer um registro de execução separado.",
+        "git_commit": "870cebbd10be9afaa3029ebbd533e5fec04f511e",
+        "id": "SRC_TUPLE",
+        "kind": "rust_source",
+        "line": 159,
+        "path": "src/tuple.rs",
+        "sha256": "99385e2ca2803661609d6fd740c1e3434e53fe19165c0a8ab862b37693dd1916"
+      },
+      "statement": "O teste vector_does_fill_properties chama assert_equivalent! para comparar vector.x com 1.4.",
+      "unknowns_scope": "Declarações do dossiê inteiro, preservadas sem seleção por relevância. Ausência ou lista vazia não demonstram ausência de lacunas."
+    },
+    {
+      "authorship": "manual",
+      "evidence_id": "tuplas-construtor-vector",
+      "evidence_unknowns": [
+        "O validador compara o arquivo atual indicado por path com sha256 e lines; não verifica git_commit nem matches_commit.",
+        "Este registro cobre um teste selecionado; não é resultado da suíte completa nem benchmark.",
+        "O validador confere os bytes do registro, mas não reexecuta o teste nem autentica a origem do resultado."
+      ],
+      "fact_id": "F_VECTOR_TEST_Y",
+      "metadata_scope": "Os metadados exportados são declarações do dossiê, não verificações de origem ou execução. O campo legado executed é omitido para rust_source.",
+      "scope": "Uma ficha, sua linha de referência e linhas vizinhas conforme requested_radius. Janela textual que pode cortar funções; significado da afirmação não validado.",
+      "source": {
+        "context": {
+          "context_id": "CTX_1",
+          "end_line": 164,
+          "requested_radius": 4,
+          "start_line": 156
+        },
+        "excerpt": "        assert_equivalent!(vector.y, 8.9);",
+        "execution_scope": "Esta fonte descreve código. Ela não informa se, quando ou com qual resultado o código foi executado; isso requer um registro de execução separado.",
+        "git_commit": "870cebbd10be9afaa3029ebbd533e5fec04f511e",
+        "id": "SRC_TUPLE",
+        "kind": "rust_source",
+        "line": 160,
+        "path": "src/tuple.rs",
+        "sha256": "99385e2ca2803661609d6fd740c1e3434e53fe19165c0a8ab862b37693dd1916"
+      },
+      "statement": "O teste vector_does_fill_properties chama assert_equivalent! para comparar vector.y com 8.9.",
+      "unknowns_scope": "Declarações do dossiê inteiro, preservadas sem seleção por relevância. Ausência ou lista vazia não demonstram ausência de lacunas."
+    },
+    {
+      "authorship": "manual",
+      "evidence_id": "tuplas-construtor-vector",
+      "evidence_unknowns": [
+        "O validador compara o arquivo atual indicado por path com sha256 e lines; não verifica git_commit nem matches_commit.",
+        "Este registro cobre um teste selecionado; não é resultado da suíte completa nem benchmark.",
+        "O validador confere os bytes do registro, mas não reexecuta o teste nem autentica a origem do resultado."
+      ],
+      "fact_id": "F_VECTOR_TEST_PASSED",
+      "metadata_scope": "Os metadados exportados são declarações do dossiê, não verificações de origem ou execução. O campo legado executed é omitido para rust_source.",
+      "scope": "Uma ficha, sua linha de referência e linhas vizinhas conforme requested_radius. Janela textual que pode cortar funções; significado da afirmação não validado.",
+      "source": {
+        "context": {
+          "context_id": "CTX_2",
+          "end_line": 29,
+          "requested_radius": 4,
+          "start_line": 23
+        },
+        "excerpt": "test tuple::tests_tuple::vector_does_fill_properties ... ok",
+        "execution": {
+          "command": "cargo test --offline --lib tuple::tests_tuple::vector_does_fill_properties -- --exact",
+          "exit_code": 0,
+          "finished_at": "2026-09-17T02:06:35.345977+00:00",
+          "id": "RUN_VECTOR_1",
+          "started_at": "2026-09-17T02:06:33.984295+00:00"
+        },
+        "execution_scope": "execution_validation descreve apenas a conferência da transcrição em source.lines, não a autenticação do relatório. O ID é atribuído ao catalogar e não é conferido no cabeçalho. O código de término é do comando registrado, não do validador atual; sua coerência com a saída dos testes não foi verificada. Não houve reexecução nem validação semântica de horários ou comando. Sem execution, nenhuma transcrição foi conferida.",
+        "execution_validation": {
+          "basis": "source.lines: cabeçalho anterior à primeira linha vazia; comparação textual exata.",
+          "compared_fields": [
+            "command",
+            "started_at",
+            "finished_at",
+            "exit_code"
+          ],
+          "status": "matches_report_header"
+        },
+        "git_commit": "870cebbd10be9afaa3029ebbd533e5fec04f511e",
+        "id": "TEST_VECTOR_1",
+        "kind": "test_run",
+        "line": 27,
+        "path": "ai/experimentos/03-tuplas/teste-vector.txt",
+        "sha256": "6d053575d8dfb7f03c0dcbf3eb81cab322fbb1533aab951d9fe840b0cad3faa8"
+      },
+      "statement": "O teste tuple::tests_tuple::vector_does_fill_properties passou na execução registrada em TEST_VECTOR_1.",
+      "unknowns_scope": "Declarações do dossiê inteiro, preservadas sem seleção por relevância. Ausência ou lista vazia não demonstram ausência de lacunas."
+    }
+  ]
+}

@@ -1,0 +1,178 @@
+{
+  "id": "fronteira-equivalencia-aula-12",
+  "sources": [
+    {
+      "id": "SRC_BOUNDARY_TEST",
+      "kind": "rust_source",
+      "path": "tests/equivalence_boundary.rs",
+      "sha256": "75930e5efc0f7f1ffb8173bf996d4e89b852b8e4bbb003cd8d506fe517bfa0b6",
+      "lines": [
+        "use renderer::{assert_equivalent, equivalent::Equivalence, EPSILON};",
+        "",
+        "#[test]",
+        "fn accepts_equal_values() {",
+        "    assert_equivalent!(0.0_f64, 0.0_f64);",
+        "}",
+        "",
+        "#[test]",
+        "fn accepts_difference_below_epsilon() {",
+        "    assert_equivalent!(0.0_f64, EPSILON / 2.0);",
+        "}",
+        "",
+        "#[test]",
+        "#[should_panic(expected = \"asserting equality.\")]",
+        "fn rejects_difference_at_epsilon() {",
+        "    assert_equivalent!(0.0_f64, EPSILON);",
+        "}",
+        "",
+        "#[test]",
+        "#[should_panic(expected = \"asserting equality.\")]",
+        "fn rejects_difference_above_epsilon() {",
+        "    assert_equivalent!(0.0_f64, EPSILON * 2.0);",
+        "}"
+      ]
+    },
+    {
+      "id": "TEST_BOUNDARY_1",
+      "kind": "test_run",
+      "path": "ai/experimentos/03-tuplas/teste-fronteira.txt",
+      "sha256": "7562f6ee7f9799fce00e41015e5325ccfb19027df777fba04fc4135e088780a4",
+      "lines": [
+        "Registro de execução — fronteira da tolerância",
+        "Execução: RUN_EQUIVALENCE_BOUNDARY_1",
+        "Comando: cargo test --offline --test equivalence_boundary -- --test-threads=1",
+        "Diretório de execução: /workspaces/renderer-local",
+        "Início UTC: 2026-09-19T17:40:01.376195+00:00",
+        "Fim UTC: 2026-09-19T17:40:05.698741+00:00",
+        "Commit HEAD: e2010265e150a398b99d7297642bacbfc334e08e",
+        "Rust: rustc 1.98.1 (48a229cea 2026-09-01)",
+        "SHA-256 tests/equivalence_boundary.rs: 75930e5efc0f7f1ffb8173bf996d4e89b852b8e4bbb003cd8d506fe517bfa0b6",
+        "SHA-256 src/equivalent.rs: 3d23b2da4c66c846da942b9f5f21be139017c0477c570cc77f65b792d7c83047",
+        "SHA-256 src/lib.rs: 8260247e5d2909b648b553a54a118a690e49007aa88b7850c4253597ffdcf78f",
+        "SHA-256 Cargo.toml: 2deb10990c45692ca544f50b5218ec9d22e04a46e2a6acd8b764c24fae0adb18",
+        "SHA-256 Cargo.lock: c9864babf8ff8c29db7696256d1721c97c37e87d09454d85f30599591508d374",
+        "SHA-256 ai/experimentos/03-tuplas/previsoes-fronteira.md: 8861d0a53f81a932c6f8d18ee3ee923650f64b6184209401ceb03e94b1222e58",
+        "Código de término: 0",
+        "",
+        "Nota: captura pontual; não autentica a origem nem captura todo o ambiente.",
+        "Não comprova a associação histórica de RUN_VECTOR_1.",
+        "Estado Git antes da execução:",
+        " M ai/README.md",
+        " M src/bin/validate_evidence.rs",
+        "?? ai/aulas/06-metadados-das-fontes.md",
+        "?? ai/aulas/07-identidade-limites-e-consulta.md",
+        "?? ai/aulas/08-codigo-nao-e-execucao.md",
+        "?? ai/aulas/09-reunir-evidencias.md",
+        "?? ai/aulas/10-avaliar-codigo-e-resultado.md",
+        "?? ai/aulas/11-investigar-assert-equivalent.md",
+        "?? ai/experimentos/03-tuplas/avaliacao-codigo-e-resultado.json",
+        "?? ai/experimentos/03-tuplas/avaliacao-consulta-vector-x.json",
+        "?? ai/experimentos/03-tuplas/consulta-codigo-e-resultado-inicial.json",
+        "?? ai/experimentos/03-tuplas/consulta-codigo-e-resultado-pergunta.json",
+        "?? ai/experimentos/03-tuplas/consulta-contexto-compartilhado.json",
+        "?? ai/experimentos/03-tuplas/consulta-execucao-conferida.json",
+        "?? ai/experimentos/03-tuplas/consulta-execucao-identificada.json",
+        "?? ai/experimentos/03-tuplas/consulta-implementacao-macro.json",
+        "?? ai/experimentos/03-tuplas/consulta-teste-vector-metadados.json",
+        "?? ai/experimentos/03-tuplas/consulta-vector-x-dossie.json",
+        "?? ai/experimentos/03-tuplas/consulta-vector-x-limites.json",
+        "?? ai/experimentos/03-tuplas/consulta-vector-x-metadados.json",
+        "?? ai/experimentos/03-tuplas/consulta-vector-x-pergunta.json",
+        "?? ai/experimentos/03-tuplas/consulta-vector-x-sem-executed.json",
+        "?? ai/experimentos/03-tuplas/evidencias-execucao-identificada.json",
+        "?? ai/experimentos/03-tuplas/evidencias-macro.json",
+        "?? ai/experimentos/03-tuplas/pergunta-codigo-e-resultado.txt",
+        "?? ai/experimentos/03-tuplas/pergunta-vector-x.txt",
+        "?? ai/experimentos/03-tuplas/previsoes-fronteira.md",
+        "?? tests/",
+        "",
+        "Saída combinada (stdout e stderr):",
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 4.30s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-70e34e017309d7ce)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "executed": true,
+      "execution": {
+        "id": "RUN_EQUIVALENCE_BOUNDARY_1",
+        "command": "cargo test --offline --test equivalence_boundary -- --test-threads=1",
+        "started_at": "2026-09-19T17:40:01.376195+00:00",
+        "finished_at": "2026-09-19T17:40:05.698741+00:00",
+        "exit_code": 0
+      }
+    }
+  ],
+  "facts": [
+    {
+      "id": "F_CODE_ACCEPTS_EQUAL_VALUES",
+      "statement": "O teste accepts_equal_values está definido no código apresentado.",
+      "source_id": "SRC_BOUNDARY_TEST",
+      "line": 4,
+      "authorship": "manual"
+    },
+    {
+      "id": "F_RESULT_ACCEPTS_EQUAL_VALUES",
+      "statement": "O relatório TEST_BOUNDARY_1 registra aprovação de accepts_equal_values em RUN_EQUIVALENCE_BOUNDARY_1.",
+      "source_id": "TEST_BOUNDARY_1",
+      "line": 56,
+      "authorship": "manual"
+    },
+    {
+      "id": "F_CODE_ACCEPTS_DIFFERENCE_BELOW_EPSILON",
+      "statement": "O teste accepts_difference_below_epsilon está definido no código apresentado.",
+      "source_id": "SRC_BOUNDARY_TEST",
+      "line": 9,
+      "authorship": "manual"
+    },
+    {
+      "id": "F_RESULT_ACCEPTS_DIFFERENCE_BELOW_EPSILON",
+      "statement": "O relatório TEST_BOUNDARY_1 registra aprovação de accepts_difference_below_epsilon em RUN_EQUIVALENCE_BOUNDARY_1.",
+      "source_id": "TEST_BOUNDARY_1",
+      "line": 55,
+      "authorship": "manual"
+    },
+    {
+      "id": "F_CODE_REJECTS_DIFFERENCE_AT_EPSILON",
+      "statement": "O teste rejects_difference_at_epsilon está definido no código apresentado.",
+      "source_id": "SRC_BOUNDARY_TEST",
+      "line": 15,
+      "authorship": "manual"
+    },
+    {
+      "id": "F_RESULT_REJECTS_DIFFERENCE_AT_EPSILON",
+      "statement": "O relatório TEST_BOUNDARY_1 registra aprovação de rejects_difference_at_epsilon em RUN_EQUIVALENCE_BOUNDARY_1; este teste espera pânico.",
+      "source_id": "TEST_BOUNDARY_1",
+      "line": 58,
+      "authorship": "manual"
+    },
+    {
+      "id": "F_CODE_REJECTS_DIFFERENCE_ABOVE_EPSILON",
+      "statement": "O teste rejects_difference_above_epsilon está definido no código apresentado.",
+      "source_id": "SRC_BOUNDARY_TEST",
+      "line": 21,
+      "authorship": "manual"
+    },
+    {
+      "id": "F_RESULT_REJECTS_DIFFERENCE_ABOVE_EPSILON",
+      "statement": "O relatório TEST_BOUNDARY_1 registra aprovação de rejects_difference_above_epsilon em RUN_EQUIVALENCE_BOUNDARY_1; este teste espera pânico.",
+      "source_id": "TEST_BOUNDARY_1",
+      "line": 57,
+      "authorship": "manual"
+    }
+  ],
+  "unknowns": [
+    "Quatro casos específicos não demonstram correção universal, comportamento para NaN ou infinitos, nem desempenho.",
+    "Aprovação dos testes com should_panic significa rejeição esperada do par pela macro.",
+    "O registro contém hashes coletados antes do comando, mas não captura todo o ambiente nem autentica sua origem.",
+    "Esta execução não comprova retroativamente a associação de código com RUN_VECTOR_1.",
+    "O Bibliotecário confere referências e campos do cabeçalho; não verifica semanticamente as fichas nem associa automaticamente os hashes no relatório ao código compilado."
+  ]
+}

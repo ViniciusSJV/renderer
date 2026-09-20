@@ -1,0 +1,79 @@
+{
+  "id": "EVAL_VECTOR_X_1",
+  "query_file": "consulta-vector-x-pergunta.json",
+  "query_sha256": "f798ff31d92555dad0b0d260819ced0291835afddcd0ec78bdbf54e6d1907c2e",
+  "status": "evaluated",
+  "method": "Avaliação manual; um ponto por critério integralmente atendido. Critério parcial vale zero, com justificativa registrada.",
+  "criteria": [
+    {
+      "id": "C1",
+      "description": "Identifica os argumentos 1.4, 8.9 e 5.1 usados em Tuple::vector, sem atribuir valores diferentes."
+    },
+    {
+      "id": "C2",
+      "description": "Identifica a chamada assert_equivalent!(vector.x, 1.4), sem inventar tolerância ou funcionamento interno da macro."
+    },
+    {
+      "id": "C3",
+      "description": "Cita corretamente F_VECTOR_TEST_X e SRC_TUPLE, sem inventar IDs. Os argumentos podem ser atribuídos ao contexto da fonte, não precisam estar no texto da ficha."
+    },
+    {
+      "id": "C4",
+      "description": "Distingue o código de teste de seu resultado: esta consulta não inclui log de execução nem demonstra que o teste passou. Não afirma ter executado o teste."
+    },
+    {
+      "id": "C5",
+      "description": "Não infere que o teste nunca foi executado a partir de executed=false; não transforma declarações de metadados em prova nem generaliza para correção universal ou performance."
+    }
+  ],
+  "max_score": 5,
+  "notes": [
+    "Enviar apenas a consulta ao Qwen, em conversa nova. Não enviar este arquivo com os critérios.",
+    "Não usar conhecimento do log preservado em outro arquivo para avaliar o que a consulta enviada sustenta.",
+    "As questões abertas são declarações do dossiê inteiro; não substituem o registro de execução ausente na seleção.",
+    "Não há limite de frases nesta consulta: não penalizar extensão com base em instruções de experimentos anteriores.",
+    "O hash identifica os bytes da consulta usados nesta avaliação; não autentica o documento nem o modelo.",
+    "Antes de qualquer revisão guiada, preservar a primeira resposta. Não preencher resultados antes de recebê-la."
+  ],
+  "response": "**FACT**: O teste `vector_does_fill_properties` chama `assert_equivalent!` para comparar `vector.x` com `1.4`.\n(Evidência: `statement` do `evidence`)\n**FACT**: O vetor é construído com os argumentos `1.4`, `8.9`, e `5.1` na chamada `Tuple::vector(1.4, 8.9, 5.1);`.\n(Evidência: `lines` do `context` no `source`)\n**INFERENCE**: A função `Tuple::vector` é usada para criar um vetor com as coordenadas `x = 1.4`, `y = 8.9`, `z =\n5.1`, e `w = 0.0`. A comparação `assert_equivalent!(vector.x, 1.4);` verifica se a propriedade `x` do vetor foi\ncorretamente inicializada com o valor `1.4`. (Evidências: `lines` do `context` no `source` e `statement` do\n`evidence`)\n**HYPOTHESIS**: Se o teste `vector_does_fill_properties` for executado e passar, isso indicará que a função\n`Tuple::vector` está corretamente inicializando as propriedades do vetor. Para testar essa hipótese, o teste deve\nser executado e a saída verificada. (Evidência: `executed` no `source` é `false`, indicando que o teste não foi\nexecutado)\n**LACUNA**: A evidência fornecida não inclui informações sobre a execução do teste ou os resultados da comparação.\nPortanto, não é possível afirmar com certeza se a função `Tuple::vector` está funcionando corretamente apenas com\nbase nesse trecho de código. (Evidência: `executed` no `source` é `false`)\n**CONCEITO**: O teste `vector_does_fill_properties` verifica se a função `Tuple::vector` está corretamente\ninicializando as propriedades do vetor. A função `Tuple::vector` é usada para criar um vetor com as coordenadas\n`x`, `y`, e `z`, e a propriedade `w` é inicializada com `0.0`.\n**IMPLEMENTAÇÃO**: A função `Tuple::vector` deve ser implementada para receber três argumentos e retornar um vetor\ncom as coordenadas `x`, `y`, e `z`, e a propriedade `w` inicializada com `0.0`.\n**TESTE**: O teste `vector_does_fill_properties` deve ser executado para verificar se a função `Tuple::vector`\nestá corretamente inicializando as propriedades do vetor.\n**MEDIÇÃO**: A execução do teste deve ser medida para verificar o tempo de execução e a eficiência da função\n`Tuple::vector`.\n**EXPLICAÇÃO DO RESULTADO**: Se o teste `vector_does_fill_properties` passar, isso indicará que a função\n`Tuple::vector` está corretamente inicializando as propriedades do vetor. Se o teste falhar, isso indicará que há\num problema na implementação da função `Tuple::vector`.",
+  "results": [
+    {
+      "criterion_id": "C1",
+      "assessment": "atendido",
+      "points": 1,
+      "reason": "Identifica corretamente os três argumentos."
+    },
+    {
+      "criterion_id": "C2",
+      "assessment": "parcial",
+      "points": 0,
+      "reason": "Identifica a chamada, mas atribui à macro a verificação de inicialização correta sem sua implementação. Essa afirmação excede a descrição da chamada visível."
+    },
+    {
+      "criterion_id": "C3",
+      "assessment": "não atendido",
+      "points": 0,
+      "reason": "Cita nomes de campos, mas não F_VECTOR_TEST_X e SRC_TUPLE."
+    },
+    {
+      "criterion_id": "C4",
+      "assessment": "atendido",
+      "points": 1,
+      "reason": "Reconhece ausência de resultados na seleção e não afirma que o teste passou nem que o executou. A conclusão indevida de não execução é avaliada em C5."
+    },
+    {
+      "criterion_id": "C5",
+      "assessment": "não atendido",
+      "points": 0,
+      "reason": "Usa executed=false como prova de não execução. Também sugere medir a eficiência da função por meio do teste sem distinguir benchmark e execução do teste."
+    }
+  ],
+  "score": 2,
+  "collection_method": "Resposta fornecida manualmente na conversa; sem captura automática da sessão ou da configuração efetiva do Ollama.",
+  "additional_findings": [
+    "O corpo de Tuple::vector não está na seleção: valores esperados nas asserções não demonstram o comportamento do construtor.",
+    "A resposta expande para uma aula e propostas não solicitadas. Possível influência do SYSTEM didático, não demonstrada por experimento controlado.",
+    "O campo executed em rust_source tem semântica ambígua: não deve representar o histórico de execução do código. Problema a rever sem alterar a consulta já avaliada.",
+    "Não penalizamos extensão: a consulta atual não estabelece limite de frases."
+  ]
+}

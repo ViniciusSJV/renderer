@@ -1,0 +1,1 @@
+Quais argumentos são usados na construção do vetor e qual comparação é feita para vector.x no trecho fornecido? Cite a ficha e a fonte; diferencie o que aparece no código do que exigiria evidência de execução.

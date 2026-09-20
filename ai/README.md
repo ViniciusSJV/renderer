@@ -98,11 +98,65 @@ exportação de uma ficha com contexto configurável por `--context`. Os 32 test
 do binário passaram; duas exportações com os mesmos dados e parâmetros tiveram
 bytes idênticos. A aula registra comandos, artefatos e limites dessa observação.
 
+Na [Aula 6](aulas/06-metadados-das-fontes.md), preservamos `kind`, `executed`,
+`git_commit` e `authorship` na leitura e exportação. Campos ausentes permanecem
+sem informação; declarações não são promovidas a comprovações. Os 37 testes do
+binário passaram e duas exportações reais tiveram seus metadados conferidos.
+
+Na [Aula 7](aulas/07-identidade-limites-e-consulta.md), preservamos identidade
+e questões abertas do dossiê e montamos a consulta com `--question`. Os 43 testes
+do binário passaram. Uma resposta do Qwen recebeu 2/5 em critérios definidos
+previamente; consulta, resposta e avaliação estão preservadas.
+
+Na [Aula 8](aulas/08-codigo-nao-e-execucao.md), separamos fonte de código de
+registro de execução. As novas exportações de `rust_source` omitem `executed`;
+`ExecutionRecord` identifica uma execução e seus campos são comparados ao
+cabeçalho do relatório. A exportação informa quais campos foram conferidos e
+os limites dessa comparação. Os **53 testes do Bibliotecário passaram**.
+As consultas anteriores foram preservadas; não houve nova consulta ao Qwen
+nem benchmark.
+
+Na [Aula 9](aulas/09-reunir-evidencias.md), passamos a selecionar várias fichas
+com `--fact ID` repetido e compartilhar janelas de contexto sobrepostas ou
+adjacentes da mesma fonte. As referências individuais e os limites de cada
+janela foram preservados. Os **60 testes do Bibliotecário passaram**. No exemplo
+com três fichas, 25 linhas de contexto nas janelas individuais passaram a 17
+nos blocos compartilhados; não medimos tokens, desempenho ou qualidade do Qwen.
+
+Na [Aula 10](aulas/10-avaliar-codigo-e-resultado.md), preparamos uma consulta
+com código e resultado e seis critérios anteriores à resposta. A resposta
+recebida manualmente obteve **3/6**: reconheceu limites da macro e da conferência,
+mas inferiu inicialização correta sem suporte suficiente e confundiu o ID da
+fonte com o da execução. Consulta, critérios, resposta e justificativas estão
+preservados na [avaliação](experimentos/03-tuplas/avaliacao-codigo-e-resultado.json).
+Não houve alteração de Rust ou Modelfile, nova execução de testes ou benchmark.
+
+Na [Aula 11](aulas/11-investigar-assert-equivalent.md), investigamos a cadeia
+`assert_equivalent!` → `not_equivalent` → `equivalent` para f64 → `EPSILON`.
+Criamos dez fichas e duas fontes novas em um dossiê separado. O Bibliotecário
+validou **4 fontes e 17 fichas, sem referências inválidas**. A leitura mostra
+uma tolerância absoluta estrita de `0.00001`; não houve novos testes da macro,
+consulta ao Qwen ou benchmark. Os artefatos anteriores foram preservados.
+
+Na [Aula 12](aulas/12-observar-fronteira-tolerancia.md), registramos previsões
+e executamos quatro testes de integração da macro: pares iguais e abaixo de
+EPSILON foram aceitos; no limite e acima dele houve o pânico esperado.
+**4 testes passaram**, com código 0, em RUN_EQUIVALENCE_BOUNDARY_1.
+O novo dossiê contém **2 fontes e 8 fichas, sem referências inválidas**.
+Não houve benchmark nem nova consulta ao Qwen.
+
 ## Ponto de retomada
 
-A Aula 5 está concluída. O próximo passo é montar uma consulta com pergunta e
-material exportado, sem copiar trechos manualmente. Depois poderemos selecionar
-mais de uma ficha. Mantemos o Modelfile atual e a comunicação manual com o Ollama.
+A **Aula 12 — Observar a fronteira da tolerância está concluída**.
+As previsões, o relatório e as fichas estão vinculados na aula. A execução nova
+não comprova a associação histórica com RUN_VECTOR_1. A nota da Aula 10
+permanece **3/6**.
 
-Seguimos a ordem do livro, com foco no Graph Engine e sem repetir fundamentos
-já dominados. Ainda não há banco de grafos nem extração automática de afirmações.
+Na **Aula 13 — Captura de execução**, vamos transformar a captura pontual em
+um procedimento reutilizável para registrar comando, saída, código de término
+e ambiente, incluindo o tratamento de falhas. A associação entre código e
+execução será aprofundada na Aula 14. O envio ao Ollama continua manual.
+
+Seguimos a sequência acordada: Bibliotecário e evidências, integração e avaliação,
+performance e, depois, criação de cenas por linguagem natural. Ainda não há
+banco de grafos nem extração automática de afirmações.

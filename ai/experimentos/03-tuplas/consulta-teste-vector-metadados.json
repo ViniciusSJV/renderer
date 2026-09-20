@@ -1,0 +1,31 @@
+{
+  "authorship": "manual",
+  "fact_id": "F_VECTOR_TEST_PASSED",
+  "metadata_scope": "kind, executed, git_commit e authorship são declarações preservadas do dossiê, não verificações de origem ou execução.",
+  "scope": "Uma ficha, sua linha de referência e linhas vizinhas conforme requested_radius. Janela textual que pode cortar funções; significado da afirmação não validado.",
+  "source": {
+    "context": {
+      "end_line": 29,
+      "lines": [
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.34s",
+        "     Running unittests src/lib.rs (target/debug/deps/renderer-2682e9ea66618bbb)",
+        "",
+        "running 1 test",
+        "test tuple::tests_tuple::vector_does_fill_properties ... ok",
+        "",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 200 filtered out; finished in 0.00s"
+      ],
+      "requested_radius": 4,
+      "start_line": 23
+    },
+    "excerpt": "test tuple::tests_tuple::vector_does_fill_properties ... ok",
+    "executed": true,
+    "git_commit": "870cebbd10be9afaa3029ebbd533e5fec04f511e",
+    "id": "TEST_VECTOR_1",
+    "kind": "test_run",
+    "line": 27,
+    "path": "ai/experimentos/03-tuplas/teste-vector.txt",
+    "sha256": "6d053575d8dfb7f03c0dcbf3eb81cab322fbb1533aab951d9fe840b0cad3faa8"
+  },
+  "statement": "O teste tuple::tests_tuple::vector_does_fill_properties passou na execução registrada em TEST_VECTOR_1."
+}

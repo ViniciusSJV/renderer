@@ -1,0 +1,104 @@
+{
+  "id": "EVAL_CODE_AND_RESULT_1",
+  "query_file": "consulta-codigo-e-resultado-pergunta.json",
+  "query_sha256": "301bb094ca6f2256925c161ee5edf125c582055166a35e49849be8e316a7210a",
+  "status": "evaluated",
+  "method": "Avaliação manual: um ponto por critério integralmente atendido; parcial vale zero. Registrar justificativas e contradições na resposta inteira. Não preencher resultados antes de receber a resposta.",
+  "criteria": [
+    {
+      "id": "C1",
+      "description": "Descreve as chamadas visíveis sem atribuir implementação ao construtor.",
+      "expected": "Identifica os argumentos 1.4, 8.9 e 5.1 e as chamadas assert_equivalent!(vector.x, 1.4) e assert_equivalent!(vector.y, 8.9). Não transforma os valores esperados em comprovação do comportamento do construtor."
+    },
+    {
+      "id": "C2",
+      "description": "Reconhece a ausência da implementação de assert_equivalent!.",
+      "expected": "Não inventa tolerância, igualdade exata ou mecanismo interno. Distingue a chamada visível da semântica não fornecida da macro."
+    },
+    {
+      "id": "C3",
+      "description": "Atribui o resultado à execução registrada e delimita seu alcance.",
+      "expected": "Reconhece que TEST_VECTOR_1 relata aprovação do teste selecionado em RUN_VECTOR_1, com código de término 0; não o trata como resultado da suíte completa nem alega execução própria. Não exige repetir contagens, mas contagens citadas devem corresponder ao relatório."
+    },
+    {
+      "id": "C4",
+      "description": "Usa referências existentes que sustentam as afirmações.",
+      "expected": "Cita F_VECTOR_TEST_X e F_VECTOR_TEST_Y com SRC_TUPLE ao descrever as chamadas, e F_VECTOR_TEST_PASSED com TEST_VECTOR_1 ao descrever o resultado. Não inventa IDs ou confunde CTX_1/CTX_2 com IDs de execução. RUN_VECTOR_1 é avaliado em C3."
+    },
+    {
+      "id": "C5",
+      "description": "Distingue correspondência textual de autenticidade e associação histórica.",
+      "expected": "Explica que command, started_at, finished_at e exit_code foram comparados ao cabeçalho. Não inclui o ID entre os campos conferidos, não afirma autenticação, reexecução ou comprovação automática de que a versão de SRC_TUPLE produziu o resultado. Hash e commit declarados não bastam para essa associação."
+    },
+    {
+      "id": "C6",
+      "description": "Não generaliza a evidência para correção universal ou ganho de desempenho.",
+      "expected": "Reconhece que o registro de um teste não demonstra correção para todas as entradas e que não há benchmark comparativo para sustentar ganho de desempenho. Não usa finished in 0.00s como medida de custo da função ou prova de rapidez."
+    }
+  ],
+  "max_score": 6,
+  "notes": [
+    "Enviar somente a consulta, em conversa nova com renderer-analyst. Não enviar esta rubrica nem o gabarito.",
+    "Preservar a primeira resposta completa antes de orientar qualquer revisão.",
+    "Avaliar apenas o material da consulta. Implementações existentes em outros arquivos não foram fornecidas ao modelo.",
+    "Não descontar pontos por extensão ou ausência de hipótese: não há limite de frases e não é necessário preencher categorias artificiais. Desvios de formato podem ser registrados separadamente.",
+    "Uma ressalva não apaga uma afirmação incompatível em outra parte da resposta; citar ambas na justificativa.",
+    "Pergunta, evidências e critérios diferem da Aula 7. As pontuações não constituem comparação controlada nem demonstram melhora causada pelo novo formato.",
+    "O hash identifica os bytes preparados; não autentica a sessão nem garante que todo o conteúdo foi recebido pelo modelo.",
+    "O Modelfile local declara num_ctx 4096 e num_predict 1024. Não medimos tokens nem confirmamos configuração efetiva ou ausência de truncamento; registrar qualquer sinal de corte e condições relatadas pelo usuário."
+  ],
+  "response": "1. **Quais argumentos aparecem na chamada Tuple::vector e quais chamadas de assert\\_equivalent! envolvem x e y? O\n   material permite descrever o funcionamento interno dessa macro?**\n\n   **FACT:** Na chamada `Tuple::vector(1.4, 8.9, 5.1)`, os argumentos são `1.4`, `8.9`, e `5.1`. As chamadas de\n   `assert_equivalent!` envolvem `vector.x` e `vector.y` com os valores `1.4` e `8.9`, respectivamente.\n   **(F\\_VECTOR\\_TEST\\_X, F\\_VECTOR\\_TEST\\_Y)**\n\n   **LACUNA:** O material fornecido não permite descrever o funcionamento interno da macro `assert_equivalent!`.\n   **(SRC\\_TUPLE)**\n\n2. **Qual resultado o relatório registra para o teste vector\\_does\\_fill\\_properties, em qual execução identificada,\n   e qual é o alcance desse resultado?**\n\n   **FACT:** O relatório registra que o teste `tuple::tests_tuple::vector_does_fill_properties` passou na execução\n   identificada por `TEST_VECTOR_1`. **(F\\_VECTOR\\_TEST\\_PASSED)**\n\n   **INFERENCE:** O alcance desse resultado é limitado ao escopo do teste específico, que verifica a inicialização\n   correta das propriedades `x` e `y` do vetor. **(SRC\\_TUPLE, TEST\\_VECTOR\\_1)**\n\n3. **O que execution\\_validation informa que foi conferido? Isso autentica a execução ou comprova que a versão de\n   SRC\\_TUPLE apresentada produziu esse resultado?**\n\n   **FACT:** O `execution_validation` informa que foi conferido o cabeçalho anterior à primeira linha vazia e a\n   comparação textual exata dos campos `command`, `started_at`, `finished_at`, e `exit_code`. **(TEST\\_VECTOR\\_1)**\n\n   **LACUNA:** Isso não autentica a execução nem comprova que a versão de `SRC_TUPLE` apresentada produziu esse\n   resultado. **(TEST\\_VECTOR\\_1)**\n\n4. **Podemos concluir correção para todas as entradas ou ganho de desempenho? Explique o que falta para essas\n   conclusões.**\n\n   **INFERENCE:** Com base nas evidências fornecidas, podemos concluir que a função `Tuple::vector` inicializa\n   corretamente as propriedades `x` e `y` para as entradas fornecidas, pois o teste `vector_does_fill_properties`\n   passou. **(F\\_VECTOR\\_TEST\\_PASSED)**\n\n   **LACUNA:** Para concluir um ganho de desempenho, precisaríamos de benchmarks ou comparações de tempo de\n   execução antes e depois de alterações no código. Além disso, para garantir a correção para todas as entradas,\n   seria necessário um conjunto mais amplo de testes que cubra diferentes cenários e valores de entrada.\n   **(SRC\\_TUPLE, TEST\\_VECTOR\\_1)**",
+  "results": [
+    {
+      "criterion_id": "C1",
+      "assessment": "parcial",
+      "points": 0,
+      "reason": "Descreve corretamente argumentos e chamadas no item 1, mas no item 4 conclui que Tuple::vector inicializa corretamente x e y porque o teste passou. Isso excede as chamadas visíveis e o registro fornecido; o critério exige não promover valores esperados a comprovação do comportamento."
+    },
+    {
+      "criterion_id": "C2",
+      "assessment": "atendido",
+      "points": 1,
+      "reason": "Reconhece explicitamente a ausência da implementação da macro e não inventa tolerância, igualdade exata ou mecanismo interno. A conclusão excessiva sobre correção é penalizada em C1 e sua sustentação em C4; este ponto não valida aquela conclusão."
+    },
+    {
+      "criterion_id": "C3",
+      "assessment": "parcial",
+      "points": 0,
+      "reason": "Reconhece a aprovação e o escopo de um teste, sem alegar execução própria, mas usa TEST_VECTOR_1 como identificador da execução. Esse é o ID da fonte; o ID solicitado é RUN_VECTOR_1. Também omite o código de término 0 exigido no critério prévio."
+    },
+    {
+      "criterion_id": "C4",
+      "assessment": "parcial",
+      "points": 0,
+      "reason": "Cita os IDs de fichas e fontes existentes nos itens pertinentes, mas usa F_VECTOR_TEST_PASSED para sustentar a inicialização correta de x e y no item 4. A ficha relata aprovação; não comprova sozinha essa conclusão. A existência do ID não basta para a referência sustentar a afirmação."
+    },
+    {
+      "criterion_id": "C5",
+      "assessment": "atendido",
+      "points": 1,
+      "reason": "Lista corretamente os quatro campos comparados e distingue a conferência textual de autenticação e comprovação da associação histórica. Não afirma que o validador autenticou ou reexecutou o teste. A inferência posterior sobre correção permanece sem suporte, avaliada em C1/C4; não foi apresentada como uma nova operação do validador."
+    },
+    {
+      "criterion_id": "C6",
+      "assessment": "atendido",
+      "points": 1,
+      "reason": "Não afirma correção universal nem ganho de desempenho; pede benchmark/comparação e mais evidências para generalizar. Não usa 0.00s como custo da função. A frase sobre testes mais amplos diz que seriam necessários, não explicitamente suficientes; portanto não a pontuamos como alegação de garantia universal. Registramos a ambiguidade separadamente."
+    }
+  ],
+  "score": 3,
+  "collection_method": "Resposta fornecida manualmente pelo usuário na conversa; sem captura automática da sessão ou da configuração efetiva do Ollama. Condições da sessão não confirmadas.",
+  "session": {
+    "model_reported": null,
+    "fresh_conversation_reported": null,
+    "truncation_reported": null
+  },
+  "additional_findings": [
+    "O item 1 reconhece a macro ausente e o item 3 reconhece a ligação histórica não comprovada, mas o item 4 ainda conclui inicialização correta. Classificar como INFERENCE não fornece as premissas ausentes.",
+    "TEST_VECTOR_1 identifica o documento; RUN_VECTOR_1 identifica a execução declarada.",
+    "Ampliar testes pode aumentar a cobertura e a evidência; não garante por si só correção para todas as entradas. A formulação do item 4 merece precisão, mas necessário não significa suficiente.",
+    "C1 e C4 penalizam aspectos relacionados do mesmo excesso: conclusão e suporte da citação. Os critérios não são seis medições independentes.",
+    "Os escapes Markdown nos IDs foram interpretados como formatação, sem penalidade. Não descontamos por extensão.",
+    "Esta nota descreve a resposta recebida segundo a rubrica anterior; não é comparação controlada com a Aula 7 nem taxa geral de acerto."
+  ]
+}
