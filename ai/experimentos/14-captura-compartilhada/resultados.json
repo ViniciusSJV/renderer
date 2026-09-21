@@ -1,0 +1,127 @@
+[
+  {
+    "sources": 1,
+    "metrics": {
+      "counts": {
+        "capture_link": {
+          "bytes": 0,
+          "calls": 2
+        },
+        "capture_validate": {
+          "bytes": 0,
+          "calls": 2
+        },
+        "digest_calls": {
+          "bytes": 0,
+          "calls": 12
+        },
+        "digest_chunks": {
+          "bytes": 25140,
+          "calls": 12
+        },
+        "record_link_read": {
+          "bytes": 7560,
+          "calls": 2
+        },
+        "record_validate_read": {
+          "bytes": 7560,
+          "calls": 2
+        },
+        "source_content_read": {
+          "bytes": 1620,
+          "calls": 3
+        }
+      },
+      "schema_version": 1,
+      "scope": "Bytes entregues à aplicação nas leituras instrumentadas de conferência; não I/O físico. Não inclui dossiê, pergunta, parecer ou escrita. Relatório apenas ao concluir com sucesso."
+    },
+    "total_instrumented_bytes": 41880,
+    "output_sha256": "3a4ab8383f1bec6d21dfb998c77de8e9e067d434288c88efd4f258244278e6cb",
+    "matches_previous": true
+  },
+  {
+    "sources": 10,
+    "metrics": {
+      "counts": {
+        "capture_link": {
+          "bytes": 0,
+          "calls": 20
+        },
+        "capture_validate": {
+          "bytes": 0,
+          "calls": 11
+        },
+        "digest_calls": {
+          "bytes": 0,
+          "calls": 66
+        },
+        "digest_chunks": {
+          "bytes": 138270,
+          "calls": 66
+        },
+        "record_link_read": {
+          "bytes": 41580,
+          "calls": 11
+        },
+        "record_validate_read": {
+          "bytes": 41580,
+          "calls": 11
+        },
+        "source_content_read": {
+          "bytes": 16200,
+          "calls": 30
+        }
+      },
+      "schema_version": 1,
+      "scope": "Bytes entregues à aplicação nas leituras instrumentadas de conferência; não I/O físico. Não inclui dossiê, pergunta, parecer ou escrita. Relatório apenas ao concluir com sucesso."
+    },
+    "total_instrumented_bytes": 237630,
+    "output_sha256": "35e8bae0473e0bee6623ecde6bd5ff7cee30ec402b26d0f6bc8b0a0cf0d5d50d",
+    "matches_previous": true
+  },
+  {
+    "sources": 100,
+    "metrics": {
+      "counts": {
+        "capture_link": {
+          "bytes": 0,
+          "calls": 200
+        },
+        "capture_validate": {
+          "bytes": 0,
+          "calls": 101
+        },
+        "digest_calls": {
+          "bytes": 0,
+          "calls": 606
+        },
+        "digest_chunks": {
+          "bytes": 1269570,
+          "calls": 606
+        },
+        "record_link_read": {
+          "bytes": 381780,
+          "calls": 101
+        },
+        "record_validate_read": {
+          "bytes": 381780,
+          "calls": 101
+        },
+        "source_content_read": {
+          "bytes": 162000,
+          "calls": 300
+        }
+      },
+      "schema_version": 1,
+      "scope": "Bytes entregues à aplicação nas leituras instrumentadas de conferência; não I/O físico. Não inclui dossiê, pergunta, parecer ou escrita. Relatório apenas ao concluir com sucesso."
+    },
+    "total_instrumented_bytes": 2195130,
+    "output_sha256": "65fff6cfcea404fd3a20d57ea35ec379966b7bdf1afd09554e2e24753d72f51c",
+    "matches_previous": true
+  },
+  {
+    "case": "invalido",
+    "exit_code": 1,
+    "export_created": false
+  }
+]

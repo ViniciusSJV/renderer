@@ -1,0 +1,23 @@
+1. **FACT**: O ID que identifica a fonte do relatório é "TEST\_BOUNDARY\_2". O ID que identifica a execução é
+   "RUN\_EQUIVALENCE\_BOUNDARY\_2". O resultado registrado foi "test result: ok. 4 passed; 0 failed; 0 ignored; 0
+   measured; 0 filtered out; finished in 0.00s". A aprovação do teste no limite que espera pânico significa que o
+   teste foi executado conforme esperado, mas não foi possível confirmar se o pânico ocorreu, pois o relatório não
+   fornece detalhes adicionais sobre o comportamento do teste.
+
+2. **FACT**: O `capture_validation` informa que foi conferido o `record_sha256`, `run_id`, `source_output_path`,
+   `source_sha256_and_lines`, `output_bytes_and_sha256`, e `source_comparisons_and_current_files`. O resultado do
+   comando registrado foi {"exit\_code":0,"status":"exited"}. A conferência pelo Bibliotecário informa que o registro
+   é consistente, a saída foi conferida (540 bytes), as fontes são iguais, os arquivos atuais conferidos são 5, e o
+   ambiente tem presença/estrutura básica conferida.
+
+3. **INFERENCE**: A conferência pelo Bibliotecário não autentica a execução nem comprova quais bytes o compilador
+   utilizou. A correspondência dos arquivos atuais aos hashes posteriores permite afirmar que os arquivos atuais
+   estão consistentes com os hashes registrados no momento da captura, mas não fornece informações sobre a execução
+   ou a compilação.
+
+4. **LACUNA**: Com base nas evidências fornecidas, não podemos concluir correção para todas as entradas ou ganho
+   de desempenho. As evidências não fornecem detalhes sobre a implementação, os dados de entrada, os resultados
+   esperados ou as métricas de desempenho. Para concluir a correção, seria necessário verificar se os testes cobrem
+   todas as entradas possíveis e se os resultados dos testes correspondem aos resultados esperados. Para avaliar o
+   ganho de desempenho, seria necessário comparar as métricas de desempenho antes e depois de qualquer mudança
+   implementada.

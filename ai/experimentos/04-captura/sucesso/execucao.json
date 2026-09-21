@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "run_id": "RUN_CAPTURE_SUCCESS_1",
+  "argv": [
+    "python3",
+    "-c",
+    "print(\"captura de exemplo\")"
+  ],
+  "cwd": "/workspaces/renderer-local",
+  "started_at": "2026-09-20T22:43:49.469904+00:00",
+  "finished_at": "2026-09-20T22:43:49.484240+00:00",
+  "environment": {
+    "os": "Linux",
+    "os_release": "6.8.0-1064-azure",
+    "architecture": "x86_64",
+    "python": "3.14.2",
+    "rust": {
+      "available": true,
+      "exit_code": 0,
+      "stdout": "rustc 1.98.1 (48a229cea 2026-09-01)\n",
+      "stderr": ""
+    },
+    "cargo": {
+      "available": true,
+      "exit_code": 0,
+      "stdout": "cargo 1.98.1 (797e8a9bc 2026-08-05)\n",
+      "stderr": ""
+    },
+    "git_head": {
+      "available": true,
+      "exit_code": 0,
+      "stdout": "3bcaeed2ed80725f51a424b9333d8d67b4050e5e\n",
+      "stderr": ""
+    },
+    "git_status": {
+      "available": true,
+      "exit_code": 0,
+      "stdout": "?? ai/aulas/resumo-aulas-06-a-12.md\n?? ai/scripts/capturar_execucao.py\n?? ai/scripts/test_capturar_execucao.py\n",
+      "stderr": ""
+    }
+  },
+  "result": {
+    "status": "exited",
+    "exit_code": 0
+  },
+  "output": {
+    "path": "saida.bin",
+    "streams": "stdout+stderr",
+    "bytes": 19
+  }
+}

@@ -1,0 +1,16 @@
+Documento lido: ai/experimentos/09-custo-conferencia/baseline/input-1.json (1558 bytes).
+Obras no acervo: 1
+Fichas no catálogo: 1
+Acervo sem IDs de fontes duplicados.
+Catálogo sem IDs de fatos duplicados.
+TEST_BOUNDARY_2: arquivo atual e linhas correspondem à edição registrada.
+TEST_BOUNDARY_2: captura ligada à saída e conferida; origem não autenticada.
+Fichas verificadas: 1. Referências inválidas: 0.
+Ficha selecionada: BENCH_0
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: TEST_BOUNDARY_2, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Seleção salva em ai/experimentos/10-trabalho-repetido/export-1.json
+BIBLIOTECARIO_METRICS {"counts":{"capture_link":{"bytes":0,"calls":2},"capture_validate":{"bytes":0,"calls":2},"digest_calls":{"bytes":0,"calls":12},"digest_chunks":{"bytes":25140,"calls":12},"record_link_read":{"bytes":7560,"calls":2},"record_validate_read":{"bytes":7560,"calls":2},"source_content_read":{"bytes":1620,"calls":3}},"schema_version":1,"scope":"Bytes entregues à aplicação nas leituras instrumentadas de conferência; não I/O físico. Não inclui dossiê, pergunta, parecer ou escrita. Relatório apenas ao concluir com sucesso."}

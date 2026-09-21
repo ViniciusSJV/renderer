@@ -1,0 +1,4 @@
+Ensaio concluído: ai/experimentos/11-reuso-conferencia/depois/results.json
+1 fichas: {"max_ns":1887834,"median_ns":1591511,"min_ns":1522502}
+10 fichas: {"max_ns":2140475,"median_ns":2044036,"min_ns":1992088}
+100 fichas: {"max_ns":8121569,"median_ns":5997375,"min_ns":5894593}

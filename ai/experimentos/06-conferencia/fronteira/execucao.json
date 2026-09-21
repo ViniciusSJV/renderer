@@ -1,0 +1,72 @@
+{
+  "argv": [
+    "target/debug/validate_evidence",
+    "--capture",
+    "ai/experimentos/05-associacao/fronteira/execucao.json"
+  ],
+  "cwd": "/workspaces/renderer-local",
+  "environment": {
+    "architecture": "x86_64",
+    "cargo": {
+      "available": true,
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "cargo 1.98.1 (797e8a9bc 2026-08-05)\n"
+    },
+    "git_head": {
+      "available": true,
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "3bcaeed2ed80725f51a424b9333d8d67b4050e5e\n"
+    },
+    "git_status": {
+      "available": true,
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": " M ai/README.md\n M src/bin/validate_evidence.rs\n?? ai/aulas/13-captura-de-execucao.md\n?? ai/aulas/14-associar-codigo-e-execucao.md\n?? ai/aulas/resumo-aulas-06-a-12.md\n?? ai/experimentos/04-captura/falha/execucao.json\n?? ai/experimentos/04-captura/falha/saida.bin\n?? ai/experimentos/04-captura/inexistente/execucao.json\n?? ai/experimentos/04-captura/inexistente/saida.bin\n?? ai/experimentos/04-captura/rust-falha/execucao.json\n?? ai/experimentos/04-captura/rust-falha/saida.bin\n?? ai/experimentos/04-captura/rust-inexistente/execucao.json\n?? ai/experimentos/04-captura/rust-inexistente/saida.bin\n?? ai/experimentos/04-captura/rust-sucesso/execucao.json\n?? ai/experimentos/04-captura/rust-sucesso/saida.bin\n?? ai/experimentos/04-captura/sucesso/execucao.json\n?? ai/experimentos/04-captura/sucesso/saida.bin\n?? ai/experimentos/05-associacao/fronteira/execucao.json\n?? ai/experimentos/05-associacao/fronteira/saida.bin\n?? src/bin/capture_execution.rs\n?? src/bin/validate_evidence/capture.rs\n"
+    },
+    "os": "linux",
+    "os_release": {
+      "available": true,
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "6.8.0-1064-azure\n"
+    },
+    "rust": {
+      "available": true,
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "rustc 1.98.1 (48a229cea 2026-09-01)\n"
+    }
+  },
+  "finished_at": "2026-09-20T23:11:51Z",
+  "output": {
+    "bytes": 424,
+    "path": "saida.bin",
+    "sha256": "1e53ddf5ad630196930db3652a91be15861308b0afd22b7d257ef6011042c157",
+    "streams": "stdout+stderr"
+  },
+  "result": {
+    "exit_code": 0,
+    "status": "exited"
+  },
+  "run_id": "RUN_VALIDATE_CAPTURE_1",
+  "schema_version": 2,
+  "sources": [
+    {
+      "after_sha256": "3df7321832ada5ee6e91032ee7c0650b6353d732cdcfd395b1512213866af1b1",
+      "before_sha256": "3df7321832ada5ee6e91032ee7c0650b6353d732cdcfd395b1512213866af1b1",
+      "comparison": "equal",
+      "path": "src/bin/validate_evidence.rs",
+      "resolved_path": "/workspaces/renderer-local/src/bin/validate_evidence.rs"
+    },
+    {
+      "after_sha256": "733c4cd065a5b835d6d771e12005605bd7e3309654c8ae2887163c331f5460e9",
+      "before_sha256": "733c4cd065a5b835d6d771e12005605bd7e3309654c8ae2887163c331f5460e9",
+      "comparison": "equal",
+      "path": "src/bin/validate_evidence/capture.rs",
+      "resolved_path": "/workspaces/renderer-local/src/bin/validate_evidence/capture.rs"
+    }
+  ],
+  "started_at": "2026-09-20T23:11:51Z"
+}

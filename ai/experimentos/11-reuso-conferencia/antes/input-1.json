@@ -1,0 +1,43 @@
+{
+  "facts": [
+    {
+      "authorship": "manual",
+      "id": "BENCH_0",
+      "line": 11,
+      "source_id": "TEST_BOUNDARY_2",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    }
+  ],
+  "id": "SYNTHETIC_BENCH_1",
+  "sources": [
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "TEST_BOUNDARY_2",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    }
+  ],
+  "unknowns": [
+    "Não autentica execução nem comprova bytes compilados.",
+    "Não valida semanticamente as afirmações."
+  ]
+}

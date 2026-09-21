@@ -1,0 +1,4 @@
+Ensaio concluído: ai/experimentos/09-custo-conferencia/baseline/results.json
+1 fichas: {"max_ns":1616327,"median_ns":1562617,"min_ns":1512222}
+10 fichas: {"max_ns":3698626,"median_ns":3558342,"min_ns":3494122}
+100 fichas: {"max_ns":26032942,"median_ns":22686726,"min_ns":22357582}

@@ -1,0 +1,118 @@
+{
+  "argv": [
+    "env",
+    "BIBLIOTECARIO_METRICS=1",
+    "target/release/validate_evidence",
+    "ai/experimentos/09-custo-conferencia/baseline/input-10.json",
+    "--fact",
+    "BENCH_0",
+    "--fact",
+    "BENCH_1",
+    "--fact",
+    "BENCH_2",
+    "--fact",
+    "BENCH_3",
+    "--fact",
+    "BENCH_4",
+    "--fact",
+    "BENCH_5",
+    "--fact",
+    "BENCH_6",
+    "--fact",
+    "BENCH_7",
+    "--fact",
+    "BENCH_8",
+    "--fact",
+    "BENCH_9",
+    "--context",
+    "1",
+    "--output",
+    "ai/experimentos/10-trabalho-repetido/export-10.json"
+  ],
+  "cwd": "/workspaces/renderer-local",
+  "environment": {
+    "architecture": "x86_64",
+    "cargo": {
+      "available": true,
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "cargo 1.98.1 (797e8a9bc 2026-08-05)\n"
+    },
+    "git_head": {
+      "available": true,
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "3bcaeed2ed80725f51a424b9333d8d67b4050e5e\n"
+    },
+    "git_status": {
+      "available": true,
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": " M ai/README.md\n M src/bin/validate_evidence.rs\n?? ai/aulas/13-captura-de-execucao.md\n?? ai/aulas/14-associar-codigo-e-execucao.md\n?? ai/aulas/15-conferir-registro-captura.md\n?? ai/aulas/16-levar-conferencia-ao-dossie.md\n?? ai/aulas/17-avaliar-explicacao-captura.md\n?? ai/aulas/18-medir-custo-conferencia.md\n?? ai/experimentos/04-captura/falha/execucao.json\n?? ai/experimentos/04-captura/falha/saida.bin\n?? ai/experimentos/04-captura/inexistente/execucao.json\n?? ai/experimentos/04-captura/inexistente/saida.bin\n?? ai/experimentos/04-captura/rust-falha/execucao.json\n?? ai/experimentos/04-captura/rust-falha/saida.bin\n?? ai/experimentos/04-captura/rust-inexistente/execucao.json\n?? ai/experimentos/04-captura/rust-inexistente/saida.bin\n?? ai/experimentos/04-captura/rust-sucesso/execucao.json\n?? ai/experimentos/04-captura/rust-sucesso/saida.bin\n?? ai/experimentos/04-captura/sucesso/execucao.json\n?? ai/experimentos/04-captura/sucesso/saida.bin\n?? ai/experimentos/05-associacao/fronteira/execucao.json\n?? ai/experimentos/05-associacao/fronteira/saida.bin\n?? ai/experimentos/06-conferencia/fronteira/execucao.json\n?? ai/experimentos/06-conferencia/fronteira/saida.bin\n?? ai/experimentos/07-dossie-captura/evidencias.json\n?? ai/experimentos/07-dossie-captura/selecao.json\n?? ai/experimentos/08-avaliacao-captura/consulta.json\n?? ai/experimentos/08-avaliacao-captura/criterios.json\n?? ai/experimentos/08-avaliacao-captura/pergunta.txt\n?? ai/experimentos/08-avaliacao-captura/resposta.txt\n?? ai/experimentos/09-custo-conferencia/baseline/input-1.json\n?? ai/experimentos/09-custo-conferencia/baseline/input-10.json\n?? ai/experimentos/09-custo-conferencia/baseline/input-100.json\n?? ai/experimentos/09-custo-conferencia/baseline/results.json\n?? ai/experimentos/09-custo-conferencia/captura/execucao.json\n?? ai/experimentos/09-custo-conferencia/captura/saida.bin\n?? ai/experimentos/09-custo-conferencia/protocolo.md\n?? ai/experimentos/10-trabalho-repetido/captura-1/execucao.json\n?? ai/experimentos/10-trabalho-repetido/captura-1/saida.bin\n?? ai/experimentos/10-trabalho-repetido/export-1.json\n?? ai/experimentos/10-trabalho-repetido/previsoes.md\n?? src/bin/bench_evidence.rs\n?? src/bin/capture_execution.rs\n?? src/bin/validate_evidence/capture.rs\n?? src/bin/validate_evidence/metrics.rs\n"
+    },
+    "os": "linux",
+    "os_release": {
+      "available": true,
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "6.8.0-1064-azure\n"
+    },
+    "rust": {
+      "available": true,
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "rustc 1.98.1 (48a229cea 2026-09-01)\n"
+    }
+  },
+  "finished_at": "2026-09-20T23:35:31Z",
+  "output": {
+    "bytes": 4797,
+    "path": "saida.bin",
+    "sha256": "836da133ed0f60a35be9214ee770c1211d43c5a5221634c51d3465eee6582314",
+    "streams": "stdout+stderr"
+  },
+  "result": {
+    "exit_code": 0,
+    "status": "exited"
+  },
+  "run_id": "RUN_COUNTS_10_1",
+  "schema_version": 2,
+  "sources": [
+    {
+      "after_sha256": "580a56ac329e9d92bd32a8c326ecbc91bb14177c339957e19b1c1dde8b9f77f3",
+      "before_sha256": "580a56ac329e9d92bd32a8c326ecbc91bb14177c339957e19b1c1dde8b9f77f3",
+      "comparison": "equal",
+      "path": "src/bin/validate_evidence.rs",
+      "resolved_path": "/workspaces/renderer-local/src/bin/validate_evidence.rs"
+    },
+    {
+      "after_sha256": "9ffda14196e481c677bcb44e582f72be57173c07e2bc0139d46391ebe4a66494",
+      "before_sha256": "9ffda14196e481c677bcb44e582f72be57173c07e2bc0139d46391ebe4a66494",
+      "comparison": "equal",
+      "path": "src/bin/validate_evidence/capture.rs",
+      "resolved_path": "/workspaces/renderer-local/src/bin/validate_evidence/capture.rs"
+    },
+    {
+      "after_sha256": "483907849c428273138dea0d27df5accfa5d682af1c45ce89d4296d76b98fac7",
+      "before_sha256": "483907849c428273138dea0d27df5accfa5d682af1c45ce89d4296d76b98fac7",
+      "comparison": "equal",
+      "path": "src/bin/validate_evidence/metrics.rs",
+      "resolved_path": "/workspaces/renderer-local/src/bin/validate_evidence/metrics.rs"
+    },
+    {
+      "after_sha256": "aa686f887941d114141bb63c92d81fb0382e4e0ffb798ccaace56c5483f278b8",
+      "before_sha256": "aa686f887941d114141bb63c92d81fb0382e4e0ffb798ccaace56c5483f278b8",
+      "comparison": "equal",
+      "path": "target/release/validate_evidence",
+      "resolved_path": "/workspaces/renderer-local/target/release/validate_evidence"
+    },
+    {
+      "after_sha256": "dd36c9104fac4b2fca3bad72862d2a29fec175f24e28a0eca27be8ffe9b058cf",
+      "before_sha256": "dd36c9104fac4b2fca3bad72862d2a29fec175f24e28a0eca27be8ffe9b058cf",
+      "comparison": "equal",
+      "path": "ai/experimentos/10-trabalho-repetido/previsoes.md",
+      "resolved_path": "/workspaces/renderer-local/ai/experimentos/10-trabalho-repetido/previsoes.md"
+    }
+  ],
+  "started_at": "2026-09-20T23:35:31Z"
+}

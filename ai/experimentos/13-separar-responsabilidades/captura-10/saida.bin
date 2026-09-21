@@ -1,0 +1,628 @@
+Documento lido: ai/experimentos/12-varias-fontes/input-10.json (31441 bytes).
+Obras no acervo: 10
+Fichas no catálogo: 100
+Acervo sem IDs de fontes duplicados.
+Catálogo sem IDs de fatos duplicados.
+SOURCE_0: arquivo atual e linhas correspondem à edição registrada.
+SOURCE_1: arquivo atual e linhas correspondem à edição registrada.
+SOURCE_2: arquivo atual e linhas correspondem à edição registrada.
+SOURCE_3: arquivo atual e linhas correspondem à edição registrada.
+SOURCE_4: arquivo atual e linhas correspondem à edição registrada.
+SOURCE_5: arquivo atual e linhas correspondem à edição registrada.
+SOURCE_6: arquivo atual e linhas correspondem à edição registrada.
+SOURCE_7: arquivo atual e linhas correspondem à edição registrada.
+SOURCE_8: arquivo atual e linhas correspondem à edição registrada.
+SOURCE_9: arquivo atual e linhas correspondem à edição registrada.
+SOURCE_0: captura ligada à saída e conferida; origem não autenticada.
+SOURCE_1: captura ligada à saída e conferida; origem não autenticada.
+SOURCE_2: captura ligada à saída e conferida; origem não autenticada.
+SOURCE_3: captura ligada à saída e conferida; origem não autenticada.
+SOURCE_4: captura ligada à saída e conferida; origem não autenticada.
+SOURCE_5: captura ligada à saída e conferida; origem não autenticada.
+SOURCE_6: captura ligada à saída e conferida; origem não autenticada.
+SOURCE_7: captura ligada à saída e conferida; origem não autenticada.
+SOURCE_8: captura ligada à saída e conferida; origem não autenticada.
+SOURCE_9: captura ligada à saída e conferida; origem não autenticada.
+Fichas verificadas: 100. Referências inválidas: 0.
+Ficha selecionada: BENCH_0
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_0, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_1
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_1, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_2
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_2, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_3
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_3, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_4
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_4, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_5
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_5, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_6
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_6, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_7
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_7, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_8
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_8, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_9
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_9, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_10
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_0, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_11
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_1, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_12
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_2, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_13
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_3, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_14
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_4, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_15
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_5, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_16
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_6, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_17
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_7, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_18
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_8, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_19
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_9, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_20
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_0, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_21
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_1, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_22
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_2, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_23
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_3, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_24
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_4, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_25
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_5, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_26
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_6, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_27
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_7, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_28
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_8, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_29
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_9, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_30
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_0, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_31
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_1, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_32
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_2, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_33
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_3, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_34
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_4, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_35
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_5, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_36
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_6, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_37
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_7, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_38
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_8, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_39
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_9, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_40
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_0, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_41
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_1, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_42
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_2, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_43
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_3, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_44
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_4, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_45
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_5, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_46
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_6, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_47
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_7, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_48
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_8, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_49
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_9, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_50
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_0, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_51
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_1, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_52
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_2, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_53
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_3, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_54
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_4, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_55
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_5, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_56
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_6, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_57
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_7, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_58
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_8, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_59
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_9, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_60
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_0, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_61
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_1, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_62
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_2, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_63
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_3, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_64
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_4, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_65
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_5, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_66
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_6, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_67
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_7, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_68
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_8, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_69
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_9, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_70
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_0, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_71
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_1, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_72
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_2, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_73
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_3, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_74
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_4, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_75
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_5, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_76
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_6, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_77
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_7, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_78
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_8, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_79
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_9, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_80
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_0, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_81
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_1, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_82
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_2, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_83
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_3, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_84
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_4, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_85
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_5, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_86
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_6, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_87
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_7, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_88
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_8, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_89
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_9, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_90
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_0, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_91
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_1, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_92
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_2, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_93
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_3, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_94
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_4, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_95
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_5, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_96
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_6, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_97
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_7, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_98
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_8, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ficha selecionada: BENCH_99
+Afirmação: O relatório registra quatro testes aprovados e zero falhas.
+Referência: SOURCE_9, linha 11
+Arquivo: ai/experimentos/05-associacao/fronteira/saida.bin
+SHA-256: c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453
+Trecho: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Seleção salva em ai/experimentos/13-separar-responsabilidades/export-10.json
+BIBLIOTECARIO_METRICS {"counts":{"capture_link":{"bytes":0,"calls":20},"capture_validate":{"bytes":0,"calls":20},"digest_calls":{"bytes":0,"calls":120},"digest_chunks":{"bytes":251400,"calls":120},"record_link_read":{"bytes":75600,"calls":20},"record_validate_read":{"bytes":75600,"calls":20},"source_content_read":{"bytes":16200,"calls":30}},"schema_version":1,"scope":"Bytes entregues à aplicação nas leituras instrumentadas de conferência; não I/O físico. Não inclui dossiê, pergunta, parecer ou escrita. Relatório apenas ao concluir com sucesso."}

@@ -1,0 +1,12 @@
+   Compiling renderer v0.1.0 (/workspaces/renderer-local)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s
+     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)
+
+running 4 tests
+test accepts_difference_below_epsilon ... ok
+test accepts_equal_values ... ok
+test rejects_difference_above_epsilon - should panic ... ok
+test rejects_difference_at_epsilon - should panic ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

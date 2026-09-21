@@ -1,0 +1,3211 @@
+{
+  "facts": [
+    {
+      "authorship": "manual",
+      "id": "BENCH_0",
+      "line": 11,
+      "source_id": "SOURCE_0",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_1",
+      "line": 11,
+      "source_id": "SOURCE_1",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_2",
+      "line": 11,
+      "source_id": "SOURCE_2",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_3",
+      "line": 11,
+      "source_id": "SOURCE_3",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_4",
+      "line": 11,
+      "source_id": "SOURCE_4",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_5",
+      "line": 11,
+      "source_id": "SOURCE_5",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_6",
+      "line": 11,
+      "source_id": "SOURCE_6",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_7",
+      "line": 11,
+      "source_id": "SOURCE_7",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_8",
+      "line": 11,
+      "source_id": "SOURCE_8",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_9",
+      "line": 11,
+      "source_id": "SOURCE_9",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_10",
+      "line": 11,
+      "source_id": "SOURCE_10",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_11",
+      "line": 11,
+      "source_id": "SOURCE_11",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_12",
+      "line": 11,
+      "source_id": "SOURCE_12",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_13",
+      "line": 11,
+      "source_id": "SOURCE_13",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_14",
+      "line": 11,
+      "source_id": "SOURCE_14",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_15",
+      "line": 11,
+      "source_id": "SOURCE_15",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_16",
+      "line": 11,
+      "source_id": "SOURCE_16",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_17",
+      "line": 11,
+      "source_id": "SOURCE_17",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_18",
+      "line": 11,
+      "source_id": "SOURCE_18",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_19",
+      "line": 11,
+      "source_id": "SOURCE_19",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_20",
+      "line": 11,
+      "source_id": "SOURCE_20",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_21",
+      "line": 11,
+      "source_id": "SOURCE_21",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_22",
+      "line": 11,
+      "source_id": "SOURCE_22",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_23",
+      "line": 11,
+      "source_id": "SOURCE_23",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_24",
+      "line": 11,
+      "source_id": "SOURCE_24",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_25",
+      "line": 11,
+      "source_id": "SOURCE_25",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_26",
+      "line": 11,
+      "source_id": "SOURCE_26",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_27",
+      "line": 11,
+      "source_id": "SOURCE_27",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_28",
+      "line": 11,
+      "source_id": "SOURCE_28",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_29",
+      "line": 11,
+      "source_id": "SOURCE_29",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_30",
+      "line": 11,
+      "source_id": "SOURCE_30",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_31",
+      "line": 11,
+      "source_id": "SOURCE_31",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_32",
+      "line": 11,
+      "source_id": "SOURCE_32",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_33",
+      "line": 11,
+      "source_id": "SOURCE_33",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_34",
+      "line": 11,
+      "source_id": "SOURCE_34",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_35",
+      "line": 11,
+      "source_id": "SOURCE_35",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_36",
+      "line": 11,
+      "source_id": "SOURCE_36",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_37",
+      "line": 11,
+      "source_id": "SOURCE_37",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_38",
+      "line": 11,
+      "source_id": "SOURCE_38",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_39",
+      "line": 11,
+      "source_id": "SOURCE_39",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_40",
+      "line": 11,
+      "source_id": "SOURCE_40",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_41",
+      "line": 11,
+      "source_id": "SOURCE_41",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_42",
+      "line": 11,
+      "source_id": "SOURCE_42",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_43",
+      "line": 11,
+      "source_id": "SOURCE_43",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_44",
+      "line": 11,
+      "source_id": "SOURCE_44",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_45",
+      "line": 11,
+      "source_id": "SOURCE_45",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_46",
+      "line": 11,
+      "source_id": "SOURCE_46",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_47",
+      "line": 11,
+      "source_id": "SOURCE_47",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_48",
+      "line": 11,
+      "source_id": "SOURCE_48",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_49",
+      "line": 11,
+      "source_id": "SOURCE_49",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_50",
+      "line": 11,
+      "source_id": "SOURCE_50",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_51",
+      "line": 11,
+      "source_id": "SOURCE_51",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_52",
+      "line": 11,
+      "source_id": "SOURCE_52",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_53",
+      "line": 11,
+      "source_id": "SOURCE_53",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_54",
+      "line": 11,
+      "source_id": "SOURCE_54",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_55",
+      "line": 11,
+      "source_id": "SOURCE_55",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_56",
+      "line": 11,
+      "source_id": "SOURCE_56",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_57",
+      "line": 11,
+      "source_id": "SOURCE_57",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_58",
+      "line": 11,
+      "source_id": "SOURCE_58",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_59",
+      "line": 11,
+      "source_id": "SOURCE_59",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_60",
+      "line": 11,
+      "source_id": "SOURCE_60",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_61",
+      "line": 11,
+      "source_id": "SOURCE_61",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_62",
+      "line": 11,
+      "source_id": "SOURCE_62",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_63",
+      "line": 11,
+      "source_id": "SOURCE_63",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_64",
+      "line": 11,
+      "source_id": "SOURCE_64",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_65",
+      "line": 11,
+      "source_id": "SOURCE_65",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_66",
+      "line": 11,
+      "source_id": "SOURCE_66",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_67",
+      "line": 11,
+      "source_id": "SOURCE_67",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_68",
+      "line": 11,
+      "source_id": "SOURCE_68",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_69",
+      "line": 11,
+      "source_id": "SOURCE_69",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_70",
+      "line": 11,
+      "source_id": "SOURCE_70",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_71",
+      "line": 11,
+      "source_id": "SOURCE_71",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_72",
+      "line": 11,
+      "source_id": "SOURCE_72",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_73",
+      "line": 11,
+      "source_id": "SOURCE_73",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_74",
+      "line": 11,
+      "source_id": "SOURCE_74",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_75",
+      "line": 11,
+      "source_id": "SOURCE_75",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_76",
+      "line": 11,
+      "source_id": "SOURCE_76",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_77",
+      "line": 11,
+      "source_id": "SOURCE_77",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_78",
+      "line": 11,
+      "source_id": "SOURCE_78",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_79",
+      "line": 11,
+      "source_id": "SOURCE_79",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_80",
+      "line": 11,
+      "source_id": "SOURCE_80",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_81",
+      "line": 11,
+      "source_id": "SOURCE_81",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_82",
+      "line": 11,
+      "source_id": "SOURCE_82",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_83",
+      "line": 11,
+      "source_id": "SOURCE_83",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_84",
+      "line": 11,
+      "source_id": "SOURCE_84",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_85",
+      "line": 11,
+      "source_id": "SOURCE_85",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_86",
+      "line": 11,
+      "source_id": "SOURCE_86",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_87",
+      "line": 11,
+      "source_id": "SOURCE_87",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_88",
+      "line": 11,
+      "source_id": "SOURCE_88",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_89",
+      "line": 11,
+      "source_id": "SOURCE_89",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_90",
+      "line": 11,
+      "source_id": "SOURCE_90",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_91",
+      "line": 11,
+      "source_id": "SOURCE_91",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_92",
+      "line": 11,
+      "source_id": "SOURCE_92",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_93",
+      "line": 11,
+      "source_id": "SOURCE_93",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_94",
+      "line": 11,
+      "source_id": "SOURCE_94",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_95",
+      "line": 11,
+      "source_id": "SOURCE_95",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_96",
+      "line": 11,
+      "source_id": "SOURCE_96",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_97",
+      "line": 11,
+      "source_id": "SOURCE_97",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_98",
+      "line": 11,
+      "source_id": "SOURCE_98",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_99",
+      "line": 11,
+      "source_id": "SOURCE_99",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    }
+  ],
+  "id": "SYNTHETIC_MULTI_SOURCE_100",
+  "sources": [
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_0",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_1",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_2",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_3",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_4",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_5",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_6",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_7",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_8",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_9",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_10",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_11",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_12",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_13",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_14",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_15",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_16",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_17",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_18",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_19",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_20",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_21",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_22",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_23",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_24",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_25",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_26",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_27",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_28",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_29",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_30",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_31",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_32",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_33",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_34",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_35",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_36",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_37",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_38",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_39",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_40",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_41",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_42",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_43",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_44",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_45",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_46",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_47",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_48",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_49",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_50",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_51",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_52",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_53",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_54",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_55",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_56",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_57",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_58",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_59",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_60",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_61",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_62",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_63",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_64",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_65",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_66",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_67",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_68",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_69",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_70",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_71",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_72",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_73",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_74",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_75",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_76",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_77",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_78",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_79",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_80",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_81",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_82",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_83",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_84",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_85",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_86",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_87",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_88",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_89",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_90",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_91",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_92",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_93",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_94",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_95",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_96",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_97",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_98",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_99",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    }
+  ],
+  "unknowns": [
+    "Não autentica execução nem comprova bytes compilados.",
+    "Não valida semanticamente as afirmações."
+  ]
+}

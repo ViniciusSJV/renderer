@@ -1,0 +1,8 @@
+Analise somente as evidências fornecidas. Cite os IDs das fichas e das fontes pertinentes e consulte os blocos indicados por context_id.
+
+1. Qual ID identifica a fonte do relatório e qual identifica a execução? Qual resultado foi registrado e o que significa a aprovação do teste no limite que espera pânico?
+2. O que capture_validation informa que foi conferido? Diferencie o resultado do comando registrado do resultado da conferência pelo Bibliotecário.
+3. Essa conferência autentica a execução ou comprova quais bytes o compilador utilizou? O que a correspondência dos arquivos atuais aos hashes posteriores permite afirmar?
+4. Podemos concluir correção para todas as entradas ou ganho de desempenho com esse material?
+
+Responda aos quatro itens usando FACT, INFERENCE ou LACUNA conforme necessário. Não invente hipóteses para preencher categorias, não proponha implementação e não afirme ter executado testes.

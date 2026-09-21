@@ -1,0 +1,54 @@
+{
+  "argv": [
+    "printf",
+    "captura de exemplo\\n"
+  ],
+  "cwd": "/workspaces/renderer-local",
+  "environment": {
+    "architecture": "x86_64",
+    "cargo": {
+      "available": true,
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "cargo 1.98.1 (797e8a9bc 2026-08-05)\n"
+    },
+    "git_head": {
+      "available": true,
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "3bcaeed2ed80725f51a424b9333d8d67b4050e5e\n"
+    },
+    "git_status": {
+      "available": true,
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": " M ai/README.md\n?? ai/aulas/13-captura-de-execucao.md\n?? ai/aulas/resumo-aulas-06-a-12.md\n?? ai/experimentos/04-captura/falha/execucao.json\n?? ai/experimentos/04-captura/falha/saida.bin\n?? ai/experimentos/04-captura/inexistente/execucao.json\n?? ai/experimentos/04-captura/inexistente/saida.bin\n?? ai/experimentos/04-captura/sucesso/execucao.json\n?? ai/experimentos/04-captura/sucesso/saida.bin\n?? src/bin/capture_execution.rs\n"
+    },
+    "os": "linux",
+    "os_release": {
+      "available": true,
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "6.8.0-1064-azure\n"
+    },
+    "rust": {
+      "available": true,
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "rustc 1.98.1 (48a229cea 2026-09-01)\n"
+    }
+  },
+  "finished_at": "2026-09-20T22:51:34Z",
+  "output": {
+    "bytes": 19,
+    "path": "saida.bin",
+    "streams": "stdout+stderr"
+  },
+  "result": {
+    "exit_code": 0,
+    "status": "exited"
+  },
+  "run_id": "RUN_CAPTURE_RUST_SUCCESS_1",
+  "schema_version": 1,
+  "started_at": "2026-09-20T22:51:34Z"
+}

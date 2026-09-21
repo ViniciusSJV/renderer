@@ -1,0 +1,5 @@
+RUN_EQUIVALENCE_BOUNDARY_2: registro consistente; saída conferida (540 bytes).
+Fontes: 5 iguais, 0 diferentes, 0 indisponíveis depois. Arquivos atuais conferidos: 5.
+Resultado declarado: {"exit_code":0,"status":"exited"}.
+Datas e ambiente têm presença/estrutura básica conferida; conteúdo não autenticado. Indisponibilidades históricas não são comprovadas.
+Não autentica execução nem comprova bytes compilados.

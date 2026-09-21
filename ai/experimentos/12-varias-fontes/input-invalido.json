@@ -1,0 +1,961 @@
+{
+  "facts": [
+    {
+      "authorship": "manual",
+      "id": "BENCH_0",
+      "line": 11,
+      "source_id": "SOURCE_0",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_1",
+      "line": 11,
+      "source_id": "SOURCE_1",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_2",
+      "line": 11,
+      "source_id": "SOURCE_2",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_3",
+      "line": 11,
+      "source_id": "SOURCE_3",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_4",
+      "line": 11,
+      "source_id": "SOURCE_4",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_5",
+      "line": 11,
+      "source_id": "SOURCE_5",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_6",
+      "line": 11,
+      "source_id": "SOURCE_6",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_7",
+      "line": 11,
+      "source_id": "SOURCE_7",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_8",
+      "line": 11,
+      "source_id": "SOURCE_8",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_9",
+      "line": 11,
+      "source_id": "SOURCE_9",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_10",
+      "line": 11,
+      "source_id": "SOURCE_0",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_11",
+      "line": 11,
+      "source_id": "SOURCE_1",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_12",
+      "line": 11,
+      "source_id": "SOURCE_2",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_13",
+      "line": 11,
+      "source_id": "SOURCE_3",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_14",
+      "line": 11,
+      "source_id": "SOURCE_4",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_15",
+      "line": 11,
+      "source_id": "SOURCE_5",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_16",
+      "line": 11,
+      "source_id": "SOURCE_6",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_17",
+      "line": 11,
+      "source_id": "SOURCE_7",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_18",
+      "line": 11,
+      "source_id": "SOURCE_8",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_19",
+      "line": 11,
+      "source_id": "SOURCE_9",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_20",
+      "line": 11,
+      "source_id": "SOURCE_0",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_21",
+      "line": 11,
+      "source_id": "SOURCE_1",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_22",
+      "line": 11,
+      "source_id": "SOURCE_2",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_23",
+      "line": 11,
+      "source_id": "SOURCE_3",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_24",
+      "line": 11,
+      "source_id": "SOURCE_4",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_25",
+      "line": 11,
+      "source_id": "SOURCE_5",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_26",
+      "line": 11,
+      "source_id": "SOURCE_6",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_27",
+      "line": 11,
+      "source_id": "SOURCE_7",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_28",
+      "line": 11,
+      "source_id": "SOURCE_8",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_29",
+      "line": 11,
+      "source_id": "SOURCE_9",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_30",
+      "line": 11,
+      "source_id": "SOURCE_0",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_31",
+      "line": 11,
+      "source_id": "SOURCE_1",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_32",
+      "line": 11,
+      "source_id": "SOURCE_2",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_33",
+      "line": 11,
+      "source_id": "SOURCE_3",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_34",
+      "line": 11,
+      "source_id": "SOURCE_4",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_35",
+      "line": 11,
+      "source_id": "SOURCE_5",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_36",
+      "line": 11,
+      "source_id": "SOURCE_6",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_37",
+      "line": 11,
+      "source_id": "SOURCE_7",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_38",
+      "line": 11,
+      "source_id": "SOURCE_8",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_39",
+      "line": 11,
+      "source_id": "SOURCE_9",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_40",
+      "line": 11,
+      "source_id": "SOURCE_0",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_41",
+      "line": 11,
+      "source_id": "SOURCE_1",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_42",
+      "line": 11,
+      "source_id": "SOURCE_2",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_43",
+      "line": 11,
+      "source_id": "SOURCE_3",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_44",
+      "line": 11,
+      "source_id": "SOURCE_4",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_45",
+      "line": 11,
+      "source_id": "SOURCE_5",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_46",
+      "line": 11,
+      "source_id": "SOURCE_6",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_47",
+      "line": 11,
+      "source_id": "SOURCE_7",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_48",
+      "line": 11,
+      "source_id": "SOURCE_8",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_49",
+      "line": 11,
+      "source_id": "SOURCE_9",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_50",
+      "line": 11,
+      "source_id": "SOURCE_0",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_51",
+      "line": 11,
+      "source_id": "SOURCE_1",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_52",
+      "line": 11,
+      "source_id": "SOURCE_2",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_53",
+      "line": 11,
+      "source_id": "SOURCE_3",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_54",
+      "line": 11,
+      "source_id": "SOURCE_4",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_55",
+      "line": 11,
+      "source_id": "SOURCE_5",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_56",
+      "line": 11,
+      "source_id": "SOURCE_6",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_57",
+      "line": 11,
+      "source_id": "SOURCE_7",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_58",
+      "line": 11,
+      "source_id": "SOURCE_8",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_59",
+      "line": 11,
+      "source_id": "SOURCE_9",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_60",
+      "line": 11,
+      "source_id": "SOURCE_0",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_61",
+      "line": 11,
+      "source_id": "SOURCE_1",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_62",
+      "line": 11,
+      "source_id": "SOURCE_2",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_63",
+      "line": 11,
+      "source_id": "SOURCE_3",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_64",
+      "line": 11,
+      "source_id": "SOURCE_4",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_65",
+      "line": 11,
+      "source_id": "SOURCE_5",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_66",
+      "line": 11,
+      "source_id": "SOURCE_6",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_67",
+      "line": 11,
+      "source_id": "SOURCE_7",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_68",
+      "line": 11,
+      "source_id": "SOURCE_8",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_69",
+      "line": 11,
+      "source_id": "SOURCE_9",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_70",
+      "line": 11,
+      "source_id": "SOURCE_0",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_71",
+      "line": 11,
+      "source_id": "SOURCE_1",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_72",
+      "line": 11,
+      "source_id": "SOURCE_2",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_73",
+      "line": 11,
+      "source_id": "SOURCE_3",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_74",
+      "line": 11,
+      "source_id": "SOURCE_4",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_75",
+      "line": 11,
+      "source_id": "SOURCE_5",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_76",
+      "line": 11,
+      "source_id": "SOURCE_6",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_77",
+      "line": 11,
+      "source_id": "SOURCE_7",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_78",
+      "line": 11,
+      "source_id": "SOURCE_8",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_79",
+      "line": 11,
+      "source_id": "SOURCE_9",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_80",
+      "line": 11,
+      "source_id": "SOURCE_0",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_81",
+      "line": 11,
+      "source_id": "SOURCE_1",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_82",
+      "line": 11,
+      "source_id": "SOURCE_2",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_83",
+      "line": 11,
+      "source_id": "SOURCE_3",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_84",
+      "line": 11,
+      "source_id": "SOURCE_4",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_85",
+      "line": 11,
+      "source_id": "SOURCE_5",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_86",
+      "line": 11,
+      "source_id": "SOURCE_6",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_87",
+      "line": 11,
+      "source_id": "SOURCE_7",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_88",
+      "line": 11,
+      "source_id": "SOURCE_8",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_89",
+      "line": 11,
+      "source_id": "SOURCE_9",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_90",
+      "line": 11,
+      "source_id": "SOURCE_0",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_91",
+      "line": 11,
+      "source_id": "SOURCE_1",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_92",
+      "line": 11,
+      "source_id": "SOURCE_2",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_93",
+      "line": 11,
+      "source_id": "SOURCE_3",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_94",
+      "line": 11,
+      "source_id": "SOURCE_4",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_95",
+      "line": 11,
+      "source_id": "SOURCE_5",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_96",
+      "line": 11,
+      "source_id": "SOURCE_6",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_97",
+      "line": 11,
+      "source_id": "SOURCE_7",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_98",
+      "line": 11,
+      "source_id": "SOURCE_8",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    },
+    {
+      "authorship": "manual",
+      "id": "BENCH_99",
+      "line": 11,
+      "source_id": "SOURCE_9",
+      "statement": "O relatório registra quatro testes aprovados e zero falhas."
+    }
+  ],
+  "id": "SYNTHETIC_MULTI_SOURCE_10",
+  "sources": [
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_0",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_1",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_2",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_3",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_4",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_5",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_6",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_7",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_EQUIVALENCE_BOUNDARY_2",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_8",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    },
+    {
+      "capture": {
+        "path": "ai/experimentos/05-associacao/fronteira/execucao.json",
+        "run_id": "RUN_INCORRETO",
+        "sha256": "eeb8e2f5bd138b799e3c05278da8320dbb78be383ec80beb256d480eeec23864"
+      },
+      "id": "SOURCE_9",
+      "kind": "test_run",
+      "lines": [
+        "   Compiling renderer v0.1.0 (/workspaces/renderer-local)",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.24s",
+        "     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-03bc9867b3b9274f)",
+        "",
+        "running 4 tests",
+        "test accepts_difference_below_epsilon ... ok",
+        "test accepts_equal_values ... ok",
+        "test rejects_difference_above_epsilon - should panic ... ok",
+        "test rejects_difference_at_epsilon - should panic ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        ""
+      ],
+      "path": "ai/experimentos/05-associacao/fronteira/saida.bin",
+      "sha256": "c2cbb8fb4c22d4f455b7c4b3dbe59f7e96205cbb895468668be070443e9dc453"
+    }
+  ],
+  "unknowns": [
+    "Não autentica execução nem comprova bytes compilados.",
+    "Não valida semanticamente as afirmações."
+  ]
+}

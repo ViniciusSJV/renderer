@@ -1,3 +1,8 @@
+#[path = "validate_evidence/capture.rs"]
+mod capture;
+#[path = "validate_evidence/metrics.rs"]
+mod metrics;
+
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
 use std::collections::HashSet;
@@ -58,8 +63,159 @@ mod tests {
         (review, evidence)
     }
 
+    fn capture_dossier() -> Evidence {
+        serde_json::from_str(include_str!(
+            "../../ai/experimentos/07-dossie-captura/evidencias.json"
+        ))
+        .unwrap()
+    }
+    #[test]
+    fn capture_export_preserves_source_and_run_id_with_limits() {
+        let e = capture_dossier();
+        let text = selection_json(&e.facts[0], &e.sources[0], 0, e.id.as_deref(), None).unwrap();
+        let v: serde_json::Value = serde_json::from_str(&text).unwrap();
+        assert_eq!(v["source"]["id"], "TEST_BOUNDARY_2");
+        assert_eq!(
+            v["source"]["capture_validation"]["record"]["run_id"],
+            "RUN_EQUIVALENCE_BOUNDARY_2"
+        );
+        assert!(v["source"]["capture_validation"]["scope"]
+            .as_str()
+            .unwrap()
+            .contains("Não autentica"));
+        assert!(v["source"].get("execution_validation").is_none());
+        assert!(v["source"].get("executed").is_none());
+        let many = selections_json(&[&e.facts[0], &e.facts[1]], &e.sources, 0, None, None).unwrap();
+        assert_eq!(many.matches("capture_and_source_match").count(), 2);
+    }
+    #[test]
+    fn capture_link_rejects_wrong_run_or_record_hash() {
+        let mut e = capture_dossier();
+        e.sources[0].capture.as_mut().unwrap().run_id = "TEST_BOUNDARY_2".into();
+        assert!(validate_capture_link(&e.sources[0])
+            .unwrap_err()
+            .contains("ID de execução"));
+        e.sources[0].capture.as_mut().unwrap().sha256 = "0".repeat(64);
+        assert!(validate_capture_link(&e.sources[0])
+            .unwrap_err()
+            .contains("Hash do registro"));
+    }
+    #[test]
+    fn capture_link_rejects_wrong_source_and_tampered_lines() {
+        let mut e = capture_dossier();
+        e.sources[0].lines[0] = "alterada".into();
+        assert!(validate_capture_link(&e.sources[0]).is_err());
+        let mut e = capture_dossier();
+        let bytes = fs::read("Cargo.toml").unwrap();
+        e.sources[0].path = Some("Cargo.toml".into());
+        e.sources[0].sha256 = Some(format!("{:x}", Sha256::digest(&bytes)));
+        e.sources[0].lines = String::from_utf8(bytes)
+            .unwrap()
+            .lines()
+            .map(str::to_owned)
+            .collect();
+        assert!(validate_capture_link(&e.sources[0])
+            .unwrap_err()
+            .contains("não corresponde"));
+    }
+    #[test]
+    fn capture_link_rejects_code_kind_and_legacy_execution() {
+        let mut e = capture_dossier();
+        e.sources[0].kind = Some("rust_source".into());
+        assert!(validate_capture_link(&e.sources[0]).is_err());
+        e.sources[0].kind = Some("test_run".into());
+        e.sources[0].execution = recorded_execution_source().execution;
+        assert!(validate_capture_link(&e.sources[0]).is_err());
+    }
+
+    #[test]
+    fn capture_reuse_does_not_cross_exports_or_sources() {
+        let mut e = capture_dossier();
+        selections_json(&[&e.facts[0], &e.facts[1]], &e.sources, 1, None, None).unwrap();
+        e.sources[0].capture.as_mut().unwrap().sha256 = "0".repeat(64);
+        assert!(selections_json(&[&e.facts[0], &e.facts[1]], &e.sources, 1, None, None).is_err());
+        let mut e = capture_dossier();
+        let mut other = capture_dossier().sources.remove(0);
+        other.id = "OTHER".into();
+        other.capture.as_mut().unwrap().run_id = "WRONG".into();
+        e.sources.push(other);
+        e.facts[1].source_id = "OTHER".into();
+        assert!(selections_json(&[&e.facts[0], &e.facts[1]], &e.sources, 1, None, None).is_err());
+    }
+
+    #[test]
+    fn checked_capture_does_not_approve_an_unrelated_source() {
+        let e = capture_dossier();
+        let source = &e.sources[0];
+        let checked = check_capture_document(source.capture.as_ref().unwrap()).unwrap();
+        check_source_capture_output(
+            source.path.as_ref().unwrap(),
+            source.sha256.as_ref().unwrap(),
+            &checked,
+        )
+        .unwrap();
+        assert!(check_source_capture_output(
+            "Cargo.toml",
+            source.sha256.as_ref().unwrap(),
+            &checked
+        )
+        .is_err());
+        assert!(check_source_capture_output(
+            source.path.as_ref().unwrap(),
+            &"0".repeat(64),
+            &checked
+        )
+        .is_err());
+    }
+
+    #[test]
+    fn shared_capture_still_checks_each_source() {
+        let mut e = capture_dossier();
+        let mut cache = CaptureCache::new();
+        validate_capture_link_cached(&e.sources[0], &mut cache).unwrap();
+        e.sources[0].id = "OTHER".into();
+        validate_capture_link_cached(&e.sources[0], &mut cache).unwrap();
+        assert_eq!(cache.len(), 1);
+        e.sources[0].lines[0] = "alterada".into();
+        assert!(validate_capture_link_cached(&e.sources[0], &mut cache).is_err());
+        let bytes = fs::read("Cargo.toml").unwrap();
+        e.sources[0].path = Some("Cargo.toml".into());
+        e.sources[0].sha256 = Some(format!("{:x}", Sha256::digest(&bytes)));
+        e.sources[0].lines = String::from_utf8(bytes)
+            .unwrap()
+            .lines()
+            .map(str::to_owned)
+            .collect();
+        assert!(validate_capture_link_cached(&e.sources[0], &mut cache)
+            .unwrap_err()
+            .contains("não corresponde"));
+    }
+
+    #[test]
+    fn cache_key_separates_hash_run_and_location_and_does_not_save_failures() {
+        let mut e = capture_dossier();
+        let mut cache = CaptureCache::new();
+        validate_capture_link_cached(&e.sources[0], &mut cache).unwrap();
+        let link = e.sources[0].capture.as_mut().unwrap();
+        let original_hash = link.sha256.clone();
+        let original_run = link.run_id.clone();
+        let original_path = link.path.clone();
+        link.sha256 = "0".repeat(64);
+        assert!(validate_capture_link_cached(&e.sources[0], &mut cache).is_err());
+        let link = e.sources[0].capture.as_mut().unwrap();
+        link.sha256 = original_hash;
+        link.run_id = "WRONG".into();
+        assert!(validate_capture_link_cached(&e.sources[0], &mut cache).is_err());
+        let link = e.sources[0].capture.as_mut().unwrap();
+        link.run_id = original_run;
+        link.path = format!("{original_path}/missing");
+        assert!(validate_capture_link_cached(&e.sources[0], &mut cache).is_err());
+        assert_eq!(cache.len(), 1);
+    }
+
     fn version_example() -> Source {
         Source {
+            capture: None,
             execution: None,
             executed: None,
             git_commit: None,
@@ -821,6 +977,7 @@ mod tests {
 
     fn example() -> (Fact, Source) {
         let source = Source {
+            capture: None,
             execution: None,
             executed: None,
             git_commit: None,
@@ -868,6 +1025,7 @@ mod tests {
     fn accepts_unique_source_ids() {
         let sources = vec![
             Source {
+                capture: None,
                 execution: None,
                 executed: None,
                 git_commit: None,
@@ -878,6 +1036,7 @@ mod tests {
                 lines: vec![],
             },
             Source {
+                capture: None,
                 execution: None,
                 executed: None,
                 git_commit: None,
@@ -895,6 +1054,7 @@ mod tests {
     fn rejects_duplicate_source_ids_with_different_content() {
         let sources = vec![
             Source {
+                capture: None,
                 execution: None,
                 executed: None,
                 git_commit: None,
@@ -905,6 +1065,7 @@ mod tests {
                 lines: vec![String::from("Primeira obra.")],
             },
             Source {
+                capture: None,
                 execution: None,
                 executed: None,
                 git_commit: None,
@@ -915,6 +1076,7 @@ mod tests {
                 lines: vec![],
             },
             Source {
+                capture: None,
                 execution: None,
                 executed: None,
                 git_commit: None,
@@ -941,6 +1103,7 @@ mod tests {
         let (_, source) = example();
         let sources = vec![
             Source {
+                capture: None,
                 execution: None,
                 executed: None,
                 git_commit: None,
@@ -1013,8 +1176,16 @@ struct ExecutionRecord {
     exit_code: i32,
 }
 
+#[derive(Deserialize, Serialize)]
+struct CaptureLink {
+    path: String,
+    sha256: String,
+    run_id: String,
+}
+
 #[derive(Deserialize)]
 struct Source {
+    capture: Option<CaptureLink>,
     execution: Option<ExecutionRecord>,
     executed: Option<bool>,
     git_commit: Option<String>,
@@ -1023,6 +1194,106 @@ struct Source {
     sha256: Option<String>,
     id: String,
     lines: Vec<String>,
+}
+
+// Resultado de uma conferência local. Não é uma garantia de imutabilidade.
+struct CheckedCapture {
+    record: serde_json::Value,
+    report: String,
+    output_path: std::path::PathBuf,
+}
+
+fn check_capture_document(link: &CaptureLink) -> Result<CheckedCapture, String> {
+    let path = std::path::Path::new(&link.path);
+    let bytes = fs::read(path).map_err(|e| e.to_string())?;
+    metrics::add("record_link_read", bytes.len());
+    if format!("{:x}", Sha256::digest(&bytes)) != link.sha256 {
+        return Err("Hash do registro de captura diverge do dossiê".into());
+    }
+    let record: serde_json::Value = serde_json::from_slice(&bytes).map_err(|e| e.to_string())?;
+    if record["run_id"] != link.run_id || link.run_id.trim().is_empty() {
+        return Err("ID de execução diverge da captura".into());
+    }
+    let output_path = path
+        .parent()
+        .unwrap_or(std::path::Path::new("."))
+        .join("saida.bin");
+    let report = capture::validate(path)?;
+    Ok(CheckedCapture {
+        record,
+        report,
+        output_path,
+    })
+}
+
+fn check_source_capture_output(
+    source_path: &str,
+    source_hash: &str,
+    checked: &CheckedCapture,
+) -> Result<(), String> {
+    if fs::canonicalize(source_path).map_err(|e| e.to_string())?
+        != fs::canonicalize(&checked.output_path).map_err(|e| e.to_string())?
+        || checked.record["output"]["sha256"] != source_hash
+    {
+        return Err("Fonte do dossiê não corresponde à saída da captura".into());
+    }
+    Ok(())
+}
+
+type CaptureCache = std::collections::HashMap<(std::path::PathBuf, String, String), CheckedCapture>;
+
+fn capture_key(link: &CaptureLink) -> Result<(std::path::PathBuf, String, String), String> {
+    // Não canonicalizar: a pasta declarada determina onde fica saida.bin.
+    let path = std::env::current_dir()
+        .map_err(|e| e.to_string())?
+        .join(&link.path);
+    Ok((path, link.sha256.clone(), link.run_id.clone()))
+}
+
+fn validate_capture_link(source: &Source) -> Result<Option<serde_json::Value>, String> {
+    validate_capture_link_cached(source, &mut CaptureCache::new())
+}
+
+fn validate_capture_link_cached(
+    source: &Source,
+    documents: &mut CaptureCache,
+) -> Result<Option<serde_json::Value>, String> {
+    let Some(link) = &source.capture else {
+        return Ok(None);
+    };
+    metrics::add("capture_link", 0);
+    if source.kind.as_deref() != Some("test_run") || source.execution.is_some() {
+        return Err(format!(
+            "{}: capture exige test_run sem execution legado",
+            source.id
+        ));
+    }
+    validate_source_version(source)?;
+    let source_path = source
+        .path
+        .as_ref()
+        .ok_or("capture exige path e sha256 da saída")?;
+    let source_hash = source
+        .sha256
+        .as_ref()
+        .ok_or("capture exige sha256 da saída")?;
+    let checked = match documents.entry(capture_key(link)?) {
+        std::collections::hash_map::Entry::Occupied(entry) => entry.into_mut(),
+        std::collections::hash_map::Entry::Vacant(entry) => {
+            entry.insert(check_capture_document(link)?)
+        }
+    };
+    check_source_capture_output(source_path, source_hash, &checked)?;
+    let record = &checked.record;
+    let report = &checked.report;
+    Ok(Some(serde_json::json!({
+        "status": "capture_and_source_match",
+        "record": link,
+        "result": record["result"],
+        "checked": ["record_sha256", "run_id", "source_output_path", "source_sha256_and_lines", "output_bytes_and_sha256", "source_comparisons_and_current_files"],
+        "report": report,
+        "scope": "Conferência local no momento da leitura, sem snapshot atômico. Não autentica execução, não comprova bytes compilados nem valida semanticamente a ficha. Datas e ambiente recebem apenas conferência básica. Fontes unavailable não têm arquivo atual conferido."
+    })))
 }
 
 fn validate_source_ids(sources: &[Source]) -> Result<(), String> {
@@ -1209,6 +1480,7 @@ fn validate_source_version(source: &Source) -> Result<(), String> {
             let bytes = fs::read(path).map_err(|error| {
                 format!("{}: não foi possível ler {}: {}", source.id, path, error)
             })?;
+            metrics::add("source_content_read", bytes.len());
             validate_source_content(source, &bytes)
         }
         _ => Err(format!(
@@ -1218,12 +1490,32 @@ fn validate_source_version(source: &Source) -> Result<(), String> {
     }
 }
 
+#[cfg(test)]
 fn selection_json(
     fact: &Fact,
     source: &Source,
     radius: usize,
     evidence_id: Option<&str>,
     evidence_unknowns: Option<&[String]>,
+) -> Result<String, String> {
+    let validation = validate_capture_link(source)?;
+    selection_with_capture(
+        fact,
+        source,
+        radius,
+        evidence_id,
+        evidence_unknowns,
+        validation,
+    )
+}
+
+fn selection_with_capture(
+    fact: &Fact,
+    source: &Source,
+    radius: usize,
+    evidence_id: Option<&str>,
+    evidence_unknowns: Option<&[String]>,
+    capture_validation: Option<serde_json::Value>,
 ) -> Result<String, String> {
     validate_reference(fact, source)?;
     validate_execution_record(source)?;
@@ -1290,6 +1582,14 @@ fn selection_json(
             "Esta fonte descreve código. Ela não informa se, quando ou com qual resultado o código foi executado; isso requer um registro de execução separado."
         );
     }
+    if let Some(validation) = capture_validation {
+        let obj = selection["source"].as_object_mut().unwrap();
+        obj.remove("executed");
+        obj.remove("execution");
+        obj.remove("execution_validation");
+        obj.remove("execution_scope");
+        obj.insert("capture_validation".into(), validation);
+    }
     serde_json::to_string_pretty(&selection).map_err(|error| error.to_string())
 }
 
@@ -1339,13 +1639,31 @@ fn selections_json(
     validate_source_ids(sources)?;
     let mut seen = HashSet::new();
     let mut selections = Vec::new();
+    let mut documents = CaptureCache::new();
+    let mut captures: std::collections::HashMap<&str, Option<serde_json::Value>> =
+        std::collections::HashMap::new();
     for fact in facts {
         if !seen.insert(fact.id.as_str()) {
             return Err(format!("Ficha repetida na seleção: \"{}\".", fact.id));
         }
         let source = find_source(sources, &fact.source_id)
             .ok_or_else(|| format!("{}: fonte \"{}\" não encontrada.", fact.id, fact.source_id))?;
-        let json = selection_json(fact, source, radius, evidence_id, evidence_unknowns)?;
+        // Somente nesta exportação. Não é snapshot nem confiança persistente.
+        let validation = match captures.entry(source.id.as_str()) {
+            std::collections::hash_map::Entry::Occupied(entry) => entry.get().clone(),
+            std::collections::hash_map::Entry::Vacant(entry) => {
+                let validation = validate_capture_link_cached(source, &mut documents)?;
+                entry.insert(validation).clone()
+            }
+        };
+        let json = selection_with_capture(
+            fact,
+            source,
+            radius,
+            evidence_id,
+            evidence_unknowns,
+            validation,
+        )?;
         if facts.len() == 1 {
             return Ok(json);
         }
@@ -1416,6 +1734,23 @@ fn query_json(question: &str, selection: &str) -> Result<String, String> {
 }
 
 fn main() {
+    let _metrics_report = metrics::Report;
+    if std::env::args().nth(1).as_deref() == Some("--capture") {
+        let args: Vec<String> = std::env::args().collect();
+        if args.len() != 3 {
+            eprintln!("Uso: validate_evidence --capture CAMINHO/execucao.json");
+            std::process::exit(1);
+        }
+        match capture::validate(std::path::Path::new(&args[2])) {
+            Ok(report) => println!("{report}"),
+            Err(error) => {
+                eprintln!("Conferência da captura falhou: {error}");
+                std::process::exit(1);
+            }
+        }
+        return;
+    }
+
     let arguments: Vec<String> = std::env::args().collect();
     let mut radius = 3;
     let mut output_path: Option<&str> = None;
@@ -1545,6 +1880,17 @@ fn main() {
     }
 
     for source in &sources {
+        match validate_capture_link(source) {
+            Ok(Some(_)) => println!(
+                "{}: captura ligada à saída e conferida; origem não autenticada.",
+                source.id
+            ),
+            Ok(None) => {}
+            Err(message) => {
+                eprintln!("{message}");
+                std::process::exit(1);
+            }
+        }
         if let Err(message) = validate_execution_record(source) {
             eprintln!("{}", message);
             std::process::exit(1);

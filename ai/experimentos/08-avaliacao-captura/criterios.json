@@ -1,0 +1,89 @@
+{
+  "id": "EVAL_CAPTURE_1",
+  "status": "evaluated",
+  "query_file": "consulta.json",
+  "query_sha256": "53b8a52c4455ef8bbbf62f674fe6ddd32f1b1e691050cdc5f5857ca23ebb9417",
+  "method": "Avaliação manual: um ponto por critério integralmente atendido; parcial vale zero. Examinar a resposta inteira, citando justificativas e contradições. Não preencher resultados antes da resposta.",
+  "criteria": [
+    {
+      "id": "C1",
+      "description": "Distingue identidade da fonte e da execução.",
+      "expected": "TEST_BOUNDARY_2 identifica a fonte; RUN_EQUIVALENCE_BOUNDARY_2 identifica a execução. Não troca esses papéis nem usa CTX_1 como execução."
+    },
+    {
+      "id": "C2",
+      "description": "Interpreta corretamente o resultado e o pânico esperado.",
+      "expected": "Registra quatro testes aprovados, zero falhas e código 0 do comando. Explica que o teste no limite passou esperando pânico, sem transformar isso em aceitação do par. Não generaliza para a suíte inteira."
+    },
+    {
+      "id": "C3",
+      "description": "Usa referências que sustentam as afirmações.",
+      "expected": "Cita F_BOUNDARY_RUN_RESULT e TEST_BOUNDARY_2 para o resultado e F_BOUNDARY_LIMIT_PANIC e TEST_BOUNDARY_2 para o pânico esperado. Para a conferência, aponta capture_validation da fonte, sem inventar fichas."
+    },
+    {
+      "id": "C4",
+      "description": "Distingue conferência do registro de sucesso do comando.",
+      "expected": "Descreve a conferência do hash/ID do registro, ligação da fonte à saída, linhas/hash da fonte, tamanho/hash da saída e comparações das fontes. Distingue result.exit_code do status capture_and_source_match; não trata código 0 do comando como código do validador nem alega reexecução."
+    },
+    {
+      "id": "C5",
+      "description": "Delimita a associação e a autenticidade.",
+      "expected": "Explica que cinco arquivos atuais correspondem aos hashes posteriores e há cinco comparações equal declaradas e conferidas. Não conclui imutabilidade durante todo o intervalo, autenticação, veracidade do ambiente/datas ou prova das entradas do compilador. A conferência semântica da ficha não foi feita."
+    },
+    {
+      "id": "C6",
+      "description": "Não generaliza correção ou desempenho.",
+      "expected": "Reconhece que os casos registrados não provam correção universal e não há benchmark comparativo. Não interpreta finished in 0.00s como custo da macro ou ganho de velocidade."
+    }
+  ],
+  "max_score": 6,
+  "response": "1. **FACT**: O ID que identifica a fonte do relatório é \"TEST\\_BOUNDARY\\_2\". O ID que identifica a execução é\n   \"RUN\\_EQUIVALENCE\\_BOUNDARY\\_2\". O resultado registrado foi \"test result: ok. 4 passed; 0 failed; 0 ignored; 0\n   measured; 0 filtered out; finished in 0.00s\". A aprovação do teste no limite que espera pânico significa que o\n   teste foi executado conforme esperado, mas não foi possível confirmar se o pânico ocorreu, pois o relatório não\n   fornece detalhes adicionais sobre o comportamento do teste.\n\n2. **FACT**: O `capture_validation` informa que foi conferido o `record_sha256`, `run_id`, `source_output_path`,\n   `source_sha256_and_lines`, `output_bytes_and_sha256`, e `source_comparisons_and_current_files`. O resultado do\n   comando registrado foi {\"exit\\_code\":0,\"status\":\"exited\"}. A conferência pelo Bibliotecário informa que o registro\n   é consistente, a saída foi conferida (540 bytes), as fontes são iguais, os arquivos atuais conferidos são 5, e o\n   ambiente tem presença/estrutura básica conferida.\n\n3. **INFERENCE**: A conferência pelo Bibliotecário não autentica a execução nem comprova quais bytes o compilador\n   utilizou. A correspondência dos arquivos atuais aos hashes posteriores permite afirmar que os arquivos atuais\n   estão consistentes com os hashes registrados no momento da captura, mas não fornece informações sobre a execução\n   ou a compilação.\n\n4. **LACUNA**: Com base nas evidências fornecidas, não podemos concluir correção para todas as entradas ou ganho\n   de desempenho. As evidências não fornecem detalhes sobre a implementação, os dados de entrada, os resultados\n   esperados ou as métricas de desempenho. Para concluir a correção, seria necessário verificar se os testes cobrem\n   todas as entradas possíveis e se os resultados dos testes correspondem aos resultados esperados. Para avaliar o\n   ganho de desempenho, seria necessário comparar as métricas de desempenho antes e depois de qualquer mudança\n   implementada.\n",
+  "score": 3,
+  "results": [
+    {
+      "id": "C1",
+      "score": 1,
+      "justification": "Item 1 distingue corretamente TEST_BOUNDARY_2 e RUN_EQUIVALENCE_BOUNDARY_2. Escapes Markdown não alteram os IDs."
+    },
+    {
+      "id": "C2",
+      "score": 0,
+      "justification": "Acerta quatro aprovações, zero falhas e código 0 (item 2), mas diz que não foi possível confirmar se o pânico ocorreu. O trecho should panic ... ok e F_BOUNDARY_LIMIT_PANIC registram aprovação com pânico esperado. Não autenticar o evento não elimina o significado do resultado relatado."
+    },
+    {
+      "id": "C3",
+      "score": 0,
+      "justification": "Não cita F_BOUNDARY_RUN_RESULT nem F_BOUNDARY_LIMIT_PANIC. Mencionar a fonte e capture_validation não atende às referências de fichas exigidas no critério prévio."
+    },
+    {
+      "id": "C4",
+      "score": 1,
+      "justification": "Item 2 enumera os campos conferidos e separa o código 0 do comando da consistência informada pelo Bibliotecário. A expressão registro consistente descreve o status sem exigir repetição literal de capture_and_source_match. Não alega reexecução."
+    },
+    {
+      "id": "C5",
+      "score": 0,
+      "justification": "Atendimento parcial: itens 2 e 3 reconhecem cinco arquivos, igualdade, hashes posteriores e ausência de autenticação/prova dos bytes compilados. Omite que a semântica das fichas não foi validada, exigência explícita do critério. A frase não fornece informações sobre a execução ou a compilação é ampla demais: há informações declaradas, embora sem comprovação. Parcial vale zero pela regra anterior."
+    },
+    {
+      "id": "C6",
+      "score": 1,
+      "justification": "Item 4 nega correção universal e ganho de desempenho e pede comparação de métricas. Não usa 0.00s como benchmark. As ressalvas de formulação foram registradas separadamente, sem acrescentar critérios após a resposta."
+    }
+  ],
+  "notes": [
+    "Enviar somente consulta.json, sem esta rubrica, em conversa nova com renderer-analyst.",
+    "Preservar a primeira resposta completa antes de orientar revisões.",
+    "A nota da Aula 10 permanece 3/6. Pergunta e evidências diferentes impedem comparação controlada.",
+    "Registrar sinais de truncamento. O contexto configurado anteriormente era 4096 e a saída 1024; configuração efetiva e tokens desta consulta não foram medidos.",
+    "O hash identifica a consulta preparada, não autentica a sessão nem prova recebimento integral pelo modelo."
+  ],
+  "response_file": "resposta.txt",
+  "response_sha256": "d815a405bbdafaf210801d980f14468ef3f66a15ded6a0a9c457c16edc86271d",
+  "observations": [
+    "A resposta foi fornecida manualmente pelo usuário. Não há confirmação adicional de configuração efetiva, conversa nova ou recebimento integral da consulta. Não há corte textual evidente; isso não prova ausência de truncamento de contexto.",
+    "Item 3 rotula como INFERENCE limites já explícitos no material; anotação de formato, sem penalidade adicional.",
+    "Item 4 exagera ao negar informação sobre resultados esperados: o pânico esperado consta no material. Cobrir todas as entradas não é a única via de justificar correção; argumentos formais também existem. Essas ressalvas não transformam a resposta em alegação de correção universal.",
+    "A nota descreve esta resposta sob a rubrica prévia. Não é comparação controlada com a Aula 10, cuja nota permanece 3/6."
+  ]
+}
