@@ -1,104 +1,94 @@
 # Aula 18 — Medir o custo da conferência
 
-## Conceito e previsão
+## Objetivo
 
-Antes de otimizar, precisamos de uma linha de base. O
-[protocolo](../experimentos/09-custo-conferencia/protocolo.md) foi escrito antes
-da medição: exportar 1, 10 e 100 fichas da mesma fonte/captura, com IDs distintos.
-São cópias sintéticas de uma afirmação, não evidências independentes.
+Medir o tempo total de exportação de 1, 10 e 100 fichas ligadas à mesma captura,
+preservando amostras e distinguindo custo observado de hipótese causal.
 
-A hipótese foi que repetir conferências por ficha pode contribuir para aumentar
-o custo. A leitura da implementação mostra chamadas de `validate_capture_link`
-na validação da fonte e na seleção de cada ficha. Isso não mede sua contribuição
-no tempo total. Serialização, alocações, buscas e escrita também podem contribuir.
+## Contexto e pré-requisitos
 
-## Implementação
+Use Linux/Bash, Cargo e `aula16-dossie.json`, com sua captura ainda conferível.
+Todos os comandos partem da raiz. Ollama não participa. O
+[protocolo histórico](../experimentos/09-custo-conferencia/protocolo.md) definiu
+cargas antes da medição: são cópias sintéticas de uma ficha, não fatos independentes.
 
-Criamos [bench_evidence.rs](../../src/bin/bench_evidence.rs), sem alterar o
-validador. O medidor prepara três dossiês, executa o binário release diretamente
-e usa `Instant` do início da criação do processo até seu término. A compilação
-não entra no tempo. stdout é descartado e stderr é capturado para diagnóstico.
+A versão inicial repetia conferências por ficha. A árvore atual já inclui as
+reutilizações das aulas 20 e 23; medir agora produz uma linha de base da versão
+atual, não recria o algoritmo anterior nem seus tempos.
+
+## Conceitos e implementação
+
+[src/bin/bench_evidence.rs](../../src/bin/bench_evidence.rs) prepara as cargas e
+mede, com `Instant`, da criação do processo validador ao seu término. Compilação
+fica fora do tempo. stdout é descartado; stderr é guardado para diagnóstico.
 
 Cada carga recebe três aquecimentos e 15 amostras. A ordem é rotacionada por
-rodada, sem ensaios paralelos iniciados pelo medidor. O ambiente continua
-compartilhado; não isolamos CPU nem limpamos caches.
+rodada, sem ensaios paralelos iniciados pelo medidor. CPU e caches não são isolados.
+Fora do intervalo medido, o programa confere JSON, quantidade e IDs de fichas,
+status de captura e igualdade dos hashes das exportações da mesma carga.
 
-Após cada processo, fora do tempo medido, o medidor verifica JSON, quantidade
-e IDs das seleções e status de conferência. Compara o hash da exportação com o
-primeiro resultado da mesma carga. Remove somente a exportação temporária que
-acabou de produzir. Dossiês e resultados brutos permanecem no destino.
+O medidor remove apenas exportações temporárias produzidas por ele e preserva
+entradas e resultados brutos. O destino é novo; falhas podem deixar arquivos
+parciais e impedem publicar `results.json`. O executável também tem hash
+comparado antes/depois, sem comprovação de suas entradas de compilação.
 
-Falha do comando, exportação inesperada ou mudança de bytes interrompe o ensaio.
-O destino deve ser novo; `results.json` só é publicado ao concluir. Uma falha
-pode deixar artefatos parciais. O JSON final registra comandos, ordem, amostras,
-tamanhos, hashes de entrada/saída e do executável. O hash do executável foi
-comparado antes/depois, sem comprovação do processo de compilação.
+## Passo a passo
 
-## Teste e execução
+Na raiz, teste o medidor. Cargo grava em `target`; não inicia o benchmark completo:
 
 ```bash
-cargo test --offline --bin bench_evidence
-cargo build --offline --release --bin validate_evidence --bin bench_evidence
+cargo test --locked --bin bench_evidence
 ```
 
-**2 testes passaram**, conferindo geração das cargas e cálculo da mediana.
-O ensaio real também verificou os resultados das 54 execuções: nove aquecimentos
-e 45 medições. Os hashes de cada exportação permaneceram iguais nas repetições.
-Não repetimos a suíte do validador, pois sua implementação não mudou nesta aula.
-
-O comando do ensaio foi:
+Observe os dois testes de geração de cargas e cálculo da mediana aprovados.
+Compile os dois binários em release; isso grava em `target/release`, sem medir:
 
 ```bash
-target/release/bench_evidence target/release/validate_evidence ai/experimentos/07-dossie-captura/evidencias.json ai/experimentos/09-custo-conferencia/baseline
+cargo build --locked --release --bin validate_evidence --bin bench_evidence
 ```
 
-Executamos esse comando pelo capturador em
-[RUN_BENCH_EVIDENCE_BASELINE_1](../experimentos/09-custo-conferencia/captura/execucao.json),
-que preservou ambiente parcial, argumentos, hashes de oito arquivos selecionados,
-saída e código 0. O diretório pai deve existir; os destinos registrados já estão
-ocupados. Use novos destinos e IDs para repetir.
+Agora execute o ensaio com o dossiê local. O comando cria `aula18-medicao`,
+prepara cargas e realiza 54 processos: nove aquecimentos e 45 medições:
 
-Os [resultados brutos](../experimentos/09-custo-conferencia/baseline/results.json)
-contêm todas as amostras em nanossegundos. Uma conferência posterior recalculou
-as medianas e confirmou 15 amostras por carga e 45 registros de ordem.
+```bash
+target/release/bench_evidence target/release/validate_evidence aula16-dossie.json aula18-medicao
+```
 
-## Medição
+Abra `aula18-medicao/results.json` no editor. Verifique 15 amostras por carga,
+45 itens de ordem, tamanhos, hashes e resumo. Se a captura divergir, o medidor
+interrompe; não use uma execução incompleta como resultado. Destino existente
+exige outro nome, não sobrescrita.
 
-Valores de tempo em milissegundos, arredondados a três casas:
+## Evidência histórica
 
-| Fichas | Entrada (bytes) | Exportação (bytes) | Mínimo | Mediana | Máximo |
+Os [resultados originais](../experimentos/09-custo-conferencia/baseline/results.json)
+e a [captura do ensaio](../experimentos/09-custo-conferencia/captura/execucao.json)
+preservam a versão medida antes das otimizações:
+
+| Fichas | Entrada (bytes) | Exportação (bytes) | Mínimo (ms) | Mediana (ms) | Máximo (ms) |
 | --- | --- | --- | --- | --- | --- |
 | 1 | 1.558 | 2.798 | 1,512 | 1,563 | 1,616 |
 | 10 | 3.395 | 29.461 | 3,494 | 3,558 | 3,699 |
 | 100 | 21.846 | 288.401 | 22,358 | 22,687 | 26,033 |
 
-Esses tamanhos são dos arquivos, não a quantidade total de bytes lidos pelo
-processo. O tempo inclui inicialização, leitura, conferência, serialização e
-escrita da CLI. Não inclui preparação das cargas nem análise posterior das
-exportações. Não é custo isolado de SHA-256 ou da macro Rust.
+São valores registrados, não resultados esperados da repetição atual.
+O tempo inclui processo, leitura, conferência, serialização e escrita. Não inclui
+preparação das cargas ou conferência posterior. Uma ficha usa formato individual;
+as demais usam formato múltiplo. Tamanho do arquivo não é total de bytes lidos.
 
-## Explicação e limites
+## Validação e limites
 
-Neste ensaio, aumentar fichas coincidiu com aumento de tempo e tamanho da saída.
-Ainda não sabemos quanto cabe a cada componente. Uma ficha usa formato individual;
-as outras cargas usam formato múltiplo. Os caches foram aquecidos e o Codespaces
-pode sofrer interferência externa. Três cargas e uma sessão não estabelecem uma
-lei geral de complexidade nem desempenho em outras máquinas.
+Compare primeiro correção e identidade das exportações, depois tempos.
+O ensaio histórico verificou as 54 execuções e a estabilidade de bytes por carga.
+Aumento de tempo com fichas não isola hashes, alocações, buscas ou escrita.
+Não estabelece uma lei geral de complexidade nem mede o renderer ou o modelo.
 
-Não houve comparação entre versões nem otimização: **não demonstramos ganho de
-performance**. Também não medimos alocações, CPU, tokens ou latência do Qwen.
-Os binários em target são artefatos locais de build e não são versionados;
-recompilá-los pode fazer seus hashes atuais divergirem da captura histórica.
+Não houve comparação de versões ou otimização nesta etapa histórica. Caches
+aquecidos e interferência do ambiente limitam a conclusão. Binários de `target`
+não são versionados; recompilá-los não preserva o hash de executáveis antigos.
 
-## Fechamento e próxima aula
+## Resultado da aula e próxima aula
 
-A **Aula 18 está concluída**: protocolo prévio, medidor Rust, testes, amostras
-preservadas e interpretação limitada ao custo total observado. As avaliações
-das aulas 10 e 17 permanecem **3/6**, sem nova consulta ao modelo. Nenhuma
-comprovação retroativa foi atribuída a RUN_VECTOR_1.
-
-Na **Aula 19 — Investigar conferências repetidas**, propomos contar chamadas e
-bytes lidos para localizar trabalho repetido antes de escolher uma otimização.
-Um eventual reaproveitamento deverá ter escopo e limites explícitos diante de
-arquivos mutáveis. Continuamos depois com integração e avaliação e, mais adiante,
-criação de cenas por linguagem natural. O envio ao Ollama permanece manual.
+O custo total tem um protocolo e amostras examináveis. A
+[Aula 19](19-investigar-conferencias-repetidas.md) acrescenta contadores de
+operações e bytes para investigar trabalho repetido sem confundi-lo com tempo.

@@ -1,190 +1,197 @@
 # Aula 1 — Entendendo o Modelfile do Ollama
 
-## O que vamos construir
+## Objetivo
 
-Nosso ray tracer em Rust, baseado em *The Ray Tracer Challenge*, de Jamis
-Buck, também será um laboratório de algoritmos, performance e IA local.
-Nesta aula, vamos preparar o Qwen para participar desse laboratório: receber
-informações sobre o projeto, explicar o que elas sustentam e reconhecer
-o que ainda precisa ser testado.
+Preparar o modelo `renderer-analyst` e distinguir configuração de comportamento
+verificado. O primeiro exercício usa texto enviado manualmente; a comunicação
+pelo cliente Rust será apresentada na Aula 25.
 
-Princípio: **Condensar fatos a partir de vapores de nuances.**
+## Contexto e arquitetura
 
-- Graph Engine — “Testa sem explicar”: futura camada de fatos, relações,
-  contexto, evidências, testes, benchmarks e validação.
-- LLM Engine — “Explica sem interpretar”: explica evidências e identifica
-  deduções sem apresentá-las como observações verificadas.
+O projeto é um ray tracer em Rust baseado em *The Ray Tracer Challenge*.
+O laboratório estuda como transformar código, testes e medições em evidências
+que possam ser explicadas sem ultrapassar seus limites.
 
-O Codex participa como parceiro de desenvolvimento e estudo. O Qwen, rodando
-no Ollama, é o modelo local com o qual faremos os experimentos.
+- **Graph Engine — “Testa sem explicar”:** organiza fontes e relações e executa
+  conferências determinísticas. Não decide automaticamente a verdade de uma frase.
+- **LLM Engine — “Explica sem interpretar”:** explica o material recebido,
+  separando observações de deduções e possibilidades ainda não verificadas.
 
-Formato das aulas: conceito → implementação → teste → medição → explicação.
-Prioridade de performance: complexidade, estruturas de dados, alocações,
-localidade de cache, SIMD quando aplicável e paralelismo.
-Nenhuma melhoria de velocidade deve ser afirmada sem evidência mensurável.
+“Explica sem interpretar” é uma restrição sobre as conclusões apresentadas,
+não a afirmação de que o modelo seja incapaz de interpretar texto.
+O princípio é **condensar fatos a partir de vapores de nuances**.
+Uma otimização só poderá ser chamada de mais rápida com evidência mensurável.
 
-## Antes de começar: dois ambientes
+## Pré-requisitos e obtenção do projeto
 
-O projeto está no GitHub Codespaces `silver guide`, em
-`/workspaces/renderer-local`. Já o Ollama com `qwen2.5-coder:14b` roda no
-Windows. Essa separação explica um detalhe importante da prática:
-`localhost` no Codespaces aponta para o ambiente remoto, não para o Windows.
-Por isso, criaremos o arquivo no projeto e levaremos uma cópia ao Windows
-para registrá-lo no Ollama.
+Use um editor de texto e um terminal. A sequência completa inclui Linux para
+as capturas das aulas 13–23 e PowerShell no Windows para a chamada Ollama
+registrada na Aula 25. Não há configuração Dev Container versionada que instale
+automaticamente todas as ferramentas. WSL não teve instalação validada nas fontes.
 
-O pacote `renderer` usa Rust 2021, com
-Rayon, itertools e png, testes dentro dos módulos, exemplos em `src/bin`,
-um carregador OBJ e construção de BVH em `src/bin/cap15.rs`.
-Em `src/camera.rs`, a renderização usa Rayon, chama `world.clone()` por pixel
-e adquire um mutex para escrever a cor. Essas operações nos dão boas perguntas
-para estudar performance.
-Para descobrir quanto custam, precisaremos de benchmarks; nesta aula,
-vamos trabalhar apenas com a configuração e as respostas do modelo.
+Git será usado para obter e inspecionar o repositório. Em qualquer diretório,
+verifique sua disponibilidade; este comando não modifica arquivos:
 
-## Conceito: uma receita para executar o modelo
-
-Um Modelfile descreve o modelo base, parâmetros de execução e instruções de
-comportamento no Ollama. Nossa configuração não treina os pesos do modelo.
-
-| Instrução | Papel no experimento |
-| --- | --- |
-| `FROM qwen2.5-coder:14b` | Seleciona a base. |
-| `PARAMETER temperature 0` | Reduz variabilidade da geração; não garante verdade. |
-| `PARAMETER seed 42` | Registra uma semente; repetibilidade precisa ser observada. |
-| `PARAMETER num_ctx 4096` | Define a janela de contexto em tokens. |
-| `PARAMETER num_predict 1024` | Limita os tokens gerados na resposta. |
-| `SYSTEM` | Orienta domínio técnico, categorias de afirmações e método de estudo. |
-
-Tokens são unidades de texto, não necessariamente palavras. O contexto precisa
-acomodar instruções, entrada, histórico e geração. Estes valores são condições
-iniciais, não parâmetros demonstrados como ótimos para o hardware.
-
-Categorias adotadas:
-
-- **FACT:** afirmação sustentada por evidência identificável; relatos precisam
-  ser atribuídos, sem fingir verificação independente.
-- **INFERENCE:** conclusão derivada de fatos com premissas e limites explícitos.
-- **HYPOTHESIS:** proposição ainda dependente de validação, acompanhada de uma
-  forma de testá-la.
-
-O SYSTEM orienta o comportamento, mas não garante cumprimento. Um rótulo FACT
-não valida a frase. O Modelfile também não dá acesso automático ao repositório.
-
-## Implementação: criando o renderer-analyst
-
-A configuração fica em [ai/ollama/Modelfile](../ollama/Modelfile).
-O `SYSTEM` reúne nosso foco em Rust e performance, a ordem de investigação
-e as regras para distinguir evidências de suposições.
-
-Com uma cópia do arquivo na pasta Downloads do Windows, executamos no
-PowerShell:
-
-```powershell
-ollama create renderer-analyst -f "C:\Users\beatl\Downloads\Modelfile"
+```bash
+git --version
 ```
 
-O comando terminou em `writing manifest` e `success`: o modelo configurado
-foi registrado. As mensagens `using existing layer` indicam o reaproveitamento
-de camadas. Estamos configurando como executar o Qwen, sem treinar seus pesos.
+A saída deve identificar uma versão do Git. Se o comando não existir, instale
+Git pelo instalador para Windows ou pelo gerenciador de pacotes da distribuição
+Linux e abra outro terminal. O repositório não registra versões de instaladores
+nem um procedimento de instalação de Git testado; valide repetindo o comando.
 
-Agora precisamos descobrir como ele responde às nossas perguntas.
+Em uma pasta de projetos, clone para uma pasta nova. O endereço é o remote
+público registrado no projeto; o comando baixa arquivos e cria `renderer-local`:
 
-Depois do registro, a conversa pode ser iniciada de qualquer pasta:
+```bash
+git clone https://github.com/ViniciusSJV/renderer.git renderer-local
+```
+
+Entre na pasta criada; isso muda apenas o diretório do terminal:
+
+```bash
+cd renderer-local
+```
+
+**Daqui em diante, execute os comandos na raiz do repositório**, salvo indicação
+contrária. Confira a presença de `Cargo.toml`, `src`, `tests` e `ai` no editor.
+O material descreve a árvore com as 25 aulas e os binários da Aula 25: alterações
+locais ainda não publicadas não são obtidas por um clone. Se faltarem arquivos,
+a edição disponível no remoto não contém toda essa sequência; não invente os
+arquivos ausentes nem considere o roteiro integralmente disponível nessa edição.
+
+## Preparação do Ollama no Windows
+
+Ollama serve o modelo; `renderer-analyst` será uma configuração da base Qwen.
+No PowerShell, verifique a instalação, sem gerar texto ou alterar arquivos:
+
+```powershell
+ollama --version
+```
+
+Se não existir, instale o aplicativo Ollama para Windows e reabra o PowerShell.
+**Limitação das fontes:** o repositório registra uso do Ollama instalado, mas não
+preserva seu instalador, os passos de instalação nem requisitos de hardware
+validados. A instalação do aplicativo precisa ser concluída pelo procedimento
+do fornecedor; não há script de instalação verificável neste repositório.
+Repita a verificação de versão após instalar. Não há alternativa Linux/WSL de
+instalação do Ollama comprovada pelos registros deste laboratório.
+
+Confira o serviço e os modelos locais, sem geração:
+
+```powershell
+ollama list
+```
+
+Se a conexão falhar, inicie o servidor em uma segunda janela e mantenha-a aberta:
+
+```powershell
+ollama serve
+```
+
+Volte à primeira janela e repita a listagem. Se a porta estiver ocupada, use o
+diagnóstico de API da Aula 25 antes de iniciar outra instância. `localhost`
+identifica o ambiente do processo: um terminal remoto não alcança por esse nome
+o Ollama do Windows. Para esta prática, mantenha projeto e Ollama no Windows.
+
+Se `qwen2.5-coder:14b` não estiver na lista, obtenha a base. Este comando usa rede
+e grava o modelo no armazenamento do Ollama; duração e espaço necessário variam:
+
+```powershell
+ollama pull qwen2.5-coder:14b
+```
+
+Repita a listagem e confirme o nome. Disponibilidade remota e capacidade do
+hardware não foram verificadas nesta revisão; um erro no download ou na carga
+impede prosseguir com esse modelo, não autoriza substituí-lo silenciosamente.
+
+## Conceitos: uma receita de execução
+
+Abra [ai/ollama/Modelfile](../ollama/Modelfile) no editor.
+O arquivo configura execução; não treina os pesos do modelo.
+
+| Instrução | Papel |
+| --- | --- |
+| `FROM qwen2.5-coder:14b` | Base usada pelo laboratório. |
+| `temperature 0` | Redução da variabilidade, sem garantia de verdade. |
+| `seed 42` | Semente declarada, sem prova de repetibilidade entre ambientes. |
+| `num_ctx 4096` | Janela de contexto em tokens. |
+| `num_predict 1024` | Limite de geração em tokens. |
+| `SYSTEM` | Instruções sobre domínio, evidências e limites. |
+
+Tokens são unidades de texto, não necessariamente palavras. Esses valores não
+foram demonstrados como ótimos. As categorias pedidas no SYSTEM são:
+
+- **FACT:** afirmação sustentada por evidência identificada, com origem e escopo.
+- **INFERENCE:** conclusão derivada, com premissas e limites explícitos.
+- **HYPOTHESIS:** possibilidade ainda dependente de teste.
+
+Um rótulo FACT não valida a frase. O Modelfile não fornece acesso aos arquivos.
+
+## Passo a passo: registrar e experimentar
+
+Na raiz do clone Windows, registre a configuração. O comando lê o Modelfile e
+cria ou atualiza o nome no Ollama, sem alterar o código do projeto:
+
+```powershell
+ollama create renderer-analyst -f ai/ollama/Modelfile
+```
+
+O registro histórico terminou com `success`. Confirme o modelo na listagem;
+mensagens de download ou reaproveitamento de camadas podem variar. Repita o
+registro quando alterar o Modelfile, para aplicar a nova configuração.
+
+Inicie a interface interativa, ainda no PowerShell. Ela gera texto e pode
+carregar o modelo na memória; não edita o repositório:
 
 ```powershell
 ollama run renderer-analyst
 ```
 
-A pasta Downloads só serviu para localizar o arquivo de entrada do create.
-Alterações futuras no arquivo precisam ser registradas novamente no Ollama.
-
-## Teste 1 — Resposta espontânea
-
-Começamos com uma pergunta que convida a uma conclusão precipitada:
+Envie este texto na interface do modelo, não no terminal de comandos:
 
 ```text
 Um renderer Rust usa Rayon para processar pixels e adquire um Mutex
-compartilhado para gravar a cor de cada pixel. Não forneci código,
-tempos de execução ou resultados de benchmark.
-
+compartilhado para gravar a cor de cada pixel. Não há código,
+tempos de execução ou resultados de benchmark fornecidos.
 Remover esse Mutex tornará o renderer mais rápido?
-
-Organize sua análise em FACT, INFERENCE e HYPOTHESIS.
+Organize a análise em FACT, INFERENCE e HYPOTHESIS.
 Proponha um teste e uma medição, sem apresentar resultados inventados.
 ```
 
-A resposta seguiu as categorias e não inventou tempos. Porém, não atribuiu
-explicitamente de onde veio a descrição e misturou possibilidade de overhead
-com FACT. Sugeriu AtomicU32 sem conhecer a representação das cores. Propôs
-benchmark, mas não detalhou equivalência das imagens e controles suficientes.
-
-## Teste 2 — Revisão guiada
-
-Na mesma conversa, pedimos ao Qwen que examine as próprias suposições:
+Preserve a resposta em um arquivo novo pelo editor. Avalie se ela identifica
+sua fonte, reconhece a ausência de medição e evita recomendar uma representação
+de cor desconhecida. Como segundo exercício na mesma sessão do modelo, envie:
 
 ```text
-Revise sua resposta anterior.
-
-1. Você inspecionou o código ou apenas recebeu minha descrição?
-2. Você conhece a representação das cores para recomendar AtomicU32?
-3. A disputa pelo mesmo Mutex exige que as threads escrevam no mesmo pixel?
-4. Se cada tarefa tiver acesso exclusivo a pixels distintos, operações
-   atômicas seriam necessárias? Explicite as condições.
-5. Como comparar as versões preservando correção e condições equivalentes?
-
-Separe FACT, INFERENCE e HYPOTHESIS. Reconheça as lacunas da resposta
-anterior e não invente evidências.
+Revise a resposta anterior.
+1. A descrição fornecida equivale a inspecionar o código?
+2. Há informação sobre a representação das cores para recomendar AtomicU32?
+3. Disputa pelo mesmo Mutex exige escrever no mesmo pixel?
+4. Acesso exclusivo a pixels distintos exige operações atômicas?
+5. Como comparar versões preservando correção e condições equivalentes?
+Separe fatos, inferências e hipóteses e explicite as lacunas.
 ```
 
-Dessa vez, o Qwen reconheceu que não leu código nem executou testes e
-admitiu supor cores de 32 bits. Ainda associou disputa pela trava à mesma
-região de memória. Disse que acesso exclusivo dispensa atômicos, mas voltou
-a recomendar AtomicU32 no plano de teste. Não demonstrou correção da proposta.
+## Validação e limites
 
-## Medição: avaliando as respostas
+A avaliação histórica identificou categorias corretas na apresentação, mas
+suposições sobre cores de 32 bits e confusão entre disputa pela trava e escrita
+no mesmo pixel. A revisão reconheceu lacunas, mas manteve contradições. Os textos
+acima orientam nova prática; não prometem reproduzir literalmente aquela resposta.
 
-Neste primeiro exercício, avaliamos a qualidade das duas respostas:
-identificação das evidências, coerência e cuidado com as conclusões.
-Ainda não medimos latência, quantidade de tokens ou velocidade do renderer.
+Pixels distintos podem disputar o mesmo mutex. Isso não demonstra espera em
+uma execução específica nem que a trava seja um gargalo. Trocar a representação
+de cores exige investigar precisão e equivalência. Medir uma alternativa exige
+preservar cena, resolução, threads e perfil de compilação e repetir execuções.
 
-| Critério | Teste 1 | Teste 2 |
-| --- | --- | --- |
-| Reconhecer origem e limites da evidência | Parcial | Reconheceu ausência de inspeção |
-| Separar categorias corretamente | Parcial | Ainda classificou suposição como inferência |
-| Evitar ganho de velocidade inventado | Atendeu | Atendeu |
-| Propor comparação com correção e controles explícitos | Parcial | Parcial |
-| Distinguir disputa pela trava de disputa pelo pixel | Insuficiente | Erro persistente |
+Não houve teste Rust, benchmark do renderer ou medição de latência do modelo
+nesta etapa histórica. A segunda pergunta acrescenta orientação e não constitui
+repetição controlada da primeira. Configuração não garante correção.
 
-Essas amostras não demonstram confiabilidade geral nem permitem comparar
-modelos ou configurações. O segundo teste contém orientação adicional e não
-é uma repetição controlada do primeiro.
+## Resultado da aula e próxima aula
 
-## O que aprendemos com o resultado
-
-Pixels diferentes podem disputar o mesmo mutex. A exclusão ocorre sobre a
-trava compartilhada, mesmo quando as posições a modificar não coincidem.
-Investigar regiões sem sobreposição com acesso exclusivo é uma alternativa
-conceitual; ela não possui ganho de desempenho demonstrado nesta aula.
-Também é necessário coordenar a conclusão das tarefas antes de consumir a
-imagem e considerar quaisquer outros acessos durante o processamento.
-
-Trocar a representação de cores exige verificar precisão e equivalência.
-Atômicos não são sinônimo de acesso sem custo e não devem ser recomendados
-automaticamente quando a divisão de propriedade pode resolver os acessos.
-
-Uma comparação futura deve preservar cena, resolução, threads e compilação
-entre versões, verificar resultados, repetir execuções e delimitar se o tempo
-inclui renderização ou gravação. Ganhos sustentariam conclusões apenas nas
-condições medidas.
-
-## Próxima aula
-
-Na Aula 2, vamos reduzir o problema a duas tarefas que escrevem em pixels
-diferentes usando o mesmo mutex. Antes de consultar o Qwen, definiremos
-os critérios de uma boa resposta. Assim poderemos avaliar uma questão
-por vez e entender melhor o erro antes de ajustar o `SYSTEM`.
-
-## Referências consultadas na aula
-
-- [Modelfile Reference — Ollama](https://docs.ollama.com/modelfile)
-- [API de geração — Ollama](https://docs.ollama.com/api/generate)
+O modelo configurado pode receber texto manualmente. A
+[Aula 2](02-evidencias-atomizadas.md) reduz o problema a duas tarefas e registra
+pequenas afirmações com referências, para avaliar uma conclusão por vez.

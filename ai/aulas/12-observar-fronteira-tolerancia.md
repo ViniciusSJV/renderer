@@ -1,89 +1,87 @@
 # Aula 12 — Observar a fronteira da tolerância
 
-## Conceito: previsão antes da observação
+## Objetivo
 
-Na Aula 11, lemos que a equivalência de f64 exige diferença absoluta menor
-que EPSILON. Agora observamos quatro casos usando a macro real do renderer.
-As [previsões](../experimentos/03-tuplas/previsoes-fronteira.md) foram gravadas
-antes da execução e seu hash foi incluído no relatório.
+Executar quatro testes da macro real e interpretar corretamente a aprovação de
+um teste que espera pânico.
 
-Usamos zero como primeiro operando e o próprio EPSILON como fronteira.
-Não presumimos que o literal decimal 0.00001 tenha representação binária exata.
-Dividir ou multiplicar esse valor normal por dois fornece casos abaixo e acima
-do limite, sem introduzir a subtração entre números próximos de outra magnitude.
+## Contexto e pré-requisitos
 
-## Implementação pequena
+A Aula 11 identificou a regra de diferença absoluta estritamente menor que
+EPSILON para `f64`. Use Cargo e o editor na raiz do clone. Não é necessário
+Ollama. A previsão deve anteceder a leitura do resultado.
 
-Criamos [equivalence_boundary.rs](../../tests/equivalence_boundary.rs), com
-quatro testes de integração. Eles importam a macro, o trait Equivalence
-(necessário à resolução do método usado pela macro) e EPSILON do renderer.
-A implementação da macro e as fontes das aulas anteriores foram preservadas.
+## Conceitos e implementação
+
+Leia [previsoes-fronteira.md](../experimentos/03-tuplas/previsoes-fronteira.md)
+e [tests/equivalence_boundary.rs](../../tests/equivalence_boundary.rs).
+Os quatro testes importam a macro, o trait `Equivalence` para resolver o método
+usado por ela e a constante `EPSILON`.
+
+Zero é o primeiro operando. Não é necessário presumir que o decimal 0.00001
+tenha representação binária exata: o próprio valor de EPSILON é a fronteira,
+e sua metade e seu dobro definem os outros casos.
 
 Os testes de rejeição usam `#[should_panic(expected = "asserting equality.")]`.
-Cada corpo contém apenas a chamada em investigação. O harness exige pânico
-com essa parte da mensagem; se a macro aceitar o par, o teste falha.
-Assim, quatro testes aprovados não significam quatro pares aceitos.
+O harness exige um pânico contendo essa mensagem. Se a macro aceitar o par, o
+teste falha. Portanto, quatro testes aprovados não significam quatro pares aceitos.
 
-## Teste e resultado
+## Passo a passo
 
-Executamos na raiz do repositório:
+Na raiz, execute somente os testes de integração da fronteira. Cargo compila e
+grava em `target`; não altera os registros históricos nem cria uma captura:
 
 ```bash
-cargo test --offline --test equivalence_boundary -- --test-threads=1
+cargo test --locked --test equivalence_boundary -- --test-threads=1
 ```
 
-| Par f64 | Previsão | Observação em RUN_EQUIVALENCE_BOUNDARY_1 |
+O segundo `--` encaminha opções ao harness; uma thread torna a execução dos
+casos sequencial. Observe quatro aprovações, incluindo dois pânicos esperados:
+
+| Par | Previsão | Registro RUN_EQUIVALENCE_BOUNDARY_1 |
 | --- | --- | --- |
-| 0.0, 0.0 | Aceitar | Teste aprovado sem pânico. |
-| 0.0, EPSILON / 2.0 | Aceitar | Teste aprovado sem pânico. |
-| 0.0, EPSILON | Rejeitar | Teste aprovado com pânico esperado. |
-| 0.0, EPSILON * 2.0 | Rejeitar | Teste aprovado com pânico esperado. |
+| 0.0, 0.0 | Aceitar | Aprovação sem pânico. |
+| 0.0, EPSILON / 2.0 | Aceitar | Aprovação sem pânico. |
+| 0.0, EPSILON | Rejeitar | Aprovação com pânico esperado. |
+| 0.0, EPSILON * 2.0 | Rejeitar | Aprovação com pânico esperado. |
 
-**4 testes passaram; 0 falharam; código de término 0.**
-O [relatório](../experimentos/03-tuplas/teste-fronteira.txt) preserva comando,
-diretório, início e fim UTC, versão do Rust, HEAD, estado Git, hashes coletados
-antes da execução e saída combinada. A captura foi feita por um script pontual
-nesta sessão; ainda não temos um capturador reutilizável no projeto.
+O [relatório histórico](../experimentos/03-tuplas/teste-fronteira.txt) registra
+**4 aprovados, 0 falhas e código 0**, comando, horários, Rust, Git e hashes
+anteriores do teste, fontes, manifesto, lockfile e previsões. Ele foi produzido
+por captura pontual, cujo script não é um procedimento reutilizável versionado.
+Uma execução nova no terminal não é a execução antiga com o mesmo ID.
 
-TEST_BOUNDARY_1 identifica o documento e RUN_EQUIVALENCE_BOUNDARY_1 identifica
-a execução catalogada. Os hashes registrados abrangem o teste, a implementação
-da equivalência, lib.rs, Cargo.toml, Cargo.lock e as previsões. Isso não é uma
-captura completa do ambiente, autenticação ou comprovação da execução antiga.
-
-## Evidências e medição
-
-Criamos [evidencias-fronteira.json](../experimentos/03-tuplas/evidencias-fronteira.json)
-com duas fontes e oito fichas manuais: quatro sobre a presença dos testes no
-código e quatro sobre os resultados registrados. Validamos com:
+Na raiz, confira o dossiê histórico. Isso lê fontes e relatório, sem reexecutar
+seu comando ou criar exportação:
 
 ```bash
-cargo run --offline --bin validate_evidence -- ai/experimentos/03-tuplas/evidencias-fronteira.json
+cargo run --locked --bin validate_evidence -- ai/experimentos/03-tuplas/evidencias-fronteira.json
 ```
 
-O Bibliotecário conferiu **2 fontes e 8 fichas, com 0 referências inválidas**,
-terminando com código 0. Os campos da execução correspondem ao cabeçalho.
-Ele não julga as afirmações nem verifica automaticamente os hashes internos
-do relatório contra os arquivos compilados.
+O material correspondente contém duas fontes e oito fichas: quatro sobre código
+e quatro sobre resultados. A conferência histórica teve zero referências
+inválidas. Se uma fonte atual mudar, examine a divergência; não atualize o hash
+histórico para fazê-la passar.
 
-A contagem de testes e resultados é a medição desta aula. `finished in 0.00s`
-não mede o custo da macro. Não houve benchmark, execução da suíte completa,
-repetição do teste do vetor ou nova consulta ao Qwen.
+## Validação e problemas comuns
 
-## Explicação e limites
+TEST_BOUNDARY_1 identifica o documento; RUN_EQUIVALENCE_BOUNDARY_1, a execução.
+O validador compara os campos transcritos ao cabeçalho, mas não verifica todos
+os hashes internos do relatório contra arquivos compilados.
 
-Os resultados correspondem às quatro previsões: a diferença igual ao limite
-é rejeitada, coerentemente com `<`, e um par de valores diferentes é aceito
-abaixo do limite. Aceitação por tolerância não implica igualdade exata.
-Não investigamos NaN, infinitos, outras magnitudes ou todas as entradas.
-Esta execução não comprova retroativamente quais bytes produziram RUN_VECTOR_1.
-A avaliação da Aula 10 permanece 3/6.
+Se aparecer `should panic ... ok`, leia como rejeição esperada observada.
+Se aparecer falha, examine qual caso divergiu da previsão antes de modificar o
+teste. `finished in 0.00s` é uma apresentação arredondada do harness, não uma
+medição do custo da macro.
 
-## Fechamento e próxima aula
+## Resultado e limites
 
-A **Aula 12 está concluída**: previsão, implementação, execução identificada,
-registro, validação e interpretação dos quatro casos foram realizados.
+Os quatro casos são coerentes com `< EPSILON` e mostram que tolerância pode
+aceitar valores distintos. Não cobrem todas as entradas, NaN, infinitos ou outras
+magnitudes. Não comprovam retroativamente os bytes que produziram RUN_VECTOR_1.
+Não houve benchmark ou nova avaliação do Qwen; a nota da Aula 10 permanece 3/6.
 
-Na **Aula 13 — Captura de execução**, vamos transformar a captura pontual em
-um procedimento reutilizável para registrar comando, saída, código de término
-e ambiente. Definiremos o formato e o tratamento de falhas antes de implementar.
-A associação mais completa entre código e execução será aprofundada na Aula 14.
+## Próxima aula
+
+A [Aula 13](13-captura-de-execucao.md) apresenta um capturador reutilizável,
+para preservar comando, saída e resultado de novas execuções.

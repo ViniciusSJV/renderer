@@ -1,83 +1,85 @@
 # Aula 17 — Avaliar a explicação da captura
 
-## Conceito e preparação
+## Objetivo
 
-A conferência local agora acompanha as fichas exportadas. Vamos observar se o
-Qwen explica o resultado sem confundir fonte, execução, conferência e autenticação.
-Os critérios foram escritos antes de gerar a consulta e antes de receber resposta.
+Avaliar se a explicação distingue fonte, execução, conferência e autenticação,
+com critérios definidos antes da resposta.
 
-Preparamos a [pergunta](../experimentos/08-avaliacao-captura/pergunta.txt) e
-[seis critérios](../experimentos/08-avaliacao-captura/criterios.json): identidade,
-resultado/pânico esperado, referências, alcance da conferência, autenticidade e
-limites de correção/desempenho. Cada critério integralmente atendido vale um
-ponto; parcial vale zero. Contradições na resposta inteira contam na análise.
+## Contexto e pré-requisitos
 
-## Geração e conferência
+Use `aula16-dossie.json` e o ambiente Linux das aulas 13–16 para exportar.
+Para geração manual, use o Ollama configurado no Windows na Aula 1. A consulta
+pode ser copiada como texto entre os ambientes; isso não transfere o serviço.
+Todos os comandos abaixo partem da raiz do clone no ambiente indicado.
+
+## Preparação e passo a passo
+
+Leia a [pergunta](../experimentos/08-avaliacao-captura/pergunta.txt) e os
+[critérios históricos](../experimentos/08-avaliacao-captura/criterios.json).
+No editor, prepare uma rubrica nova com seis critérios: identidade, resultado e
+pânico esperado, referências, alcance da conferência, autenticidade e limites
+de correção/desempenho. Adapte os IDs esperados à captura local antes da resposta.
+Cada critério integralmente atendido vale um ponto; parcial vale zero.
+
+Na raiz Linux, gere a consulta nova. O comando lê e confere o dossiê local,
+cria a exportação e pode compilar em `target`; não envia ao modelo:
 
 ```bash
-cargo run --offline --bin validate_evidence -- ai/experimentos/07-dossie-captura/evidencias.json --fact F_BOUNDARY_RUN_RESULT --fact F_BOUNDARY_LIMIT_PANIC --context 1 --question ai/experimentos/08-avaliacao-captura/pergunta.txt --output ai/experimentos/08-avaliacao-captura/consulta.json
+cargo run --locked --bin validate_evidence -- aula16-dossie.json --fact F_BOUNDARY_RUN_RESULT --fact F_BOUNDARY_LIMIT_PANIC --context 1 --question ai/experimentos/08-avaliacao-captura/pergunta.txt --output aula17-consulta.json
 ```
 
-O comando terminou com código 0, **1 fonte e 2 fichas, zero referências inválidas**.
-A consulta foi interpretada como JSON e seu SHA-256 foi registrado na rubrica.
-O destino já existe; use outro caminho para nova exportação. Não alteramos Rust,
-não repetimos testes nem fizemos benchmark. Não medimos tokens ou latência.
+Observe uma fonte, duas fichas e ausência de referências inválidas. Abra a
+consulta e confira fonte, execução e resultado da conferência. Caso o destino
+exista, use outro nome. Fonte divergente deve ser investigada antes de continuar.
 
-## Passo manual
+No PowerShell da raiz Windows, abra uma sessão nova; o comando carrega o modelo
+e permite geração, sem modificar as fontes:
 
-1. No Windows, inicie uma conversa nova com `ollama run renderer-analyst`.
-2. Envie o conteúdo completo de [consulta.json](../experimentos/08-avaliacao-captura/consulta.json).
-   Não envie os critérios, que contêm o gabarito.
-3. Preserve a primeira resposta completa, sem pedir correção antes da avaliação.
-4. Traga a resposta para esta conversa. Informe se houve corte, erro ou mudança
-   na configuração do modelo.
+```powershell
+ollama run renderer-analyst
+```
 
-O modelo não recebe o arquivo por conhecer seu caminho no Codespaces. É preciso
-transferir o conteúdo manualmente. O contexto e a saída configurados anteriormente
-não garantem recebimento integral; não confirmamos a configuração efetiva atual.
+Envie o conteúdo completo de `aula17-consulta.json`, sem o gabarito. Preserve
+a primeira resposta em documento novo, antes de pedir revisão. Registre cortes,
+erros e configuração conhecida. Um caminho de arquivo não entrega seu conteúdo
+ao modelo; contexto e saída configurados não garantem processamento integral.
 
-## Resposta e avaliação
+## Avaliação histórica
 
-Recebemos manualmente a [resposta completa](../experimentos/08-avaliacao-captura/resposta.txt).
-Preservamos o texto recebido com quebras de linha e escapes Markdown; seu hash
-identifica o arquivo salvo, não os bytes de transporte da sessão. O hash da
-consulta preparada foi reconferido e correspondeu ao registrado.
+A [consulta original](../experimentos/08-avaliacao-captura/consulta.json) usou
+o dossiê histórico, não a captura local criada neste roteiro. A
+[resposta preservada](../experimentos/08-avaliacao-captura/resposta.txt) recebeu
+**3/6**, sem alteração posterior dos critérios:
 
-A [rubrica preenchida](../experimentos/08-avaliacao-captura/criterios.json)
-resultou em **3/6**, aplicando um ponto por critério integralmente atendido:
-
-| Critério | Pontos | Motivo |
+| Critério | Pontos | Justificativa |
 | --- | --- | --- |
 | C1 — Identidades | 1 | Distingue fonte e execução. |
-| C2 — Resultado e pânico | 0 | Nega que o relatório permita confirmar o pânico esperado relatado. |
-| C3 — Referências | 0 | Omite os dois IDs de fichas exigidos. |
-| C4 — Conferência versus comando | 1 | Enumera conferências e separa o resultado do comando da consistência do registro. |
-| C5 — Associação e limites | 0 | Parcial: acerta hashes e limites de autenticação, mas omite a ausência de validação semântica da ficha. |
-| C6 — Generalização | 1 | Não conclui correção universal nem ganho de desempenho. |
+| C2 — Resultado/pânico | 0 | Nega que o relatório permita confirmar o pânico esperado relatado. |
+| C3 — Referências | 0 | Omite os dois IDs das fichas. |
+| C4 — Conferência/comando | 1 | Enumera conferências e distingue seus resultados. |
+| C5 — Associação/limites | 0 | Omite ausência de validação semântica da ficha. |
+| C6 — Generalização | 1 | Não conclui correção universal ou ganho. |
 
-O ponto central é separar duas frases: o relatório registra aprovação com
-pânico esperado; o Bibliotecário não autentica que a execução ocorreu. A segunda
-não invalida a leitura da primeira. `should panic ... ok` não significa que o
-par foi aceito pela macro.
+O relatório pode registrar aprovação com pânico esperado sem que o Bibliotecário
+autentique a execução. A falta de autenticação não apaga a informação declarada.
+`should panic ... ok` significa rejeição esperada, não aceitação do par.
+Dizer que não existe nenhuma informação sobre execução também seria amplo demais:
+há informações registradas, com limites de comprovação.
 
-No item 3, “não fornece informações sobre a execução ou a compilação” é amplo
-demais: existem informações declaradas, sem a comprovação pretendida. No item 4,
-“não fornece ... resultados esperados” ignora o pânico esperado apresentado.
-Essas nuances estão registradas na avaliação; a nota não pretende resumir toda
-a qualidade da resposta. Não alteramos os critérios depois de recebê-la.
+## Validação e limites
 
-## Fechamento e próxima aula
+Confira a resposta inteira, inclusive contradições entre itens. Um resumo correto
+não compensa uma extrapolação posterior. O hash do texto salvo identifica esse
+arquivo, não os bytes da sessão manual. Na coleta histórica, configuração efetiva
+e ausência de truncamento não foram confirmadas.
 
-**A Aula 17 está concluída:** pergunta e critérios prévios, consulta conferida,
-resposta preservada e avaliação manual com justificativas. Não há confirmação
-de configuração efetiva nem ausência de truncamento de contexto. Não houve
-benchmark, alteração de Rust ou nova execução de testes nesta avaliação.
+A nota da Aula 10 continua 3/6, mas igualdade numérica não significa qualidade
+igual: perguntas e critérios diferem. Não houve benchmark, alteração de Rust
+ou nova execução de testes na avaliação histórica. A consulta local deste roteiro
+exige avaliação própria; ela não herda a nota da resposta antiga.
 
-A nota da Aula 10 permanece **3/6**. Igualdade numérica não indica desempenho
-igual: tarefas e rubricas diferem, sem comparação controlada.
+## Resultado da aula e próxima aula
 
-Na **Aula 18 — Medir o custo da conferência**, propomos definir cargas e métricas
-para medir o Bibliotecário antes de otimizar: tempo, volume de dados e efeito de
-repetir fichas ligadas à mesma captura. A avaliação identificou limites do modelo;
-nenhum ganho de performance foi demonstrado. O envio ao Ollama continua manual,
-e a criação de cenas por linguagem natural permanece posterior a essa sequência.
+A explicação passa a ser examinada com critérios sobre cada camada de evidência.
+A [Aula 18](18-medir-custo-conferencia.md) mede o custo total da CLI antes de
+atribuir desempenho a operações isoladas.

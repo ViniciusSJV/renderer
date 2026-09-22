@@ -1,171 +1,121 @@
 # Aula 4 — Uma obra real: tuplas, código e evidências
 
-## Conceito: seguir o livro com o Bibliotecário
+## Objetivo
 
-Vamos acompanhar *The Ray Tracer Challenge* na ordem do livro, usando o código
-já implementado como material de investigação. Começamos por tuplas, pontos e
-vetores. Não precisamos reconstruir os fundamentos a cada exercício: o foco
-é aprender a transformar o trabalho existente em evidências rastreáveis.
+Relacionar uma afirmação sobre `Tuple::vector` a uma fonte identificada por hash
+e distinguir essa leitura de um resultado de teste registrado.
 
-A câmera teria ligação com o exemplo anterior do mutex, mas o Bibliotecário
-não depende dela. Nossa primeira obra real passou a ser `src/tuple.rs`.
+## Contexto e pré-requisitos
 
-Na representação do projeto, pontos têm w = 1 e vetores têm w = 0. Consultamos
-os construtores e executamos separadamente seus testes de componentes; ambos
-passaram. Depois concentramos o dossiê no construtor de vetores.
+Use o ambiente Rust e Cargo da Aula 3 e o editor, na raiz do clone.
+As tuplas são o primeiro assunto do ray tracer estudado nesta sequência.
+Não é necessário reconstruir o renderer: o código existente é o material de
+investigação. Os exercícios usam a árvore atual; artefatos anteriores continuam
+identificados como históricos.
 
-## Implementação: guardar uma edição da obra
+## Conceitos e implementação
 
-O [dossiê de tuplas](../experimentos/03-tuplas/evidencias.json) contém uma cópia
-integral das linhas de `src/tuple.rs`, identificada como SRC_TUPLE. A ficha
-F_VECTOR_W afirma que `Tuple::vector` define w como 0.0 e aponta para a linha 18.
+Em [src/tuple.rs](../../src/tuple.rs), pontos têm `w = 1` e vetores têm `w = 0`.
+O [dossiê](../experimentos/03-tuplas/evidencias.json) copia as linhas desse
+arquivo como SRC_TUPLE. F_VECTOR_W aponta para o construtor de vetores,
+na linha 18 da cópia, e afirma que ele define `w` como `0.0`.
 
-O conteúdo foi extraído do arquivo; a afirmação foi escrita manualmente. Extrair
-texto não é gerar nem comprovar fatos automaticamente.
+O texto foi extraído do arquivo e a ficha foi escrita manualmente. Extrair
+linhas não é extrair automaticamente fatos verdadeiros.
 
-Registramos o caminho, o commit consultado e o SHA-256 dos bytes do arquivo.
-Na criação do dossiê, conferimos que o conteúdo correspondia ao arquivo no commit.
-Esse registro é uma fotografia: uma edição nova não atualiza a cópia antiga.
+Um SHA-256 identifica bytes. O validador usa `sha2`, já declarada no manifesto,
+para comparar `path` e `sha256` com o arquivo atual. Depois compara a lista
+`lines` com esse arquivo: um hash externo correto não aprova uma cópia adulterada.
+Espaços e terminações de linha afetam os bytes sem necessariamente alterar o
+comportamento do programa.
 
-O Bibliotecário ganhou duas verificações, usando a dependência `sha2`:
+`path` e `sha256` devem aparecer juntos. Fontes sem ambos continuam aceitas sem
+conferência externa. `git_commit` e `matches_commit` não são autenticados pelo
+validador. Um commit identifica a base versionada, não todas as alterações locais.
 
-1. Ler `path`, calcular o SHA-256 e comparar com o valor registrado.
-2. Comparar as linhas do arquivo com a cópia em `lines`.
+## Passo a passo
 
-A segunda verificação impede que uma cópia alterada passe apenas por carregar
-o hash correto do arquivo externo. Espaços e terminações de linha fazem parte
-dos bytes: diferenças de hash não significam necessariamente mudanças de comportamento.
-
-As fontes antigas sem path e sha256 continuam aceitas, com uma mensagem indicando
-que não houve conferência externa. Os dois campos devem aparecer juntos quando
-usados. Os caminhos são relativos à pasta de execução; usamos a raiz do projeto.
-O programa ainda não verifica git_commit ou matches_commit, nem autentica a origem
-do documento. Se o arquivo mudar, uma ficha pode continuar historicamente válida,
-mas precisa ser reconferida para descrever a versão atual.
-
-## Uma segunda obra: o registro do teste
-
-Executamos:
+Na raiz, execute apenas o teste dos componentes do vetor. Cargo grava artefatos
+em `target`; não cria um relatório histórico nem consulta Ollama:
 
 ```bash
-cargo test --offline --lib tuple::tests_tuple::vector_does_fill_properties -- --exact
+cargo test --locked --lib tuple::tests_tuple::vector_does_fill_properties -- --exact
 ```
 
-O [registro preservado](../experimentos/03-tuplas/teste-vector.txt) contém comando,
-horários, diretório, commit, estado do Git, versão do Rust, hashes de arquivos,
-saída combinada e código de término. Havia alterações locais: HEAD identifica
-uma base, não todo o estado executado. O registro não é uma captura completa
-do ambiente nem permite reconstruí-lo sozinho.
+Observe um teste aprovado. A quantidade de testes filtrados pode variar com a
+versão. O registro original teve um aprovado e 200 filtrados; isso descreve
+somente aquela seleção, não a suíte inteira.
 
-O resultado foi um teste aprovado, zero falhas e 200 testes filtrados.
-A fonte TEST_VECTOR_1 guarda esse registro. F_VECTOR_TEST_PASSED aponta para a
-linha que informa a aprovação nessa execução específica.
+Agora valide o dossiê, ainda na raiz. O comando lê arquivos e imprime a
+conferência; não atualiza hashes nem exporta dados:
 
-Temos agora duas obras com papéis diferentes:
-
-| Obra | O que podemos consultar |
-| --- | --- |
-| SRC_TUPLE | O código que implementa e testa as tuplas. |
-| TEST_VECTOR_1 | O resultado observado de uma execução selecionada. |
-
-Conferir o hash do registro não reexecuta o teste nem comprova sua autoria.
-
-## Teste com o Qwen: resultado não descreve o procedimento
-
-Enviamos o construtor e o resultado do teste ao Qwen. A resposta identificou
-w = 0, mas sua explicação afirmou indevidamente que x, y e z também eram zerados.
-Também descreveu verificações internas do teste sem ter recebido seu corpo.
-
-Pedimos revisão. O Qwen corrigiu a interpretação de x, y e z, reconheceu a falta
-do corpo do teste, mas voltou a afirmar que as componentes estavam preenchidas
-corretamente. A ressalva não removeu a conclusão sem suporte. Também não seguiu
-o limite de frases e as referências solicitadas.
-
-Em vez de repetir a correção até obter uma resposta desejada, fornecemos a
-informação ausente: o procedimento executado.
-
-## Acrescentar as fichas do procedimento
-
-Adicionamos cinco fichas, sem alterar o código do renderer:
-
-| Ficha | Trecho registrado |
-| --- | --- |
-| F_VECTOR_TEST_INPUT | Construção com argumentos 1.4, 8.9 e 5.1. |
-| F_VECTOR_TEST_X | Chamada de assert_equivalent! para x e 1.4. |
-| F_VECTOR_TEST_Y | Chamada de assert_equivalent! para y e 8.9. |
-| F_VECTOR_TEST_Z | Chamada de assert_equivalent! para z e 5.1. |
-| F_VECTOR_TEST_W | Chamada de assert_equivalent! para w e 0. |
-
-Cada ficha aponta para uma linha de SRC_TUPLE. O dossiê passou a conter duas
-fontes e sete fichas. O validador conferiu hashes, cópias e referências sem erros.
-Não repetimos o teste para adicionar essas fichas: usamos a execução preservada.
-
-## Consulta com o corpo do teste
-
-Preparamos [prompt-corpo-teste.txt](../experimentos/03-tuplas/prompt-corpo-teste.txt)
-com o corpo do teste, as fichas, o resultado e três perguntas. A orientação foi
-usar uma conversa nova, evitando depender das correções anteriores; não houve
-captura automática do histórico para verificar essa condição.
-
-Critérios definidos antes da resposta:
-
-- Descrever argumentos e comparações corretamente.
-- Separar leitura do código de resultado observado.
-- Não generalizar para todas as entradas e operações.
-
-O prompt também exigia citar IDs, responder em até quatro frases e não deduzir
-o funcionamento de assert_equivalent! apenas pelo nome.
-
-### Avaliação da resposta recebida
-
-O Qwen descreveu corretamente os argumentos e comparações, identificou a execução
-aprovada e negou que isso demonstrasse correção de todas as operações. Porém:
-
-- Omitiu os IDs das fichas.
-- Excedeu o limite de quatro frases.
-- Falou em inicialização correta sem ter recebido a implementação da macro.
-- Sugeriu testes mais abrangentes como caminho para demonstrar correção de todas
-  as entradas; ampliar testes aumenta a evidência, mas não garante correção universal.
-
-A avaliação é manual, baseada nas respostas trazidas à aula. Não houve captura
-automática dessas conversas nem comparação controlada de modelos.
-
-## Medição e limites
-
-Ao acrescentar a conferência de versões, executamos os testes do binário:
-**26 passaram**, incluindo arquivo alterado, cópia alterada e metadados incompletos.
-Também executamos o dossiê com sete fichas: nenhuma referência inválida.
-Esses números registram verificações de correção, não desempenho.
-
-Não fizemos benchmarks do renderer ou do Qwen, não executamos a suíte completa
-do renderer e não demonstramos que JSON melhora a qualidade das respostas.
-
-O exercício mostra por que precisamos separar:
-
-```text
-Código → descrição do procedimento
-Execução → resultado observado
-Qwen → explicação sujeita a avaliação
+```bash
+cargo run --locked --bin validate_evidence -- ai/experimentos/03-tuplas/evidencias.json
 ```
 
-## Decisão: fortalecer o Graph Engine primeiro
+No material correspondente, são duas fontes e sete fichas sem referências
+inválidas. Se o arquivo atual divergir, examine o diagnóstico e a cópia preservada.
+Não reescreva um hash antigo para apresentar uma nova versão como a mesma fonte.
 
-Queremos melhorar o Qwen, mas corrigir repetidamente uma resposta não demonstra
-que o modelo acertará uma consulta nova. Antes de ajustar o SYSTEM, precisamos
-de entradas reproduzíveis e critérios de avaliação estáveis.
+## Código, execução e explicação
 
-Vamos manter o Modelfile atual e trabalhar no Bibliotecário:
+O [relatório do vetor](../experimentos/03-tuplas/teste-vector.txt) é outra obra,
+TEST_VECTOR_1. Ele registra comando, horários, ambiente parcial, hashes, saída e
+código de término. F_VECTOR_TEST_PASSED aponta para a aprovação relatada.
+Conferir seu hash não reexecuta o teste nem autentica quem o executou.
 
-1. Selecionar fichas por ID no programa.
-2. Reunir seus trechos e referências a partir do dossiê validado.
-3. Guardar o material de consulta e definir os critérios de avaliação.
-4. Depois comparar ajustes do LLM Engine usando entradas controladas, incluindo
-   exemplos não usados para orientar os ajustes.
+| Ficha | Informação no código ou relatório |
+| --- | --- |
+| F_VECTOR_W | Construtor define w como 0.0. |
+| F_VECTOR_TEST_INPUT | Teste constrói vetor com 1.4, 8.9 e 5.1. |
+| F_VECTOR_TEST_X | Chamada de `assert_equivalent!` para x e 1.4. |
+| F_VECTOR_TEST_Y | Chamada para y e 8.9. |
+| F_VECTOR_TEST_Z | Chamada para z e 5.1. |
+| F_VECTOR_TEST_W | Chamada para w e 0. |
+| F_VECTOR_TEST_PASSED | Aprovação registrada do teste selecionado. |
 
-Ainda não precisamos de um banco de grafos. Rust e JSON permitem explorar as
-relações ficha → fonte → trecho → execução → parecer. O Qwen continuará fazendo
-parte das aulas, com envio manual enquanto a integração não for implementada.
+A chamada da macro mostra operandos, mas ainda não explica seu mecanismo.
+Sua implementação será investigada na Aula 11. Um resultado aprovado não
+substitui o procedimento que o produziu.
 
-O próximo passo pequeno será selecionar uma ficha por ID e obter seu trecho
-pelo programa. A geração de consultas virá a partir dessa seleção, mantendo
-explícitos os limites do contexto fornecido.
+## Experimento de explicação
+
+Leia [prompt-corpo-teste.txt](../experimentos/03-tuplas/prompt-corpo-teste.txt).
+Para repetir a consulta manual, inicie o modelo no PowerShell da raiz; ele pode
+gerar texto e carregar o modelo, mas não altera fontes:
+
+```powershell
+ollama run renderer-analyst
+```
+
+Envie o conteúdo completo do prompt em uma sessão nova. Antes de receber a
+resposta, registre os critérios: descrever argumentos e comparações; separar
+código e resultado; evitar generalização. O prompt também exige IDs, até quatro
+frases e nenhuma dedução do funcionamento da macro somente pelo nome.
+
+A avaliação histórica encontrou descrição correta dos argumentos, mas omissão
+de IDs, excesso de frases e conclusão de inicialização correta sem a macro.
+Consultas anteriores sem o corpo do teste também produziram a suposição errada
+de que x, y e z eram zerados. A informação ausente foi então acrescentada;
+revisões sucessivas não foram tratadas como prova de confiabilidade geral.
+
+## Validação e limites
+
+Na raiz, execute a suíte do validador. Ela grava artefatos de teste em `target`
+e usa arquivos temporários; não modifica os dossiês:
+
+```bash
+cargo test --locked --bin validate_evidence
+```
+
+Na implementação desta etapa, **26 testes passaram**, incluindo arquivo alterado,
+cópia adulterada e metadados incompletos. A árvore atual inclui testes posteriores.
+Uma nova resposta deve receber avaliação própria, sem herdar a nota histórica.
+Não houve benchmark nem demonstração de que JSON melhora a qualidade do modelo.
+
+## Resultado da aula e próxima aula
+
+Código descreve um procedimento; execução registra uma observação; o modelo
+produz uma explicação sujeita a avaliação. A
+[Aula 5](05-selecao-e-contexto.md) seleciona uma ficha por ID e exporta seu trecho
+com contexto, fortalecendo a preparação das entradas antes de ajustar o modelo.

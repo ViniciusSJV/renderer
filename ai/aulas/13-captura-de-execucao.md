@@ -1,132 +1,114 @@
 # Aula 13 — Captura de execução
 
-## Conceito
+## Objetivo
 
-Uma captura válida pode registrar um comando que falhou. Se o comando termina
-com código 7, guardar a saída e o código 7 é o comportamento correto do
-capturador. Isso é diferente de não conseguir gravar o registro.
+Registrar uma execução em arquivos e distinguir sucesso do capturador de sucesso
+do comando capturado.
 
-Antes da implementação, definimos um diretório novo por execução, contendo
-`execucao.json` e `saida.bin`. O JSON registra versão do formato, identidade,
-argumentos, diretório, início e fim UTC, ambiente e resultado. A saída preserva
-os bytes combinados de stdout e stderr, inclusive bytes que não são UTF-8.
-Não preserva a identidade de cada canal nem garante a ordem lógica entre
-mensagens que o próprio programa tenha armazenado em buffers.
+## Pré-requisitos e preparação do ambiente
 
-## Implementação
+Use o clone e Rust/Cargo da Aula 3 em **Linux com terminal Bash**. O capturador
+usa APIs Unix, sockets locais, `date`, `uname`, Rust, Cargo e Git. O código não
+compila como capturador nativo Windows. Um ambiente Linux remoto pode executar
+esta etapa; não precisa acessar o Ollama do Windows.
 
-O [capturador](../../src/bin/capture_execution.rs) é um binário Rust do projeto,
-com a biblioteca padrão e serde_json já disponível, sem novas dependências.
-Esta versão é para Unix (o Codespaces usa Linux): um par de sockets locais
-reúne stdout e stderr antes da cópia para o arquivo. Usa `date -u` para UTC
-com resolução de segundos; falha nessa coleta impede concluir o registro. O comando é uma lista de argumentos;
-não há interpretação automática por shell. A entrada padrão fica fechada
-(`Stdio::null()`): esta versão é para comandos sem interação.
-
-O ambiente inclui sistema operacional, versão do sistema, arquitetura,
-Rust, Cargo, HEAD e estado Git. As sondagens de Rust, Cargo e Git registram
-disponibilidade, saída, erro e código quando houver. O ambiente é observado
-antes do comando, depois da reserva do destino; o estado Git pode incluir a
-pasta reservada e alterações locais. Não copiamos todas as variáveis de ambiente.
-
-O campo `argv` contém o comando realmente passado ao processo. `result` distingue:
-
-| Situação | status | exit_code | Informação adicional |
-| --- | --- | --- | --- |
-| Término normal, com sucesso ou erro | exited | Código do processo | — |
-| Não foi possível iniciar | start_failed | null | error |
-| Término por sinal em POSIX | signaled | null | signal |
-
-O capturador retorna **0 quando o registro foi concluído**, inclusive para
-`start_failed` ou código não zero do comando. Retorna **2 para erros de captura
-tratados ou argumentos inválidos**. Quem automatizar uma aprovação de testes
-precisa ler `result`: o código do capturador sozinho não aprova o comando.
-
-O destino deve ser novo e seu diretório pai deve existir. Um destino existente
-é recusado antes de executar comandos. A saída é gravada progressivamente,
-sem acumulá-la inteira na memória. Após fechar e sincronizar a saída, gravamos
-e sincronizamos um JSON temporário, renomeado para `execucao.json` ao final.
-Se uma etapa falhar, arquivos parciais podem permanecer: sem o JSON final,
-não há registro concluído. Uma nova tentativa deve usar outro destino.
-
-Essa publicação evita apresentar um JSON parcialmente escrito como concluído;
-não oferece garantia completa contra queda de energia, adulteração ou mudanças
-concorrentes. Não há timeout nem controle de árvores de processos nesta versão;
-comandos que não terminam ou descendentes que mantêm a saída aberta podem
-manter a captura em espera. Interrupções do capturador não têm um relatório
-final garantido.
-
-## Teste
-
-Na raiz do repositório:
+Na raiz, confira os utilitários usados para horário e identificação do sistema.
+São consultas de leitura, sem modificar arquivos:
 
 ```bash
-cargo test --offline --bin capture_execution
+date -u
 ```
 
-**8 testes passaram**: saída binária combinada e JSON, código não zero, comando
-inexistente, sinal POSIX, destino existente sem executar, falha de publicação
-sem registro final, separação dos códigos pela CLI e argumentos sem
-interpretação automática por shell.
-Os testes usam diretórios temporários. Não repetimos as suítes já concluídas
-do Bibliotecário e da fronteira; seus arquivos Rust não foram alterados.
-
-## Medição e exemplos registrados
-
-Executamos três exemplos independentes, com identidades novas:
-
-| Execução | Resultado | Bytes de saída | Código do capturador |
-| --- | --- | --- | --- |
-| RUN_CAPTURE_RUST_SUCCESS_1 | exited, código 0 | 19 | 0 |
-| RUN_CAPTURE_RUST_FAILURE_1 | exited, código 7 | 17 | 0 |
-| RUN_CAPTURE_RUST_MISSING_1 | start_failed, código null | 0 | 0 |
-
-Registros: [sucesso](../experimentos/04-captura/rust-sucesso/execucao.json),
-[falha](../experimentos/04-captura/rust-falha/execucao.json) e
-[comando inexistente](../experimentos/04-captura/rust-inexistente/execucao.json).
-Cada pasta contém também `saida.bin`. Conferimos os tamanhos registrados contra
-os arquivos. O diagnóstico de início malsucedido fica no JSON, pois não houve
-processo filho produzindo saída. Essas contagens não são um benchmark.
-
-Para experimentar uma nova captura, usando um destino ainda inexistente:
+A saída deve apresentar data/hora UTC. Confira o sistema:
 
 ```bash
-cargo run --offline --bin capture_execution -- --id RUN_EXEMPLO_2 --destino ai/experimentos/04-captura/exemplo-2 -- printf 'ola\n'
+uname -r
 ```
 
-O primeiro `--` separa as opções do Cargo; o segundo separa as opções do
-capturador dos argumentos do comando. Os comandos
-exatos dos três exemplos preservados estão no campo `argv` de cada JSON.
+Deve aparecer a versão do kernel. `date` é necessário para concluir a captura;
+sondagens como `uname`, Rust, Cargo e Git registram também indisponibilidade.
+Se faltarem utilitários, instale os pacotes correspondentes da distribuição.
+Não há bootstrap Linux nem configuração WSL/Dev Container validada no repositório.
 
-Os exemplos originais nas pastas `sucesso`, `falha` e `inexistente` foram
-produzidos pelo protótipo Python e permanecem preservados como registros
-históricos. O procedimento e os testes Python foram substituídos pelo binário
-Rust; não reatribuímos as execuções antigas à implementação nova.
+## Conceitos e implementação
 
-## Explicação e limites
+[src/bin/capture_execution.rs](../../src/bin/capture_execution.rs) cria um
+diretório novo por execução, com `execucao.json` e `saida.bin`. O JSON registra
+identidade, argumentos, diretório, horários, ambiente parcial e resultado.
+A saída combina bytes de stdout e stderr, inclusive bytes não UTF-8. Não preserva
+a identidade dos canais nem garante a ordem lógica de mensagens em buffers.
 
-Saída vazia não significa sucesso. Código diferente de zero não significa que
-a captura falhou. `null` não é zero: nos exemplos, significa que não existe um
-código de término normal a registrar. Essa separação é o aprendizado central.
+O comando é uma lista de argumentos, sem interpretação automática por shell.
+A entrada padrão fica fechada: use comandos sem interação. A biblioteca padrão
+e `serde_json` já estão disponíveis no projeto.
 
-O novo JSON ainda não é importado automaticamente pelo Bibliotecário. Seu
-formato anterior continua conferindo referências, hashes, linhas e quatro
-campos de cabeçalho. Não alteramos esse contrato nesta aula.
+| Resultado do comando | `status` | `exit_code` |
+| --- | --- | --- |
+| Término normal | `exited` | Código, inclusive não zero. |
+| Falha ao iniciar | `start_failed` | `null`; diagnóstico em `error`. |
+| Término por sinal | `signaled` | `null`; número em `signal`. |
 
-Os registros são observações locais, sem autenticação. HEAD não identifica
-sozinho os arquivos modificados nem comprova os bytes compilados. Não há hash
-ou associação automática com fontes neste formato inicial. Não reescrevemos
-RUN_EQUIVALENCE_BOUNDARY_1 nem atribuímos comprovação retroativa a RUN_VECTOR_1.
-A avaliação da Aula 10 permanece **3/6**; não houve consulta ao Qwen e o envio
-ao Ollama continua manual. A revisão local das aulas 6–12 foi preservada.
+O capturador retorna **0 quando consegue registrar**, mesmo que o comando falhe,
+e **2 em erros tratados de captura ou argumentos**. Automação de testes deve
+examinar `result`, não apenas o código do capturador.
 
-## Fechamento e próxima aula
+A saída é gravada progressivamente e sincronizada. O JSON temporário é renomeado
+para `execucao.json` por último. Sem esse arquivo final, o registro é parcial.
+Destinos existentes são recusados antes de executar o comando. Não há timeout
+nem controle completo de descendentes; uma saída mantida aberta pode bloquear
+até depois do término do processo principal.
 
-A **Aula 13 está concluída**: definimos o contrato antes de implementar,
-criamos o procedimento reutilizável, testamos falhas e registramos exemplos.
+## Passo a passo
 
-Na **Aula 14 — Associação entre código e execução**, vamos estudar como
-identificar os arquivos relacionados a uma nova execução e conferir essa
-associação, distinguindo hashes observados de prova sobre os bytes compilados.
-Continuamos na sequência Bibliotecário e evidências, integração e avaliação,
-performance e, depois, cenas por linguagem natural.
+Na raiz Linux, teste o capturador. Cargo escreve em `target` e os testes usam
+diretórios temporários; Ollama não participa:
+
+```bash
+cargo test --locked --bin capture_execution
+```
+
+O formato inicial teve **8 testes aprovados**. O código atual inclui a extensão
+da Aula 14 e seus testes; não exija a contagem antiga.
+
+Faça uma captura nova de uma consulta à versão do compilador. O diretório pai
+é a própria raiz; não crie `aula13-captura` antes. O comando cria a pasta e os
+dois arquivos, além dos artefatos de compilação:
+
+```bash
+cargo run --locked --bin capture_execution -- --id AULA13_RUST_01 --destino aula13-captura -- rustc --version
+```
+
+O primeiro `--` separa Cargo do programa; o segundo, opções da captura do comando.
+Abra `aula13-captura/execucao.json` no editor: com compilador disponível, observe
+`exited` e código 0. `saida.bin` deve conter a versão, cujo texto varia.
+A versão atual gera formato 2, mesmo sem fontes; a primeira implementação gerava
+formato 1. Não atribua uma execução nova ao formato antigo.
+
+## Evidências históricas
+
+| Registro | Resultado | Bytes | Código do capturador |
+| --- | --- | --- | --- |
+| [Sucesso](../experimentos/04-captura/rust-sucesso/execucao.json) | `exited`, 0 | 19 | 0 |
+| [Falha](../experimentos/04-captura/rust-falha/execucao.json) | `exited`, 7 | 17 | 0 |
+| [Inexistente](../experimentos/04-captura/rust-inexistente/execucao.json) | `start_failed`, null | 0 | 0 |
+
+Os testes também exercitam sinal POSIX, saída binária, destino existente, falha
+de publicação e argumentos sem shell. Registros do protótipo Python nas pastas
+sem prefixo `rust-` não foram reatribuídos ao capturador Rust.
+
+## Validação e limites
+
+Saída vazia não significa sucesso; `null` não equivale a zero. Uma pasta parcial
+não deve ser reutilizada: examine seus arquivos e escolha destino e ID novos.
+O código 0 informa conclusão do registro, sem autenticação, snapshot atômico ou
+garantia completa contra queda de energia.
+
+O formato inicial não associava hashes de fontes nem era importado pelo
+Bibliotecário. HEAD não identifica alterações locais nem comprova compilação.
+Não houve benchmark ou consulta ao modelo nesta etapa.
+
+## Resultado da aula e próxima aula
+
+Comando, saída e resultado podem ser preservados para inspeção. A
+[Aula 14](14-associar-codigo-e-execucao.md) acrescenta observações de hashes de
+fontes antes e depois de uma nova execução.

@@ -1,94 +1,94 @@
 # Aula 22 — Separar fonte documental de captura compartilhada
 
-## Conceito
+## Objetivo
 
-Continuamos do fim da Aula 21, sem pular a investigação das responsabilidades.
-Duas fontes podem apontar para a mesma captura, mas cada fonte ainda precisa
-corresponder à saída e às linhas que declara. Uma captura consistente não
-aprova automaticamente uma fonte que a referencia.
+Identificar quais conferências pertencem à fonte, à ligação e ao documento de
+captura, preservando a recusa de fontes inválidas mesmo diante de captura válida.
+
+## Contexto e pré-requisitos
+
+Use o editor e Cargo da Aula 3 e os resultados da Aula 21. Os comandos partem
+da raiz; não há dependência nova nem uso de Ollama. Duas fontes podem apontar
+para uma captura, mas cada fonte ainda precisa corresponder à saída declarada.
+
+## Conceitos e implementação
 
 | Responsabilidade | Conferências |
 | --- | --- |
-| Fonte documental | Tipo test_run, ausência de execution legado simultâneo, arquivo atual, hash e linhas copiados. |
-| Ligação fonte–captura | Caminho da fonte corresponde à saída da captura; hash declarado coincide com o hash da saída. |
-| Documento de captura | Bytes do registro correspondem ao hash esperado; run_id corresponde à ligação; formato, resultado, saída e associações passam na conferência da Aula 15. |
+| Fonte documental | `test_run`, ausência de execução legada simultânea, arquivo atual, hash e linhas. |
+| Ligação fonte–captura | Caminho da fonte corresponde à saída e hash declarado coincide. |
+| Documento de captura | Hash do registro, run_id, formato, resultado, saída e associações da Aula 15. |
 
-## Implementação
+Em [validate_evidence.rs](../../src/bin/validate_evidence.rs):
 
-Refatoramos validate_evidence.rs, sem criar cache por captura:
+- `check_capture_document` retorna `CheckedCapture`, com registro, relatório e
+  caminho da saída após conferência.
+- `check_source_capture_output` compara a ligação da fonte com a saída conferida.
+- `validate_capture_link` coordena o fluxo. Arquivo, hash e linhas da fonte
+  continuam obrigatórios.
 
-- `check_capture_document` confere o registro e retorna `CheckedCapture`, com
-  conteúdo do registro, relatório e caminho da saída.
-- `check_source_capture_output` confere a ligação de uma fonte à saída desse
-  documento conferido.
-- `validate_capture_link` coordena essas responsabilidades e mantém o formato
-  exportado. A conferência do arquivo/hash/linhas da fonte continua obrigatória.
+Na refatoração original, o reaproveitamento por fonte em `selections_json`
+permaneceu igual, sem cache por captura. A conferência completa do documento
+passou a preceder a comparação de caminho/hash com a fonte. Havendo vários erros,
+a ordem do diagnóstico pode mudar. As duas leituras do registro ainda existiam.
+A árvore atual já inclui o cache da Aula 23; use os artefatos para examinar a
+refatoração isolada.
 
-O reaproveitamento por ID de fonte, limitado a selections_json, permanece igual.
-A conferência completa do documento agora precede a comparação do caminho/hash
-com a fonte. Com várias inconsistências simultâneas, a ordem do diagnóstico pode
-mudar. Ainda há duas leituras do registro; não eliminamos essa repetição aqui.
+## Passo a passo e validação
 
-## Teste e medição
+No editor, siga as três funções acima e localize o teste
+`checked_capture_does_not_approve_an_unrelated_source`. Ele recebe captura válida
+e exige recusa de caminho ou hash incompatível da fonte.
 
-As [previsões](../experimentos/13-separar-responsabilidades/previsoes.md) foram
-registradas antes das execuções de comparação.
+Na raiz, execute esse teste especificamente. Cargo compila em `target`; a
+fixture usa arquivos temporários, sem alterar o dossiê local ou histórico:
 
 ```bash
-cargo test --offline --bin validate_evidence
-cargo build --offline --release --bin validate_evidence
+cargo test --locked --bin validate_evidence checked_capture_does_not_approve_an_unrelated_source
 ```
 
-**74 testes passaram**, incluindo um novo teste: mesmo com CheckedCapture válido,
-um caminho de fonte diferente ou hash incorreto é recusado.
+Observe um teste selecionado aprovado. Se nenhum teste for selecionado, confira
+o nome e a versão do código antes de interpretar o resumo como aprovação.
 
-Repetimos as cargas da Aula 21, com 100 fichas:
+Execute também a suíte do validador, na raiz, para verificar as demais regras:
 
-| Fontes | Conferências de captura | Bytes instrumentados | Exportação |
+```bash
+cargo test --locked --bin validate_evidence
+```
+
+A refatoração original teve **74 testes aprovados**. A árvore atual inclui testes
+posteriores. Os [resultados históricos](../experimentos/13-separar-responsabilidades/resultados.json),
+precedidos pelas [previsões](../experimentos/13-separar-responsabilidades/previsoes.md),
+preservaram a comparação com a Aula 21:
+
+| Fontes | Conferências | Bytes instrumentados | Exportações |
 | --- | --- | --- | --- |
-| 1 | 2 | 41.880 | Idêntica à Aula 21 |
-| 10 | 20 | 418.800 | Idêntica à Aula 21 |
-| 100 | 200 | 4.188.000 | Idêntica à Aula 21 |
+| 1 | 2 | 41.880 | Idênticas às anteriores. |
+| 10 | 20 | 418.800 | Idênticas às anteriores. |
+| 100 | 200 | 4.188.000 | Idênticas às anteriores. |
 
-A carga de ID incorreto retornou 1 e não criou exportação. Os resultados estão
-em [resultados.json](../experimentos/13-separar-responsabilidades/resultados.json).
-As capturas RUN_SEPARATE_1_1, RUN_SEPARATE_10_1, RUN_SEPARATE_100_1 e
-RUN_SEPARATE_invalido_1 preservam os comandos completos, saída e arquivos
-selecionados. Os destinos já existem; novas execuções exigem destinos novos.
-Não medimos tempo nem demonstramos ganho nesta refatoração.
+A ligação inválida continuou recusada sem exportação. Não houve medição de tempo
+nem ganho demonstrado nesta refatoração. O roteiro local da Aula 21 permite
+exercitar as cargas com o código atual, cuja política já é diferente.
 
-## Decisão para o próximo passo
+## Identidade proposta para reutilização
 
-Vale experimentar reutilizar a parte CheckedCapture entre fontes durante uma
-mesma exportação, mantendo as verificações próprias de cada fonte. A identidade
-proposta inclui **caminho absoluto do registro, SHA-256 esperado e run_id esperado**.
-O caminho deve preservar a localização usada para resolver saida.bin; canonicalizar
-um link simbólico do registro sem considerar essa base pode mudar seu significado.
-Uma opção conservadora é não unificar aliases de caminhos, aceitando perder
-reutilização em vez de presumir equivalência.
+A próxima etapa identifica a captura por caminho absoluto do registro,
+SHA-256 esperado e run_id esperado. Caminho sozinho não distingue versões;
+hash sozinho não define onde resolver `saida.bin`; ID sozinho não é único
+universalmente. A chave composta também não autentica a origem.
 
-Caminho sozinho não distingue versões. Hash sozinho não distingue o diretório
-em que as referências da saída são resolvidas. ID sozinho é uma declaração,
-sem garantia de unicidade global. A chave combinada também não autentica nada.
+Resolver um link simbólico sem considerar a base da saída pode mudar seu
+significado. A política conservadora mantém localizações distintas sem presumir
+aliases equivalentes. Cada fonte continua sendo conferida, mesmo quando o
+documento está no mapa. Somente documentos conferidos com sucesso podem entrar.
 
-Na futura reutilização, uma entrada só poderá ser guardada após conferência
-bem-sucedida. A fonte deverá continuar tendo seu arquivo/hash/linhas e ligação
-conferidos; não basta encontrar a captura no mapa. Novas exportações deverão
-refazer as leituras. Falhas não serão transformadas em resultados válidos.
+Arquivos podem mudar depois da leitura: reutilização local não oferece snapshot
+atômico nem detecta todas as mudanças concorrentes. Novas exportações devem
+refazer as leituras.
 
-Arquivos podem mudar após a primeira leitura. Reutilização local não oferece
-snapshot atômico nem detecção de toda alteração durante o intervalo. Esses
-limites já existem no reaproveitamento por fonte e precisam permanecer explícitos.
+## Resultado da aula e próxima aula
 
-## Fechamento e próxima aula
-
-A **Aula 22 está concluída**: responsabilidades separadas, refatoração testada,
-exportações preservadas, contagens mantidas e identidade proposta para o próximo
-experimento. Ainda não implementamos o compartilhamento por captura.
-
-Na **Aula 23 — Reaproveitar a captura entre fontes**, vamos implementar esse
-escopo local, testar diferenças de identidade e fontes inválidas e repetir
-contagens antes de concluir qualquer ganho. Continuamos fechando o Graph Engine
-e depois a integração do LLM Engine via Ollama, sem pular etapas. Qwen continua
-atual; DeepSeek é uma possibilidade futura sujeita a avaliação, sem troca feita.
-As notas das aulas 10 e 17 permanecem 3/6, sem comprovação retroativa de RUN_VECTOR_1.
+As responsabilidades estão separadas e possuem um teste que protege a ligação.
+A [Aula 23](23-reaproveitar-captura-entre-fontes.md) usa essa divisão para
+compartilhar a conferência do documento entre fontes, mantendo verificações individuais.

@@ -1,35 +1,82 @@
 # Aula 3 — Construindo o Bibliotecário em Rust
 
-## Conceito: localizar não é comprovar
+## Objetivo
 
-Vamos imaginar o laboratório como uma biblioteca. A inspiração no Bibliotecário
-de *Snow Crash* nos ajuda a dar nomes concretos às peças que estamos construindo:
-queremos localizar informações, preservar suas origens e distinguir o que sabemos
-do que ainda precisa ser investigado.
+Compilar e executar o validador de referências e demonstrar, com três dossiês,
+por que um endereço válido não comprova a afirmação que o acompanha.
 
-| Na biblioteca | No programa |
+## Pré-requisitos e preparação do ambiente
+
+Conclua as aulas 1–2 e mantenha o terminal na raiz do clone. Rust compila o
+programa; Cargo obtém dependências, compila e executa testes. Verifique ambos,
+sem modificar arquivos, em PowerShell ou terminal Linux:
+
+```bash
+rustc --version
+```
+
+A saída deve identificar o compilador. Em seguida, confira Cargo:
+
+```bash
+cargo --version
+```
+
+Se faltarem, instale a distribuição Rust com rustup para o sistema utilizado e
+reabra o terminal. No Windows, a ferramenta de ligação MSVC também é necessária
+para o alvo MSVC: a ausência de `link.exe` foi um problema registrado no projeto.
+Instale as ferramentas de compilação C++/MSVC e SDK do Windows quando o diagnóstico
+do compilador indicar essa falta. No Linux, é necessário um linker de sistema.
+
+**Limitação:** não há instalador, script de bootstrap nem versão mínima de Rust
+validada no repositório. Os registros da Aula 25 citam Rust/Cargo 1.98.1; edição
+Rust 2021 no manifesto não significa versão mínima 1.21. A instalação inicial
+do sistema não foi reproduzida nesta revisão. Valide-a com as versões acima e
+a compilação abaixo; não há ambiente pronto garantido por um Dev Container.
+
+Na raiz, obtenha as dependências exatas do lockfile. Isso usa rede e grava o
+cache do Cargo, sem editar o código nem atualizar o lockfile:
+
+```bash
+cargo fetch --locked
+```
+
+O comando deve terminar sem erro. `--locked` impede resolver outra versão quando
+o lockfile precisar mudar. Não use `--offline` na primeira obtenção: essa opção
+só permite dependências já presentes no cache.
+
+Compile apenas o Bibliotecário. Isso grava artefatos em `target`, sem executar
+uma consulta nem exigir Ollama:
+
+```bash
+cargo build --locked --bin validate_evidence
+```
+
+Sucesso na compilação confirma ferramentas e dependências suficientes para esse
+binário. A mensagem de término e o tempo variam. `src/bin` contém vários
+executáveis; selecionar `--bin` evita compilar alvos Unix no Windows.
+
+## Conceitos: a biblioteca de evidências
+
+| Biblioteca | Estrutura do programa |
 | --- | --- |
-| Dossiê | Um documento JSON com fontes, fichas e questões abertas. |
-| Obra | Uma `Source`: neste exemplo, um pseudocódigo. |
-| Código da obra | `source.id`, como S1. |
-| Trechos numerados | As entradas de `source.lines`. |
-| Ficha | Um `Fact`, com uma afirmação e uma referência. |
-| Código da ficha | `fact.id`, como F4. |
-| Afirmação da ficha | `fact.statement`. |
-| Endereço para consulta | `fact.source_id` e `fact.line`. |
-| Nota de revisão | Um `Review`, com o parecer do Qwen. |
+| Dossiê | `Evidence`, com fontes e fichas. |
+| Obra | `Source`, identificada por `id`. |
+| Trechos numerados (`Lines`) | Campo `lines: Vec<String>`; não há um tipo Rust chamado `Lines`. |
+| Ficha | `Fact`, com `id`, `statement`, `source_id` e `line`. |
+| Nota de revisão | `Review`, com texto avaliado, referência e parecer. |
 
-F4 aponta para a obra S1, trecho 5. O Bibliotecário pode conferir esse endereço
-sem decidir se a afirmação da ficha é verdadeira. Essa separação é o fundamento
-da aula: **uma referência válida pode acompanhar uma afirmação incorreta**.
+Uma ficha é uma afirmação com endereço. F4 aponta para S1:5. O endereço usa
+numeração a partir de 1; o vetor Rust começa em zero. O tipo `usize` aceita zero,
+mas a regra da aplicação o rejeita. Ler JSON, desserializar e validar são etapas
+diferentes.
 
-O campo `line` conta entradas de `lines` a partir de 1. Não é a numeração física
-do arquivo JSON mostrada no editor. Já os índices de um `Vec` começam em zero.
+## Implementação
 
-## Implementação: primeiro a ficha, depois o acervo
-
-O programa está em [src/bin/validate_evidence.rs](../../src/bin/validate_evidence.rs).
-Começamos construindo uma ficha diretamente na memória:
+Leia [src/bin/validate_evidence.rs](../../src/bin/validate_evidence.rs), começando
+por `Fact`, `Evidence`, `Source`, `validate_reference` e `find_source`.
+O código já contém a evolução até a Aula 25; nesta aula, concentre-se nas
+referências. As estruturas mínimas abaixo são recortes explicativos, não arquivos
+a substituir no clone:
 
 ```rust
 struct Fact {
@@ -38,224 +85,95 @@ struct Fact {
     source_id: String,
     line: usize,
 }
-```
-
-`String` guarda o texto pertencente ao valor. `usize` representa um inteiro não
-negativo, adequado para tamanhos e índices de coleções. Ele aceita zero, embora
-nossa convenção de linhas não aceite: o tipo não substitui a regra de validação.
-
-Depois criamos a obra:
-
-```rust
 struct Source {
     id: String,
     lines: Vec<String>,
 }
 ```
 
-`Vec<String>` é uma sequência de textos. `Vec<Source>` passa a ser nosso acervo.
-Ter S1 escrito na ficha e na obra não cria uma ligação automática em Rust;
-o programa precisa comparar os identificadores.
+`String` possui seu texto e `Vec` guarda uma sequência. Referências `&Fact` e
+`&Source` emprestam valores sem copiá-los. `validate_reference` confere fonte e
+intervalo antes de acessar `lines[line - 1]`. `Result<(), String>` distingue
+sucesso sem valor adicional de erro com mensagem; `?` propaga erros.
 
-### Conferir o endereço
+`find_source` faz busca linear e devolve `Some` ou `None`. Seu lifetime liga o
+empréstimo devolvido ao acervo recebido. Para N fontes e F fichas, repetir essa
+busca pode exigir até F × N comparações; isso não mede tempo real.
+`HashSet` rejeita IDs repetidos: `insert` retorna falso quando o ID já existe.
+Textos iguais com IDs diferentes continuam permitidos.
 
-A função `validate_reference` recebe a ficha e uma obra por empréstimo, com
-`&Fact` e `&Source`. Confere se o ID corresponde e se a linha está no intervalo:
+`serde` com `derive` e `serde_json`, declarados em `Cargo.toml`, fazem a conversão
+entre JSON e estruturas. Cargo instala essas bibliotecas; não há instalação
+manual de cada uma. Campos opcionais presentes no código atual serão estudados
+nas próximas aulas; a versão inicial não os preservava todos.
 
-```text
-1 ≤ line ≤ quantidade de trechos
-```
+## Passo a passo
 
-Só depois acessamos `source.lines[fact.line - 1]`. Isso evita tanto subtrair 1
-de zero quanto acessar uma posição além do fim da lista.
-
-A função devolve `Result<(), String>`: `Ok(())` indica que as verificações
-passaram; `Err(message)` descreve o problema. O `main` decide como apresentar
-a resposta. O Bibliotecário confere; a interface mostra o resultado.
-
-### Procurar no acervo
-
-`find_source` percorre as obras com um `for`, comparando cada ID com o solicitado.
-Devolve `Some(source)` quando encontra e `None` quando chega ao fim sem sucesso.
-
-A assinatura usa uma referência com lifetime `'a`: a obra devolvida continua
-pertencendo ao acervo emprestado. A busca não copia seu conteúdo.
-
-Para N obras, essa busca faz até N comparações de identificadores. Para F fichas,
-repetir a busca pode exigir até F × N comparações. A comparação de textos também
-tem um custo que depende do conteúdo; contar comparações não mede tempo real.
-
-### Evitar códigos repetidos
-
-Duas obras com código S1 tornam a referência ambígua. Duas fichas com código F4
-fazem o mesmo com uma citação do modelo. Criamos `validate_source_ids` e
-`validate_fact_ids`, cada uma com um `HashSet` de identificadores já vistos.
-
-```rust
-if !seen.insert(fact.id.as_str()) {
-    return Err(format!("Fato duplicado: \"{}\".", fact.id));
-}
-```
-
-`insert` devolve `true` para um valor novo e `false` para um valor já presente.
-O `!` inverte essa resposta. `as_str()` empresta o texto, sem duplicar a String.
-O conjunto ainda precisa de memória para sua própria estrutura.
-
-A regra trata identidade: textos iguais com IDs diferentes são permitidos.
-Ela também não detecta que uma obra ganhou uma nova edição. Para código real,
-precisaremos considerar versões, como commits ou hashes de conteúdo.
-
-## Do documento às estruturas Rust
-
-Primeiro lemos o arquivo usando `fs::read_to_string`. Nesse momento, temos apenas
-texto. Depois adicionamos `serde` com a opção `derive` e `serde_json` para
-transformá-lo nas estruturas:
-
-```rust
-#[derive(Deserialize)]
-struct Evidence {
-    sources: Vec<Source>,
-    facts: Vec<Fact>,
-}
-```
-
-`serde_json::from_str` faz a desserialização. Campos exigidos pelas estruturas
-precisam estar presentes e ter tipos compatíveis. Os campos adicionais, como
-`kind`, `executed` e `unknowns`, permanecem no arquivo, mas não são carregados
-pelas estruturas atuais. Não estamos validando todo o significado do dossiê.
-
-Uma linha zero pode ser desserializada como `usize` e depois ser rejeitada pelo
-validador. Ler, interpretar e validar são etapas distintas.
-
-## Teste: entregar dossiês diferentes
-
-Execute os comandos a partir da raiz do projeto no terminal do Codespaces:
+Todos os comandos abaixo partem da raiz. Cargo pode atualizar `target`; os
+comandos de consulta somente leem os dossiês e imprimem diagnósticos.
+Primeiro valide o exemplo original:
 
 ```bash
-cargo run --bin validate_evidence
-cargo run --bin validate_evidence -- ai/experimentos/02-mutex/evidencias-fonte-ausente.json
-cargo run --bin validate_evidence -- ai/experimentos/02-mutex/evidencias-afirmacao-incorreta.json
+cargo run --locked --bin validate_evidence -- ai/experimentos/02-mutex/evidencias.json
 ```
 
-O `--` separa os argumentos do Cargo dos argumentos do programa. Sem um caminho,
-o programa usa o dossiê original. Os outros dois são cópias para experimentos,
-não substituições do original.
+Observe cinco referências válidas e término com código 0. O `--` separa opções
+do Cargo dos argumentos do programa. Sem caminho, esse é o dossiê padrão.
 
-| Dossiê | Alteração | Resultado observado |
-| --- | --- | --- |
-| [Original](../experimentos/02-mutex/evidencias.json) | Nenhuma | Cinco referências válidas; saída 0. |
-| [Fonte ausente](../experimentos/02-mutex/evidencias-fonte-ausente.json) | F4 aponta para S9. | Uma referência inválida; saída 1. |
-| [Afirmação incorreta](../experimentos/02-mutex/evidencias-afirmacao-incorreta.json) | F4 diz que B escreve no pixel 999. | Referências válidas; saída 0. |
-
-A terceira entrada passa porque a obra e o trecho existem. Seu trecho fala em
-pixel 20, mas o validador estrutural não interpreta a afirmação sobre pixel 999.
-
-O programa continua verificando as fichas quando encontra uma referência
-inválida. Conta os problemas e encerra com código 1 se encontrou algum. IDs
-repetidos encerram a consulta antes da busca, pois tornam o catálogo ambíguo.
-Erros de leitura e desserialização também resultam em código 1.
-
-Código 0 significa sucesso nas verificações implementadas, não verdade dos fatos.
-
-## O parecer do Qwen
-
-Enviamos manualmente uma afirmação e seu trecho ao `renderer-analyst`, no Ollama
-local do Windows. A primeira resposta misturou sustentação parcial, contradição
-e insuficiência. Isso revelou também uma lacuna na pergunta: o trecho representa
-uma operação específica ou toda a tarefa, incluindo operações não mostradas?
-
-Refinamos o escopo:
-
-```text
-Avalie somente a operação explicitamente mostrada no trecho.
-
-Afirmação F4:
-Na operação de escrita mostrada em S1:5, a tarefa B escreve no pixel 999.
-
-S1:5:
-Tarefa B: adquirir M; escrever azul no pixel 20; liberar M.
-
-Escolha um único resultado: SUSTENTA, CONTRADIZ ou INSUFICIENTE.
-Justifique em uma frase, sem avaliar afirmações alternativas.
-```
-
-O Qwen respondeu `CONTRADIZ`, justificando a diferença entre 20 e 999. A resposta
-atendeu a esse teste. Uma amostra não demonstra confiabilidade geral do modelo.
-
-Guardamos a nota em [parecer-f4.json](../experimentos/02-mutex/parecer-f4.json),
-com afirmação original, reformulação avaliada, trecho, prompt, resposta e julgamento.
-A coleta foi manual; não capturamos automaticamente o histórico completo nem os
-parâmetros efetivos da execução.
-
-A nota preserva os dois textos porque o julgamento foi feito sobre a reformulação.
-Não podemos atribuí-lo silenciosamente a qualquer frase parecida.
-
-## Conferir a nota de revisão
-
-O programa recebe o parecer como segundo argumento:
+Agora execute o caso cuja ficha F4 aponta para S9, inexistente:
 
 ```bash
-cargo run --bin validate_evidence -- ai/experimentos/02-mutex/evidencias-afirmacao-incorreta.json ai/experimentos/02-mutex/parecer-f4.json
+cargo run --locked --bin validate_evidence -- ai/experimentos/02-mutex/evidencias-fonte-ausente.json
 ```
 
-`Review` e `ReviewSource` carregam os campos usados na conferência. A função
-`validate_review` verifica IDs únicos no dossiê e depois:
+O resultado deve informar a referência inválida e terminar com código 1.
+Essa falha é o resultado correto deste teste negativo.
 
-1. Procura a ficha indicada.
-2. Compara sua afirmação com `original_statement` do parecer.
-3. Confere o ID da fonte e o número da linha.
-4. Valida o endereço antes de acessar a lista.
-5. Compara o trecho da fonte com a cópia guardada no parecer.
-
-O operador `?`, usado nessas chamadas, devolve imediatamente um erro recebido;
-se o resultado for `Ok`, a execução continua.
-
-Com o dossiê da afirmação incorreta, P1 passou e o programa terminou com saída 0.
-Com o dossiê original, o programa rejeitou P1: F4 tinha outro texto. A saída foi 1.
-
-Essas comparações são textuais e exatas. Elas não verificam a equivalência de
-significado entre a afirmação original e sua reformulação, a correção do julgamento,
-a autoria da resposta ou a versão histórica dos documentos. O campo `evidence_file`
-é descritivo nesta implementação; o programa confere o conteúdo do dossiê recebido,
-não a identidade do caminho registrado na nota.
-
-## Medição e explicação do resultado
-
-Ao concluir a implementação, executamos:
+Execute o caso cujo texto diz pixel 999, embora o trecho mostre pixel 20:
 
 ```bash
-cargo test --bin validate_evidence
+cargo run --locked --bin validate_evidence -- ai/experimentos/02-mutex/evidencias-afirmacao-incorreta.json
 ```
 
-**Resultado observado: 21 testes passaram.** Eles cobrem referências, IDs,
-carregamento do JSON e associação dos pareceres. Também executamos o programa
-com os dossiês e conferimos seus códigos de saída, inclusive com casos temporários
-contendo múltiplos erros. Esses experimentos temporários não são novos testes
-permanentes da suíte.
+As referências passam. Esse sucesso estrutural demonstra o limite do validador,
+sem aprovar semanticamente a afirmação.
 
-A quantidade de testes não prova ausência de defeitos. Não medimos desempenho,
-não executamos a suíte completa do renderer nesta etapa e não alteramos seu
-algoritmo de renderização.
+## Conferir um parecer
 
-O ciclo que construímos é:
+Abra [parecer-f4.json](../experimentos/02-mutex/parecer-f4.json). Ele preserva a
+frase original, a reformulação restrita à operação mostrada, prompt, trecho e
+parecer manual do Qwen. A resposta `CONTRADIZ` aponta a diferença entre 20 e 999.
+A reformulação é preservada porque o julgamento não vale automaticamente para
+qualquer frase semelhante. A coleta não capturou todos os parâmetros do modelo.
 
-```text
-Dossiê → validação estrutural → seleção de afirmação e trecho
-                                      ↓
-                              Qwen, por envio manual
-                                      ↓
-                          parecer registrado em arquivo
-                                      ↓
-                         conferência das correspondências
+Na raiz, confira a correspondência entre parecer e dossiê, sem consultar Ollama:
+
+```bash
+cargo run --locked --bin validate_evidence -- ai/experimentos/02-mutex/evidencias-afirmacao-incorreta.json ai/experimentos/02-mutex/parecer-f4.json
 ```
 
-Essa é uma primeira peça da arquitetura. Ainda não há extração automática de
-fatos, banco de grafos nem chamada ao Ollama pelo programa Rust.
+O parecer P1 deve passar: ID, afirmação original, fonte, linha e cópia do trecho
+correspondem. Com o dossiê original, a afirmação difere e o parecer seria recusado.
+`evidence_file` é descritivo; o programa compara o dossiê recebido, não autentica
+seu caminho nem julga a equivalência semântica da reformulação.
 
-## Próxima aula: uma obra real
+## Validação e problemas comuns
 
-Vamos começar por `src/camera.rs`: ler o arquivo, observar uma operação e criar
-uma ficha manual com sua referência. Antes de medir ou propor otimizações,
-precisamos entender o trecho e o contexto que sustenta a afirmação.
+Execute os testes do binário na raiz. Eles compilam testes e usam arquivos
+temporários quando necessário; não precisam de Ollama:
 
-Manteremos o ritmo: conceito, uma implementação pequena, teste e explicação.
+```bash
+cargo test --locked --bin validate_evidence
+```
+
+O registro original desta etapa contém **21 testes aprovados**. Na árvore atual,
+o total é maior: verifique ausência de falhas, sem exigir a contagem histórica.
+IDs repetidos, arquivo ilegível e JSON incompatível devem ser diagnosticados
+antes de tratar a entrada como válida. Não altere uma ficha só para obter código 0.
+
+## Resultado da aula e próxima aula
+
+O Bibliotecário verifica endereços e correspondências textuais; não interpreta
+a verdade dos fatos. Não houve benchmark nem mudança no renderer nessa etapa.
+A [Aula 4](04-tuplas-codigo-e-evidencias.md) investiga `src/tuple.rs`, registra
+uma versão da fonte e separa código de resultado de teste.

@@ -1,115 +1,101 @@
 # Aula 14 — Associação entre código e execução
 
-## Conceito: identificar bytes não é comprovar compilação
+## Objetivo
 
-A Aula 13 registra uma execução. Agora queremos responder: quais arquivos
-selecionados foram observados junto dessa execução? HEAD sozinho não basta,
-porque a árvore de trabalho pode conter alterações não commitadas.
+Capturar os testes de fronteira com hashes de cinco arquivos selecionados,
+coletados antes e depois do comando, e delimitar o que essa associação prova.
 
-Um SHA-256 identifica o conteúdo observado de um arquivo. Nossa proposta é
-coletar esse hash em dois momentos: antes de iniciar o comando e depois de
-seu término. O registro ligará essas observações ao mesmo `run_id`.
+## Contexto e pré-requisitos
 
-| Observação | O que permite afirmar |
+Use Linux/Bash com as ferramentas da Aula 13 e os testes da Aula 12. Todos os
+comandos partem da raiz. A captura nova será usada nas próximas aulas; preserve
+seu diretório e mantenha os arquivos selecionados sem alterações entre etapas.
+Ollama não é necessário.
+
+## Conceitos
+
+HEAD sozinho não identifica arquivos modificados. SHA-256 identifica os bytes
+observados de cada arquivo em um momento:
+
+| Comparação | Conclusão permitida |
 | --- | --- |
-| Hash antes igual ao hash depois | Os conteúdos observados nos dois momentos coincidem. |
-| Hash antes diferente do hash depois | Foi observada uma mudança de conteúdo entre as leituras. |
-| Arquivo não pôde ser lido depois | A conferência desse arquivo ficou incompleta. |
+| Hash antes igual ao posterior | Conteúdos observados nas duas leituras coincidem. |
+| Hash diferente | Houve diferença de conteúdo entre as leituras. |
+| Leitura posterior indisponível | A observação posterior ficou incompleta. |
 
-Hashes iguais não demonstram que o arquivo ficou intacto durante todo o
-intervalo: ele pode mudar e voltar. Também não demonstram que o compilador
-leu aquele arquivo, que não reutilizou um artefato ou que não havia outras
-entradas relevantes. Não estamos autenticando a captura.
+Hashes iguais não demonstram imutabilidade durante todo o intervalo: o arquivo
+pode mudar e voltar. Também não provam que o compilador leu esses bytes, quais
+artefatos reutilizou ou se outras entradas eram relevantes.
 
 ## Implementação
 
-Implementamos a extensão em `src/bin/capture_execution.rs`:
+Em [capture_execution.rs](../../src/bin/capture_execution.rs), `--source CAMINHO`
+é repetível. O formato 2 inclui `path`, `resolved_path`, `before_sha256`,
+`after_sha256` e `comparison` por fonte, além de tamanho e hash de `saida.bin`.
+Sem `--source`, a lista fica vazia.
 
-1. Acrescentamos `--source CAMINHO` repetível ao capturador Rust, resolvido a
-   partir do diretório de execução, e registrar os caminhos selecionados.
-2. Coletamos SHA-256 antes de iniciar o comando. Se uma fonte selecionada não
-   puder ser lida, recusar a execução, sem apresentar associação completa.
-3. Coletamos novamente depois e registrar cada resultado: igual, diferente ou
-   indisponível. Falha nessa leitura não deve apagar o resultado do comando.
-4. Identificamos também os bytes de `saida.bin` por SHA-256. Essa conferência
-   detecta divergência em relação ao hash registrado; não impede que alguém
-   altere conjuntamente o arquivo e o JSON.
-5. O formato agora usa `schema_version: 2`. Os registros da versão 1 foram
-   preservados. Sem `--source`, a lista `sources` fica vazia, sem associação
-   a fontes declarada.
+A falha de leitura anterior impede executar o comando; uma falha posterior
+preserva o resultado e registra `unavailable`, hash nulo e diagnóstico.
+`equal` e `different` exigem os hashes correspondentes. Os caminhos são resolvidos
+a partir do diretório do comando. Leituras sequenciais e links simbólicos não
+produzem snapshot atômico. Erro de gravação ou hash da saída impede o JSON final.
 
-Para a fronteira, a seleção inicial incluiu o teste de integração,
-`src/equivalent.rs`, `src/lib.rs`, `Cargo.toml` e `Cargo.lock`. Essa lista é
-deliberadamente parcial: não é o inventário completo de entradas do Cargo.
-A conferência pelo Bibliotecário será tratada explicitamente; o JSON da
-Aula 13 ainda não é importado pelo validador atual.
+## Passo a passo
 
-## Formato e tratamento de falhas
-
-Cada item de `sources` contém `path` (seleção original), `resolved_path`
-(caminho absoluto a partir de cwd), `before_sha256`, `after_sha256` e
-`comparison`: `equal`, `different` ou `unavailable`. Na indisponibilidade
-posterior, `after_sha256` é null e `after_error` informa a causa.
-Os caminhos das fontes são relativos ao cwd do comando; o destino continua
-relativo ao diretório em que o capturador foi chamado.
-
-As leituras são sequenciais, não uma fotografia atômica do conjunto. Links
-simbólicos são seguidos na leitura; os hashes descrevem os bytes encontrados.
-Uma falha antes do comando deixa no máximo uma captura parcial, sem JSON final.
-Uma falha de leitura de fonte depois não apaga o resultado do comando. Falha
-na gravação ou no hash da saída impede publicar o JSON final. O código 0 do
-capturador continua significando registro concluído, mesmo com diferenças ou
-fontes indisponíveis depois; consulte `result` e `sources` separadamente.
-
-## Teste
+Na raiz Linux, execute os testes da extensão. Cargo escreve em `target`; fontes
+modificadas ou removidas pelos casos de teste ficam em diretórios temporários:
 
 ```bash
-cargo test --offline --bin capture_execution
+cargo test --locked --bin capture_execution
 ```
 
-**11 testes passaram.** Além dos oito da Aula 13, testamos fontes iguais,
-modificadas e removidas depois (preservando inclusive código 7 do comando),
-fonte ausente antes impedindo a execução e a CLI com `--source` repetido e
-caminhos relativos a um cwd diferente. Os hashes de `abc` e da saída vazia
-foram comparados a valores SHA-256 conhecidos. Os arquivos modificados pelos
-testes ficam em diretórios temporários.
+A extensão teve **11 testes aprovados**, cobrindo mudanças antes/depois, fonte
+ausente, argumentos, hashes conhecidos e preservação de código não zero.
 
-## Nova execução e medição
-
-Após os testes, compilamos o capturador e executamos:
+Compile o capturador para invocá-lo diretamente. Isso cria ou atualiza o binário
+em `target/debug`, sem executar os testes de fronteira:
 
 ```bash
-cargo build --offline --bin capture_execution
-target/debug/capture_execution --id RUN_EQUIVALENCE_BOUNDARY_2 --destino ai/experimentos/05-associacao/fronteira --source tests/equivalence_boundary.rs --source src/equivalent.rs --source src/lib.rs --source Cargo.toml --source Cargo.lock -- cargo test --offline --test equivalence_boundary -- --test-threads=1
+cargo build --locked --bin capture_execution
 ```
 
-O diretório pai deve existir. O destino acima já está ocupado: para reproduzir,
-use um novo destino e ID.
+Capture uma execução nova na raiz. O comando cria `aula14-fronteira`, registra
+cinco fontes e executa os quatro testes. O destino deve estar ausente:
 
-O [registro](../experimentos/05-associacao/fronteira/execucao.json) contém
-**5 fontes com hashes iguais antes/depois**, **0 diferentes** e **0 indisponíveis**.
-A [saída](../experimentos/05-associacao/fronteira/saida.bin) contém **540 bytes**,
-com **4 testes aprovados**, código de término **0**. Os testes no limite e acima
-de EPSILON continuam esperando pânico: aprovados significa rejeição esperada.
+```bash
+target/debug/capture_execution --id AULA14_FRONTEIRA_01 --destino aula14-fronteira --source tests/equivalence_boundary.rs --source src/equivalent.rs --source src/lib.rs --source Cargo.toml --source Cargo.lock -- cargo test --locked --test equivalence_boundary -- --test-threads=1
+```
 
-Uma conferência independente com hashlib recalculou o hash e o tamanho da
-saída e os hashes atuais das cinco fontes; todos corresponderam ao registro.
-Essa conferência da sessão ainda não é uma função do Bibliotecário. As contagens
-não são benchmark nem medida de custo da macro. Não repetimos a suíte do
-Bibliotecário: sua implementação não mudou.
+Abra `aula14-fronteira/execucao.json` e `saida.bin`. Observe quatro aprovações,
+`result.exit_code` igual a 0 e cinco comparações. Se nada alterou os arquivos,
+elas devem ser `equal`. Tamanho da saída, horários, diretórios e hashes variam.
+O código 0 do capturador sozinho não confirma esses resultados: leia o registro.
 
-## Explicação, fechamento e próxima aula
+## Comparação com a evidência histórica
 
-A **Aula 14 está concluída** no escopo de associação por observação: um mesmo
-registro reúne comando, resultado, saída identificada e hashes das fontes
-selecionadas em dois momentos. Não comprovamos as entradas efetivas do
-compilador, não autenticamos a execução e não capturamos todas as dependências.
-Nenhum resultado foi atribuído retroativamente a RUN_VECTOR_1 ou
-RUN_EQUIVALENCE_BOUNDARY_1. A avaliação da Aula 10 permanece **3/6** e o envio
-ao Ollama continua manual.
+[RUN_EQUIVALENCE_BOUNDARY_2](../experimentos/05-associacao/fronteira/execucao.json)
+registrou cinco fontes iguais, nenhuma diferente ou indisponível, e saída de
+540 bytes com quatro aprovações. Uma conferência independente registrada na etapa
+recalculou tamanho e hashes, que correspondiam naquele momento.
 
-Na **Aula 15 — Conferir o registro de captura**, a proposta é integrar a leitura
-do formato novo ao Bibliotecário, conferir saída e associações declaradas,
-testando divergências sem confundir integridade com autenticação. Esse trabalho
-ainda está pendente. Depois seguimos integração e avaliação, performance e
-criação de cenas por linguagem natural.
+Esses valores não são requisitos para a captura nova. O registro histórico
+contém caminhos do ambiente de origem e hashes antigos de Cargo.toml/Cargo.lock;
+portanto não é uma captura portátil a reconferir automaticamente em qualquer clone.
+A captura local nova preserva a identidade da nova execução sem reescrever a antiga.
+
+## Validação e limites
+
+Se não houver JSON final, examine o erro e os arquivos parciais. Se uma fonte
+aparecer como `different` ou `unavailable`, investigue o arquivo antes de declarar
+associação completa. Não altere o registro para converter a comparação em `equal`.
+
+A lista de cinco arquivos é deliberadamente parcial, não o inventário completo
+de entradas do Cargo. Aprovação com pânico esperado continua sendo rejeição do
+par. Não houve benchmark nem autenticação da execução, e RUN_VECTOR_1 não ganhou
+comprovação retroativa.
+
+## Resultado da aula e próxima aula
+
+Uma execução local reúne comando, saída identificada e observações de fontes.
+A [Aula 15](15-conferir-registro-captura.md) usa o Bibliotecário para conferir
+esse registro e seus arquivos atuais.

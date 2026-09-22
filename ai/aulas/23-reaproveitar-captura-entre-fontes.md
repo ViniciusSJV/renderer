@@ -1,95 +1,107 @@
 # Aula 23 — Reaproveitar a captura entre fontes
 
-## Conceito
+## Objetivo
 
-Reutilizamos a conferência do documento de captura durante uma exportação,
-mantendo as verificações de cada fonte. A validação inicial da CLI permanece
-separada. Portanto, S fontes da mesma captura ainda provocam S conferências
-iniciais, mas somente uma conferência completa na montagem da exportação.
+Verificar o compartilhamento da conferência de uma captura durante a exportação,
+sem eliminar as verificações individuais das fontes.
 
-## Implementação
+## Contexto e pré-requisitos
 
-Em validate_evidence.rs, `CaptureCache` guarda `CheckedCapture`, usando a chave
-(caminho absoluto do registro, SHA-256 esperado, run_id esperado). Não resolvemos
-links simbólicos para compor a chave: a localização declarada determina onde
-procurar saida.bin. Não unificamos caminhos distintos com `..` ou aliases de
-symlink; perder reutilização é preferível a presumir equivalência.
+Use Linux/Bash, Cargo, Python 3 da Aula 16 e `aula21-resultados` da Aula 21.
+Todos os comandos partem da raiz; Ollama não participa. A Aula 22 separou fonte,
+ligação e documento. Agora S fontes da mesma captura exigem S conferências na
+validação inicial, mas apenas uma conferência completa na exportação.
 
-`validate_capture_link_cached` sempre confere tipo, arquivo, hash e linhas da
-fonte e sua ligação à saída. Só a conferência do documento é reaproveitada.
-A entrada é inserida após `check_capture_document` ter sucesso. Uma falha de
-ligação posterior não aprova a fonte: interrompe a exportação. O registro
-conferido não significa que todas as fontes que o referenciam sejam válidas.
+## Implementação e limites da identidade
 
-O mapa de documentos e o mapa por ID de fonte ficam locais a `selections_json`.
-O wrapper usado pela validação inicial cria um mapa novo por chamada. Não há
-cache global, entre exportações ou processos. Cada nova exportação refaz as
-leituras. O formato JSON permanece igual.
+Em [validate_evidence.rs](../../src/bin/validate_evidence.rs), `CaptureCache`
+guarda `CheckedCapture` com a chave caminho absoluto, SHA-256 esperado e run_id.
+Não resolve links simbólicos nem unifica aliases com `..`: a localização
+declarada determina onde procurar a saída.
 
-Essa política reutiliza uma observação anterior: não garante detectar mudança
-posterior dos arquivos durante a mesma exportação. Não existe snapshot atômico,
-autenticação nem prova das entradas do compilador. A chave identifica o registro
-esperado; não transforma arquivos mutáveis em conteúdo imutável.
+`validate_capture_link_cached` mantém tipo, arquivo, hash, linhas e ligação da
+fonte. Só o documento é reaproveitado. A entrada é inserida após conferência
+bem-sucedida; uma ligação posterior inválida interrompe a exportação.
 
-## Testes e previsões
+Os mapas ficam locais a `selections_json`. A validação inicial usa um mapa novo
+por chamada. Não há cache global, entre exportações ou processos. O formato
+exportado permanece igual. Essa política reutiliza uma observação anterior,
+sem snapshot atômico, autenticação ou prova das entradas do compilador.
+
+## Passo a passo
+
+Na raiz, execute a suíte. Cargo grava em `target`; as fixtures verificam identidade,
+fontes inválidas e isolamento sem modificar evidências históricas:
 
 ```bash
-cargo test --offline --bin validate_evidence
-cargo build --offline --release --bin validate_evidence
+cargo test --locked --bin validate_evidence
 ```
 
-**76 testes passaram**. Dois testes novos exercitam o cache preenchido:
+A etapa original teve **76 testes aprovados**. Dois casos novos verificaram
+compartilhamento com fonte válida, recusa de linhas/saída incorretas e diferenças
+de hash, run_id ou localização sem inserir entradas inválidas. A árvore atual
+tem mais testes; o resultado relevante é ausência de falhas.
 
-- Uma segunda fonte válida compartilha a entrada; linhas adulteradas e arquivo
-  de saída errado continuam recusados.
-- Hash, run_id ou localização diferentes exigem conferência e falham quando
-  inválidos, sem acrescentar entradas válidas ao mapa.
+Leia os contadores da prática local da Aula 21 e compare suas exportações com
+as contagens previstas para a versão atual. Este bloco, na raiz, somente lê
+os logs e arquivos, sem reexecutar o validador ou gravar novos resultados:
 
-O teste anterior de isolamento entre exportações e fontes também passou.
-As [previsões](../experimentos/14-captura-compartilhada/previsoes.md) foram
-registradas antes das execuções de contagem.
+```bash
+python3 - <<'PY'
+import json
+from pathlib import Path
 
-## Medição
+for sources in (1, 10, 100):
+    stderr = Path(f'aula21-resultados/{sources}.stderr.txt').read_text(encoding='utf-8')
+    reports = [line.split(' ', 1)[1] for line in stderr.splitlines()
+               if line.startswith('BIBLIOTECARIO_METRICS ')]
+    assert len(reports) == 1
+    counts = json.loads(reports[0])['counts']
+    assert counts['capture_validate']['calls'] == sources + 1
+    assert counts['capture_link']['calls'] == 2 * sources
+    assert counts['source_content_read']['calls'] == 3 * sources
+    export = json.loads(Path(f'aula21-resultados/export-{sources}.json').read_text(encoding='utf-8'))
+    assert len(export['selections']) == 100
+    print(sources, counts['capture_validate']['calls'])
+PY
+```
 
-Repetimos as cargas de 100 fichas da Aula 22. Cada fonte ainda aponta para os
-mesmos arquivos físicos; as cargas variam identidades documentais.
+Observe pares 1/2, 10/11 e 100/101. Se alguma asserção falhar, confira a versão
+do executável release e os logs completos antes de atribuir causa. Um build
+antigo não representa necessariamente a fonte atual.
 
-| Fontes | Conferências completas antes | Agora | Bytes instrumentados antes | Agora |
+## Evidência histórica
+
+As [previsões](../experimentos/14-captura-compartilhada/previsoes.md) e os
+[resultados](../experimentos/14-captura-compartilhada/resultados.json) registram
+100 fichas distribuídas entre fontes da mesma captura:
+
+| Fontes | Conferências antes | Depois | Bytes antes | Depois |
 | --- | --- | --- | --- | --- |
 | 1 | 2 | 2 | 41.880 | 41.880 |
 | 10 | 20 | 11 | 418.800 | 237.630 |
 | 100 | 200 | 101 | 4.188.000 | 2.195.130 |
 
-Todas as previsões corresponderam: capture_validate e ambas as leituras do
-registro ocorrem S + 1 vezes; digest_calls, 6(S + 1). capture_link continua em
-2S e source_content_read em 3S. As verificações próprias das fontes não foram
-eliminadas. Os bytes somam 1.620S + 20.130(S + 1) nestas cargas específicas.
+As leituras do registro passaram a S + 1; chamadas de hash, 6(S + 1).
+Ligação permaneceu 2S e leitura de conteúdo, 3S. Naqueles arquivos, os bytes
+somavam 1.620S + 20.130(S + 1), não uma fórmula geral de tamanho.
+As exportações foram comparadas byte a byte com as da Aula 22 e permaneceram
+idênticas. A ligação inválida continuou recusada na fase inicial; testes unitários
+exercitaram também o mapa já preenchido.
 
-As três exportações foram comparadas byte a byte com as da Aula 22 e são
-idênticas. A carga com ID de execução incorreto continuou recusada, com código 1
-e sem exportação. Nesse caso, a recusa ocorre na fase inicial da CLI; os testes
-unitários adicionais exercitam diretamente o reaproveitamento com mapa preenchido.
+## Validação e conclusão permitida
 
-[Resultados completos](../experimentos/14-captura-compartilhada/resultados.json),
-exportações e capturas RUN_SHARED_CAPTURE_1_1, RUN_SHARED_CAPTURE_10_1,
-RUN_SHARED_CAPTURE_100_1 e RUN_SHARED_CAPTURE_invalido_1 estão preservados na
-mesma pasta. Os registros contêm comandos exatos, ambiente parcial e hashes.
-Para repetir, use destinos novos e mantenha seus diretórios pais existentes.
+Houve redução de trabalho lógico nas cargas com várias fontes. Não houve nova
+medição de tempo; portanto a etapa não demonstrou ganho adicional de latência
+nem desempenho do renderer. As verificações próprias da fonte não desapareceram.
+A validação inicial ainda repete capturas; esse limite é conhecido.
 
-## Explicação e fechamento
+A leitura dos logs atuais reproduz a regra atual, mas não uma comparação entre
+binários históricos. As avaliações do modelo e os registros antigos permanecem
+inalterados, sem comprovação retroativa de RUN_VECTOR_1.
 
-A **Aula 23 está concluída**: reaproveitamento local, identidade composta,
-verificações de fonte preservadas, testes e contagens. Reduzimos trabalho lógico
-observado nas cargas com várias fontes. Não medimos tempo nesta aula, portanto
-não demonstramos um novo ganho de latência. Não fizemos benchmark do renderer.
+## Resultado da aula e próxima aula
 
-A validação inicial ainda repete capturas entre fontes. Isso é um limite
-conhecido, não um defeito que obrigue a continuar otimizando antes da integração.
-Registros históricos permanecem intactos. As notas das aulas 10 e 17 continuam
-3/6, e não há comprovação retroativa de RUN_VECTOR_1.
-
-Na **Aula 24 — Contrato e critérios de conclusão dos engines**, vamos consolidar
-o que o Graph Engine já entrega, listar lacunas e definir entradas, saídas e
-falhas da integração com o LLM Engine. Depois implementaremos a comunicação
-Rust–Ollama. O modelo atual permanece Qwen; uma futura troca por DeepSeek será
-avaliada. O envio continua manual até implementar e validar essa integração.
+O reaproveitamento tem identidade, escopo e limites testados. A
+[Aula 24](24-contrato-dos-engines.md) consolida entradas, saídas e critérios de
+conclusão antes da comunicação Rust–Ollama.

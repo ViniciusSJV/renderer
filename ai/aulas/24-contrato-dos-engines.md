@@ -1,58 +1,95 @@
 # Aula 24 — Contrato e critérios de conclusão dos engines
 
-## Conceito
+## Objetivo
 
-Separar três resultados: evidências conferidas, resposta recebida e resposta
-avaliada. A primeira etapa não garante correção semântica das fichas; a segunda
-não garante correção da explicação. Cada etapa precisa de identidade e limites.
+Definir responsabilidades e critérios de aceitação para o ciclo de explicação,
+separando evidência conferida, resposta recebida e resposta avaliada.
 
-## Contrato documentado
+## Contexto e pré-requisitos
 
-Criamos [engines-v1.md](../contratos/engines-v1.md), com responsabilidades,
-entrada/saída, ligação entre artefatos, estados de erro e critérios de conclusão.
-A consulta existente mantém question, evidence e instructions; a futura tentativa
-terá envelope separado. O contrato não é ainda código nem especificação da API
-Ollama: os detalhes dessa API serão conferidos na implementação.
+Leia as aulas 1–23 e use o editor para consultar código, Modelfile e
+[contrato dos engines](../contratos/engines-v1.md). Não há instalação ou execução
+nova necessária nesta aula. O contrato contém a matriz original da Aula 24 e
+atualizações posteriores; não confunda as duas situações.
 
-O cliente será Rust e usará Ollama, inicialmente com Qwen. DeepSeek permanece
-uma possibilidade a avaliar, sem troca realizada. O modelo será configurável.
-Precisamos definir a conexão entre cliente e Ollama considerando Codespaces e
-Windows antes da chamada real; nenhum ajuste de rede foi executado nesta aula.
+## Conceitos: três resultados distintos
 
-## Revisão do desenho
+```text
+Dossiê → conferência → consulta → Ollama/modelo → resposta preservada → avaliação
+```
 
-Examinamos o formato produzido por query_json, o Modelfile e o estado registrado
-no README. O contrato cobre quatro situações conceituais:
+O **Graph Engine — “Testa sem explicar”** organiza fontes, fichas, contexto,
+execuções e relações, aplicando verificações determinísticas. Uma referência
+válida não comprova a afirmação da ficha.
 
-- Evidência inválida impede envio.
-- Falha de comunicação não vira resposta avaliada nem tenta novamente em silêncio.
-- Resposta recebida pode ser incompleta ou semanticamente errada.
-- Consulta histórica não é promovida a conferência atual apenas por possuir status.
+O **LLM Engine — “Explica sem interpretar”** recebe evidências e produz uma
+explicação que deve distinguir fato, inferência e hipótese. O transporte preserva
+a resposta, mas não a transforma em evidência de correção semântica.
+A avaliação manual aplica critérios definidos antes da resposta e examina
+referências, premissas e contradições.
 
-Isso é revisão do desenho, não teste executável da futura integração. Não
-alteramos Rust, executamos testes, medimos latência ou chamamos o Ollama.
+## Implementação documental
 
-## Medição e explicação
+O contrato define uma consulta com `question`, `evidence` e `instructions` e
+um registro de tentativa separado. A tentativa deve ligar identidade, hashes,
+origem do dossiê, seleção, endpoint, modelo, limites, horários e resposta.
+O modelo é configurável; Qwen é o usado nos registros. DeepSeek permanece
+hipótese de avaliação futura, sem superioridade demonstrada ou troca realizada.
 
-A matriz tem **12 critérios: 3 implementados, 2 parciais e 7 pendentes**.
-A contagem não representa porcentagem de esforço. Os três implementados dizem
-respeito à base de evidências, testada até a Aula 23. As principais pendências
-estão no cliente, no registro de tentativas e no ciclo integrado.
+A topologia precisa ser explícita: cliente e Ollama no mesmo Windows podem
+usar o endereço de loopback. `localhost` de um ambiente remoto identifica esse
+ambiente, não o Windows. O contrato não estabelece uma ponte de rede automática.
 
-Não precisamos de banco de grafos ou otimização adicional do cache para fechar
-o contrato v1. Também não exigimos acerto perfeito do Qwen: precisamos conseguir
-identificar e avaliar erros com evidências, sem confundi-los com falhas de transporte.
-Os objetivos de CPU e cenas continuam posteriores ao fechamento dos engines,
-podendo servir como casos de validação quando necessário.
+## Passo a passo: revisar o contrato
 
-## Fechamento e próxima aula
+No editor, percorra o contrato e associe cada regra ao código ou ao teste que
+já a sustenta. Essa inspeção não modifica arquivos nem chama o modelo:
 
-A **Aula 24 está concluída como definição de contrato**, não como implementação
-da integração. Graph Engine e LLM Engine ainda não estão ambos fechados.
+1. Confira a seleção em `query_json` e a distinção entre consulta e instruções.
+2. Relacione as verificações das aulas 3–23 às fontes e aos testes existentes.
+3. Examine a matriz original e identifique o que ainda exigia um cliente HTTP.
+4. Separe uma exigência documentada de uma implementação e de uma execução observada.
 
-Na **Aula 25 — Primeira comunicação Rust–Ollama**, vamos definir a configuração
-de conexão, implementar o adaptador e testar uma chamada. Se a topologia exigir
-uma decisão do usuário, preparar a parte local e os testes independentes antes
-de depender da conexão real. Não presumir que o localhost do Codespaces seja
-o Ollama do Windows. A próxima aula continua dedicada aos engines, não inicia
-automaticamente os objetivos finais.
+As quatro situações centrais são: evidência inválida bloqueia envio; falha de
+comunicação não vira resposta avaliada; resposta recebida pode estar incompleta
+ou errada; status numa consulta antiga não equivale a reconferência atual.
+Não há execução automática de sugestões do modelo.
+
+## Critérios de aceitação na etapa original
+
+| ID | Exigência | Estado ao final da Aula 24 |
+| --- | --- | --- |
+| G1 | Recusar referências, hashes e linhas inválidas. | Implementado. |
+| G2 | Conferir captura versão 2 e ligação ao dossiê. | Implementado. |
+| G3 | Preservar IDs, contexto e limites, com reaproveitamento local. | Implementado. |
+| G4 | Conferir antes de enviar e registrar origem exata. | Pendente. |
+| L1 | Cliente Rust com endpoint e modelo configuráveis. | Pendente. |
+| L2 | Ligar entrada, resposta e configuração por identidade/hash. | Parcial. |
+| L3 | Testar falhas, timeout, limites e gravação. | Pendente. |
+| L4 | Configurar modelo sem alterar Graph Engine. | Pendente no cliente. |
+| I1 | Testar envio e falhas com servidor simulado. | Pendente. |
+| I2 | Executar ciclo real e avaliar com rubrica prévia. | Pendente. |
+| I3 | Registrar latência e tamanhos com escopo. | Pendente no cliente. |
+| I4 | Documentar reprodução, configuração e limites. | Parcial. |
+
+São **12 critérios: 3 implementados, 2 parciais e 7 pendentes**. A contagem não
+representa porcentagem de esforço. G1–G3 se apoiavam nos testes até a Aula 23;
+esta aula de contrato não executou novos testes, benchmark ou geração.
+
+## Validação e limites
+
+Fechar os engines exige evidência para cada critério e registro dos limites
+restantes. Não exige nota perfeita do Qwen: erros precisam ser preservados e
+identificados. Uma resposta correta isolada também não encerra o contrato.
+
+Banco de grafos, extração automática de fatos, otimização autônoma e geração de
+cenas não são requisitos dessa versão. Os objetivos posteriores registrados são
+performance do renderer em CPU e cenas por linguagem natural, após validar os
+engines. O contrato não é especificação externa da API Ollama.
+
+## Resultado da aula e próxima aula
+
+O ciclo possui requisitos examináveis. A
+[Aula 25](25-primeira-comunicacao-ollama.md) apresenta o preparador, o cliente HTTP,
+a primeira comunicação real registrada e o coordenador testado por simulação,
+sem confundir esses avanços com fechamento de todos os critérios.

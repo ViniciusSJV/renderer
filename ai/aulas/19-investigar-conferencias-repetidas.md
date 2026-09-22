@@ -1,89 +1,93 @@
 # Aula 19 — Investigar conferências repetidas
 
-## Conceito e previsão
+## Objetivo
 
-A Aula 18 mediu tempo total da CLI. Agora contamos trabalho lógico: chamadas
-de conferência e bytes entregues à aplicação nas leituras instrumentadas.
-Esses bytes não representam tráfego físico de disco: caches podem atender
-leituras repetidas. Não estamos medindo renderização.
+Observar contadores de chamadas e bytes instrumentados e distinguir trabalho
+lógico, tráfego físico de disco e tempo total.
 
-As [previsões](../experimentos/10-trabalho-repetido/previsoes.md) foram registradas
-antes das execuções. Com uma fonte e N fichas selecionadas, previmos N + 1
-conferências da captura: uma na validação inicial, outra para cada seleção.
+## Contexto e pré-requisitos
 
-## Implementação
+Use Linux/Bash, a compilação release e `aula18-medicao/input-1.json` da Aula 18.
+Todos os comandos partem da raiz. Não há dependência nova nem uso de Ollama.
+O ensaio anterior mediu a CLI inteira; isso não identifica sozinho o custo de
+cada componente.
 
-Criamos [metrics.rs](../../src/bin/validate_evidence/metrics.rs) e instrumentamos
-as leituras em validate_evidence.rs e capture.rs. Para ativar:
+## Implementação e conceitos
+
+[src/bin/validate_evidence/metrics.rs](../../src/bin/validate_evidence/metrics.rs)
+conta pontos instrumentados no validador e em seu módulo de captura. A variável
+`BIBLIOTECARIO_METRICS=1` ativa o relatório em stderr; o JSON exportado não recebe
+esses contadores. Sem valor 1, não há relatório, embora os pontos consultem a flag.
+
+| Categoria | O que conta |
+| --- | --- |
+| `capture_link`, `capture_validate` | Chamadas de conferência. |
+| `record_link_read`, `record_validate_read` | Leituras do JSON da captura. |
+| `source_content_read` | Leitura da fonte documental. |
+| `digest_calls` | Chamadas de hash de arquivo. |
+| `digest_chunks` | Blocos e bytes entregues nas leituras de hash. |
+
+Contadores de chamadas têm bytes zero, sem duplicar leituras no total. Leituras
+de dossiê/pergunta/parecer, metadados, escrita, parsing e alocações não estão
+inteiramente instrumentados. Bytes lógicos podem vir de caches e não equivalem
+a tráfego físico. O relatório é emitido no sucesso; erros com `process::exit`
+podem não produzi-lo.
+
+## Passo a passo
+
+Na raiz, rode a carga de uma ficha com instrumentação. A variável vale apenas
+para este processo; o comando lê fontes e cria `aula19-selecao.json`:
 
 ```bash
-BIBLIOTECARIO_METRICS=1 target/release/validate_evidence ai/experimentos/09-custo-conferencia/baseline/input-1.json --fact BENCH_0 --context 1 --output /tmp/aula19-exemplo-novo.json
+BIBLIOTECARIO_METRICS=1 target/release/validate_evidence aula18-medicao/input-1.json --fact BENCH_0 --context 1 --output aula19-selecao.json
 ```
 
-O destino deve ser novo. A linha `BIBLIOTECARIO_METRICS` vai para stderr com JSON;
-a exportação das fichas permanece intacta. Sem a variável igual a 1, não há
-contagem nem relatório, embora os pontos instrumentados ainda consultem a flag.
+Observe a linha de métricas no terminal e a seleção no arquivo. Com a versão
+atual e uma fonte ligada à captura, são duas conferências completas: fase inicial
+e exportação. Os bytes dependem da captura local. Não espere os tamanhos históricos.
 
-Categorias:
+Execute a suíte na raiz para conferir as regras que sustentam o fluxo. Cargo
+grava em `target` e os testes usam fixtures; não fazem geração de modelo:
 
-- `capture_link` e `capture_validate`: chamadas de conferência.
-- `record_link_read` e `record_validate_read`: leituras completas do JSON.
-- `source_content_read`: leitura do conteúdo da fonte documental.
-- `digest_calls`: chamadas da função que lê e calcula hash de arquivo.
-- `digest_chunks`: blocos e bytes retornados nessas leituras de hash.
+```bash
+cargo test --locked --bin validate_evidence
+```
 
-Contadores de chamadas têm bytes zero; não representam leituras adicionais.
-O total soma somente as quatro categorias de bytes, sem contar chamadas duas
-vezes. Leituras de dossiê/pergunta/parecer, metadados, escrita, alocações e custo
-de parsing não estão instrumentados. O relatório é emitido ao concluir com
-sucesso; saídas por erro via process::exit não o emitem. Não usamos essas
-contagens como diagnóstico completo de execuções interrompidas.
+A versão instrumentada original passou em **72 testes**. Na árvore atual o
+total é maior; procure falhas, não equivalência da contagem de testes.
 
-## Teste e medição
+## Previsão e observação históricas
 
-Os **72 testes do Bibliotecário passaram**. Depois compilamos release e rodamos
-as três cargas preservadas da Aula 18, cada uma em um processo separado.
-Conferimos por assertions todas as fórmulas previstas e hashes das exportações.
-Um teste adicional pela CLI sem a variável confirmou stderr vazio e a mesma
-exportação. Não cronometramos a versão instrumentada.
+As [previsões](../experimentos/10-trabalho-repetido/previsoes.md) esperavam N + 1
+conferências para N fichas de uma fonte. Os
+[registros de contagem](../experimentos/10-trabalho-repetido/contagens.json)
+confirmaram isso na versão anterior ao reaproveitamento:
 
-| Fichas | Conferências de captura | Chamadas de hash de arquivo | Bytes instrumentados |
+| Fichas | Conferências | Chamadas de hash | Bytes instrumentados |
 | --- | --- | --- | --- |
 | 1 | 2 | 12 | 41.880 |
 | 10 | 11 | 66 | 227.910 |
 | 100 | 101 | 606 | 2.088.210 |
 
-Todas as previsões corresponderam às contagens. As três exportações tiveram
-SHA-256 idêntico ao registrado na Aula 18. Os resultados completos estão em
-[contagens.json](../experimentos/10-trabalho-repetido/contagens.json).
-Cada carga tem uma captura própria, RUN_COUNTS_1_1, RUN_COUNTS_10_1 e
-RUN_COUNTS_100_1, com comando exato, ambiente parcial, hashes e saída. Os hashes
-selecionados incluem o executável e os arquivos de instrumentação.
+Nessa carga, cada conferência calculava hashes de saída e cinco fontes, e o
+registro era lido em dois pontos. A expressão observada para bytes foi
+540 + (N + 1) × 20.670, específica daqueles arquivos. As exportações preservaram
+os hashes da Aula 18; uma execução sem métricas também preservou a saída.
 
-## Explicação
+## Validação e limites
 
-Há trabalho repetido observado: para 100 fichas de uma única fonte, conferimos
-a mesma captura 101 vezes. Cada uma das 101 conferências calcula hashes de
-seis arquivos: saída e cinco fontes associadas. O JSON da captura também é
-lido em dois pontos por ligação: identidade/hash e conferência interna.
+A árvore atual já reutiliza conferências: selecionar muitas fichas não deve
+ser apresentado como reprodução do N + 1 histórico. Uma nova medição descreve
+a implementação atual e exige registrar essa diferença.
 
-A relação observada para bytes dessas cargas é **540 + (N + 1) × 20.670**.
-Ela depende dos tamanhos desses arquivos e desse fluxo; não é uma fórmula
-geral para qualquer dossiê. Não é possível atribuir uma porcentagem do tempo
-da Aula 18 aos hashes com esses contadores. Não demonstramos que eles sejam
-o maior gargalo e ainda não fizemos otimização.
+Se não aparecerem métricas, confira valor da variável e sucesso da CLI antes
+de interpretar ausência como zero operações. Uma captura divergente impede
+exportação. Esses contadores confirmam repetição, mas não atribuem a ela uma
+porcentagem do tempo nem demonstram o maior gargalo. Não houve cronômetro nesta
+etapa histórica.
 
-## Fechamento e próxima aula
+## Resultado da aula e próxima aula
 
-A **Aula 19 está concluída**: previsão, instrumentação, testes e contagens
-confirmaram repetição, preservando os bytes exportados. Os registros históricos
-foram mantidos; recompilar o binário pode causar divergência com o hash de
-executáveis de capturas anteriores, sem refutar suas observações históricas.
-As notas das aulas 10 e 17 permanecem 3/6; o envio ao Ollama continua manual.
-Não há comprovação retroativa de RUN_VECTOR_1.
-
-Na **Aula 20 — Reaproveitar a conferência dentro de uma exportação**, propomos
-definir o escopo de reutilização por fonte e seus limites diante de arquivos
-mutáveis. Depois implementaremos, conferiremos equivalência das exportações
-e repetiremos contagens e medições antes de afirmar ganho. Não criaremos
-confiança permanente em um arquivo apenas por ele ter sido conferido antes.
+Trabalho repetido tem evidência própria, separada de latência. A
+[Aula 20](20-reaproveitar-conferencia.md) delimita o reaproveitamento por fonte
+e examina uma comparação histórica de tempo e equivalência.

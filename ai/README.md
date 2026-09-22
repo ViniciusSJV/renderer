@@ -1,307 +1,214 @@
-# Laboratório de IA e performance
+# Laboratório de IA, evidências e performance
 
-## O projeto
+Este laboratório usa um ray tracer em Rust baseado em *The Ray Tracer Challenge*
+para estudar código, testes, medições e explicações de um modelo local. As 25
+aulas formam uma sequência: configurar o modelo, atomizar informações, conferir
+referências, registrar execuções, investigar custos e realizar a primeira
+comunicação Rust–Ollama.
 
-Este laboratório acompanha o ray tracer em Rust baseado em *The Ray Tracer
-Challenge*, de Jamis Buck. O README principal registra capítulos 1–15
-concluídos e 16–17 pendentes. Queremos aprender implementando, com atenção
-especial a algoritmos e performance.
+## Objetivos e arquitetura
 
-**Condensar fatos a partir de vapores de nuances.**
+O objetivo imediato é construir um ciclo verificável de explicação:
 
-A arquitetura que estamos explorando divide responsabilidades:
-
-- **Graph Engine — “Testa sem explicar”:** fatos, relações, contexto,
-  evidências, testes, benchmarks e validação.
-- **LLM Engine — “Explica sem interpretar”:** explica as evidências recebidas,
-  distinguindo fatos, inferências e hipóteses.
-
-O Codex é parceiro de desenvolvimento e estudo. O Qwen local, via Ollama,
-é parte da arquitetura que estamos aprendendo a construir.
-
-Cada aula segue conceito → implementação → teste → medição → explicação.
-Ao estudar performance, priorizamos complexidade, estruturas de dados,
-alocações, localidade de cache, SIMD quando aplicável e paralelismo.
-Uma otimização só será chamada de mais rápida com evidência mensurável.
-
-## Ambiente
-
-O repositório está no Codespaces `silver guide`, em `/workspaces/renderer-local`.
-O Ollama roda no Windows, com `qwen2.5-coder:14b`. O localhost desses ambientes
-é diferente. Ainda não construímos uma integração entre o projeto remoto e o
-Ollama local; os exemplos são enviados manualmente ao modelo.
-
-## O que fizemos
-
-Na [Aula 1](aulas/01-modelfile-ollama.md), criamos o
-[Modelfile](ollama/Modelfile), com temperatura 0, semente 42, contexto de 4096
-tokens e saída limitada a 1024 tokens. O SYSTEM orienta o domínio técnico e
-a separação entre FACT, INFERENCE e HYPOTHESIS.
-
-O arquivo foi copiado para o Windows e registrado com sucesso como
-`renderer-analyst`. Para iniciar uma conversa no PowerShell:
-
-```powershell
-ollama run renderer-analyst
+```text
+Fonte → ficha → conferência → seleção/contexto → consulta
+                                                   ↓
+Avaliação manual ← resposta preservada ← modelo via Ollama
 ```
 
-O modelo pode ser iniciado de qualquer pasta. Isso não lhe dá acesso automático
-aos arquivos do projeto. Alterações no Modelfile precisam ser registradas
-novamente com `ollama create` no ambiente do Ollama.
+- **Graph Engine — “Testa sem explicar”:** organiza fontes, fichas e relações;
+  confere referências, hashes, capturas e limites; executa testes e medições.
+- **LLM Engine — “Explica sem interpretar”:** explica o material recebido,
+  distinguindo fato, inferência e hipótese, sem apresentar deduções como observações.
 
-Nos primeiros testes, o Qwen seguiu os rótulos, mas presumiu uma representação
-de cores, recomendou AtomicU32 sem conhecer o código e confundiu disputa pela
-trava com escrita no mesmo pixel. Reconheceu algumas lacunas quando questionado,
-mas manteve contradições. Configurar o comportamento não garante correção.
+`Source` é a obra; `lines` são os trechos numerados; `Fact` é a ficha com uma
+afirmação e um endereço. Não existe um tipo Rust separado chamado `Lines`.
+Uma referência válida não significa que a evidência sustenta a afirmação.
+Evidência não é conclusão, código não é execução e resposta não é validação.
 
-Na [Aula 2](aulas/02-evidencias-atomizadas.md), reduzimos o exemplo a duas
-tarefas que escrevem em pixels distintos usando o mesmo mutex. A resposta
-acertou as cinco conclusões principais, mas ainda apresentou justificativas
-problemáticas: uma nota sobre conclusões não descreve a resposta inteira.
+Os objetivos posteriores registrados são otimizar o renderer em CPU com
+profiling, correção e benchmarks e criar cenas por linguagem natural a partir
+de uma estrutura validada. Nenhum desses objetivos está concluído pela integração
+com Ollama. Os ganhos medidos nas aulas são do Bibliotecário, não do renderer.
 
-Criamos então [evidencias.json](experimentos/02-mutex/evidencias.json), com uma
-fonte de pseudocódigo, cinco fatos identificados e uma lista de informações
-desconhecidas. Cada fato aponta para uma linha da fonte. A estrutura do JSON,
-a unicidade dos IDs e a existência das referências foram verificadas.
+## Pré-requisitos gerais
 
-No teste com esse JSON, o Qwen recebeu **4/5** nos critérios definidos antes
-da resposta. Citou fatos pertinentes, mas acrescentou uma ordem de execução
-não fornecida: A antes de B. Uma referência existente pode acompanhar uma
-dedução que ela não sustenta.
+| Recurso | Uso e momento |
+| --- | --- |
+| Git, editor e terminal | Obter e inspecionar o projeto, desde a Aula 1. |
+| Ollama e Qwen | Experimentos manuais desde a Aula 1; cliente Rust na Aula 25. |
+| Rust, Cargo e linker do sistema | Compilar e testar a partir da Aula 3. |
+| Linux/Bash e utilitários Unix | Capturas reutilizáveis a partir da Aula 13. |
+| Python 3, biblioteca padrão | Montar dossiê/cargas locais nas aulas 16 e 21; sem pip. |
+| PowerShell no Windows | Roteiro da chamada real Ollama na Aula 25. |
 
-Essas avaliações são manuais e descrevem as respostas examinadas. Não provam
-confiabilidade geral nem superioridade do JSON sobre texto livre. Nas aulas 1 e 2, não rodamos
-testes Rust ou benchmarks do renderer e não medimos latência do Qwen.
+Os registros incluem Linux e Windows. O capturador é Unix e não compila
+nativamente no Windows. O cliente HTTP foi testado no Windows antes da extração
+final do módulo compartilhado; a versão final do coordenador foi testada em
+Linux com servidor simulado. WSL e instalação por Dev Container não têm
+procedimento validado no repositório.
 
-Na [Aula 3](aulas/03-bibliotecario-em-rust.md), construímos o Bibliotecário em
-[src/bin/validate_evidence.rs](../src/bin/validate_evidence.rs). Ele lê o JSON,
-confere IDs únicos, encontra fontes e verifica linhas. Referências inválidas
-resultam em código de saída 1. Ao fim da implementação, os 21 testes do binário
-passaram; não fizemos benchmark nem executamos a suíte completa do renderer.
+**Limite da preparação:** as fontes não preservam instaladores, bootstrap,
+requisitos de hardware do modelo ou uma versão mínima de Rust validada.
+As aulas indicam as ferramentas a instalar e as verificações de disponibilidade,
+mas não apresentam instalação externa como execução comprovada. Os registros
+citam Rust/Cargo 1.98.1 e Ollama 0.34.2; esses números não são versões mínimas.
 
-Também registramos um parecer do Qwen e implementamos a conferência de sua
-associação à ficha e ao trecho. O julgamento permanece uma análise do modelo;
-o programa não verifica sua correção semântica. A comunicação com o Ollama
-continua manual. A aula documenta os comandos e os experimentos reproduzíveis.
+## Obter e preparar o projeto
 
-Na [Aula 4](aulas/04-tuplas-codigo-e-evidencias.md), seguimos o livro a partir
-de `src/tuple.rs`, criando uma cópia identificada por hash e fichas manuais.
-O Bibliotecário agora compara arquivos atuais, hashes e linhas copiadas.
-Registramos uma execução do teste do vetor e reunimos duas fontes e sete fichas.
-Os 26 testes do validador passaram ao implementar essa etapa; não houve benchmark.
+Em um terminal com Git, a partir de uma pasta de projetos, clone para um destino
+novo. O comando baixa o repositório e cria a pasta:
 
-As consultas ao Qwen mostraram acertos, mas também omissão de referências e
-conclusões além das evidências. A aula registra a avaliação e seus limites.
+```bash
+git clone https://github.com/ViniciusSJV/renderer.git renderer-local
+```
 
-Na [Aula 5](aulas/05-selecao-e-contexto.md), adicionamos seleção por ID e
-exportação de uma ficha com contexto configurável por `--context`. Os 32 testes
-do binário passaram; duas exportações com os mesmos dados e parâmetros tiveram
-bytes idênticos. A aula registra comandos, artefatos e limites dessa observação.
+Entre na raiz; o comando muda somente o diretório do terminal:
 
-Na [Aula 6](aulas/06-metadados-das-fontes.md), preservamos `kind`, `executed`,
-`git_commit` e `authorship` na leitura e exportação. Campos ausentes permanecem
-sem informação; declarações não são promovidas a comprovações. Os 37 testes do
-binário passaram e duas exportações reais tiveram seus metadados conferidos.
+```bash
+cd renderer-local
+```
 
-Na [Aula 7](aulas/07-identidade-limites-e-consulta.md), preservamos identidade
-e questões abertas do dossiê e montamos a consulta com `--question`. Os 43 testes
-do binário passaram. Uma resposta do Qwen recebeu 2/5 em critérios definidos
-previamente; consulta, resposta e avaliação estão preservadas.
+O endereço é o remote público registrado. Um clone contém apenas o que foi
+publicado: se faltarem aulas ou binários, a edição remota ainda não contém toda
+a árvore descrita aqui. Alterações locais não são transferidas automaticamente.
+Confira `Cargo.toml`, `Cargo.lock`, `src`, `tests` e `ai` no editor.
 
-Na [Aula 8](aulas/08-codigo-nao-e-execucao.md), separamos fonte de código de
-registro de execução. As novas exportações de `rust_source` omitem `executed`;
-`ExecutionRecord` identifica uma execução e seus campos são comparados ao
-cabeçalho do relatório. A exportação informa quais campos foram conferidos e
-os limites dessa comparação. Os **53 testes do Bibliotecário passaram**.
-As consultas anteriores foram preservadas; não houve nova consulta ao Qwen
-nem benchmark.
+Comece pela Aula 1; Rust será preparado na Aula 3. Depois de instalá-lo, confirme
+na raiz a versão do compilador, sem modificar arquivos:
 
-Na [Aula 9](aulas/09-reunir-evidencias.md), passamos a selecionar várias fichas
-com `--fact ID` repetido e compartilhar janelas de contexto sobrepostas ou
-adjacentes da mesma fonte. As referências individuais e os limites de cada
-janela foram preservados. Os **60 testes do Bibliotecário passaram**. No exemplo
-com três fichas, 25 linhas de contexto nas janelas individuais passaram a 17
-nos blocos compartilhados; não medimos tokens, desempenho ou qualidade do Qwen.
+```bash
+rustc --version
+```
 
-Na [Aula 10](aulas/10-avaliar-codigo-e-resultado.md), preparamos uma consulta
-com código e resultado e seis critérios anteriores à resposta. A resposta
-recebida manualmente obteve **3/6**: reconheceu limites da macro e da conferência,
-mas inferiu inicialização correta sem suporte suficiente e confundiu o ID da
-fonte com o da execução. Consulta, critérios, resposta e justificativas estão
-preservados na [avaliação](experimentos/03-tuplas/avaliacao-codigo-e-resultado.json).
-Não houve alteração de Rust ou Modelfile, nova execução de testes ou benchmark.
+Confira também Cargo:
 
-Na [Aula 11](aulas/11-investigar-assert-equivalent.md), investigamos a cadeia
-`assert_equivalent!` → `not_equivalent` → `equivalent` para f64 → `EPSILON`.
-Criamos dez fichas e duas fontes novas em um dossiê separado. O Bibliotecário
-validou **4 fontes e 17 fichas, sem referências inválidas**. A leitura mostra
-uma tolerância absoluta estrita de `0.00001`; não houve novos testes da macro,
-consulta ao Qwen ou benchmark. Os artefatos anteriores foram preservados.
+```bash
+cargo --version
+```
 
-Na [Aula 12](aulas/12-observar-fronteira-tolerancia.md), registramos previsões
-e executamos quatro testes de integração da macro: pares iguais e abaixo de
-EPSILON foram aceitos; no limite e acima dele houve o pânico esperado.
-**4 testes passaram**, com código 0, em RUN_EQUIVALENCE_BOUNDARY_1.
-O novo dossiê contém **2 fontes e 8 fichas, sem referências inválidas**.
-Não houve benchmark nem nova consulta ao Qwen.
+Na Aula 3, obtenha as dependências do lockfile. Isso usa rede e grava cache:
 
-Na [Aula 13](aulas/13-captura-de-execucao.md), criamos um capturador reutilizável
-em Rust, com comando e argumentos, saída binária combinada, resultado e
-ambiente parcial. **8 testes passaram** e três exemplos registraram sucesso,
-código 7 e comando inexistente. O JSON novo ainda não é importado pelo
-Bibliotecário. Não houve benchmark nem nova consulta ao Qwen.
+```bash
+cargo fetch --locked
+```
 
-Na [Aula 14](aulas/14-associar-codigo-e-execucao.md), acrescentamos `--source`
-e hashes antes/depois ao capturador Rust, com formato versão 2 e hash da saída.
-**11 testes passaram**. RUN_EQUIVALENCE_BOUNDARY_2 registrou **4 testes aprovados**
-e **5 fontes com hashes iguais nas duas leituras**, sem comprovar as entradas
-reais do compilador. Os registros anteriores foram preservados.
+Compile o Bibliotecário. O comando grava em `target`, sem consultar o modelo:
 
-Na [Aula 15](aulas/15-conferir-registro-captura.md), o Bibliotecário ganhou
-`--capture` para conferir registros versão 2, saída e associações de fontes.
-**68 testes passaram**. A conferência de RUN_EQUIVALENCE_BOUNDARY_2 validou
-540 bytes de saída e cinco arquivos atuais correspondentes aos hashes
-posteriores. A conferência foi registrada em RUN_VALIDATE_CAPTURE_1.
+```bash
+cargo build --locked --bin validate_evidence
+```
 
-Na [Aula 16](aulas/16-levar-conferencia-ao-dossie.md), ligamos uma fonte de
-resultado à captura por caminho, SHA-256 e ID de execução. **72 testes passaram**.
-O novo dossiê teve **1 fonte e 2 fichas, sem referências inválidas**, e sua
-exportação inclui a conferência e os limites. Os registros anteriores foram
-preservados; não houve benchmark nem nova consulta ao Qwen.
+Sucesso confirma as ferramentas necessárias a esse alvo. `--locked` preserva a
+resolução do lockfile; `--offline` só deve ser usado com dependências já no cache.
+No Windows, selecione binários explicitamente para evitar o capturador Unix.
+Ausência de `link.exe` no alvo MSVC exige concluir a instalação das ferramentas
+de compilação; Rust disponível sozinho não garante linker disponível.
 
-Na [Aula 17](aulas/17-avaliar-explicacao-captura.md), preparamos seis critérios
-antes da resposta do Qwen. A resposta recebida manualmente foi preservada e
-recebeu **3/6**: distinguiu IDs e conferência, mas interpretou mal o pânico
-esperado, omitiu referências de fichas e atendeu parcialmente aos limites.
-Não é comparação controlada com a Aula 10, cuja nota permanece **3/6**.
+## Como acompanhar as aulas
 
-Na [Aula 18](aulas/18-medir-custo-conferencia.md), medimos a CLI release com
-1, 10 e 100 fichas da mesma captura. O medidor Rust passou em **2 testes**.
-Com 15 amostras por carga após aquecimento, as medianas foram **1,563 ms**,
-**3,558 ms** e **22,687 ms**. São tempos totais da CLI, incluindo exportação;
-não houve otimização, isolamento do custo de hashes ou ganho demonstrado.
-Protocolo, cargas e amostras estão em `experimentos/09-custo-conferencia/`.
+Leia em ordem e execute os comandos a partir da raiz, salvo indicação explícita.
+Cada aula apresenta o problema, a implementação existente, a prática e os limites
+da conclusão. O clone já contém a evolução do código: não é necessário substituir
+fontes por recortes didáticos nem reconstruir cada versão antiga.
 
-Na [Aula 19](aulas/19-investigar-conferencias-repetidas.md), instrumentamos as
-conferências. **72 testes passaram**. Para 1, 10 e 100 fichas, observamos 2, 11
-e 101 conferências de captura, com 41.880, 227.910 e 2.088.210 bytes nas leituras
-instrumentadas. As exportações preservaram os hashes da Aula 18. Confirmamos
-trabalho repetido, sem medir sua participação no tempo nem otimizar.
+Resultados com notas, tempos e contagens históricas descrevem as versões e entradas
+registradas. A implementação atual pode exportar mais campos ou fazer menos
+leituras. Não use resultados antigos como saída prometida de comandos atuais.
+Uma nova resposta recebe avaliação própria, com critérios anteriores à geração.
 
-Na [Aula 20](aulas/20-reaproveitar-conferencia.md), reutilizamos a conferência
-por fonte dentro de uma exportação, sem cache entre comandos. **73 testes
-passaram**. As cargas de 1, 10 e 100 fichas passaram a duas conferências cada,
-com exportações idênticas. Na comparação local, as medianas de 10 e 100 fichas
-caíram de 3,619 e 26,513 ms para 2,044 e 5,997 ms; uma ficha não melhorou.
-Esses resultados não garantem ganho em outros ambientes ou cargas.
+Use destinos novos para exportações e tentativas. A partir da Aula 14, a prática
+produz uma captura local; a Aula 16 liga essa captura a um dossiê novo, usado nos
+ensaios seguintes. Isso permite executar sem reescrever hashes e caminhos das
+capturas históricas. Alterar os arquivos observados pode impedir nova conferência.
 
-Na [Aula 21](aulas/21-testar-varias-fontes.md), distribuímos 100 fichas entre
-1, 10 e 100 fontes documentais da mesma captura. Observamos **2, 20 e 200
-conferências**, confirmando o escopo por fonte. Uma ligação inválida foi recusada
-sem exportação; os testes de identidade e equivalência de saída passaram.
-Não alteramos Rust nem medimos tempo; as fontes não representam arquivos únicos.
+## Índice das aulas
 
-Na [Aula 22](aulas/22-separar-fonte-e-captura.md), separamos a conferência do
-documento de captura da ligação e validação da fonte. **74 testes passaram**.
-As exportações e contagens das cargas da Aula 21 permaneceram iguais; a ligação
-inválida continuou recusada. Não implementamos cache por captura nem medimos tempo.
+| Aula | Conteúdo |
+| --- | --- |
+| [1 — Entendendo o Modelfile do Ollama](aulas/01-modelfile-ollama.md) | Obtenção do projeto, modelo configurado, categorias e limites das instruções. |
+| [2 — Evidências pequenas e critérios explícitos](aulas/02-evidencias-atomizadas.md) | Atomização do exemplo de mutex e avaliação de referências e premissas. |
+| [3 — Construindo o Bibliotecário em Rust](aulas/03-bibliotecario-em-rust.md) | Preparação Rust/Cargo, estruturas, JSON e validação estrutural. |
+| [4 — Uma obra real: tuplas, código e evidências](aulas/04-tuplas-codigo-e-evidencias.md) | Tuplas, hashes de fontes e distinção entre procedimento e resultado. |
+| [5 — Seleção e contexto pelo Bibliotecário](aulas/05-selecao-e-contexto.md) | Seleção por ID, janela de linhas e exportação sem sobrescrita. |
+| [6 — Preservar a natureza e a procedência declarada das fontes](aulas/06-metadados-das-fontes.md) | Metadados opcionais e diferença entre declaração e comprovação. |
+| [7 — Identidade, limites e uma consulta avaliável](aulas/07-identidade-limites-e-consulta.md) | Identidade do dossiê, questões abertas, pergunta e avaliação histórica 2/5. |
+| [8 — Código não é execução](aulas/08-codigo-nao-e-execucao.md) | Registro identificado e comparação de campos com o cabeçalho. |
+| [9 — Reunir evidências sem misturar seus papéis](aulas/09-reunir-evidencias.md) | Seleção múltipla e união de janelas sem misturar fontes. |
+| [10 — Avaliar uma consulta com código e resultado](aulas/10-avaliar-codigo-e-resultado.md) | Rubrica prévia, identidade e sustentação; avaliação histórica 3/6. |
+| [11 — Investigar assert_equivalent!](aulas/11-investigar-assert-equivalent.md) | Cadeia da macro à tolerância absoluta estrita de f64. |
+| [12 — Observar a fronteira da tolerância](aulas/12-observar-fronteira-tolerancia.md) | Quatro testes e significado de aprovação com pânico esperado. |
+| [13 — Captura de execução](aulas/13-captura-de-execucao.md) | Capturador Unix, saída binária e distinção dos códigos de término. |
+| [14 — Associação entre código e execução](aulas/14-associar-codigo-e-execucao.md) | Captura local com hashes antes/depois, sem prova de compilação. |
+| [15 — Conferir o registro de captura](aulas/15-conferir-registro-captura.md) | Conferência do formato 2, saída e arquivos atuais. |
+| [16 — Levar a conferência ao dossiê](aulas/16-levar-conferencia-ao-dossie.md) | Dossiê local, ligação à captura e exportação dos limites. |
+| [17 — Avaliar a explicação da captura](aulas/17-avaliar-explicacao-captura.md) | Avaliação de identidades, pânico e autenticação; histórico 3/6. |
+| [18 — Medir o custo da conferência](aulas/18-medir-custo-conferencia.md) | Medidor Rust, aquecimento, amostras e custo total da CLI. |
+| [19 — Investigar conferências repetidas](aulas/19-investigar-conferencias-repetidas.md) | Instrumentação de chamadas e bytes lógicos, separada de latência. |
+| [20 — Reaproveitar a conferência dentro de uma exportação](aulas/20-reaproveitar-conferencia.md) | Cache por fonte e limites da comparação histórica de tempo. |
+| [21 — Testar o reaproveitamento com várias fontes](aulas/21-testar-varias-fontes.md) | Cargas locais com 100 fichas e ligação inválida. |
+| [22 — Separar fonte documental de captura compartilhada](aulas/22-separar-fonte-e-captura.md) | Responsabilidades e identidade composta da captura. |
+| [23 — Reaproveitar a captura entre fontes](aulas/23-reaproveitar-captura-entre-fontes.md) | Cache local por captura, verificações individuais e contagens. |
+| [24 — Contrato e critérios de conclusão dos engines](aulas/24-contrato-dos-engines.md) | Doze critérios para distinguir implementação, transporte e avaliação. |
+| [25 — Primeira comunicação Rust–Ollama](aulas/25-primeira-comunicacao-ollama.md) | Preparação, serviço/modelo, requisição, resposta, registros e integração simulada. |
 
-Na [Aula 23](aulas/23-reaproveitar-captura-entre-fontes.md), reutilizamos o
-documento de captura entre fontes dentro da exportação, preservando verificações
-individuais. **76 testes passaram**. Com 1, 10 e 100 fontes, as conferências
-completas passaram de 2, 20 e 200 para **2, 11 e 101**; exportações idênticas.
-Não medimos tempo nem implementamos compartilhamento na validação inicial.
+## Estrutura, dependências e comandos gerais
 
-Na [Aula 24](aulas/24-contrato-dos-engines.md), documentamos o
-[contrato v1 dos engines](contratos/engines-v1.md): responsabilidades, entradas,
-saídas, falhas e 12 critérios de conclusão (3 implementados, 2 parciais e 7
-pendentes). Não implementamos a integração nem executamos testes nesta aula.
+`src/lib.rs` reúne a biblioteca do renderer; seus módulos contêm testes unitários.
+`src/bin` contém executáveis do livro e do laboratório; `tests` contém testes de
+integração. `ai/experimentos` preserva dados, consultas, respostas, capturas e
+medições; `ai/ollama/Modelfile` configura o modelo; `ai/contratos` registra o contrato.
 
-## Ponto de retomada
+`Cargo.toml` declara Rayon, itertools e png para o renderer; serde/serde_json
+para dados; sha2 para hashes; reqwest para HTTP. `Cargo.lock` fixa as versões
+resolvidas. Cargo obtém essas dependências; não é preciso instalá-las manualmente.
 
-A **Aula 24 está concluída** e a [Aula 25 — Primeira comunicação Rust–Ollama](aulas/25-primeira-comunicacao-ollama.md)
-está **em andamento**. O preparador Rust `prepare_ollama` monta a requisição sem
-enviar nem reconferir evidências; **3 testes passaram**. Seguimos com Windows
-nativo: o usuário informou Rust/Cargo 1.98.1, Ollama 0.34.2 em execução local
-e os modelos renderer-analyst:latest e qwen2.5-coder:14b disponíveis. O próximo
-passo é levar o código do Codespaces para uma cópia no Windows. Depois
-implementaremos o transporte HTTP e testaremos uma chamada real. O capturador
-ainda é Unix; os engines ainda não estão fechados.
+Após preparar Rust, execute a suíte da biblioteca na raiz. O comando compila e
+usa `target`; não inicia Ollama nem os executáveis de cenas:
 
-O envio continua manual até a integração funcionar. Qwen é o modelo atual;
-DeepSeek permanece uma possibilidade sujeita a avaliação. As notas das aulas
-10 e 17 permanecem **3/6**. Seguimos os engines primeiro, sem comprovação
-retroativa de RUN_VECTOR_1 ou promessa de snapshot atômico.
+```bash
+cargo test --locked --lib
+```
 
-## Roteiro acordado — engines antes dos objetivos
+Para o Bibliotecário, selecione seu binário de testes:
 
-Manter o desenvolvimento em Rust e o **Ollama como meio de execução do modelo**.
-O modelo atual é o Qwen; o usuário pode optar por substituí-lo por **DeepSeek
-via Ollama**, buscando melhor desempenho em tarefas de Rust e análise de
-performance. Essa vantagem é uma hipótese a avaliar com tarefas, critérios e
-configurações registrados, não um resultado já demonstrado pelo laboratório.
-Não houve troca de modelo. Não introduzir outros serviços de IA como dependência.
+```bash
+cargo test --locked --bin validate_evidence
+```
 
-O Graph Engine organiza e confere evidências; o LLM Engine consulta o modelo
-configurado no Ollama e preserva suas explicações como respostas sujeitas a
-avaliação. Planejar a integração com seleção explícita do modelo, registrando
-sua identificação e configuração em cada consulta para permitir uma futura
-troca sem reescrever o Graph Engine. O modelo não substitui validação
-determinística, testes ou benchmarks.
+Observe os resumos de aprovação e investigue falhas. Os comandos de captura,
+benchmark e HTTP aparecem nas aulas correspondentes com entradas e destinos
+explícitos; não devem ser executados antes de seus pré-requisitos.
 
-Seguimos conceito → implementação → teste → medição → explicação. Não refazer
-etapas concluídas. Atualizar o ponto de retomada e apresentar a próxima aula
-a cada fechamento.
+## Estado ao final da Aula 25
 
-| Etapa | Trabalho previsto | Condição para avançar |
-| --- | --- | --- |
-| Aula 22 — concluída | Separar verificações da fonte documental e da captura compartilhada. | Responsabilidades separadas, identidade e limites propostos; 74 testes passaram. |
-| Aula 23 — concluída | Reaproveitar a captura entre fontes na mesma exportação. | 76 testes passaram; exportações preservadas e contagens reduzidas. |
-| Aula 24 — concluída | Consolidar contrato e critérios de conclusão dos engines. | Contrato v1 documentado, integração ainda pendente. |
-| Aula 25 | Primeira comunicação Rust–Ollama. | Configuração explícita, adaptador testado e chamada registrada. |
-| Aulas seguintes — Graph Engine | Concluir as etapas decorrentes dessa investigação e explicitar contrato, lacunas e critérios de conclusão dos engines. | Conferências e limites testados; contrato e critérios verificáveis documentados. |
-| Integração com Ollama | Implementar comunicação Rust → Ollama → modelo configurado (Qwen inicialmente), considerando Codespaces e Windows. | Consulta e resposta reais registradas; conexão e modelo explícitos. |
-| Validação integrada | Testar o ciclo completo e falhas de comunicação, resposta e validação. | Evidências conferidas → consulta → resposta preservada → avaliação reproduzível. |
-| Aulas seguintes, se necessárias | Fechar as lacunas encontradas no Graph Engine e no LLM Engine. | Critérios de conclusão atendidos e limites registrados. |
-| Após fechar os dois engines | Aplicar o conjunto ao desempenho do Ray Tracer em CPU. | Profiling, testes e benchmarks sustentam cada melhoria proposta. |
-| Depois, seguindo a sequência acordada | Criar cenas por linguagem natural. | Descrição → modelo via Ollama → estrutura validada → objetos do renderer → renderização. |
+O Bibliotecário confere referências, conteúdo e capturas, exporta contexto e
+preserva origem. O cliente Rust registra requisição, resposta e diagnósticos.
+Uma chamada real Windows teve HTTP 200, estado `completed`, 7,683 s no cliente
+e avaliação retrospectiva 3/6, com originais conferidos. Esses dados descrevem
+uma tentativa, não confiabilidade geral do modelo.
 
-A numeração é uma previsão de escopo: podemos dividir aulas para aprender com
-calma. **A Aula 25 não marca uma mudança automática para os objetivos**; a
-transição depende do fechamento dos dois engines, mesmo que exija mais aulas.
+O coordenador une conferência/exportação e envio com rubrica anterior à resposta,
+origem e seleção. A suíte desses componentes tem 99 testes aprovados no registro
+final Linux, com dois gravadores ignorados por padrão. A integração preservada
+é simulada: não comprova um ciclo real completo no Windows.
 
-### O que significa fechar os engines
+## Limites e próximos passos registrados
 
-Fechar significa ter uma versão funcional, integrada, testada e documentada para
-o escopo acordado, com limites conhecidos. Não significa resolver toda evolução
-futura nem garantir que o modelo sempre explique corretamente. Detalharemos
-os critérios e casos de aceitação ao longo das próximas aulas, preservando
-a continuidade da Aula 21, a partir desta base:
+Conferência não autentica execução, não garante snapshot atômico, não comprova
+entradas do compilador nem valida semanticamente fichas ou respostas. Não há
+banco de grafos, extração geral de fatos ou geração de cenas por texto.
+A captura histórica ligada à Aula 17 é recusada na árvore atual porque
+Cargo.toml mudou; seus hashes não foram reescritos.
 
-- **Graph Engine:** registrar e conferir fontes, fichas, execuções e suas
-  relações; selecionar/exportar evidências com identidade e limites; detectar
-  inconsistências previstas e demonstrar o comportamento com testes.
-- **LLM Engine:** enviar consultas ao modelo configurado no Ollama, preservar entradas,
-  respostas e configuração informada, tratar falhas e respostas incompletas,
-  e avaliar explicações por critérios definidos antes das respostas.
-- **Integração:** executar o ciclo completo em casos reais e em casos de falha,
-  distinguindo conferência, resultado do comando e interpretação do modelo;
-  registrar medições pertinentes sem afirmar ganhos não demonstrados.
+O adaptador HTTP não usa autenticação, HTTPS, proxy ou retries automáticos.
+Timeout cobre HTTP; o subprocesso validador do coordenador ainda não tem prazo
+próprio. `completed` não significa explicação correta nem processamento integral
+comprovado do contexto. Configuração do modelo não garante resposta determinística.
 
-Ainda não há banco de grafos nem extração automática de afirmações. A necessidade
-dessas capacidades deve decorrer do contrato; o nome Graph Engine não exige,
-por si só, acrescentá-las antes de avançar. A integração automática com o Ollama
-continua pendente: o envio foi manual até a Aula 21.
-
-### Objetivos finais preservados
-
-1. **Otimizar a renderização em CPU, sem RTX/GPU:** escolher cargas reais, fazer
-   profiling, identificar gargalos, implementar melhorias e comparar correção e
-   desempenho. Os ganhos medidos até aqui são do Bibliotecário, não do renderer.
-2. **Criar cenas por linguagem natural:** o modelo via Ollama produz uma descrição estruturada;
-   o programa valida estrutura e regras do domínio antes de construir World,
-   câmera, objetos, materiais e luzes e renderizar. Esse fluxo ainda não existe.
-
-Podemos trabalhar em partes desses objetivos durante as aulas dos engines para
-validá-los com exemplos reais. Isso não altera a prioridade: primeiro fechar
-os engines, depois concentrar o desenvolvimento nos objetivos finais.
+A próxima etapa registrada é a Aula 26: executar o coordenador real no Windows
+com dossiê atual e rubrica prévia, preservar e avaliar a resposta e revisar os
+critérios pendentes do [contrato](contratos/engines-v1.md). Depois do fechamento
+dos engines, o roteiro prevê performance CPU e cenas por linguagem natural.
+Uma futura avaliação de DeepSeek via Ollama é hipótese, sem troca realizada nem
+vantagem demonstrada sobre o Qwen.

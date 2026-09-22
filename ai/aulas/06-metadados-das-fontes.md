@@ -1,106 +1,91 @@
 # Aula 6 — Preservar a natureza e a procedência declarada das fontes
 
-## Conceito
+## Objetivo
 
-O Bibliotecário já entregava uma ficha com trecho, endereço e hash. Porém,
-deixava no acervo algumas etiquetas importantes: a natureza da obra, a declaração
-de execução e a autoria da ficha. Uma informação existente no dossiê desaparecia
-na desserialização, antes de chegar à consulta.
+Verificar o transporte de metadados do dossiê à exportação sem transformar
+classificação, autoria ou commit declarados em comprovação.
 
-Nosso objetivo nesta aula foi preservar quatro campos já usados nos exemplos,
-sem transformar essas declarações em provas e sem criar todas as abstrações
-futuras de observação, hipótese e experimento.
+## Contexto e pré-requisitos
 
-## Implementação
+Use o ambiente da Aula 3 e a seleção da Aula 5. O problema desta etapa é a perda
+de etiquetas durante a desserialização: o arquivo continha informações que as
+estruturas iniciais não carregavam. Não é necessário instalar outra dependência
+nem executar Ollama. Todos os comandos partem da raiz.
 
-Em [validate_evidence.rs](../../src/bin/validate_evidence.rs), acrescentamos:
+## Conceitos e implementação
+
+Em [validate_evidence.rs](../../src/bin/validate_evidence.rs), os campos opcionais
+permitem distinguir informação fornecida de informação ausente:
 
 | Estrutura | Campo | Tipo |
 | --- | --- | --- |
-| Source | kind | Option<String> |
-| Source | executed | Option<bool> |
-| Source | git_commit | Option<String> |
-| Fact | authorship | Option<String> |
+| `Source` | `kind` | `Option<String>` |
+| `Source` | `executed` | `Option<bool>` |
+| `Source` | `git_commit` | `Option<String>` |
+| `Fact` | `authorship` | `Option<String>` |
 
-Todos atravessam o caminho dossiê → estrutura Rust → seleção JSON.
+`kind` é texto livre, como `rust_source`, `test_run` ou `pseudocode`, não uma
+categoria semanticamente validada. `Some(true)`, `Some(false)` e `None` são
+três situações distintas. Ausência ou `null` não equivalem a falso; a string
+`"false"` não é o booleano `false` e é recusada na leitura.
 
-`kind` preserva a categoria declarada, como rust_source, test_run ou pseudocode.
-Ainda é texto livre: não há enumeração fechada nem validação de significado.
-Isso permite estudar a preservação sem decidir agora todo o vocabulário futuro.
+O código não deduz execução pela palavra “ok” no trecho. Commit e autoria são
+preservados, mas não autenticados. `metadata_scope` comunica esse limite.
 
-`executed` precisa distinguir três situações:
+## Evolução que precisa permanecer visível
 
-- `Some(true)`: o dossiê declara execução.
-- `Some(false)`: o dossiê declara que não houve execução.
-- `None`: informação ausente ou null no JSON.
+Na etapa original, SRC_TUPLE exportava `executed: false` por ser fonte de código;
+TEST_VECTOR_1 exportava `executed: true` por ser registro de teste. Essa convenção
+não descrevia adequadamente as várias execuções possíveis de um mesmo código.
 
-Ausência não equivale a false. Também não inferimos test_run ou executed a
-partir de um trecho que contenha a palavra “ok”. A String "false" não é o booleano
-false e é rejeitada ao carregar esse campo.
+**Na versão atual, `rust_source` já omite `executed` na exportação**, mudança
+explicada na Aula 8. A leitura do campo legado continua possível. Para observar
+a versão antiga, consulte os artefatos preservados; não altere o programa atual
+para obter a saída antiga.
 
-O commit e a autoria também são declarações preservadas. O programa não confirma
-que o arquivo pertence ao commit, nem que a autoria declarada está correta.
-O campo metadata_scope da exportação explica esse limite.
+## Passo a passo
 
-No exemplo, SRC_TUPLE tem executed false porque representa a fonte de código,
-não um registro de execução. Isso não significa que esse código nunca rodou.
-TEST_VECTOR_1 tem executed true porque representa o registro de um teste.
-Essa convenção não é ainda um modelo formal de execuções.
-
-## Testes
-
-Os testes adicionados nesta aula verificam:
-
-1. Preservação do tipo declarado, inclusive uma categoria ainda desconhecida.
-2. Ausência de inferência de tipo quando o campo não existe.
-3. Distinção entre true, false e informação ausente.
-4. Preservação da autoria e do commit declarados.
-5. Rejeição de texto onde se espera um booleano.
-
-Executamos `cargo test --offline --bin validate_evidence`: **37 testes passaram**.
-Esse total inclui os testes das aulas anteriores. Também executamos duas
-exportações reais e conferimos seus campos.
-
-## Experimento
-
-Na raiz do projeto, usando caminhos de saída ainda inexistentes:
+Na raiz, exporte a ficha de código para um destino novo. O comando lê dossiê e
+fontes, cria a exportação e pode compilar em `target`:
 
 ```bash
-cargo run --bin validate_evidence -- ai/experimentos/03-tuplas/evidencias.json --fact F_VECTOR_TEST_X --context 4 --output consulta-codigo.json
-cargo run --bin validate_evidence -- ai/experimentos/03-tuplas/evidencias.json --fact F_VECTOR_TEST_PASSED --context 4 --output consulta-execucao.json
+cargo run --locked --bin validate_evidence -- ai/experimentos/03-tuplas/evidencias.json --fact F_VECTOR_TEST_X --context 4 --output aula06-codigo.json
 ```
 
-Os resultados produzidos durante a aula estão preservados em:
+No editor, confira `kind`, `git_commit`, autoria e os textos de escopo. Não
+espere o booleano de execução na fonte Rust da versão atual.
 
-- [consulta-vector-x-metadados.json](../experimentos/03-tuplas/consulta-vector-x-metadados.json)
-- [consulta-teste-vector-metadados.json](../experimentos/03-tuplas/consulta-teste-vector-metadados.json)
+Exporte a ficha do resultado, ainda na raiz, para outro arquivo novo:
 
-A primeira preserva rust_source e false; a segunda, test_run e true.
-Ambas preservam a autoria manual e o commit declarado. As exportações anteriores
-permanecem como artefatos das etapas em que foram geradas.
+```bash
+cargo run --locked --bin validate_evidence -- ai/experimentos/03-tuplas/evidencias.json --fact F_VECTOR_TEST_PASSED --context 4 --output aula06-execucao.json
+```
 
-## Explicação e limites
+Observe `test_run` e a declaração legada de execução. O dossiê deste comando
+não é a versão posterior com execução identificada. Compare com os históricos
+[de código](../experimentos/03-tuplas/consulta-vector-x-metadados.json) e
+[de teste](../experimentos/03-tuplas/consulta-teste-vector-metadados.json).
 
-Agora o trecho chega acompanhado de sua classificação declarada. Isso permite
-que uma análise diferencie código de registro de teste sem depender somente do
-nome da ficha ou do texto do trecho.
+## Validação e problemas comuns
 
-Não verificamos que o modelo usará esses campos corretamente. Não houve nova
-consulta ao Qwen, medição de qualidade do LLM ou benchmark nesta aula.
+Execute na raiz a suíte que verifica tipos, valores ausentes e preservação dos
+metadados. Ela usa artefatos em `target` e arquivos temporários:
 
-Ainda não preservamos na seleção todos os metadados do dossiê: ID do conjunto,
-questões abertas, estado completo da árvore de trabalho e limitações adicionais
-continuam fora dela. Também não verificamos consistência entre categorias e
-campos, autenticidade dos logs ou relação histórica com o commit. Estas duas
-exportações não são pacotes completos de procedência ou reprodução experimental.
+```bash
+cargo test --locked --bin validate_evidence
+```
 
-O ganho desta etapa é evitar a perda de quatro informações existentes, mantendo
-explícita a diferença entre declaração e validação.
+A implementação original teve **37 testes aprovados** e duas exportações
+conferidas. O total atual inclui aulas posteriores. Se o JSON rejeitar um campo,
+confira primeiro seu tipo. Se o destino existir, use outro nome; se o hash da
+fonte divergir, trate a diferença como na Aula 4.
 
-## Fechamento
+Preservar informações não garante que o modelo as interprete corretamente.
+Não houve nova consulta ao Qwen ou benchmark nesta etapa. As exportações antigas
+não constituem pacotes completos de reprodução, nem prova do vínculo com o commit.
 
-A Aula 6 está concluída. Mantivemos o modelo e o renderer sem alterações e
-fortalecemos o percurso das informações no Bibliotecário. Antes de tratar a
-exportação como uma consulta completa, ainda precisaremos decidir como levar
-identidade do dossiê e limitações relevantes, além da pergunta e dos critérios.
-Esse trabalho fica para a próxima sessão.
+## Resultado da aula e próxima aula
+
+Metadados acompanham as evidências com limites explícitos. A
+[Aula 7](07-identidade-limites-e-consulta.md) acrescenta identidade do dossiê,
+questões abertas e a pergunta separada das evidências.
