@@ -1,5 +1,10 @@
 pub const EPSILON: f64 = 0.00001;
 
+pub mod core;
+pub mod bibliotecario;
+pub mod adapters;
+pub mod extractors;
+pub mod scene;
 pub mod equivalent;
 pub mod bounds;
 pub mod tuple;

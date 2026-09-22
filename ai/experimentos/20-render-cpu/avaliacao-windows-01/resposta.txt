@@ -1,0 +1,44 @@
+**Observações:**
+
+1. **Evidência de Redução de Tempo (F_TIME_REDUCTION):**
+   - **ID da Ficha:** F_TIME_REDUCTION
+   - **Fonte:** SRC_TEST
+   - **Contexto:** O log de teste salvo registra um teste de regressão aprovado, indicando que a remoção de cópias de World resultou em uma redução de tempo. No entanto, o log não fornece detalhes específicos sobre a quantidade de tempo reduzido ou a comparação direta entre as versões com e sem cópias de World.
+
+2. **Limites da Comparação (F_LIMITS):**
+   - **ID da Ficha:** F_LIMITS
+   - **Fonte:** SRC_REPORT
+   - **Contexto:** A cena de benchmark coloca a câmera dentro das esferas, o que limita a generalização do resultado. A cena específica pode não representar adequadamente todas as possíveis situações de uso, e portanto, a redução observada pode não ser generalizável para outras cenas.
+
+3. **Dispersão das Amostras (F_REGRESSION_LOG):**
+   - **ID da Ficha:** F_REGRESSION_LOG
+   - **Fonte:** SRC_TEST
+   - **Contexto:** O log do teste registra uma redução de tempo, mas não fornece informações sobre a dispersão das amostras. A dispersão pode afetar a confiabilidade da redução observada, e é importante considerar essa variabilidade ao interpretar os resultados.
+
+**Inferências:**
+
+1. **Redução de Tempo Observada:**
+   - A remoção de cópias de World parece ter resultado em uma redução de tempo, conforme indicado pelo log de teste. No entanto, a precisão dessa redução não pode ser determinada com certeza sem mais detalhes sobre as medições.
+
+2. **Limitações da Generalização:**
+   - A cena de benchmark específica pode não ser representativa de todas as situações de uso, limitando a generalização dos resultados observados. A redução de tempo pode não se refletir de maneira igual em outras cenas ou cenários de uso.
+
+**Hipótese:**
+
+1. **Necessidade de Novos Testes:**
+   - Para confirmar a redução de tempo observada e validar sua generalização, é necessário realizar novos testes em diferentes cenários e configurações. Isso permitirá avaliar se a redução de tempo é consistente e se pode ser aplicada a outras situações de uso.
+
+**Escopo do Cronômetro e do Teste de Regressão:**
+
+- **Cronômetro:** O cronômetro mede o tempo de execução do teste de regressão, mas não fornece informações sobre a precisão ou a confiabilidade das medições. A dispersão das amostras pode afetar a confiabilidade do tempo medido.
+- **Teste de Regressão:** O teste de regressão compara um digest das cores quantizadas por EPSILON de uma cena específica, mas não é uma prova universal de equivalência. O teste registra uma redução de tempo, mas não fornece detalhes específicos sobre a quantidade de tempo reduzido ou a comparação direta entre as versões com e sem cópias de World.
+
+**Próximo Experimento de CPU:**
+
+- **Baseline:** Definir uma versão base (baseline) que servirá como ponto de referência para comparações futuras.
+- **Controle de Configuração:** Manter o controle de configuração consistente entre as diferentes versões testadas, garantindo que as únicas variáveis alteradas sejam as cópias de World.
+- **Critério de Correção:** Estabelecer um critério de correção para avaliar a consistência e a significância das reduções de tempo observadas. Isso pode envolver realizar múltiplos testes e calcular a média e o desvio padrão das medições para determinar se a redução de tempo é estatisticamente significativa.
+
+**Conclusão:**
+
+A evidência disponível sugere que a remoção de cópias de World resultou em uma redução de tempo, mas a generalização desses resultados é limitada devido à cena de benchmark específica. Para confirmar a redução de tempo e validar sua aplicação a outras situações de uso, é necessário realizar novos testes em diferentes cenários e configurações, mantendo um controle rigoroso da configuração e estabelecendo um critério de correção para avaliar a consistência e a significância das reduções de tempo observadas.

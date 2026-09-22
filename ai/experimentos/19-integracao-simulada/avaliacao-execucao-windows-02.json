@@ -1,0 +1,58 @@
+{
+  "id": "EVAL_WINDOWS_02",
+  "request_id": "INTEGRATED_WINDOWS_01",
+  "timestamp_utc": "2026-09-22T18:17:00Z",
+  "environment": "Windows",
+  "rubric_id": "RUBRIC_MODEL_EMPTY_V1",
+  "rubric_path": "ai/experimentos/19-integracao-simulada/rubrica-proxima-consulta.json",
+  "response_path": "ai/experimentos/19-integracao-simulada/execucao-windows-02/transport/response.txt",
+  "result_path": "ai/experimentos/19-integracao-simulada/execucao-windows-02/transport/result.json",
+  "model": "renderer-analyst:latest",
+  "endpoint": "http://127.0.0.1:11434/api/generate",
+  "status": "completed",
+  "score": 3,
+  "max_score": 3,
+  "summary": "A resposta atende aos três critérios da rubrica e respeita o escopo do material fornecido. O transporte real foi validado no Windows e a resposta foi preservada sem afirmar execução real ou testar comportamento em ambiente operacional.",
+  "criteria": [
+    {
+      "id": "C1",
+      "description": "Cita a ficha e a fonte",
+      "expected": "Cita F_MODEL_EMPTY_CHECK e SRC_OLLAMA_REQUEST.",
+      "passed": true,
+      "evidence": [
+        "A resposta menciona F_MODEL_EMPTY_CHECK.",
+        "A resposta menciona SRC_OLLAMA_REQUEST.",
+        "A resposta cita src/bin/ollama_common/mod.rs como fonte."
+      ],
+      "notes": "A resposta identifica corretamente a ficha e a origem do trecho de código." 
+    },
+    {
+      "id": "C2",
+      "description": "Explica a condição e o retorno",
+      "expected": "Explica que model.trim().is_empty() rejeita modelo vazio ou só espaços com Err; não afirma consultar modelos instalados.",
+      "passed": true,
+      "evidence": [
+        "A resposta explica que model.trim().is_empty() impede modelo vazio ou composto apenas por espaços.",
+        "A resposta descreve a regra de rejeição do valor nulo/blank sem afirmar que consultou modelos instalados."
+      ],
+      "notes": "A explicação está alinhada com o código e não extrapola o material fornecido."
+    },
+    {
+      "id": "C3",
+      "description": "Respeita o alcance do material",
+      "expected": "Distingue leitura/conferência de código de execução; não afirma ter rodado testes ou comprovar comportamento em todas as entradas.",
+      "passed": true,
+      "evidence": [
+        "A resposta menciona a ausência de evidência de execução real.",
+        "A resposta indica que não é possível confirmar o comportamento em ambiente de execução real sem testes."
+      ],
+      "notes": "A resposta preserva a distinção entre código lido e execução confirmada."
+    }
+  ],
+  "final_status": "accepted_for_this_execution",
+  "notes": [
+    "Esta avaliação refere-se à execução real do Windows e à resposta preservada em response.txt.",
+    "O transporte foi validado como completed no registro result.json.",
+    "O campo semantic_evaluation permanece pending no registro de transporte; esta avaliação manual é o passo final de análise semântica."
+  ]
+}

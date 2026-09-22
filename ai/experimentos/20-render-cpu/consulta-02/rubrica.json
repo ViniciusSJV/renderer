@@ -1,0 +1,30 @@
+{
+  "id": "RUBRIC_RENDER_MEASUREMENT_V2",
+  "criteria": [
+    {
+      "id": "C1",
+      "description": "Referências",
+      "expected": "Cita F_TIMER/SRC_CAMERA, F_PROTOCOL/SRC_SAMPLES e F_MEDIANS/SRC_STATS corretamente, sem inventar IDs."
+    },
+    {
+      "id": "C2",
+      "description": "Cronômetro",
+      "expected": "Mede Camera::render; clone preparatório de World e descarte do canvas ficam fora. Não diz medir o teste de regressão."
+    },
+    {
+      "id": "C3",
+      "description": "Protocolo",
+      "expected": "Informa 64x64, release, quatro threads, três warmups e cinco amostras por execução."
+    },
+    {
+      "id": "C4",
+      "description": "Resultado",
+      "expected": "Informa 4876415 e 4132936 ns (ou conversão equivalente), 35 amostras por versão e aproximadamente 15,25% de redução."
+    },
+    {
+      "id": "C5",
+      "description": "Limites",
+      "expected": "Distingue registro/recálculo de autenticação da execução, não afirma ter executado o benchmark e não generaliza o ganho."
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+Responda em português, em até 200 palavras, usando apenas as evidências selecionadas. Para cada resposta, cite o ID F_* e a fonte SRC_* correspondentes.
+1. Qual operação o cronômetro mede? A cópia preparatória do World e o descarte do canvas entram na medição?
+2. Quais são resolução, perfil, threads, warmups e amostras por execução declarados?
+3. Quais são as medianas antes/depois, a contagem total de amostras por versão e a redução percentual registrada?
+Não invente IDs ou medições. Não atribua resultados de performance a testes de regressão. Distinga dados registrados de execução autenticada; declare lacunas.

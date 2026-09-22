@@ -1,0 +1,81 @@
+Documento lido: ai/experimentos/20-render-cpu/dossie/evidencias.json (62016 bytes).
+Obras no acervo: 8
+Fichas no catálogo: 11
+Acervo sem IDs de fontes duplicados.
+Catálogo sem IDs de fatos duplicados.
+SRC_WORLD: arquivo atual e linhas correspondem à edição registrada.
+SRC_CAMERA: arquivo atual e linhas correspondem à edição registrada.
+SRC_PATCH: arquivo atual e linhas correspondem à edição registrada.
+SRC_SAMPLES: arquivo atual e linhas correspondem à edição registrada.
+SRC_STATS: arquivo atual e linhas correspondem à edição registrada.
+SRC_CALC: arquivo atual e linhas correspondem à edição registrada.
+SRC_TEST: arquivo atual e linhas correspondem à edição registrada.
+SRC_REPORT: arquivo atual e linhas correspondem à edição registrada.
+Fichas verificadas: 11. Referências inválidas: 0.
+Ficha selecionada: F_BORROW
+Afirmação: shade_hit recebe &self e reutiliza o mundo para sombras, reflexão e refração.
+Referência: SRC_WORLD, linha 33
+Arquivo: src/world.rs
+SHA-256: 0f0e08bb448b670c6ec8e8addd9c85219bc081c0da002770442dac9a806b80f9
+Trecho:     pub fn shade_hit(&self, comps: Computations, remaining: u8) -> Color {
+Ficha selecionada: F_RENDER
+Afirmação: O render chama world.color_at sem clonar World por pixel; o mutex por pixel permanece.
+Referência: SRC_CAMERA, linha 97
+Arquivo: src/camera.rs
+SHA-256: a90073f7eb0a65e0ce2ed712d362d3e4292805f81af45127da5484b8f1c2ca7c
+Trecho:                 let color = world.color_at(ray, self.maximum_recursive_depth);
+Ficha selecionada: F_TIMER
+Afirmação: A preparação sample_world ocorre antes de Instant::now; o canvas é descartado depois de registrar elapsed.
+Referência: SRC_CAMERA, linha 113
+Arquivo: src/camera.rs
+SHA-256: a90073f7eb0a65e0ce2ed712d362d3e4292805f81af45127da5484b8f1c2ca7c
+Trecho:             let sample_world = world.clone();
+Ficha selecionada: F_PATCH
+Afirmação: O patch preservado registra a troca de self por &self e remoção de clones no caminho de shading.
+Referência: SRC_PATCH, linha 7
+Arquivo: ai/experimentos/20-render-cpu/optimization.patch
+SHA-256: 4cecb1705adbaaee2dc84d5b316b223ec380b15a69b826860d3794c0af23c874
+Trecho: -    pub fn shade_hit(self, comps: Computations, remaining: u8) -> Color {
+Ficha selecionada: F_PROTOCOL
+Afirmação: O arquivo histórico declara quatro threads, release, 64x64, três warmups e cinco amostras por execução.
+Referência: SRC_SAMPLES, linha 2
+Arquivo: ai/experimentos/20-render-cpu/comparison.json
+SHA-256: d5e5202362583b334db085044b459ddac256aea5e7d0066ced7e90bea40c9f28
+Trecho:   "threads": 4,
+Ficha selecionada: F_MEDIANS
+Afirmação: O recálculo registra 35 amostras por versão, medianas 4876415 e 4132936 ns e redução aproximada de 15,25%.
+Referência: SRC_STATS, linha 1
+Arquivo: ai/experimentos/20-render-cpu/dossie/estatisticas.txt
+SHA-256: 4e955b41d5c884a6c7438e0dc5dab8374a2133681bf0bbe87a3ecf7e7566f5f1
+Trecho: before: n=35 median_ns=4876415 min_ns=4570313 max_ns=10195244
+Ficha selecionada: F_CALC
+Afirmação: O verificador confere 14 execuções em ordem alternada, contagem, amostras positivas e estatísticas declaradas; não executa benchmark.
+Referência: SRC_CALC, linha 10
+Arquivo: ai/experimentos/20-render-cpu/dossie/conferir_amostras.py
+SHA-256: 98d26c959802ac83142bb819b86a948c56e2de1106ee205a9b52c40d48df75bd
+Trecho: assert len(data["runs"]) == 14
+Ficha selecionada: F_REGRESSION_CODE
+Afirmação: O teste de regressão compara um digest das cores quantizadas por EPSILON de uma cena específica; não é uma prova universal de equivalência.
+Referência: SRC_CAMERA, linha 295
+Arquivo: src/camera.rs
+SHA-256: a90073f7eb0a65e0ce2ed712d362d3e4292805f81af45127da5484b8f1c2ca7c
+Trecho:                     // Quantize at the project's numerical tolerance.
+Ficha selecionada: F_REGRESSION_LOG
+Afirmação: O log salvo registra um teste de regressão aprovado; não possui vínculo de captura versão 2.
+Referência: SRC_TEST, linha 7
+Arquivo: ai/experimentos/20-render-cpu/dossie/regressao.txt
+SHA-256: c0195c089fb3acd88ca29f7e2d072dd48011bd824872f30fbb8b32770167e88d
+Trecho: test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 210 filtered out; finished in 0.04s
+Ficha selecionada: F_LIMITS
+Afirmação: A cena de benchmark coloca a câmera dentro das esferas; o relatório limita a generalização do resultado.
+Referência: SRC_REPORT, linha 47
+Arquivo: ai/experimentos/20-render-cpu/README.md
+SHA-256: 71d5bcd5db5f7ab4c42bc8d8351bde79ec98f10e706148f097717690f8e71ca6
+Trecho: câmera na origem, dentro das esferas. Essa cena é limitada e não representa
+Ficha selecionada: F_PROFILE_PENDING
+Afirmação: Mutex, par_bridge e inversão da câmera são candidatos; não há perfil CPU comprovando o hotspot dominante.
+Referência: SRC_REPORT, linha 80
+Arquivo: ai/experimentos/20-render-cpu/README.md
+SHA-256: 71d5bcd5db5f7ab4c42bc8d8351bde79ec98f10e706148f097717690f8e71ca6
+Trecho: raio como candidatos; ainda não há perfil de CPU que determine o hotspot dominante.
+Seleção salva em ai/experimentos/20-render-cpu/dossie/pacote-local

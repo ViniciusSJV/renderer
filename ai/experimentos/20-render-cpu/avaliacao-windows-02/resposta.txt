@@ -1,0 +1,22 @@
+1. **Qual operação o cronômetro mede? A cópia preparatória do World e o descarte do canvas entram na medição?**
+   - **F_TIMER (SRC_CAMERA)**: O cronômetro mede o tempo de execução da função `self.render(sample_world)`. A cópia preparatória do `World` (`sample_world = world.clone()`) ocorre antes de iniciar a medição com `Instant::now()`, e o descarte do `canvas` (`drop(canvas)`) ocorre após registrar o tempo com `start.elapsed().as_nanos()`. Portanto, tanto a cópia do `World` quanto o descarte do `canvas` não entram na medição do tempo de renderização.
+
+2. **Quais são resolução, perfil, threads, warmups e amostras por execução declarados?**
+   - **F_PROTOCOL (SRC_SAMPLES)**: As seguintes configurações são declaradas:
+     - **Resolução**: 64x64
+     - **Perfil**: release
+     - **Threads**: 4
+     - **Warmups**: 3
+     - **Amostras por execução**: 5
+
+3. **Quais são as medianas antes/depois, a contagem total de amostras por versão e a redução percentual registrada?**
+   - **F_MEDIANS (SRC_STATS)**: As seguintes informações são registradas:
+     - **Medianas**: 
+       - **Antes**: 4876415 ns
+       - **Depois**: 4132936 ns
+     - **Contagem total de amostras por versão**: 35 amostras
+     - **Redução percentual**: 15,25%
+
+**Lacunas e Observações:**
+- **Lacunas**: Não há evidências de que a versão 2 do código tenha sido executada ou que as amostras tenham sido coletadas novamente. Além disso, não há informações sobre a execução do código ou a validação dos resultados.
+- **Observações**: As informações fornecidas são baseadas em registros históricos e não em execuções autenticadas pelo Graph Engine. Portanto, não se pode afirmar com certeza que as versões do código produziram os resultados registrados.

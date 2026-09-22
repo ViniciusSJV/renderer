@@ -1,0 +1,4 @@
+before: n=35 median_ns=4876415 min_ns=4570313 max_ns=10195244
+after: n=35 median_ns=4132936 min_ns=4041575 max_ns=7000859
+reduction_percent=15.24642591
+Escopo: consistência aritmética do arquivo histórico; sem nova medição ou autenticação da coleta.

@@ -1,0 +1,33 @@
+Documento lido: ai/experimentos/20-render-cpu/dossie/evidencias.json (62016 bytes).
+Obras no acervo: 8
+Fichas no catálogo: 11
+Acervo sem IDs de fontes duplicados.
+Catálogo sem IDs de fatos duplicados.
+SRC_WORLD: arquivo atual e linhas correspondem à edição registrada.
+SRC_CAMERA: arquivo atual e linhas correspondem à edição registrada.
+SRC_PATCH: arquivo atual e linhas correspondem à edição registrada.
+SRC_SAMPLES: arquivo atual e linhas correspondem à edição registrada.
+SRC_STATS: arquivo atual e linhas correspondem à edição registrada.
+SRC_CALC: arquivo atual e linhas correspondem à edição registrada.
+SRC_TEST: arquivo atual e linhas correspondem à edição registrada.
+SRC_REPORT: arquivo atual e linhas correspondem à edição registrada.
+Fichas verificadas: 11. Referências inválidas: 0.
+Ficha selecionada: F_TIMER
+Afirmação: A preparação sample_world ocorre antes de Instant::now; o canvas é descartado depois de registrar elapsed.
+Referência: SRC_CAMERA, linha 113
+Arquivo: src/camera.rs
+SHA-256: a90073f7eb0a65e0ce2ed712d362d3e4292805f81af45127da5484b8f1c2ca7c
+Trecho:             let sample_world = world.clone();
+Ficha selecionada: F_PROTOCOL
+Afirmação: O arquivo histórico declara quatro threads, release, 64x64, três warmups e cinco amostras por execução.
+Referência: SRC_SAMPLES, linha 2
+Arquivo: ai/experimentos/20-render-cpu/comparison.json
+SHA-256: d5e5202362583b334db085044b459ddac256aea5e7d0066ced7e90bea40c9f28
+Trecho:   "threads": 4,
+Ficha selecionada: F_MEDIANS
+Afirmação: O recálculo registra 35 amostras por versão, medianas 4876415 e 4132936 ns e redução aproximada de 15,25%.
+Referência: SRC_STATS, linha 1
+Arquivo: ai/experimentos/20-render-cpu/dossie/estatisticas.txt
+SHA-256: 4e955b41d5c884a6c7438e0dc5dab8374a2133681bf0bbe87a3ecf7e7566f5f1
+Trecho: before: n=35 median_ns=4876415 min_ns=4570313 max_ns=10195244
+Seleção salva em ai/experimentos/20-render-cpu/consulta-02/pacote-local

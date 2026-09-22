@@ -1,0 +1,17 @@
+{
+  "request_id": "RENDER_CPU_MEASUREMENT_02",
+  "project_root": ".",
+  "dossier": "ai/experimentos/20-render-cpu/dossie/evidencias.json",
+  "question": "ai/experimentos/20-render-cpu/consulta-02/pergunta.txt",
+  "rubric": "ai/experimentos/20-render-cpu/consulta-02/rubrica.json",
+  "facts": [
+    "F_TIMER",
+    "F_PROTOCOL",
+    "F_MEDIANS"
+  ],
+  "context": 6,
+  "endpoint": "http://127.0.0.1:11434/api/generate",
+  "model": "renderer-analyst:latest",
+  "timeout_ms": 120000,
+  "max_response_bytes": 1048576
+}

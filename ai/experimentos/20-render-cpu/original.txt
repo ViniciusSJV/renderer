@@ -1,0 +1,6 @@
+width=64 height=64 samples=5 min_ns=4814178 median_ns=5518904 max_ns=6374231
+sample_0=4814178ns
+sample_1=5518904ns
+sample_2=5432561ns
+sample_3=6374231ns
+sample_4=6350236ns

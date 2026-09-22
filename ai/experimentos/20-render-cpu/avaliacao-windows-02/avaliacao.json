@@ -1,0 +1,52 @@
+{
+  "request_id": "RENDER_CPU_V2_29ef6dfc096641cea7d45e0926d9bd0d",
+  "rubric_id": "RUBRIC_RENDER_MEASUREMENT_V2",
+  "evaluator": "assistant",
+  "method": "Julgamento por critério da rubrica prévia, separado da conferência determinística.",
+  "archive_sha256": "f6aa127c642b1d879739744cff627e2e5c77f4393ef9d41c8eebfd322b5c85a2",
+  "response_sha256": "b578e4efaf4470b42fbf8fbad7b1cd0e8f19d0f08ca4847c8ce953cf33c52ca0",
+  "rubric_sha256": "4afa1cb0d6c3baf5c0ef95d52d780aa600a8c6379866996d5edc5401d2cf2d40",
+  "overall": "parcial",
+  "counts": {
+    "aprovado": 4,
+    "parcial": 1,
+    "reprovado": 0
+  },
+  "criteria": [
+    {
+      "id": "C1",
+      "status": "aprovado",
+      "response_excerpt": "F_TIMER (SRC_CAMERA)",
+      "reason": "Cita corretamente os três pares de ficha/fonte selecionados; nenhum ID de ficha inexistente foi encontrado."
+    },
+    {
+      "id": "C2",
+      "status": "aprovado",
+      "response_excerpt": "tanto a cópia do `World` quanto o descarte do `canvas` não entram na medição",
+      "reason": "Identifica self.render(sample_world) como operação medida e situa corretamente clone e descarte fora do cronômetro."
+    },
+    {
+      "id": "C3",
+      "status": "aprovado",
+      "response_excerpt": "**Amostras por execução**: 5",
+      "reason": "Informa corretamente 64x64, release, quatro threads, três warmups e cinco amostras por execução."
+    },
+    {
+      "id": "C4",
+      "status": "aprovado",
+      "response_excerpt": "**Redução percentual**: 15,25%",
+      "reason": "Informa corretamente 4876415 e 4132936 ns, 35 amostras por versão e redução de 15,25%."
+    },
+    {
+      "id": "C5",
+      "status": "parcial",
+      "response_excerpt": "não há informações sobre a execução do código ou a validação dos resultados",
+      "reason": "Distingue registros históricos de execução autenticada, não afirma executar o benchmark e não generaliza. Porém a negação ampla confunde ausência de autenticação com ausência de informações: existem protocolo, amostras e recálculo. A expressão versão 2 do código não é estabelecida pela seleção; trata-se da segunda consulta, não de nova alteração do renderer."
+    }
+  ],
+  "limits": [
+    "Rubricas e escopos diferentes: não comparar contagens como medida controlada de capacidade.",
+    "Não comprova truncamento anterior; seleção, janela e pergunta mudaram.",
+    "Registros originais preservados; avaliação posterior não altera semantic_evaluation=pending na tentativa."
+  ]
+}

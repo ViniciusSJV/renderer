@@ -1,0 +1,3 @@
+Quais evidências sustentam a redução observada de tempo após remover cópias de World, quais são os limites dessa comparação e qual experimento devemos realizar em seguida?
+
+Responda em português. Cite os IDs das fichas e suas fontes. Separe observação, inferência e hipótese. Explique o escopo do cronômetro e do teste de regressão. Considere a dispersão das amostras. Não confunda conferência de arquivos com autenticação da execução, nem a presença de um teste com sua aprovação. Proponha um próximo experimento de CPU com baseline, controle de configuração e critério de correção. Não afirme ter executado ferramentas, não gere alterações de código e não generalize o ganho para outras cenas.

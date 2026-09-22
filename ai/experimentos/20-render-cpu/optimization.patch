@@ -1,0 +1,69 @@
+--- a/src/world.rs
++++ b/src/world.rs
+@@ -30,15 +30,15 @@
+         Intersections::new(xs)
+     }
+ 
+-    pub fn shade_hit(self, comps: Computations, remaining: u8) -> Color {
++    pub fn shade_hit(&self, comps: Computations, remaining: u8) -> Color {
+         let mut surface = Color::black();
+         for &light in self.lights.iter() {
+-            let shadowed = self.clone().is_shadowed(comps.over_point, light);
++            let shadowed = self.is_shadowed(comps.over_point, light);
+             let color = comps.object.material().lighting(comps.object, light, comps.over_point, comps.eye_v, comps.normal_v, shadowed);
+             surface = surface + color;
+         }
+-        let reflected = self.clone().reflected_color(comps, remaining);
+-        let refracted = self.clone().refracted_color(comps, remaining);
++        let reflected = self.reflected_color(comps, remaining);
++        let refracted = self.refracted_color(comps, remaining);
+ 
+         let material = comps.object.material();
+         if material.reflective > 0. && material.transparency > 0. {
+@@ -49,7 +49,7 @@
+         surface + reflected + refracted
+     }
+ 
+-    pub fn reflected_color(self, comps: Computations, remaining: u8) -> Color {
++    pub fn reflected_color(&self, comps: Computations, remaining: u8) -> Color {
+         if (comps.object.material().reflective).equivalent(0.) || remaining <= 0 {
+             return Color::black()
+         }
+@@ -58,7 +58,7 @@
+         color * comps.object.material().reflective
+     }
+ 
+-    pub fn refracted_color(self, comps: Computations, remaining: u8) -> Color {
++    pub fn refracted_color(&self, comps: Computations, remaining: u8) -> Color {
+         if (comps.object.material().transparency).equivalent(0.) || remaining <= 0 {
+             return Color::black();
+         }
+@@ -76,7 +76,7 @@
+         self.color_at(refract_ray, remaining - 1) * comps.object.material().transparency
+     }
+ 
+-    pub fn is_shadowed(self, point: Tuple, light: Light) -> bool {
++    pub fn is_shadowed(&self, point: Tuple, light: Light) -> bool {
+         let shadow_vector : Tuple = light.position - point;
+         let distance = shadow_vector.length();
+         let direction = shadow_vector.normalize();
+@@ -92,7 +92,7 @@
+         false
+     }
+ 
+-    pub fn color_at(self, ray: Ray, remaining: u8) -> Color {
++    pub fn color_at(&self, ray: Ray, remaining: u8) -> Color {
+         let xs = self.intersect_world(ray);
+         if xs.hit() != None {
+             let hit = xs.hit().unwrap();
+--- a/src/camera.rs
++++ b/src/camera.rs
+@@ -94,7 +94,7 @@
+             .par_bridge()
+             .for_each(|(x, y)| {
+                 let ray = self.ray_from_pixel(x, y);
+-                let color = world.clone().color_at(ray, self.maximum_recursive_depth);
++                let color = world.color_at(ray, self.maximum_recursive_depth);
+                 let mut canvas = canvas_mutex.lock().unwrap();
+                 canvas.set_pixel_color(x, y, color);
+             });

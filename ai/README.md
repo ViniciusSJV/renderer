@@ -1,5 +1,8 @@
 # Laboratório de IA, evidências e performance
 
+**Retomada do trabalho:** leia [RETOMADA.md](RETOMADA.md) para o estado validado
+e o próximo passo após os experimentos de CPU e as duas consultas no Windows.
+
 Este laboratório usa um ray tracer em Rust baseado em *The Ray Tracer Challenge*
 para estudar código, testes, medições e explicações de um modelo local. As 25
 aulas formam uma sequência: configurar o modelo, atomizar informações, conferir

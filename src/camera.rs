@@ -1,12 +1,24 @@
 use std::sync::{Mutex};
+use std::time::Instant;
 use itertools::Itertools;
 use rayon::prelude::*;
 use crate::canvas::Canvas;
 use crate::equivalent::Equivalence;
 use crate::matrix::Matrix;
+use crate::object::Intersectable;
 use crate::ray::Ray;
 use crate::tuple::Tuple;
 use crate::world::World;
+
+#[derive(Debug, Clone, PartialEq)]
+pub struct RenderBenchmarkSummary {
+    pub width: usize,
+    pub height: usize,
+    pub samples: Vec<u128>,
+    pub min_ns: u128,
+    pub median_ns: u128,
+    pub max_ns: u128,
+}
 
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub struct Camera {
@@ -82,13 +94,64 @@ impl Camera {
             .par_bridge()
             .for_each(|(x, y)| {
                 let ray = self.ray_from_pixel(x, y);
-                let color = world.clone().color_at(ray, self.maximum_recursive_depth);
+                let color = world.color_at(ray, self.maximum_recursive_depth);
                 let mut canvas = canvas_mutex.lock().unwrap();
                 canvas.set_pixel_color(x, y, color);
             });
         let canvas = canvas_mutex.into_inner().unwrap();
         canvas
     }
+
+    pub fn benchmark_render(self, world: World, warmups: usize, samples: usize) -> RenderBenchmarkSummary {
+        let mut timings = Vec::with_capacity(samples);
+
+        for _ in 0..warmups {
+            std::hint::black_box(self.render(world.clone()));
+        }
+
+        for _ in 0..samples {
+            let sample_world = world.clone();
+            let start = Instant::now();
+            let canvas = std::hint::black_box(self.render(sample_world));
+            timings.push(start.elapsed().as_nanos());
+            drop(canvas);
+        }
+
+        let mut ordered = timings.clone();
+        ordered.sort_unstable();
+        let min_ns = ordered.first().copied().unwrap_or(0);
+        let max_ns = ordered.last().copied().unwrap_or(0);
+        let median_index = ordered.len() / 2;
+        let median_ns = ordered.get(median_index).copied().unwrap_or(0);
+
+        RenderBenchmarkSummary {
+            width: self.horizontal_size,
+            height: self.vertical_size,
+            samples: timings,
+            min_ns,
+            median_ns,
+            max_ns,
+        }
+    }
+}
+
+pub fn render_benchmark(width: usize, height: usize, warmups: usize, samples: usize) -> RenderBenchmarkSummary {
+    let light = crate::lights::Light::point_light(Tuple::point(-10.0, 10.0, -10.0), crate::color::Color::new(1.0, 1.0, 1.0));
+
+    let mut material = crate::materials::Material::phong();
+    material.color = crate::color::Color::new(0.8, 1.0, 0.6);
+    material.diffuse = 0.7;
+    material.specular = 0.2;
+
+    let mut sphere = crate::sphere::Sphere::default();
+    sphere.set_material(material);
+
+    let mut sphere_2 = crate::sphere::Sphere::default();
+    sphere_2.set_transform(crate::matrix::Matrix::scaling(Tuple::vector(0.5, 0.5, 0.5)));
+
+    let world = World::new(vec![crate::object::Object::from(sphere), crate::object::Object::from(sphere_2)], vec![light]);
+    let camera = Camera::new(width, height, std::f64::consts::PI / 2.0);
+    camera.benchmark_render(world, warmups, samples)
 }
 
 impl Equivalence<Camera> for Camera {
@@ -206,5 +269,47 @@ mod tests_camera {
         let canvas = camera.render(world);
 
         assert_equivalent!(canvas.get_pixel_color(5, 5), Color::new(0.38066, 0.47583, 0.2855));
+    }
+
+    #[test]
+    fn render_preserves_complete_reflective_scene() {
+        use sha2::{Digest, Sha256};
+        let mut world = create_default_world();
+        let mut floor = crate::plane::Plane::default();
+        floor.set_transform(Matrix::translation(Tuple::vector(0., -1., 0.)));
+        floor.material.reflective = 0.5;
+        floor.material.transparency = 0.5;
+        floor.material.reflactive_index = 1.5;
+        world.objects.push(Object::from(floor));
+        let camera = Camera::new(24, 16, PI / 3.).with_transform(
+            Tuple::point(0., 1., -5.).view_transform(
+                Tuple::point(0., 0., 0.), Tuple::vector(0., 1., 0.)
+            )
+        );
+        let canvas = camera.render(world);
+        let mut digest = Sha256::new();
+        for y in 0..canvas.height {
+            for x in 0..canvas.width {
+                let color = canvas.get_pixel_color(x, y);
+                for value in [color.red, color.green, color.blue] {
+                    // Quantize at the project's numerical tolerance.
+                    digest.update(((value / crate::EPSILON).round() as i64).to_le_bytes());
+                }
+            }
+        }
+        assert_eq!(format!("{:x}", digest.finalize()),
+            "5be617744dc1fdae56449414e5b77dc806cf42bfcd01078d42b112c4f85be9bb");
+    }
+
+    #[test]
+    fn render_benchmark_records_stats_for_fixed_scene() {
+        let summary = render_benchmark(32, 32, 1, 3);
+
+        assert_eq!(summary.width, 32);
+        assert_eq!(summary.height, 32);
+        assert_eq!(summary.samples.len(), 3);
+        assert!(summary.min_ns > 0);
+        assert!(summary.median_ns >= summary.min_ns);
+        assert!(summary.max_ns >= summary.median_ns);
     }
 }

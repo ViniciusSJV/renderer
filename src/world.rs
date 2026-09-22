@@ -30,15 +30,15 @@ impl World {
         Intersections::new(xs)
     }
 
-    pub fn shade_hit(self, comps: Computations, remaining: u8) -> Color {
+    pub fn shade_hit(&self, comps: Computations, remaining: u8) -> Color {
         let mut surface = Color::black();
         for &light in self.lights.iter() {
-            let shadowed = self.clone().is_shadowed(comps.over_point, light);
+            let shadowed = self.is_shadowed(comps.over_point, light);
             let color = comps.object.material().lighting(comps.object, light, comps.over_point, comps.eye_v, comps.normal_v, shadowed);
             surface = surface + color;
         }
-        let reflected = self.clone().reflected_color(comps, remaining);
-        let refracted = self.clone().refracted_color(comps, remaining);
+        let reflected = self.reflected_color(comps, remaining);
+        let refracted = self.refracted_color(comps, remaining);
 
         let material = comps.object.material();
         if material.reflective > 0. && material.transparency > 0. {
@@ -49,7 +49,7 @@ impl World {
         surface + reflected + refracted
     }
 
-    pub fn reflected_color(self, comps: Computations, remaining: u8) -> Color {
+    pub fn reflected_color(&self, comps: Computations, remaining: u8) -> Color {
         if (comps.object.material().reflective).equivalent(0.) || remaining <= 0 {
             return Color::black()
         }
@@ -58,7 +58,7 @@ impl World {
         color * comps.object.material().reflective
     }
 
-    pub fn refracted_color(self, comps: Computations, remaining: u8) -> Color {
+    pub fn refracted_color(&self, comps: Computations, remaining: u8) -> Color {
         if (comps.object.material().transparency).equivalent(0.) || remaining <= 0 {
             return Color::black();
         }
@@ -76,7 +76,7 @@ impl World {
         self.color_at(refract_ray, remaining - 1) * comps.object.material().transparency
     }
 
-    pub fn is_shadowed(self, point: Tuple, light: Light) -> bool {
+    pub fn is_shadowed(&self, point: Tuple, light: Light) -> bool {
         let shadow_vector : Tuple = light.position - point;
         let distance = shadow_vector.length();
         let direction = shadow_vector.normalize();
@@ -92,7 +92,7 @@ impl World {
         false
     }
 
-    pub fn color_at(self, ray: Ray, remaining: u8) -> Color {
+    pub fn color_at(&self, ray: Ray, remaining: u8) -> Color {
         let xs = self.intersect_world(ray);
         if xs.hit() != None {
             let hit = xs.hit().unwrap();

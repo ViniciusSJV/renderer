@@ -1,0 +1,44 @@
+{
+  "dossier": {
+    "file": "dossier.json",
+    "id": "RENDER_CPU_CLONES_V1",
+    "sha256": "10512c6aaf5c149290fd0faf1a4d631ddd8141b2839508b017b150055ec8120b",
+    "source_path": "ai/experimentos/20-render-cpu/dossie/evidencias.json"
+  },
+  "export_finished_unix_ms": 1790103785401,
+  "format_version": 1,
+  "kind": "validated_query_export",
+  "limits": [
+    "Não autentica execução nem comprova bytes compilados.",
+    "Não é snapshot atômico das fontes.",
+    "Não valida semanticamente fichas ou respostas.",
+    "Nenhum envio HTTP realizado; rubrica e avaliação ainda não vinculadas."
+  ],
+  "query": {
+    "bytes": 36889,
+    "file": "query.json",
+    "sha256": "b4b494a2d7584f7780e228cb2358d55d47acb4bbc7f88ec63e4537cec8ffb0fa"
+  },
+  "question": {
+    "file": "question.txt",
+    "sha256": "90afb1fb89123b3cc759ac2a9b255c9cbca4d58691c5a47da076da6c48c5e467",
+    "source_path": "ai/experimentos/20-render-cpu/dossie/pergunta.txt"
+  },
+  "selection": {
+    "context": 12,
+    "fact_ids": [
+      "F_BORROW",
+      "F_RENDER",
+      "F_TIMER",
+      "F_PATCH",
+      "F_PROTOCOL",
+      "F_MEDIANS",
+      "F_CALC",
+      "F_REGRESSION_CODE",
+      "F_REGRESSION_LOG",
+      "F_LIMITS",
+      "F_PROFILE_PENDING"
+    ]
+  },
+  "validation_scope": "Conferência pelo validate_evidence antes desta exportação. Não é conferência no momento de um envio posterior."
+}

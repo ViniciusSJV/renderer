@@ -1,0 +1,11 @@
+{
+  "id": "RUBRIC_RENDER_CPU_CLONES_V1",
+  "criteria": [
+    {"id": "C1", "description": "Rastreabilidade", "expected": "Relaciona as afirmações a IDs F_* e fontes SRC_* pertinentes; não inventa execuções."},
+    {"id": "C2", "description": "Mecanismo e escopo", "expected": "Explica empréstimos de World no render/shading; não afirma eliminar todas as alocações ou clones do projeto."},
+    {"id": "C3", "description": "Medição", "expected": "Informa medianas 4876415 e 4132936 ns e redução aproximada de 15,25%; 35 amostras por versão, release, quatro threads; distingue cópia de preparação e descarte do canvas fora do cronômetro do trabalho dentro de render."},
+    {"id": "C4", "description": "Correção e proveniência", "expected": "Distingue código do teste, log de aprovação e captura autenticada; o digest quantizado cobre uma cena específica, não equivalência universal ou bit a bit."},
+    {"id": "C5", "description": "Limites", "expected": "Menciona cena 64x64 com câmera dentro das esferas, dispersão e ausência de perfil CPU; não trata hashes como prova da execução nem usa números debug como baseline release."},
+    {"id": "C6", "description": "Próxima hipótese testável", "expected": "Propõe cena externa maior e/ou perfil CPU, com configuração fixa, comparação antes/depois e regressão visual; mutex/par_bridge/inversão são candidatos, não hotspots comprovados."}
+  ]
+}

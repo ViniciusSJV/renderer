@@ -1,0 +1,58 @@
+{
+  "request_id": "RENDER_CPU_a06382b3472e484fa76066c72a779354",
+  "rubric_id": "RUBRIC_RENDER_CPU_CLONES_V1",
+  "evaluator": "assistant",
+  "method": "Leitura e julgamento por critério da rubrica preservada; não é avaliação por executor determinístico.",
+  "archive_sha256": "51d7df31626d5a144ac14e9835fd099e115408f2bb4c7af740e47e2651d10d62",
+  "response_sha256": "5181fcd38192a1a2fc5c6f35943ae979de8724d3713f8028edf8d6c1a1de7706",
+  "rubric_sha256": "05370dd7d6fd4991707f4d011a1002f920b4c64ddf678ddf5a96e124031884cc",
+  "overall": "reprovado",
+  "counts": {
+    "aprovado": 0,
+    "parcial": 3,
+    "reprovado": 3
+  },
+  "criteria": [
+    {
+      "id": "C1",
+      "status": "reprovado",
+      "response_excerpt": "Evidência de Redução de Tempo (F_TIME_REDUCTION)",
+      "reason": "F_TIME_REDUCTION não existe nas 11 fichas. SRC_TEST contém aprovação de regressão, não comparação de performance."
+    },
+    {
+      "id": "C2",
+      "status": "reprovado",
+      "response_excerpt": "A remoção de cópias de World parece ter resultado em uma redução de tempo",
+      "reason": "Não explica o mecanismo de empréstimos (&self) no render/shading, embora F_BORROW, F_RENDER e F_PATCH estejam no prompt."
+    },
+    {
+      "id": "C3",
+      "status": "reprovado",
+      "response_excerpt": "O cronômetro mede o tempo de execução do teste de regressão",
+      "reason": "O cronômetro mede Camera::render, com preparação e descarte fora do trecho medido. Omite as medianas, 15,25%, 35 amostras, release e quatro threads presentes em F_TIMER, F_PROTOCOL e F_MEDIANS."
+    },
+    {
+      "id": "C4",
+      "status": "parcial",
+      "response_excerpt": "compara um digest das cores quantizadas por EPSILON de uma cena específica, mas não é uma prova universal de equivalência",
+      "reason": "Reconhece o limite do digest, mas afirma repetidamente que o teste registra redução de tempo e não distingue log salvo de captura autenticada."
+    },
+    {
+      "id": "C5",
+      "status": "parcial",
+      "response_excerpt": "A cena de benchmark coloca a câmera dentro das esferas",
+      "reason": "Reconhece o limite de generalização e menciona variabilidade, mas omite 64x64 e ausência de perfil CPU. Não usa mínimos/máximos disponíveis em SRC_STATS; atribui indevidamente resultado temporal ao log do teste."
+    },
+    {
+      "id": "C6",
+      "status": "parcial",
+      "response_excerpt": "Manter o controle de configuração consistente entre as diferentes versões testadas",
+      "reason": "Propõe baseline e configuração controlada, mas não especifica cena externa maior ou perfil CPU nem regressão visual. Confunde critério de correção da imagem com significância de tempo; média e desvio padrão isolados não estabelecem essa significância."
+    }
+  ],
+  "limits": [
+    "Não modifica o estado semantic_evaluation=pending dos registros originais; esta avaliação posterior é separada.",
+    "Não demonstra causa do erro nem capacidade geral do modelo.",
+    "Possível limite de contexto requer inspeção da configuração efetiva no Windows e novo experimento controlado."
+  ]
+}
