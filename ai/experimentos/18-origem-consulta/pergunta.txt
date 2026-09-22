@@ -1,0 +1,1 @@
+Explique a verificação do modelo vazio citando a ficha e a fonte. Diferencie leitura do código de evidência de execução.

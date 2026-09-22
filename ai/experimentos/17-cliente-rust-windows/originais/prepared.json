@@ -1,0 +1,27 @@
+{
+  "diagnostic": null,
+  "dossier_origin": null,
+  "endpoint": "http://127.0.0.1:11434/api/generate",
+  "evidence_rechecked": false,
+  "explicit_options": {},
+  "files": {
+    "query": "query.json",
+    "request": "request.json",
+    "response": "response.bin",
+    "text": null
+  },
+  "format_version": 1,
+  "http_status": null,
+  "max_response_bytes": 1048576,
+  "query_bytes": 8203,
+  "query_sha256": "53b8a52c4455ef8bbbf62f674fe6ddd32f1b1e691050cdc5f5857ca23ebb9417",
+  "query_source_path": "ai/experimentos/08-avaliacao-captura/consulta.json",
+  "request_bytes": 8739,
+  "request_id": "OLLAMA_WINDOWS_RUST_02",
+  "request_sha256": "0b4bd6267560b91038bf796212bd2876f4bce515b0b8ea893b3d831229fbd43a",
+  "requested_model": "renderer-analyst:latest",
+  "response_body_complete": false,
+  "selection": null,
+  "semantic_evaluation": "pending",
+  "timeout_ms": 120000
+}

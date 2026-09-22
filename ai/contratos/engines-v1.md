@@ -1,6 +1,7 @@
 # Contrato dos engines — versão 1
 
-Estado: desenho da Aula 24; integração ainda não implementada. Este documento
+Estado atual: Aula 25 concluída; integração implementada e testada com servidor
+simulado, execução integrada real ainda pendente (Aula 26). Este documento
 é um contrato interno, não uma especificação da API HTTP do Ollama. O mapeamento
 para essa API será verificado ao implementar o cliente.
 
@@ -109,3 +110,96 @@ Fechar v1 exige evidência para cada linha, uma revisão conjunta das lacunas e
 registro dos limites restantes. Não exige nota perfeita do Qwen: uma resposta
 incorreta deve ser preservada e identificada, não ocultada para concluir o ciclo.
 Resultados anteriores de 3/6 permanecem históricos, sem comparação controlada.
+
+## Evidência incremental da Aula 25 (aula ainda em andamento)
+
+A tabela da Aula 24 acima permanece como fotografia do planejamento inicial.
+Em 21/09/2026, o adaptador `send_ollama` passou em 12 testes locais; três testes
+do preparador compartilhado também passaram. Um experimento simulado separado
+preserva artefatos e medição em `ai/experimentos/16-cliente-http-simulado/`.
+
+- L1: implementado e simulado em HTTP; chamada Rust real no Windows pendente.
+- L2: consulta, corpo enviado, retorno, texto e configuração ligados por
+  tentativa/hashes; origem do dossiê e seleção ainda nulas (integração pendente).
+- L3: falhas, timeout, limite e gravação exercitados localmente; validar também
+  a execução portátil no Windows. Erros de uso anteriores à tentativa vão a stderr.
+- L4: seleção explícita do modelo implementada sem alteração do Graph Engine;
+  troca real de modelo não realizada nem necessária nesta etapa.
+- I1: testes locais do adaptador implementados e aprovados.
+- I3: latência e tamanhos registrados no transporte simulado; ciclo integrado pendente.
+- I4: CLI, artefatos e limites documentados na Aula 25; execução Windows pendente.
+- G4 e I2 permanecem pendentes. Não há novo fechamento dos engines.
+
+O adaptador desta aula não recebe credenciais e aceita apenas HTTP; não reconfere
+fontes. `completed` exige resposta estruturada com done=true e done_reason=stop.
+O marcador final de gravação não é autenticação ou snapshot atômico das fontes.
+
+### Atualização — testes simulados no Windows
+
+O usuário forneceu saída de cargo test --locked --bin send_ollama após aplicar
+a correção do teste de porta fechada: **13 aprovados, 0 falhas e 1 ignorado**,
+em 2,05 s. Os 3 testes do preparador também passaram anteriormente no Windows.
+A falha inicial e a correção estão documentadas na Aula 25. Isso acrescenta
+execução Windows à evidência de L3/I1; a chamada real Rust–Ollama de L1 continua
+pendente. Não fecha G4/I2 nem transforma tempos de teste em latência do modelo.
+
+### Atualização — chamada Rust real no Windows, tentativa 02
+
+O usuário forneceu a saída de OLLAMA_WINDOWS_RUST_02: completed, com registro
+em tentativa-ollama-rust-02/result.json. É evidência de L1 por relato de execução
+do cliente real; o registro e a resposta ainda aguardam recebimento/exame.
+A tentativa 01 ficou sem result.json e foi preservada como parcial. O envio usou
+a consulta histórica da Aula 17, sem reconferência: G4/I2 continuam pendentes.
+Avaliação semântica e medições da tentativa 02 ainda não examinadas. Sem fechamento
+antecipado da Aula 25 ou dos engines.
+
+Registro/texto da tentativa 02 foram posteriormente fornecidos pelo usuário:
+HTTP 200, completed, 7682,6093 ms, 8739 bytes de requisição e 18171 de retorno.
+Transcrições e avaliação retrospectiva da rubrica existente (3/6) estão no
+experimento 17. Os originais ainda não foram recebidos para conferir os hashes.
+L1 tem chamada real relatada e I3 tem medição de transporte real; G4/I2 continuam
+pendentes por ausência de ciclo recém-conferido e avaliação previamente vinculada.
+
+Originais da tentativa 02 recebidos em ZIP e preservados no experimento 17.
+Hashes, tamanhos, IDs, coerência prepared/result, consulta/prompt e retorno/texto
+conferidos com sucesso. L1 agora tem retorno bruto examinado; L2/I3 têm artefatos
+de transporte real conferidos, mas origem/seleção seguem nulas. A avaliação do
+original permanece 3/6 em documento separado. G4/I2 ainda exigem integração e
+avaliação previamente vinculada; não declarar os engines fechados.
+
+### Integração incremental — pacote de origem
+
+validate_evidence --bundle gera consulta conferida e cópias de dossiê/pergunta
+com hashes e parâmetros de seleção (experimento 18, 78 testes aprovados).
+G4/L2 continuam parciais: ainda falta ligar essa exportação ao envio e à rubrica
+prévia no mesmo fluxo. O pacote é evidência de uma exportação, não autorização
+para promover uma consulta posteriormente carregada a evidência atual.
+A captura histórica da Aula 17 é hoje recusada por divergência de Cargo.toml;
+não alteramos seu hash registrado para contornar a validação.
+
+## Revisão ao fechar a Aula 25 — 22/09/2026
+
+A tabela original da Aula 24 e as atualizações intermediárias são históricas.
+Agora explain_evidence chama a conferência/exportação antes do HTTP, liga origem,
+seleção e rubrica prévia ao transporte e rejeita divergências sem enviar.
+99 testes aprovados; experimento 19 preserva simulação e medidas. A versão final
+extraída do transporte/coordenador ainda aguarda validação Windows.
+
+| Critério | Evidência atual e pendência |
+| --- | --- |
+| G1–G3 | Mantidos; 78 testes do Bibliotecário passaram com fixtures isoladas e rejeição explícita de fonte alterada. |
+| G4 | Fluxo implementado e simulado; pendente demonstração integrada real. |
+| L1 | Chamada Rust real Windows recebida e conferida (versão anterior à extração final do módulo). |
+| L2 | Origem/seleção/rubrica ligadas no fluxo simulado; falta aplicação real e conferência de seus artefatos. |
+| L3 | Falhas de transporte e bloqueios de integração testados; prazo do subprocesso Graph ainda não implementado. |
+| L4 | Modelo é configuração explícita, sem alteração do Graph Engine. |
+| I1 | Testes locais de envio/falhas e integração aprovados. |
+| I2 | Pendente: chamada histórica real teve avaliação retrospectiva; simulação não é geração real. |
+| I3 | Medidas de transporte real e integração simulada registradas; falta medida da integração real. |
+| I4 | CLI/configuração/limites documentados; reprodução integrada Windows pendente. |
+
+Aula 25 concluída no escopo acordado de primeira comunicação. O fechamento v1
+dos engines permanece pendente; Aula 26 executará a integração real e revisará
+as lacunas. Não reinterpretar completed como nota semântica, autenticação ou
+snapshot atômico. evidence_rechecked=true no coordenador significa conferência
+nesta invocação antes do envio, com os limites do Bibliotecário preservados.

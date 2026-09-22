@@ -1,0 +1,20 @@
+{
+  "id": "RUBRIC_MODEL_EMPTY_V1",
+  "criteria": [
+    {
+      "id": "C1",
+      "description": "Cita a ficha e a fonte",
+      "expected": "Cita F_MODEL_EMPTY_CHECK e SRC_OLLAMA_REQUEST."
+    },
+    {
+      "id": "C2",
+      "description": "Explica a condição e o retorno",
+      "expected": "Explica que model.trim().is_empty() rejeita modelo vazio ou só espaços com Err; não afirma consultar modelos instalados."
+    },
+    {
+      "id": "C3",
+      "description": "Respeita o alcance do material",
+      "expected": "Distingue leitura/conferência de código de execução; não afirma ter rodado testes ou comprovar comportamento em todas as entradas."
+    }
+  ]
+}

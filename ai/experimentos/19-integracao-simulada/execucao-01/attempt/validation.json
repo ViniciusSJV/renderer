@@ -1,0 +1,8 @@
+{
+  "elapsed_ms": 4.012230000000001,
+  "exit_code": 0,
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_sha256": "74d12f41af1496d7ca231c3b94727d83f1b3707e7708d9ca0a15b2e70d00565d",
+  "validator": "/workspaces/renderer-local/target/debug/validate_evidence",
+  "working_directory": "/tmp/integrated-9385-0"
+}

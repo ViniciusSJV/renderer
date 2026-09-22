@@ -1,0 +1,14 @@
+Documento lido: /tmp/integrated-9385-0/dossier.json (299 bytes).
+Obras no acervo: 1
+Fichas no catálogo: 1
+Acervo sem IDs de fontes duplicados.
+Catálogo sem IDs de fatos duplicados.
+S: arquivo atual e linhas correspondem à edição registrada.
+Fichas verificadas: 1. Referências inválidas: 0.
+Ficha selecionada: F
+Afirmação: A linha exige modelo explícito.
+Referência: S, linha 1
+Arquivo: /tmp/integrated-9385-0/source.txt
+SHA-256: 5776e999a39ff949972f4b5280aab8dffca7efb9b80fdbdc25ac09450bf3644b
+Trecho: model must be explicit
+Seleção salva em /tmp/integrated-9385-0/attempt/bundle

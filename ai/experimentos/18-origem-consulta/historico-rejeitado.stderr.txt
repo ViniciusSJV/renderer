@@ -1,0 +1,1 @@
+Cargo.toml: arquivo atual diverge do hash posterior; isso não refuta a execução histórica

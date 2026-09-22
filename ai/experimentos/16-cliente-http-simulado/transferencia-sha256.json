@@ -1,0 +1,7 @@
+{
+  "Cargo.toml": "ed2c93a97a57aa3447cd5fc8b44e0b1119c8e7fb19fb1a3fc161a448a5c25229",
+  "Cargo.lock": "9ec8ce2887e5277f703be9b6f3045b9d0ab8d50a92586df6301c1e92e6015382",
+  "src/bin/prepare_ollama.rs": "198364a43164f500d9792a4a808abeeac3e599e9967c77a8f926a56e24be8dd4",
+  "src/bin/send_ollama.rs": "6771efcf017791efdc52bcf9837511605ea14529f278660a2ef1fb4eabcc3fb0",
+  "src/bin/ollama_common/mod.rs": "7661dc83fe0ce25020a78b640958f46521b747fa268a05a66cfca74943bae5bd"
+}

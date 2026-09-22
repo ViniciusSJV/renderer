@@ -1,0 +1,240 @@
+//! Transporte de consulta histórica ou exportada; não reconfere evidências.
+use crate::ollama_common;
+use reqwest::{blocking::Client, redirect::Policy, Url};
+use serde_json::{json, Value};
+use sha2::{Digest, Sha256};
+use std::{
+    error::Error,
+    fs::{self, OpenOptions},
+    io::{Read, Write},
+    path::Path,
+    time::{Duration, Instant, SystemTime, UNIX_EPOCH},
+};
+pub(crate) type Result<T> = std::result::Result<T, Box<dyn Error>>;
+
+pub(crate) struct Config {
+    pub(crate) endpoint: String,
+    pub(crate) model: String,
+    pub(crate) timeout_ms: u64,
+    pub(crate) max_bytes: usize,
+}
+impl Config {
+    pub(crate) fn validate(&self) -> Result<Url> {
+        let url = Url::parse(&self.endpoint)?;
+        if url.scheme() != "http"
+            || url.host_str().is_none()
+            || !url.username().is_empty()
+            || url.password().is_some()
+            || url.query().is_some()
+            || url.fragment().is_some()
+            || url.path() != "/api/generate"
+            || self.model.trim().is_empty()
+            || self.timeout_ms == 0
+            || self.max_bytes == 0
+        {
+            return Err("Use endpoint HTTP /api/generate sem credenciais/query/fragmento, modelo e limites positivos".into());
+        }
+        Ok(url)
+    }
+}
+pub(crate) fn hash(bytes: &[u8]) -> String {
+    format!("{:x}", Sha256::digest(bytes))
+}
+pub(crate) fn now_ms() -> u128 {
+    SystemTime::now()
+        .duration_since(UNIX_EPOCH)
+        .unwrap_or_default()
+        .as_millis()
+}
+pub(crate) fn save(dir: &Path, name: &str, bytes: &[u8]) -> Result<()> {
+    let mut file = OpenOptions::new()
+        .write(true)
+        .create_new(true)
+        .open(dir.join(name))?;
+    file.write_all(bytes)?;
+    file.sync_all()?;
+    Ok(())
+}
+pub(crate) fn save_json(dir: &Path, name: &str, value: &Value) -> Result<()> {
+    save(dir, name, &serde_json::to_vec_pretty(value)?)
+}
+pub(crate) fn finish(dir: &Path, record: &Value) -> Result<()> {
+    save_json(dir, "result.pending.json", record)?;
+    fs::rename(dir.join("result.pending.json"), dir.join("result.json"))?;
+    Ok(())
+}
+// Walk the error chain: blocking body reads wrap reqwest timeout in io::Error.
+fn is_timeout(mut error: &(dyn Error + 'static)) -> bool {
+    loop {
+        if error
+            .downcast_ref::<reqwest::Error>()
+            .is_some_and(|e| e.is_timeout())
+            || error.downcast_ref::<std::io::Error>().is_some_and(|e| {
+                e.kind() == std::io::ErrorKind::TimedOut
+                    || e.get_ref().is_some_and(|inner| is_timeout(inner))
+            })
+        {
+            return true;
+        }
+        match error.source() {
+            Some(source) => error = source,
+            None => return false,
+        }
+    }
+}
+pub(crate) fn transport_state(error: &(dyn Error + 'static)) -> &'static str {
+    if is_timeout(error) {
+        "timed_out"
+    } else {
+        "transport_failed"
+    }
+}
+fn classify(status: u16, bytes: &[u8]) -> (&'static str, Option<String>) {
+    let parsed = serde_json::from_slice::<Value>(bytes);
+    if !(200..300).contains(&status) {
+        return ("provider_failed", None);
+    }
+    let Ok(v) = parsed else {
+        return ("invalid_response", None);
+    };
+    if v.get("error").is_some() {
+        return ("provider_failed", None);
+    }
+    let (Some(model), Some(text), Some(done)) = (
+        v["model"].as_str(),
+        v["response"].as_str(),
+        v["done"].as_bool(),
+    ) else {
+        return ("invalid_response", None);
+    };
+    if model.trim().is_empty() {
+        return ("invalid_response", None);
+    }
+    // Conservatively require an explicit normal stop. Unknown stop reasons stay incomplete.
+    let state = if done && v["done_reason"].as_str() == Some("stop") {
+        "completed"
+    } else {
+        "incomplete_response"
+    };
+    (state, Some(text.into()))
+}
+pub(crate) fn attempt_linked(
+    query_path: &Path,
+    dir: &Path,
+    id: &str,
+    config: &Config,
+    link: Option<&Value>,
+) -> Result<String> {
+    // Atomic reservation prevents overwriting even when two processes choose the same directory.
+    fs::create_dir(dir)?;
+    save_json(
+        dir,
+        "started.json",
+        &json!({"format_version":1,"request_id":id,"started_unix_ms":now_ms()}),
+    )?;
+    let prepared = (|| -> Result<(Url, Vec<u8>, Vec<u8>)> {
+        if id.trim().is_empty() {
+            return Err("request_id vazio".into());
+        }
+        let url = config.validate()?;
+        let query = fs::read(query_path)?;
+        if let Some(link) = link {
+            if link["query_sha256"].as_str() != Some(hash(&query).as_str()) {
+                return Err("Consulta mudou após conferência; nenhum envio realizado".into());
+            }
+        }
+        let body = ollama_common::request(std::str::from_utf8(&query)?, &config.model)?;
+        Ok((url, query, serde_json::to_vec_pretty(&body)?))
+    })();
+    let (url, query, body) = match prepared {
+        Ok(p) => p,
+        Err(e) => {
+            finish(
+                dir,
+                &json!({"format_version":1,"request_id":id,
+                "state":"input_rejected","diagnostic":e.to_string(),"sent":false}),
+            )?;
+            return Ok("input_rejected".into());
+        }
+    };
+    save(dir, "query.json", &query)?;
+    save(dir, "request.json", &body)?;
+    let mut record = json!({"format_version":1,"request_id":id,"endpoint":url.as_str(),
+        "requested_model":config.model,"timeout_ms":config.timeout_ms,"max_response_bytes":config.max_bytes,
+        "query_source_path":query_path.to_string_lossy(),"query_sha256":hash(&query),"query_bytes":query.len(),
+        "request_sha256":hash(&body),"request_bytes":body.len(),"explicit_options":{},
+        "evidence_rechecked":false,"dossier_origin":null,"selection":null,"semantic_evaluation":"pending",
+        "files":{"query":"query.json","request":"request.json","response":"response.bin","text":null},
+        "http_status":null,"diagnostic":null,"response_body_complete":false});
+    if let Some(link) = link {
+        record["evidence_rechecked"] = json!(true);
+        record["dossier_origin"] = link["dossier_origin"].clone();
+        record["selection"] = link["selection"].clone();
+        record["integration"] = link.clone();
+        record["validation_scope"] = json!(
+            "Conferência nesta invocação antes do envio; sem snapshot atômico nem autenticação."
+        );
+    }
+    save_json(dir, "prepared.json", &record)?;
+    let started = Instant::now();
+    record["http_started_unix_ms"] = json!(now_ms());
+    let mut raw = Vec::new();
+    let mut text = None;
+    let transport = (|| -> Result<&'static str> {
+        let client = Client::builder()
+            .timeout(Duration::from_millis(config.timeout_ms))
+            .redirect(Policy::none())
+            .retry(reqwest::retry::never())
+            .no_proxy()
+            .build()?;
+        let mut response = client
+            .post(url)
+            .header("Content-Type", "application/json")
+            .body(body)
+            .send()?;
+        let status = response.status().as_u16();
+        record["http_status"] = json!(status);
+        let mut buffer = [0u8; 8192];
+        loop {
+            // One extra byte detects overflow without trusting Content-Length.
+            let amount = buffer
+                .len()
+                .min(config.max_bytes - raw.len() + usize::from(raw.len() == config.max_bytes));
+            let n = response.read(&mut buffer[..amount])?;
+            if n == 0 {
+                break;
+            }
+            if raw.len() == config.max_bytes {
+                record["diagnostic"] =
+                    json!("Limite de bytes excedido; preservado apenas o prefixo permitido");
+                return Ok("incomplete_response");
+            }
+            raw.extend_from_slice(&buffer[..n]);
+        }
+        record["response_body_complete"] = json!(true);
+        let (state, extracted) = classify(status, &raw);
+        text = extracted;
+        Ok(state)
+    })();
+    record["http_elapsed_ms"] = json!(started.elapsed().as_secs_f64() * 1000.0);
+    record["http_finished_unix_ms"] = json!(now_ms());
+    let state = match transport {
+        Ok(state) => state,
+        Err(e) => {
+            record["diagnostic"] = json!(e.to_string());
+            transport_state(e.as_ref())
+        }
+    };
+    save(dir, "response.bin", &raw)?;
+    if let Some(text) = text {
+        save(dir, "response.txt", text.as_bytes())?;
+        record["files"]["text"] = json!("response.txt");
+        record["text_sha256"] = json!(hash(text.as_bytes()));
+    }
+    record["state"] = json!(state);
+    record["response_sha256"] = json!(hash(&raw));
+    record["response_bytes_preserved"] = json!(raw.len());
+    // A temporary final record must be fully written before it becomes the completion marker.
+    finish(dir, &record)?;
+    Ok(state.into())
+}

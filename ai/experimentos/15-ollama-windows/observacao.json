@@ -1,0 +1,18 @@
+{
+  "provenance": "Retorno colado pelo usuário do PowerShell Windows; sem acesso direto ao host ou captura do tráfego HTTP. JSON extraído após o prompt do terminal.",
+  "model": "renderer-analyst",
+  "created_at": "2026-09-21T05:00:46.9077324Z",
+  "done": true,
+  "done_reason": "stop",
+  "server_metrics": {
+    "total_duration": 15648829200,
+    "load_duration": 5822972000,
+    "prompt_eval_count": 2998,
+    "prompt_eval_cached_count": 0,
+    "prompt_eval_duration": 1243534000,
+    "eval_count": 505,
+    "eval_duration": 8561273999
+  },
+  "response_sha256": "ef9d2e6d6312bfb6c1b83ce0ae470498114cbc23eeae73336225487b302d427f",
+  "scope": "Teste HTTP via PowerShell de consulta histórica; não é envio por cliente Rust nem reconferência das fontes no Windows. Não altera avaliação da Aula 17."
+}

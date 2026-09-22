@@ -1,0 +1,34 @@
+{
+  "dossier": {
+    "file": "dossier.json",
+    "id": "preparador-modelo-explicito",
+    "sha256": "323205373e60699b7b60c2d900f6b6887b0d1e2925c9175001e0addc17dff8a8",
+    "source_path": "ai/experimentos/18-origem-consulta/evidencias.json"
+  },
+  "export_finished_unix_ms": 1790030243734,
+  "format_version": 1,
+  "kind": "validated_query_export",
+  "limits": [
+    "Não autentica execução nem comprova bytes compilados.",
+    "Não é snapshot atômico das fontes.",
+    "Não valida semanticamente fichas ou respostas.",
+    "Nenhum envio HTTP realizado; rubrica e avaliação ainda não vinculadas."
+  ],
+  "query": {
+    "bytes": 2201,
+    "file": "query.json",
+    "sha256": "0074485d308fb56038b5be12595b2f5a83d0eaeea61cbe436c26b89eecbb1923"
+  },
+  "question": {
+    "file": "question.txt",
+    "sha256": "5bbe67854af8534ebdba776bd07e81c1d0471d50e0cd00df583986855aa23e60",
+    "source_path": "ai/experimentos/18-origem-consulta/pergunta.txt"
+  },
+  "selection": {
+    "context": 1,
+    "fact_ids": [
+      "F_MODEL_EMPTY_CHECK"
+    ]
+  },
+  "validation_scope": "Conferência pelo validate_evidence antes desta exportação. Não é conferência no momento de um envio posterior."
+}

@@ -1,0 +1,23 @@
+{
+  "checks": {
+    "transport_result_hash": true,
+    "rubric_hash": true,
+    "origin_hash": true,
+    "same_link": true,
+    "query_matches_bundle": true,
+    "query_hash": true,
+    "request_hash": true,
+    "response_hash": true,
+    "text_hash": true
+  },
+  "tests": {
+    "validate_evidence": 78,
+    "send_ollama": 13,
+    "prepare_ollama": 3,
+    "explain_evidence": 5,
+    "total_passed": 99,
+    "recorders_ignored_by_default": 2,
+    "integrated_recorder_explicitly_passed": 1
+  },
+  "scope": "Conferência local de artefatos sintéticos; sem autenticação ou geração real."
+}

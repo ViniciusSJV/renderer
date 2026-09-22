@@ -1,0 +1,83 @@
+{
+  "id": "EVAL_OLLAMA_WINDOWS_RUST_02",
+  "request_id": "OLLAMA_WINDOWS_RUST_02",
+  "method": "Aplicação manual retrospectiva à nova resposta da rubrica já existente da Aula 17. Um ponto por critério integralmente atendido; parcial vale zero. Não houve novo compromisso prévio de avaliação nesta tentativa.",
+  "criteria_source": "../08-avaliacao-captura/criterios.json",
+  "criteria": [
+    {
+      "id": "C1",
+      "description": "Distingue identidade da fonte e da execução.",
+      "expected": "TEST_BOUNDARY_2 identifica a fonte; RUN_EQUIVALENCE_BOUNDARY_2 identifica a execução. Não troca esses papéis nem usa CTX_1 como execução."
+    },
+    {
+      "id": "C2",
+      "description": "Interpreta corretamente o resultado e o pânico esperado.",
+      "expected": "Registra quatro testes aprovados, zero falhas e código 0 do comando. Explica que o teste no limite passou esperando pânico, sem transformar isso em aceitação do par. Não generaliza para a suíte inteira."
+    },
+    {
+      "id": "C3",
+      "description": "Usa referências que sustentam as afirmações.",
+      "expected": "Cita F_BOUNDARY_RUN_RESULT e TEST_BOUNDARY_2 para o resultado e F_BOUNDARY_LIMIT_PANIC e TEST_BOUNDARY_2 para o pânico esperado. Para a conferência, aponta capture_validation da fonte, sem inventar fichas."
+    },
+    {
+      "id": "C4",
+      "description": "Distingue conferência do registro de sucesso do comando.",
+      "expected": "Descreve a conferência do hash/ID do registro, ligação da fonte à saída, linhas/hash da fonte, tamanho/hash da saída e comparações das fontes. Distingue result.exit_code do status capture_and_source_match; não trata código 0 do comando como código do validador nem alega reexecução."
+    },
+    {
+      "id": "C5",
+      "description": "Delimita a associação e a autenticidade.",
+      "expected": "Explica que cinco arquivos atuais correspondem aos hashes posteriores e há cinco comparações equal declaradas e conferidas. Não conclui imutabilidade durante todo o intervalo, autenticação, veracidade do ambiente/datas ou prova das entradas do compilador. A conferência semântica da ficha não foi feita."
+    },
+    {
+      "id": "C6",
+      "description": "Não generaliza correção ou desempenho.",
+      "expected": "Reconhece que os casos registrados não provam correção universal e não há benchmark comparativo. Não interpreta finished in 0.00s como custo da macro ou ganho de velocidade."
+    }
+  ],
+  "score": 3,
+  "max_score": 6,
+  "response_file": "resposta-transcrita.md",
+  "response_transcription_sha256": "ea4b61e1f71135f3da3bb0077947c5c3089ad1e3d89a1cca9b820bf0a0616753",
+  "results": [
+    {
+      "id": "C1",
+      "score": 1,
+      "justification": "Distingue corretamente TEST_BOUNDARY_2 como fonte e RUN_EQUIVALENCE_BOUNDARY_2 como execução."
+    },
+    {
+      "id": "C2",
+      "score": 0,
+      "justification": "Parcial: informa quatro aprovações, zero falhas e código 0, mas não explicita que o relatório registra ocorrência do pânico esperado. Não gerou um pânico inesperado é compatível com o resultado, porém insuficiente para explicar should panic ... ok; não se atribui ao modelo uma negação explícita do pânico."
+    },
+    {
+      "id": "C3",
+      "score": 0,
+      "justification": "Omite F_BOUNDARY_RUN_RESULT e F_BOUNDARY_LIMIT_PANIC, exigidos pela pergunta e rubrica."
+    },
+    {
+      "id": "C4",
+      "score": 1,
+      "justification": "Enumera os campos conferidos e distingue o sucesso do comando da consistência do registro, sem alegar reexecução."
+    },
+    {
+      "id": "C5",
+      "score": 0,
+      "justification": "Parcial: reconhece limites de autenticação e bytes compilados, mas omite cinco arquivos/cinco comparações equal e a ausência de validação semântica das fichas."
+    },
+    {
+      "id": "C6",
+      "score": 1,
+      "justification": "Não conclui correção universal nem ganho de desempenho e pede benchmarks comparativos. Não transforma 0.00s em benchmark."
+    }
+  ],
+  "notes": [
+    "As avaliações das aulas 10 e 17 permanecem 3/6; esta avaliação pertence apenas à tentativa 02 e não é comparação controlada.",
+    "Cobrir todas as entradas por testes não é a única via de justificar correção; provas formais também podem contribuir. A afirmação de ausência de informações de cobertura é ampla demais: há exemplos e contagem, mas não cobertura completa.",
+    "A resposta descreve conferências históricas; evidence_rechecked=false impede tratá-las como conferência atual no Windows.",
+    "Avaliação baseada na transcrição fornecida, não em response.bin original. Nenhuma alteração do semantic_evaluation do registro original."
+  ],
+  "original_response_file": "originais/response.txt",
+  "original_response_sha256": "e70d18da56032fa741a4e86c4de564224216d070ec9add3383768fd646a403d9",
+  "original_review": "Texto original recebido no ZIP e conferido; diferenças da transcrição limitadas a escapes Markdown e espaço final. Avaliação permanece 3/6."
+}

@@ -1,3 +1,5 @@
+#[path = "validate_evidence/bundle.rs"]
+mod bundle;
 #[path = "validate_evidence/capture.rs"]
 mod capture;
 #[path = "validate_evidence/metrics.rs"]
@@ -63,11 +65,66 @@ mod tests {
         (review, evidence)
     }
 
-    fn capture_dossier() -> Evidence {
-        serde_json::from_str(include_str!(
+    struct CaptureFixture {
+        evidence: Evidence,
+        dir: std::path::PathBuf,
+    }
+    impl std::ops::Deref for CaptureFixture {
+        type Target = Evidence;
+        fn deref(&self) -> &Evidence {
+            &self.evidence
+        }
+    }
+    impl std::ops::DerefMut for CaptureFixture {
+        fn deref_mut(&mut self) -> &mut Evidence {
+            &mut self.evidence
+        }
+    }
+    impl Drop for CaptureFixture {
+        fn drop(&mut self) {
+            let _ = fs::remove_dir_all(&self.dir);
+        }
+    }
+    fn capture_dossier() -> CaptureFixture {
+        use serde_json::json;
+        use std::sync::atomic::{AtomicUsize, Ordering};
+        static NEXT: AtomicUsize = AtomicUsize::new(0);
+        let dir = std::env::temp_dir().join(format!(
+            "capture-dossier-{}-{}",
+            std::process::id(),
+            NEXT.fetch_add(1, Ordering::Relaxed)
+        ));
+        fs::create_dir(&dir).unwrap();
+        // Synthetic fixture only: no historical evidence is modified or re-certified.
+        let mut evidence: Evidence = serde_json::from_str(include_str!(
             "../../ai/experimentos/07-dossie-captura/evidencias.json"
         ))
-        .unwrap()
+        .unwrap();
+        let output = include_bytes!("../../ai/experimentos/05-associacao/fronteira/saida.bin");
+        fs::write(dir.join("saida.bin"), output).unwrap();
+        fs::write(dir.join("source"), b"synthetic source").unwrap();
+        let hash = format!("{:x}", Sha256::digest(b"synthetic source"));
+        let record = json!({"schema_version":2,"run_id":"RUN_EQUIVALENCE_BOUNDARY_2",
+            "argv":["synthetic-fixture"],"cwd":dir,"started_at":"fixture","finished_at":"fixture",
+            "environment":{"fixture":true},"result":{"status":"exited","exit_code":0},
+            "output":{"path":"saida.bin","streams":"stdout+stderr","bytes":output.len(),"sha256":format!("{:x}",Sha256::digest(output))},
+            "sources":[{"path":"source","resolved_path":dir.join("source"),"before_sha256":hash,"after_sha256":hash,"comparison":"equal"}]});
+        let bytes = serde_json::to_vec(&record).unwrap();
+        fs::write(dir.join("execucao.json"), &bytes).unwrap();
+        evidence.sources[0].path = Some(dir.join("saida.bin").to_string_lossy().into_owned());
+        let link = evidence.sources[0].capture.as_mut().unwrap();
+        link.path = dir.join("execucao.json").to_string_lossy().into_owned();
+        link.sha256 = format!("{:x}", Sha256::digest(&bytes));
+        CaptureFixture { evidence, dir }
+    }
+    #[test]
+    fn capture_fixture_rejects_changed_current_source() {
+        let e = capture_dossier();
+        validate_capture_link(&e.sources[0]).unwrap();
+        fs::write(e.dir.join("source"), b"changed").unwrap();
+        assert!(validate_capture_link(&e.sources[0])
+            .unwrap_err()
+            .contains("diverge do hash posterior"));
     }
     #[test]
     fn capture_export_preserves_source_and_run_id_with_limits() {
@@ -135,7 +192,8 @@ mod tests {
         e.sources[0].capture.as_mut().unwrap().sha256 = "0".repeat(64);
         assert!(selections_json(&[&e.facts[0], &e.facts[1]], &e.sources, 1, None, None).is_err());
         let mut e = capture_dossier();
-        let mut other = capture_dossier().sources.remove(0);
+        let mut other_fixture = capture_dossier();
+        let mut other = other_fixture.sources.remove(0);
         other.id = "OTHER".into();
         other.capture.as_mut().unwrap().run_id = "WRONG".into();
         e.sources.push(other);
@@ -1754,6 +1812,7 @@ fn main() {
     let arguments: Vec<String> = std::env::args().collect();
     let mut radius = 3;
     let mut output_path: Option<&str> = None;
+    let mut bundle_path: Option<&str> = None;
     let mut question_path: Option<&str> = None;
     let mut selected_ids = Vec::new();
     if arguments.get(2).map(String::as_str) == Some("--fact") {
@@ -1787,6 +1846,7 @@ fn main() {
                     context_seen = true;
                 }
                 "--output" if output_path.is_none() => output_path = Some(value.as_str()),
+                "--bundle" if bundle_path.is_none() => bundle_path = Some(value.as_str()),
                 "--question" if question_path.is_none() => question_path = Some(value.as_str()),
                 _ => {
                     eprintln!("Opção desconhecida ou repetida: {}", arguments[position]);
@@ -1797,12 +1857,16 @@ fn main() {
         }
     } else {
         if arguments.len() > 3 || arguments.get(2).is_some_and(|v| v.starts_with("--")) {
-            eprintln!("Uso: validate_evidence [DOSSIÊ] [PARECER] ou DOSSIÊ --fact ID [--fact ID ...] [--context N] [--question ARQUIVO] [--output ARQUIVO]");
+            eprintln!("Uso: validate_evidence [DOSSIÊ] [PARECER] ou DOSSIÊ --fact ID [--fact ID ...] [--context N] [--question ARQUIVO] [--output ARQUIVO | --bundle DIRETORIO_NOVO]");
             std::process::exit(1);
         }
     }
-    if question_path.is_some() && output_path.is_none() {
-        eprintln!("Use --output para salvar a consulta com --question.");
+    if bundle_path.is_some() && (question_path.is_none() || output_path.is_some()) {
+        eprintln!("--bundle exige --question e substitui --output.");
+        std::process::exit(1);
+    }
+    if question_path.is_some() && output_path.is_none() && bundle_path.is_none() {
+        eprintln!("Use --output ou --bundle para salvar a consulta com --question.");
         std::process::exit(1);
     }
     let question = match question_path {
@@ -1961,7 +2025,7 @@ fn main() {
             }
             println!("Trecho: {}", source.lines[fact.line - 1]);
         }
-        if let Some(output_path) = output_path {
+        if output_path.is_some() || bundle_path.is_some() {
             let result = selections_json(
                 &selected,
                 &sources,
@@ -1974,15 +2038,35 @@ fn main() {
                     Some(text) => query_json(text, &json)?,
                     None => json,
                 };
+                if let Some(dir) = bundle_path {
+                    let bytes = format!("{json}\n");
+                    bundle::write(
+                        std::path::Path::new(dir),
+                        bytes.as_bytes(),
+                        &bundle::Origin {
+                            dossier_path: &path,
+                            dossier: &content,
+                            dossier_id: evidence_id.as_deref(),
+                            question_path: question_path.expect("validado"),
+                            question: question.as_deref().expect("validado"),
+                            facts: &selected_ids,
+                            context: radius,
+                        },
+                    )?;
+                    return Ok(());
+                }
                 let mut file = fs::OpenOptions::new()
                     .write(true)
                     .create_new(true)
-                    .open(output_path)
+                    .open(output_path.expect("validado"))
                     .map_err(|error| error.to_string())?;
                 writeln!(file, "{}", json).map_err(|error| error.to_string())
             });
             match result {
-                Ok(()) => println!("Seleção salva em {}", output_path),
+                Ok(()) => println!(
+                    "Seleção salva em {}",
+                    bundle_path.or(output_path).expect("validado")
+                ),
                 Err(error) => {
                     eprintln!("Não foi possível exportar a seleção: {}", error);
                     std::process::exit(1);

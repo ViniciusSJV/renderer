@@ -1,0 +1,14 @@
+Documento lido: ai/experimentos/18-origem-consulta/evidencias.json (1686 bytes).
+Obras no acervo: 1
+Fichas no catálogo: 1
+Acervo sem IDs de fontes duplicados.
+Catálogo sem IDs de fatos duplicados.
+SRC_OLLAMA_REQUEST: arquivo atual e linhas correspondem à edição registrada.
+Fichas verificadas: 1. Referências inválidas: 0.
+Ficha selecionada: F_MODEL_EMPTY_CHECK
+Afirmação: A função request verifica se model.trim().is_empty().
+Referência: SRC_OLLAMA_REQUEST, linha 4
+Arquivo: src/bin/ollama_common/mod.rs
+SHA-256: 7661dc83fe0ce25020a78b640958f46521b747fa268a05a66cfca74943bae5bd
+Trecho:     if model.trim().is_empty() {
+Seleção salva em ai/experimentos/18-origem-consulta/pacote-01

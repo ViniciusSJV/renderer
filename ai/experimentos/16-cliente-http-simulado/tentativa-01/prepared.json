@@ -1,0 +1,27 @@
+{
+  "diagnostic": null,
+  "dossier_origin": null,
+  "endpoint": "http://127.0.0.1:34299/api/generate",
+  "evidence_rechecked": false,
+  "explicit_options": {},
+  "files": {
+    "query": "query.json",
+    "request": "request.json",
+    "response": "response.bin",
+    "text": null
+  },
+  "format_version": 1,
+  "http_status": null,
+  "max_response_bytes": 4096,
+  "query_bytes": 67,
+  "query_sha256": "f3595f5342850f47db4f655cdeb4ff6262d8777632c729de79ceb242f056ef17",
+  "query_source_path": "/tmp/ollama-test-16431-1790027878658-0/query.json",
+  "request_bytes": 149,
+  "request_id": "SIMULATED_HTTP_1",
+  "request_sha256": "33143ee1a56549ecec32d4a270321e3eb4598dfadab30b522eedf57b89fe14e2",
+  "requested_model": "modelo-configurado",
+  "response_body_complete": false,
+  "selection": null,
+  "semantic_evaluation": "pending",
+  "timeout_ms": 2000
+}

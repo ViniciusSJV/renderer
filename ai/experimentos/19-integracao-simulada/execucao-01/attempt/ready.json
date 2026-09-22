@@ -1,0 +1,29 @@
+{
+  "link": {
+    "dossier_origin": {
+      "file": "dossier.json",
+      "id": "D_TEST",
+      "sha256": "a5cafbedd3763379f275d58bcd03961b284b28ac05186cc2cb863e7ce9029297",
+      "source_path": "/tmp/integrated-9385-0/dossier.json"
+    },
+    "files_base": "Diretório transport; arquivos dossier/question/query da origem ficam em ../bundle",
+    "limits": "Conferência nesta invocação, sem snapshot atômico; não autentica execução nem valida semântica.",
+    "origin": {
+      "file": "../bundle/origin.json",
+      "sha256": "729354c44b0275b077aed174ad6c6507a8cd73fdec1e2e4b5088a3131b2b2afb"
+    },
+    "query_sha256": "4ae46e191766203103c20636b86af1b90c997ee972000bf65374305130e3ddbe",
+    "rubric": {
+      "file": "../rubric.json",
+      "sha256": "cf40a379b96a8216d60f8d0ed98e4d709ce9aa5c9c07cd38786869dc36507e63"
+    },
+    "selection": {
+      "context": 1,
+      "fact_ids": [
+        "F"
+      ]
+    }
+  },
+  "request_id": "I_TEST",
+  "semantic_evaluation": "pending"
+}

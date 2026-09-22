@@ -1,0 +1,5 @@
+{
+  "model": "modelo-configurado",
+  "prompt": "{\n\"question\":\"Câmera?\",\"evidence\":{},\"instructions\":[\"Cite IDs\"]}\n",
+  "stream": false
+}

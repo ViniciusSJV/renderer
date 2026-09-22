@@ -1,28 +1,9 @@
 //! Prepara o corpo JSON de /api/generate. Não envia nem reconfere evidências.
-use serde_json::{json, Value};
+mod ollama_common;
+use ollama_common::request;
 use std::fs::{self, OpenOptions};
 use std::io::Write;
 
-fn request(query: &str, model: &str) -> Result<Value, String> {
-    if model.trim().is_empty() {
-        return Err("Modelo deve ser explícito".into());
-    }
-    let value: Value = serde_json::from_str(query).map_err(|e| e.to_string())?;
-    if !value["question"]
-        .as_str()
-        .is_some_and(|q| !q.trim().is_empty())
-        || !value["evidence"].is_object()
-        || !value["instructions"].as_array().is_some_and(|items| {
-            !items.is_empty()
-                && items
-                    .iter()
-                    .all(|x| x.as_str().is_some_and(|s| !s.trim().is_empty()))
-        })
-    {
-        return Err("Consulta deve conter question, evidence e instructions válidos".into());
-    }
-    Ok(json!({"model": model, "prompt": query, "stream": false}))
-}
 fn run() -> Result<(), Box<dyn std::error::Error>> {
     let args: Vec<String> = std::env::args().collect();
     if args.len() != 4 {

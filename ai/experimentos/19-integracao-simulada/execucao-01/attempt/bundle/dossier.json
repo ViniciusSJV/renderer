@@ -1,0 +1,1 @@
+{"facts":[{"id":"F","line":1,"source_id":"S","statement":"A linha exige modelo explícito."}],"id":"D_TEST","sources":[{"id":"S","kind":"text","lines":["model must be explicit"],"path":"/tmp/integrated-9385-0/source.txt","sha256":"5776e999a39ff949972f4b5280aab8dffca7efb9b80fdbdc25ac09450bf3644b"}]}

@@ -1,0 +1,29 @@
+{
+  "command": [
+    "target/debug/validate_evidence",
+    "ai/experimentos/18-origem-consulta/evidencias.json",
+    "--fact",
+    "F_MODEL_EMPTY_CHECK",
+    "--context",
+    "1",
+    "--question",
+    "ai/experimentos/18-origem-consulta/pergunta.txt",
+    "--bundle",
+    "ai/experimentos/18-origem-consulta/pacote-01"
+  ],
+  "exit_code": 0,
+  "debug_process_elapsed_ms": 228.05143499999758,
+  "query_bytes": 2201,
+  "origin_bytes": 1189,
+  "checks": {
+    "dossier_hash": true,
+    "question_hash": true,
+    "query_hash": true,
+    "legacy_query_bytes_identical": true,
+    "existing_destination_refused": true,
+    "invalid_reference_no_bundle": true,
+    "conflicting_options_refused": true,
+    "historical_drift_refused": true
+  },
+  "scope": "Uma amostra de processo CLI debug incluindo I/O; exclui compilação, sem HTTP ou geração."
+}

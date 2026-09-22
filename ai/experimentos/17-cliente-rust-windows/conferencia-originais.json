@@ -1,0 +1,38 @@
+{
+  "origin": "ZIP fornecido pelo usuário; conferência local de bytes, não autenticação da execução",
+  "zip_source": "ai/aulas/tentativa-ollama-rust-02.zip",
+  "zip_sha256": "8d9107474909417b5ebfc9f74a17afbc4272fb04b4d90f13c836bf9d80df9b3b",
+  "checks": {
+    "query.json_sha256": true,
+    "request.json_sha256": true,
+    "response.bin_sha256": true,
+    "response.txt_sha256": true,
+    "query_bytes": true,
+    "request_bytes": true,
+    "response_bytes": true,
+    "prompt_exact": true,
+    "text_exact": true,
+    "historical_query_exact": true,
+    "model_requested": true,
+    "stream_false": true,
+    "done_stop": true,
+    "identity": true,
+    "prepared_matches_result": true,
+    "result_transcription_matches": true,
+    "response_transcription_matches_after_markdown_normalization": true
+  },
+  "reported_model": "renderer-analyst:latest",
+  "server_metrics": {
+    "total_duration": 7673931800,
+    "load_duration": 2068100,
+    "prompt_eval_count": 2998,
+    "prompt_eval_duration": 36186000,
+    "eval_count": 450,
+    "eval_duration": 7623528000
+  },
+  "limits": [
+    "Consulta histórica; nenhuma reconferência das fontes no Windows",
+    "Hashes não autenticam execução nem comprovam entradas reais do modelo",
+    "Resposta semanticamente avaliada separadamente"
+  ]
+}

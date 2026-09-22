@@ -1,0 +1,70 @@
+{
+  "diagnostic": null,
+  "dossier_origin": {
+    "file": "dossier.json",
+    "id": "D_TEST",
+    "sha256": "a5cafbedd3763379f275d58bcd03961b284b28ac05186cc2cb863e7ce9029297",
+    "source_path": "/tmp/integrated-9385-0/dossier.json"
+  },
+  "endpoint": "http://127.0.0.1:36865/api/generate",
+  "evidence_rechecked": true,
+  "explicit_options": {},
+  "files": {
+    "query": "query.json",
+    "request": "request.json",
+    "response": "response.bin",
+    "text": "response.txt"
+  },
+  "format_version": 1,
+  "http_elapsed_ms": 1.948818,
+  "http_finished_unix_ms": 1790044158366,
+  "http_started_unix_ms": 1790044158364,
+  "http_status": 200,
+  "integration": {
+    "dossier_origin": {
+      "file": "dossier.json",
+      "id": "D_TEST",
+      "sha256": "a5cafbedd3763379f275d58bcd03961b284b28ac05186cc2cb863e7ce9029297",
+      "source_path": "/tmp/integrated-9385-0/dossier.json"
+    },
+    "files_base": "Diretório transport; arquivos dossier/question/query da origem ficam em ../bundle",
+    "limits": "Conferência nesta invocação, sem snapshot atômico; não autentica execução nem valida semântica.",
+    "origin": {
+      "file": "../bundle/origin.json",
+      "sha256": "729354c44b0275b077aed174ad6c6507a8cd73fdec1e2e4b5088a3131b2b2afb"
+    },
+    "query_sha256": "4ae46e191766203103c20636b86af1b90c997ee972000bf65374305130e3ddbe",
+    "rubric": {
+      "file": "../rubric.json",
+      "sha256": "cf40a379b96a8216d60f8d0ed98e4d709ce9aa5c9c07cd38786869dc36507e63"
+    },
+    "selection": {
+      "context": 1,
+      "fact_ids": [
+        "F"
+      ]
+    }
+  },
+  "max_response_bytes": 4096,
+  "query_bytes": 1613,
+  "query_sha256": "4ae46e191766203103c20636b86af1b90c997ee972000bf65374305130e3ddbe",
+  "query_source_path": "/tmp/integrated-9385-0/attempt/bundle/query.json",
+  "request_bytes": 1796,
+  "request_id": "I_TEST",
+  "request_sha256": "33b1c5f965d227fa6dfcb9b372b170a652ed531ebc54089388fb8851d12b22cf",
+  "requested_model": "simulated",
+  "response_body_complete": true,
+  "response_bytes_preserved": 71,
+  "response_sha256": "a37173a493fdde1ad00f1671678e7af70ec39a71b18b6878fd1fbb59f4c3e731",
+  "selection": {
+    "context": 1,
+    "fact_ids": [
+      "F"
+    ]
+  },
+  "semantic_evaluation": "pending",
+  "state": "completed",
+  "text_sha256": "f477c0d6efe39e4e26771ed060a0f663a326acc0fd4a3f2a7c6e0377a55a3b57",
+  "timeout_ms": 1000,
+  "validation_scope": "Conferência nesta invocação antes do envio; sem snapshot atômico nem autenticação."
+}

@@ -1,0 +1,34 @@
+{
+  "dossier": {
+    "file": "dossier.json",
+    "id": "D_TEST",
+    "sha256": "a5cafbedd3763379f275d58bcd03961b284b28ac05186cc2cb863e7ce9029297",
+    "source_path": "/tmp/integrated-9385-0/dossier.json"
+  },
+  "export_finished_unix_ms": 1790044158360,
+  "format_version": 1,
+  "kind": "validated_query_export",
+  "limits": [
+    "Não autentica execução nem comprova bytes compilados.",
+    "Não é snapshot atômico das fontes.",
+    "Não valida semanticamente fichas ou respostas.",
+    "Nenhum envio HTTP realizado; rubrica e avaliação ainda não vinculadas."
+  ],
+  "query": {
+    "bytes": 1613,
+    "file": "query.json",
+    "sha256": "4ae46e191766203103c20636b86af1b90c997ee972000bf65374305130e3ddbe"
+  },
+  "question": {
+    "file": "question.txt",
+    "sha256": "f0f2f75edabdd13c9f6362c29ac0cff3d47b29781170e89297f76f38017981cb",
+    "source_path": "/tmp/integrated-9385-0/question.txt"
+  },
+  "selection": {
+    "context": 1,
+    "fact_ids": [
+      "F"
+    ]
+  },
+  "validation_scope": "Conferência pelo validate_evidence antes desta exportação. Não é conferência no momento de um envio posterior."
+}

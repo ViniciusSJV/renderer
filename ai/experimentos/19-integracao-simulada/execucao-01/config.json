@@ -1,0 +1,1 @@
+{"context":1,"dossier":"dossier.json","endpoint":"http://127.0.0.1:36865/api/generate","facts":["F"],"max_response_bytes":4096,"model":"simulated","project_root":"/tmp/integrated-9385-0","question":"question.txt","request_id":"I_TEST","rubric":"rubric.json","timeout_ms":1000}
