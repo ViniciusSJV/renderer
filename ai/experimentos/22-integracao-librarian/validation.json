@@ -1,0 +1,70 @@
+{
+  "librarian_revision": "4e84f004061b1df84ae5d8f22af9007aa2d99962",
+  "dependencies": [
+    {
+      "name": "librarian-core",
+      "version": "0.1.0",
+      "source": "git+https://github.com/ViniciusSJV/librarian.git?rev=4e84f004061b1df84ae5d8f22af9007aa2d99962#4e84f004061b1df84ae5d8f22af9007aa2d99962"
+    },
+    {
+      "name": "librarian-graph-engine",
+      "version": "0.1.0",
+      "source": "git+https://github.com/ViniciusSJV/librarian.git?rev=4e84f004061b1df84ae5d8f22af9007aa2d99962#4e84f004061b1df84ae5d8f22af9007aa2d99962"
+    }
+  ],
+  "tests": {
+    "integration": {
+      "passed": 2,
+      "failed": 0,
+      "ignored": 0
+    },
+    "renderer": {
+      "passed": 317,
+      "failed": 0,
+      "ignored": 2
+    },
+    "librarian": {
+      "passed": 21,
+      "failed": 0,
+      "ignored": 0
+    }
+  },
+  "external_sources": [
+    {
+      "id": "SRC_EXTERNAL_BENCH",
+      "sha256_matches": true,
+      "lines_match": true
+    },
+    {
+      "id": "SRC_EXTERNAL_BASELINE",
+      "sha256_matches": true,
+      "lines_match": true
+    },
+    {
+      "id": "SRC_EXTERNAL_STATS",
+      "sha256_matches": true,
+      "lines_match": true
+    },
+    {
+      "id": "SRC_EXTERNAL_REGRESSION",
+      "sha256_matches": true,
+      "lines_match": true
+    }
+  ],
+  "baseline_recalculation": {
+    "samples": 35,
+    "median_ns": 13232986,
+    "new_measurement": false
+  },
+  "llm_queried": false,
+  "historical_zips_restored_from": "68dde8f",
+  "retomada_removed_by_user_request": true,
+  "clean_checkout": {
+    "local_librarian_present": false,
+    "retomada_present": false,
+    "integration_passed": 2,
+    "failed": 0,
+    "uses_cached_git_dependency": true,
+    "scope": "Cópia dos arquivos preparados no índice; execução offline com cache Cargo e target compartilhados. Confere independência do checkout local, não instalação sem cache."
+  }
+}

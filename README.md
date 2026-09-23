@@ -23,6 +23,27 @@ The ray tracer challenge. By Jamis Buck.
 - [ ] Chapter 16 - Constructive Solid Geometry (CSG)
 - [ ] Chapter 17 - Next Steps
 
+## Build and Librarian integration
+
+The evidence tools use [Librarian](https://github.com/ViniciusSJV/librarian),
+pinned to Git revision `4e84f004061b1df84ae5d8f22af9007aa2d99962` in both
+`Cargo.toml` and `Cargo.lock`. Cargo downloads the dependency; a separate local
+checkout is optional.
+
+```sh
+cargo fetch --locked
+cargo test --locked
+cargo test --locked --test librarian_integration
+```
+
+The integration test checks the external-scene dossier against its reference
+query and rejects an altered source. It does not contact an LLM. The full suite
+includes Unix-specific capture tools and local HTTP test servers; on native
+Windows, select supported targets explicitly.
+
+See the [evidence laboratory](ai/README.md) and the
+[integration report](ai/experimentos/22-integracao-librarian/README.md).
+
 # samples
 
 ![Chapter 10](https://github.com/ViniciusSJV/renderer/blob/master/cap10.png?raw=true)

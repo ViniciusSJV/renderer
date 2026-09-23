@@ -13,7 +13,7 @@ mod tests {
 
     #[test]
     fn core_re_exports_common_bibliotecario_types() {
-        let fact = BibliotecarioFact::new("F-1", "statement", "source-1", 3);
+        let fact = BibliotecarioFact::new("F-1", "statement", "source-1", 2);
         let source = SourceRef {
             id: "source-1".into(),
             path: "src/example.rs".into(),

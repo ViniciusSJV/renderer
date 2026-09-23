@@ -1,0 +1,85 @@
+{
+  "kind": "local_validation",
+  "base_commit": "68dde8f",
+  "scope": "Extração de Bibliotecário e Graph Engine; sem benchmark novo e sem consulta LLM nova.",
+  "comparison": {
+    "query.json": {
+      "identical_bytes": true,
+      "sha256": "520afae5122d23e42c24ad17e60a79a5f1afe0c5dae7bf78329b13204ad11075"
+    },
+    "dossier.json": {
+      "identical_bytes": true,
+      "sha256": "fdf894d7c6cbbc1b9b26828c73234b66467b2b8adc3efa2b7d1a5b188d799760"
+    },
+    "question.txt": {
+      "identical_bytes": true,
+      "sha256": "755906e94cf333184bcf615b53aa0adbabf97015b5ec44afdb1580f8cd88bc5e"
+    }
+  },
+  "tests": {
+    "renderer": {
+      "passed": 315,
+      "failed": 0,
+      "ignored": 2
+    },
+    "bibliotecario_workspace": {
+      "passed": 21,
+      "failed": 0,
+      "ignored": 0
+    }
+  },
+  "independent_checkout": {
+    "path": "/tmp/bibliotecario-independent-checkout",
+    "passed": 21,
+    "failed": 0,
+    "ignored": 0,
+    "example_bundle_created": true,
+    "scope": "Repetição em cópia fora do renderer; não somar como novos testes únicos."
+  },
+  "publication": {
+    "state": "published",
+    "error": "GraphQL: Resource not accessible by integration (createRepository)",
+    "requested_repo": "ViniciusSJV/librarian",
+    "visibility": "public",
+    "created": false,
+    "attempted_repo": "ViniciusSJV/bibliotecario",
+    "repo_exists": true,
+    "url": "https://github.com/ViniciusSJV/librarian",
+    "branch": "main",
+    "commit": "118f1613be3b0585b894e841dd78e9518d56800d",
+    "pushed": true,
+    "verified_by_github_api": true,
+    "ci_run": "https://github.com/ViniciusSJV/librarian/actions/runs/35796391179",
+    "ci_status": "completed",
+    "ci_conclusion": "success",
+    "ci_jobs": {
+      "ubuntu-latest": "success",
+      "windows-latest": "success"
+    }
+  },
+  "archive": {
+    "file": "bibliotecario-1654bea.tar.gz",
+    "sha256": "bf5aa469a3ff40055337a9b404a41dceeff6950e52555ed8bfdc893d454ef577"
+  },
+  "rename": {
+    "name": "Librarian",
+    "commit": "118f161",
+    "local_path": "Librarian/",
+    "repo_exists": true,
+    "canonical_remote_name": "ViniciusSJV/librarian",
+    "rename_http_status": 403,
+    "push_http_status": 403,
+    "pushed": false,
+    "tests": {
+      "passed": 336,
+      "failed": 0,
+      "ignored": 2
+    },
+    "archive": {
+      "file": "Librarian-118f161.tar.gz",
+      "sha256": "10ee3f2829f24e004b1d9317f100c0d22c0fee938afc44d1b51ddc0693d53d94"
+    },
+    "remote_rename_requested": false,
+    "remote_name_accepted_by_user": "ViniciusSJV/librarian"
+  }
+}

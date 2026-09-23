@@ -1,7 +1,14 @@
 # Laboratório de IA, evidências e performance
 
-**Retomada do trabalho:** leia [RETOMADA.md](RETOMADA.md) para o estado validado
-e o próximo passo após os experimentos de CPU e as duas consultas no Windows.
+O renderer consome [Librarian](https://github.com/ViniciusSJV/librarian) pela
+revisão Git `4e84f004061b1df84ae5d8f22af9007aa2d99962`, fixada em `Cargo.toml` e
+`Cargo.lock`. Não é necessário clonar a biblioteca separadamente.
+
+A [validação da integração](experimentos/22-integracao-librarian/README.md) registra
+os testes com a dependência publicada. A [baseline externa](experimentos/20-render-cpu/escena-externa/README.md)
+e o [relatório da extração](experimentos/21-extracao-bibliotecario/README.md)
+preservam os experimentos anteriores. As aulas abaixo descrevem sua evolução
+histórica; caminhos internos e próximos passos antigos podem estar superados.
 
 Este laboratório usa um ray tracer em Rust baseado em *The Ray Tracer Challenge*
 para estudar código, testes, medições e explicações de um modelo local. As 25
@@ -20,7 +27,8 @@ Avaliação manual ← resposta preservada ← modelo via Ollama
 ```
 
 - **Graph Engine — “Testa sem explicar”:** organiza fontes, fichas e relações;
-  confere referências, hashes, capturas e limites; executa testes e medições.
+  confere referências, hashes, capturas e limites. Testes e medições produzem
+  registros separados que podem ser usados como fontes.
 - **LLM Engine — “Explica sem interpretar”:** explica o material recebido,
   distinguindo fato, inferência e hipótese, sem apresentar deduções como observações.
 
@@ -32,7 +40,9 @@ Evidência não é conclusão, código não é execução e resposta não é val
 Os objetivos posteriores registrados são otimizar o renderer em CPU com
 profiling, correção e benchmarks e criar cenas por linguagem natural a partir
 de uma estrutura validada. Nenhum desses objetivos está concluído pela integração
-com Ollama. Os ganhos medidos nas aulas são do Bibliotecário, não do renderer.
+com Ollama. Os ganhos medidos nas primeiras aulas são do Bibliotecário. O experimento CPU
+posterior registra redução observada de 15,25% em uma cena do renderer; a cena
+externa tem uma baseline própria, ainda sem comparação de nova otimização.
 
 ## Pré-requisitos gerais
 
@@ -162,7 +172,8 @@ capturas históricas. Alterar os arquivos observados pode impedir nova conferên
 integração. `ai/experimentos` preserva dados, consultas, respostas, capturas e
 medições; `ai/ollama/Modelfile` configura o modelo; `ai/contratos` registra o contrato.
 
-`Cargo.toml` declara Rayon, itertools e png para o renderer; serde/serde_json
+`Cargo.toml` fixa `librarian-core` e `librarian-graph-engine` em uma revisão Git
+pública, declara Rayon, itertools e png para o renderer; serde/serde_json
 para dados; sha2 para hashes; reqwest para HTTP. `Cargo.lock` fixa as versões
 resolvidas. Cargo obtém essas dependências; não é preciso instalá-las manualmente.
 
@@ -196,7 +207,7 @@ origem e seleção. A suíte desses componentes tem 99 testes aprovados no regis
 final Linux, com dois gravadores ignorados por padrão. A integração preservada
 é simulada: não comprova um ciclo real completo no Windows.
 
-## Limites e próximos passos registrados
+## Limites e próximos passos registrados ao final das aulas
 
 Conferência não autentica execução, não garante snapshot atômico, não comprova
 entradas do compilador nem valida semanticamente fichas ou respostas. Não há

@@ -1,1 +1,4 @@
 /target
+
+# Optional independent checkout; Cargo uses the pinned Git dependency.
+/Librarian/

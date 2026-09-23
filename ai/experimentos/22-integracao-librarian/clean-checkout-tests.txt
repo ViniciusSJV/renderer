@@ -1,0 +1,10 @@
+   Compiling renderer v0.1.0 (/tmp/renderer-pinned-checkout-atom0gfa)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 28.92s
+     Running tests/librarian_integration.rs (/workspaces/renderer-local/target/debug/deps/librarian_integration-b517e19cf3084f38)
+
+running 2 tests
+test external_dossier_preserves_reference_query_through_renderer_cli ... ok
+test modified_unselected_source_blocks_export_without_changing_previous_bundle ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+

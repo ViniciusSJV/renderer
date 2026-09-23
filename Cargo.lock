@@ -494,6 +494,25 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "3eaf3ede3fee6db1a4c2ee091bf8a8b4dccdc6d17f656fb07896ee72867612f2"
 
 [[package]]
+name = "librarian-core"
+version = "0.1.0"
+source = "git+https://github.com/ViniciusSJV/librarian.git?rev=4e84f004061b1df84ae5d8f22af9007aa2d99962#4e84f004061b1df84ae5d8f22af9007aa2d99962"
+dependencies = [
+ "serde",
+]
+
+[[package]]
+name = "librarian-graph-engine"
+version = "0.1.0"
+source = "git+https://github.com/ViniciusSJV/librarian.git?rev=4e84f004061b1df84ae5d8f22af9007aa2d99962#4e84f004061b1df84ae5d8f22af9007aa2d99962"
+dependencies = [
+ "librarian-core",
+ "serde",
+ "serde_json",
+ "sha2",
+]
+
+[[package]]
 name = "litemap"
 version = "0.8.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -637,6 +656,8 @@ name = "renderer"
 version = "0.1.0"
 dependencies = [
  "itertools",
+ "librarian-core",
+ "librarian-graph-engine",
  "png",
  "rayon",
  "reqwest",

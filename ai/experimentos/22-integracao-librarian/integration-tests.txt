@@ -1,0 +1,12 @@
+   Compiling librarian-core v0.1.0 (https://github.com/ViniciusSJV/librarian.git?rev=4e84f004061b1df84ae5d8f22af9007aa2d99962#4e84f004)
+   Compiling librarian-graph-engine v0.1.0 (https://github.com/ViniciusSJV/librarian.git?rev=4e84f004061b1df84ae5d8f22af9007aa2d99962#4e84f004)
+   Compiling renderer v0.1.0 (/workspaces/renderer-local)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 6.76s
+     Running tests/librarian_integration.rs (target/debug/deps/librarian_integration-b517e19cf3084f38)
+
+running 2 tests
+test external_dossier_preserves_reference_query_through_renderer_cli ... ok
+test modified_unselected_source_blocks_export_without_changing_previous_bundle ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+

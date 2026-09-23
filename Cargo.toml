@@ -6,6 +6,8 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+librarian-core = { git = "https://github.com/ViniciusSJV/librarian.git", rev = "4e84f004061b1df84ae5d8f22af9007aa2d99962" }
+librarian-graph-engine = { git = "https://github.com/ViniciusSJV/librarian.git", rev = "4e84f004061b1df84ae5d8f22af9007aa2d99962" }
 rayon = "1.5"
 itertools = "0.10.2"
 png = "0.16.8"

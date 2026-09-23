@@ -1,0 +1,167 @@
+{
+  "id": "RENDER_CPU_EXTERNAL_BASELINE_V1",
+  "unknowns": [
+    "A baseline registra a saída observada, mas não autentica retrospectivamente a máquina, o binário ou a execução histórica.",
+    "A mediana global foi recalculada a partir do log bruto; o cálculo não é uma nova execução.",
+    "Ainda não há perfil CPU que identifique um hotspot dominante.",
+    "Nenhuma otimização nova foi aplicada após esta baseline."
+  ],
+  "sources": [
+    {
+      "id": "SRC_EXTERNAL_BENCH",
+      "kind": "rust_source",
+      "path": "src/bin/bench_external_render.rs",
+      "sha256": "217ecafb9935719e7ad9eee9d431a3cae20879374de0978e47029f637a0412a6",
+      "lines": [
+        "use renderer::camera::render_external_benchmark;",
+        "",
+        "fn main() {",
+        "    let summary = render_external_benchmark(96, 64, 3, 5);",
+        "",
+        "    println!(\"width={} height={} samples={} min_ns={} median_ns={} max_ns={}\",",
+        "        summary.width,",
+        "        summary.height,",
+        "        summary.samples.len(),",
+        "        summary.min_ns,",
+        "        summary.median_ns,",
+        "        summary.max_ns,",
+        "    );",
+        "",
+        "    for (index, sample_ns) in summary.samples.iter().enumerate() {",
+        "        println!(\"sample_{}={}ns\", index, sample_ns);",
+        "    }",
+        "}"
+      ]
+    },
+    {
+      "id": "SRC_EXTERNAL_BASELINE",
+      "kind": "benchmark_output",
+      "path": "ai/experimentos/20-render-cpu/external-scene-baseline.txt",
+      "sha256": "135f6a12a90b7eeea4e123fb7af29d94baafc5ac8c36203ecb95deb52f7a876f",
+      "lines": [
+        "round=0",
+        "width=96 height=64 samples=5 min_ns=12330831 median_ns=12374112 max_ns=13681593",
+        "sample_0=12338596ns",
+        "sample_1=12330831ns",
+        "sample_2=12576165ns",
+        "sample_3=13681593ns",
+        "sample_4=12374112ns",
+        "round=1",
+        "width=96 height=64 samples=5 min_ns=12969694 median_ns=16754303 max_ns=19609962",
+        "sample_0=19609962ns",
+        "sample_1=19308120ns",
+        "sample_2=16754303ns",
+        "sample_3=12969694ns",
+        "sample_4=13208190ns",
+        "round=2",
+        "width=96 height=64 samples=5 min_ns=12422382 median_ns=13592798 max_ns=14544134",
+        "sample_0=13202659ns",
+        "sample_1=14544134ns",
+        "sample_2=13592798ns",
+        "sample_3=12422382ns",
+        "sample_4=13713648ns",
+        "round=3",
+        "width=96 height=64 samples=5 min_ns=12592332 median_ns=13402573 max_ns=16168763",
+        "sample_0=12592332ns",
+        "sample_1=12702275ns",
+        "sample_2=16168763ns",
+        "sample_3=13455181ns",
+        "sample_4=13402573ns",
+        "round=4",
+        "width=96 height=64 samples=5 min_ns=12359485 median_ns=13163005 max_ns=18206812",
+        "sample_0=18206812ns",
+        "sample_1=13163005ns",
+        "sample_2=12359485ns",
+        "sample_3=13129653ns",
+        "sample_4=13232986ns",
+        "round=5",
+        "width=96 height=64 samples=5 min_ns=13451714 median_ns=17112769 max_ns=21777221",
+        "sample_0=13451714ns",
+        "sample_1=17112769ns",
+        "sample_2=21777221ns",
+        "sample_3=18910957ns",
+        "sample_4=16493363ns",
+        "round=6",
+        "width=96 height=64 samples=5 min_ns=12333807 median_ns=12382360 max_ns=15351090",
+        "sample_0=15351090ns",
+        "sample_1=12382360ns",
+        "sample_2=12376546ns",
+        "sample_3=12406693ns",
+        "sample_4=12333807ns"
+      ]
+    },
+    {
+      "id": "SRC_EXTERNAL_STATS",
+      "kind": "derived_report",
+      "path": "ai/experimentos/20-render-cpu/external-scene-statistics.txt",
+      "sha256": "8b14cb276b7ba248516e3f1dfe3c9f80d1300ffb9db996412839409b9326ed79",
+      "lines": [
+        "Fonte: ai/experimentos/20-render-cpu/external-scene-baseline.txt",
+        "Amostras: 35 (7 execucoes de 5 amostras)",
+        "Mediana global: 13232986 ns",
+        "Minimo global: 12330831 ns",
+        "Maximo global: 21777221 ns"
+      ]
+    },
+    {
+      "id": "SRC_EXTERNAL_REGRESSION",
+      "kind": "test_result",
+      "path": "ai/experimentos/20-render-cpu/external-scene-regression.txt",
+      "sha256": "5e0abeab4c9b5460fca21ff016001e9c3fa421e8753ca5dcdf6b2b4ac3f92ed5",
+      "lines": [
+        "Teste: camera::tests_camera::external_scene_render_is_visually_stable",
+        "Resultado: 1 passed, 0 failed",
+        "Digest quantizado por EPSILON: f8f450596cf93972fc99ffee22cbaf4126055156ac3a511170f0088bcae4abf6",
+        "Escopo: estabilidade entre duas execuções e regressão contra o digest fixado; não prova equivalência universal."
+      ]
+    }
+  ],
+  "facts": [
+    {
+      "id": "F_EXTERNAL_PROTOCOL",
+      "statement": "O executável mede a cena externa em 96x64, com três warmups e cinco amostras por execução.",
+      "source_id": "SRC_EXTERNAL_BENCH",
+      "line": 4
+    },
+    {
+      "id": "F_EXTERNAL_RUN_SAMPLE_COUNT",
+      "statement": "Cada execução registrada informa cinco amostras.",
+      "source_id": "SRC_EXTERNAL_BASELINE",
+      "line": 2
+    },
+    {
+      "id": "F_EXTERNAL_SAMPLE_TOTAL",
+      "statement": "O log contém 35 amostras, obtidas em sete execuções de cinco amostras.",
+      "source_id": "SRC_EXTERNAL_STATS",
+      "line": 2
+    },
+    {
+      "id": "F_EXTERNAL_MEDIAN",
+      "statement": "A mediana global registrada é 13232986 ns.",
+      "source_id": "SRC_EXTERNAL_STATS",
+      "line": 3
+    },
+    {
+      "id": "F_EXTERNAL_VISUAL_DIGEST",
+      "statement": "O teste de regressão visual passou e fixou o digest quantizado por EPSILON informado.",
+      "source_id": "SRC_EXTERNAL_REGRESSION",
+      "line": 3
+    },
+    {
+      "id": "F_EXTERNAL_LIMIT",
+      "statement": "A regressão visual cobre estabilidade e o digest fixado, não equivalência universal.",
+      "source_id": "SRC_EXTERNAL_REGRESSION",
+      "line": 4
+    }
+  ],
+  "selection": {
+    "fact_ids": [
+      "F_EXTERNAL_PROTOCOL",
+      "F_EXTERNAL_SAMPLE_TOTAL",
+      "F_EXTERNAL_MEDIAN",
+      "F_EXTERNAL_VISUAL_DIGEST",
+      "F_EXTERNAL_LIMIT"
+    ],
+    "context_lines": 2
+  }
+}

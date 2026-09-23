@@ -1,0 +1,61 @@
+    Blocking waiting for file lock on build directory
+   Compiling librarian-core v0.1.0 (https://github.com/ViniciusSJV/librarian.git?rev=4e84f004061b1df84ae5d8f22af9007aa2d99962#4e84f004)
+   Compiling librarian-graph-engine v0.1.0 (https://github.com/ViniciusSJV/librarian.git?rev=4e84f004061b1df84ae5d8f22af9007aa2d99962#4e84f004)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 6.25s
+     Running unittests src/lib.rs (target/debug/deps/librarian_core-26ddc0e9c279019f)
+
+running 3 tests
+test tests::evidence_bundle_keeps_source_context_and_selection_order ... ok
+test tests::selection_uses_requested_order_and_context ... ok
+test tests::validation_rejects_empty_fact_and_empty_selection ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/bundle_validation.rs (target/debug/deps/bundle_validation-7dd5e6db0fe1c4e4)
+
+running 2 tests
+test rejects_dangling_source_line_and_selection ... ok
+test rejects_duplicate_facts_and_selected_ids ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (target/debug/deps/librarian_graph_engine-38d9e07e88a02d6f)
+
+running 12 tests
+test graph_engine::capture::tests::accepts_nonzero_and_reports_limits ... ok
+test graph_engine::capture::tests::rejects_current_source_drift_and_missing_source ... ok
+test graph_engine::capture::tests::checks_declared_comparison_but_accepts_real_difference ... ok
+test graph_engine::capture::tests::rejects_incorrect_output_size ... ok
+test graph_engine::capture::tests::rejects_output_tampering_even_with_same_size ... ok
+test graph_engine::capture::tests::validates_result_states ... ok
+test graph_engine::capture::tests::unavailable_is_not_promoted_to_verified_file ... ok
+test graph_engine::filesystem::tests::checked_capture_does_not_approve_an_unrelated_source ... ok
+test graph_engine::tests::graph_fact_accepts_librarian_core_fact ... ok
+test graph_engine::tests::prepare_query_validates_dossier_and_preserves_selection ... ok
+test graph_engine::capture::tests::rejects_versions_paths_and_invalid_hashes ... ok
+test graph_engine::bundle::tests::preserves_bytes_selection_and_refuses_existing_destination ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/public_pipeline.rs (target/debug/deps/public_pipeline-83221ac8a6ae54b6)
+
+running 4 tests
+test rejects_invalid_references_selections_and_report_outside_selection ... ok
+test checks_each_source_once_and_requires_question_for_bundle ... ok
+test changed_unselected_source_blocks_query_and_preserves_old_bundle ... ok
+test other_domain_exports_shared_core_contracts_in_selected_order ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+   Doc-tests librarian_core
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests librarian_graph_engine
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

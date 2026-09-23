@@ -1,0 +1,67 @@
+   Compiling bibliotecario-core v0.1.0 (/workspaces/renderer-local/bibliotecario/crates/bibliotecario-core)
+   Compiling bibliotecario-graph-engine v0.1.0 (/workspaces/renderer-local/bibliotecario/crates/bibliotecario-graph-engine)
+   Compiling maintenance-example v0.1.0 (/workspaces/renderer-local/bibliotecario/examples/maintenance)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 3.97s
+     Running unittests src/lib.rs (bibliotecario/target/debug/deps/bibliotecario_core-602fed78f9937755)
+
+running 3 tests
+test tests::selection_uses_requested_order_and_context ... ok
+test tests::validation_rejects_empty_fact_and_empty_selection ... ok
+test tests::evidence_bundle_keeps_source_context_and_selection_order ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/bundle_validation.rs (bibliotecario/target/debug/deps/bundle_validation-646d07aa9916ae7d)
+
+running 2 tests
+test rejects_dangling_source_line_and_selection ... ok
+test rejects_duplicate_facts_and_selected_ids ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (bibliotecario/target/debug/deps/bibliotecario_graph_engine-554063248f3d4af5)
+
+running 12 tests
+test graph_engine::capture::tests::checks_declared_comparison_but_accepts_real_difference ... ok
+test graph_engine::capture::tests::accepts_nonzero_and_reports_limits ... ok
+test graph_engine::capture::tests::rejects_output_tampering_even_with_same_size ... ok
+test graph_engine::capture::tests::rejects_current_source_drift_and_missing_source ... ok
+test graph_engine::bundle::tests::preserves_bytes_selection_and_refuses_existing_destination ... ok
+test graph_engine::capture::tests::unavailable_is_not_promoted_to_verified_file ... ok
+test graph_engine::capture::tests::validates_result_states ... ok
+test graph_engine::capture::tests::rejects_incorrect_output_size ... ok
+test graph_engine::tests::prepare_query_validates_dossier_and_preserves_selection ... ok
+test graph_engine::filesystem::tests::checked_capture_does_not_approve_an_unrelated_source ... ok
+test graph_engine::capture::tests::rejects_versions_paths_and_invalid_hashes ... ok
+test graph_engine::tests::graph_fact_accepts_bibliotecario_core_fact ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests/public_pipeline.rs (bibliotecario/target/debug/deps/public_pipeline-e2e832e3738645ce)
+
+running 4 tests
+test rejects_invalid_references_selections_and_report_outside_selection ... ok
+test checks_each_source_once_and_requires_question_for_bundle ... ok
+test changed_unselected_source_blocks_query_and_preserves_old_bundle ... ok
+test other_domain_exports_shared_core_contracts_in_selected_order ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running unittests src/main.rs (bibliotecario/target/debug/deps/maintenance_example-423449a8a225a4ee)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests bibliotecario_core
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests bibliotecario_graph_engine
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

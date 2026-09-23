@@ -1,0 +1,35 @@
+{
+  "dossier": {
+    "file": "dossier.json",
+    "id": "MAINTENANCE_DEMO_V1",
+    "sha256": "4bedc72d786f2438a3876bcdc60e18257a7ad232a137bc7833b649e94e1a9b77",
+    "source_path": "memory:maintenance-adapter"
+  },
+  "export_finished_unix_ms": 1790117611599,
+  "format_version": 1,
+  "kind": "validated_query_export",
+  "limits": [
+    "Não autentica execução nem comprova bytes compilados.",
+    "Não é snapshot atômico das fontes.",
+    "Não valida semanticamente fichas ou respostas.",
+    "Nenhum envio HTTP realizado; rubrica e avaliação ainda não vinculadas."
+  ],
+  "query": {
+    "bytes": 4061,
+    "file": "query.json",
+    "sha256": "31e9a3e5447632e359b46d62db3d9d9b5357aa01feadb39df1d95a8457c0a6b3"
+  },
+  "question": {
+    "file": "question.txt",
+    "sha256": "2140f51ea2b4a35878aed9c34dfceb95ffb9fe89b35e6a69eb03ea8372451d12",
+    "source_path": "memory:maintenance-question"
+  },
+  "selection": {
+    "context": 1,
+    "fact_ids": [
+      "F_RECORD",
+      "F_INSPECTION"
+    ]
+  },
+  "validation_scope": "Conferência anterior à exportação pelo Graph Engine e pelo callback de fontes do consumidor. Não é conferência no momento de um envio posterior."
+}

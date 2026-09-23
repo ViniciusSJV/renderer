@@ -1,0 +1,465 @@
+   Compiling bibliotecario-core v0.1.0 (/workspaces/renderer-local/bibliotecario/crates/bibliotecario-core)
+   Compiling bibliotecario-graph-engine v0.1.0 (/workspaces/renderer-local/bibliotecario/crates/bibliotecario-graph-engine)
+   Compiling renderer v0.1.0 (/workspaces/renderer-local)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 10.27s
+     Running unittests src/lib.rs (target/debug/deps/renderer-6ed533abd9bc1fba)
+
+running 209 tests
+test adapters::chess::tests::chess_artifact_converts_to_bibliotecario_fact ... ok
+test camera::tests_camera::constructing_a_camera ... ok
+test adapters::renderer::tests::renderer_artifact_converts_to_bibliotecario_fact ... ok
+test camera::tests_camera::constructing_a_ray_through_a_corner_of_the_canvas ... ok
+test camera::tests_camera::constructing_a_ray_through_the_center_of_the_canvas ... ok
+test camera::tests_camera::constructing_a_ray_when_the_camera_is_transformed ... ok
+test camera::tests_camera::rendering_a_world_with_a_camera ... ok
+test camera::tests_camera::the_pixel_size_for_a_horizontal_canvas ... ok
+test camera::tests_camera::the_pixel_size_for_a_vertical_canvas ... ok
+test camera::tests_camera::render_preserves_complete_reflective_scene ... ok
+test canvas::tests_canvas::constructing_the_ppm_header ... ok
+test canvas::tests_canvas::create_canvas ... ok
+test canvas::tests_canvas::ppm_files_terminated_by_newline ... ok
+test canvas::tests_canvas::set_ppm_pixel_data ... ok
+test canvas::tests_canvas::splitting_long_lines_in_ppm ... ok
+test canvas::tests_canvas::writing_pixels_to_a_canvas ... ok
+test color::tests_color::add_to_colors ... ok
+test color::tests_color::clamping_colors ... ok
+test color::tests_color::mul_color ... ok
+test color::tests_color::mul_color_by_scalar ... ok
+test color::tests_color::color_does_fill_properties ... ok
+test color::tests_color::sub_tow_colors ... ok
+test cone::tests_cone::computing_the_normal_vector_on_a_cone ... ok
+test cone::tests_cone::intersecting_a_cone_with_a_ray ... ok
+test cone::tests_cone::intersecting_a_cone_end_caps ... ok
+test cone::tests_cone::intersecting_a_cone_with_a_ray_parallel_to_one_of_its_halves ... ok
+test core::tests::core_re_exports_common_bibliotecario_types ... ok
+test cube::tests_cube::a_ray_intersects_a_cube ... ok
+test cube::tests_cube::a_ray_misses_a_cube ... ok
+test cube::tests_cube::the_normal_on_the_surface_of_a_cube ... ok
+test cylinder::tests_cylinder::a_ray_misses_a_cylinder ... ok
+test cylinder::tests_cylinder::intersect_a_constrained_cylinder ... ok
+test cylinder::tests_cylinder::a_ray_strikes_a_cylinder ... ok
+test cylinder::tests_cylinder::intersecting_the_caps_of_a_closed_cylinder ... ok
+test cylinder::tests_cylinder::normal_vector_on_a_cylinder ... ok
+test cylinder::tests_cylinder::the_default_closed_value_for_a_cylinder ... ok
+test cylinder::tests_cylinder::the_default_minimum_and_maximum_for_a_cylinder ... ok
+test cylinder::tests_cylinder::the_normal_vector_on_a_cylinder_end_caps ... ok
+test groups::tests_groups::creating_a_new_group ... ok
+test intersection::tests_intersection::aggregating_intersection ... ok
+test intersection::tests_intersection::finding_n1_and_n2_at_various_intersections ... ok
+test intersection::tests_intersection::intersect_sets_the_object_on_the_intersection ... ok
+test intersection::tests_intersection::precomputing_the_reflection_vector ... ok
+test intersection::tests_intersection::precomputing_the_state_of_an_intersection ... ok
+test intersection::tests_intersection::the_hit_is_always_the_have_lowest_nonnegative_intersection ... ok
+test intersection::tests_intersection::the_hit_when_all_intersection_have_negative_t ... ok
+test intersection::tests_intersection::the_hit_should_offset_the_point ... ok
+test intersection::tests_intersection::the_hit_when_all_intersection_have_positive_t ... ok
+test intersection::tests_intersection::the_hit_when_an_intersection_occurs_on_the_outside ... ok
+test intersection::tests_intersection::the_hit_when_some_intersection_have_negative_t ... ok
+test intersection::tests_intersection::the_schlick_approximation_under_total_internal_reflection ... ok
+test intersection::tests_intersection::the_schlick_approximation_with_small_angle_and_n2_larger_n1 ... ok
+test intersection::tests_intersection::the_schlick_approximation_with_a_perpendicular_viewing_angle ... ok
+test intersection::tests_intersection::the_under_point_is_offset_below_the_surface ... ok
+test lights::tests_lights::an_intersection_encapsulate_t_and_object ... ok
+test materials::tests_lights::lighting_with_the_eye_between_the_light_and_the_surface ... ok
+test materials::tests_lights::lighting_with_a_pattern_applied ... ok
+test materials::tests_lights::lighting_with_the_eye_between_the_light_and_the_surface_eye_offset_45_deg ... ok
+test materials::tests_lights::lighting_with_the_eye_in_the_path_of_the_reflection_vector ... ok
+test materials::tests_lights::lighting_with_the_eye_opposite_surface_light_offset_45_deg ... ok
+test materials::tests_lights::lighting_with_the_light_behind_the_surface ... ok
+test materials::tests_lights::lighting_with_the_surface_in_shadow ... ok
+test materials::tests_lights::reflectivity_for_the_default_material ... ok
+test materials::tests_lights::the_default_material ... ok
+test materials::tests_lights::transparency_and_refractive_index_for_the_default_material ... ok
+test matrix::tests_matrix::a_scaling_matrix_applied_to_a_point ... ok
+test matrix::tests_matrix::a_scaling_matrix_applied_to_a_vector ... ok
+test matrix::tests_matrix::a_sharing_transformation_moves_x_in_proportion_to_y ... ok
+test matrix::tests_matrix::a_sharing_transformation_moves_x_in_proportion_to_z ... ok
+test matrix::tests_matrix::a_sharing_transformation_moves_y_in_proportion_to_x ... ok
+test matrix::tests_matrix::a_sharing_transformation_moves_y_in_proportion_to_z ... ok
+test matrix::tests_matrix::a_sharing_transformation_moves_z_in_proportion_to_x ... ok
+test matrix::tests_matrix::a_sharing_transformation_moves_z_in_proportion_to_y ... ok
+test matrix::tests_matrix::calculating_a_cofactor_of_a_mat3 ... ok
+test matrix::tests_matrix::calculating_a_minor_of_mat3 ... ok
+test matrix::tests_matrix::calculating_the_determinant_of_a_mat2 ... ok
+test matrix::tests_matrix::calculating_the_determinant_of_mat3 ... ok
+test matrix::tests_matrix::calculating_the_determinant_of_mat4 ... ok
+test matrix::tests_matrix::calculating_the_inverse_of_another_mat4 ... ok
+test matrix::tests_matrix::calculating_the_inverse_of_mat4 ... ok
+test matrix::tests_matrix::calculating_the_inverse_of_third_mat4 ... ok
+test matrix::tests_matrix::constructing_mat2 ... ok
+test matrix::tests_matrix::constructing_mat3 ... ok
+test matrix::tests_matrix::constructing_mat4 ... ok
+test matrix::tests_matrix::individual_transformation_are_applied_in_sequence ... ok
+test matrix::tests_matrix::is_invertible_mat4 ... ok
+test matrix::tests_matrix::is_not_invertible_mat4 ... ok
+test matrix::tests_matrix::matrix_equality_different_matrices ... ok
+test matrix::tests_matrix::matrix_equality_identical_matrices ... ok
+test matrix::tests_matrix::multiply_a_matrix_by_the_identity_matrix ... ok
+test matrix::tests_matrix::multiply_a_matrix_identity_the_tuple ... ok
+test matrix::tests_matrix::multiply_matrices ... ok
+test matrix::tests_matrix::multiply_matrix_by_a_tuple ... ok
+test matrix::tests_matrix::multiplying_by_a_matrix ... ok
+test matrix::tests_matrix::multiplying_a_product_by_its_inverse ... ok
+test matrix::tests_matrix::multiplying_by_the_invert_of_a_matrix_translation ... ok
+test matrix::tests_matrix::multiplying_by_the_invert_of_a_scaling_matrix ... ok
+test matrix::tests_matrix::reflaction_is_scaling_by_a_negative_value ... ok
+test matrix::tests_matrix::rotating_a_point_around_the_y_axis ... ok
+test matrix::tests_matrix::rotating_a_point_around_the_z_axis ... ok
+test matrix::tests_matrix::rotating_a_point_around_the_x_axis ... ok
+test matrix::tests_matrix::submatrix_of_mat3_is_a_mat2 ... ok
+test matrix::tests_matrix::submatrix_of_mat4_is_a_mat3 ... ok
+test matrix::tests_matrix::the_inverse_of_an_x_rotation_rotates_in_the_opposite_direction ... ok
+test matrix::tests_matrix::translation_does_no_affect_vectors ... ok
+test matrix::tests_matrix::transpose_identity_matrix ... ok
+test matrix::tests_matrix::transposing_a_matrix ... ok
+test object::tests_object::an_intersection_encapsulate_t_and_object ... ok
+test patterns::tests_patterns::a_gradient_linearly_interpolates_between_colors ... ok
+test patterns::tests_patterns::a_ring_should_extend_in_both_x_and_z ... ok
+test patterns::tests_patterns::a_stripe_pattern_is_constant_in_y ... ok
+test patterns::tests_patterns::a_stripe_pattern_is_constant_in_z ... ok
+test patterns::tests_patterns::a_stripe_pattern_is_constant_in_x ... ok
+test patterns::tests_patterns::assigning_a_transformation ... ok
+test patterns::tests_patterns::checkers_should_repeat_in_x ... ok
+test patterns::tests_patterns::checkers_should_repeat_in_y ... ok
+test patterns::tests_patterns::checkers_should_repeat_in_z ... ok
+test patterns::tests_patterns::creating_a_stripe_pattern ... ok
+test patterns::tests_patterns::stripes_with_an_object_transformation ... ok
+test patterns::tests_patterns::stripes_with_an_pattern_transformation ... ok
+test patterns::tests_patterns::stripes_with_both_an_object_and_a_pattern_transformation ... ok
+test patterns::tests_patterns::the_default_pattern_transformation ... ok
+test plane::tests_plane::a_ray_intersecting_a_plane_from_above ... ok
+test plane::tests_plane::a_ray_intersecting_a_plane_from_below ... ok
+test plane::tests_plane::intersect_with_a_coplanar_ray ... ok
+test plane::tests_plane::intersect_with_a_ray_parallel_to_the_plane ... ok
+test plane::tests_plane::the_normal_of_a_plane_is_constant_everywhere ... ok
+test ray::tests_ray::computing_a_point_from_a_distence ... ok
+test ray::tests_ray::creating_and_querying_a_ray ... ok
+test ray::tests_ray::scaling_a_ray ... ok
+test ray::tests_ray::translating_a_ray ... ok
+test scene::tests::scene_schema_accepts_valid_scene ... ok
+test scene::tests::scene_schema_rejects_invalid_fov_and_missing_light ... ok
+test sphere::tests_sphere::a_helper_for_producing_a_sphere_with_a_glassy_material ... ok
+test sphere::tests_sphere::a_ray_intersection_sphere_at_two_points ... ok
+test sphere::tests_sphere::a_ray_missing_sphere ... ok
+test sphere::tests_sphere::a_ray_intersection_sphere_at_two_tangent ... ok
+test sphere::tests_sphere::a_ray_originates_inside_a_sphere ... ok
+test sphere::tests_sphere::a_sphere_default_transformation ... ok
+test sphere::tests_sphere::a_sphere_has_default_material ... ok
+test sphere::tests_sphere::a_sphere_is_behing_a_ray ... ok
+test sphere::tests_sphere::a_sphere_may_be_assigned_a_material ... ok
+test sphere::tests_sphere::changing_a_sphere_transformation ... ok
+test sphere::tests_sphere::computing_the_normal_on_a_transformed_sphere ... ok
+test sphere::tests_sphere::computing_the_normal_on_a_translated_sphere ... ok
+test sphere::tests_sphere::intersecting_a_scale_sphere_with_a_ray ... ok
+test sphere::tests_sphere::intersecting_a_translated_sphere_with_a_ray ... ok
+test sphere::tests_sphere::the_normal_is_a_normalized_vector ... ok
+test sphere::tests_sphere::the_normal_on_a_sphere_at_a_nonaxial_point ... ok
+test sphere::tests_sphere::the_normal_on_a_sphere_at_a_point_on_the_x_axis ... ok
+test sphere::tests_sphere::the_normal_on_a_sphere_at_a_point_on_the_y_axis ... ok
+test sphere::tests_sphere::the_normal_on_a_sphere_at_a_point_on_the_z_axis ... ok
+test transformations::tests_transformations::an_arbitrary_view_transformation ... ok
+test transformations::tests_transformations::the_transformation_matrix_for_the_default_orientation ... ok
+test transformations::tests_transformations::the_view_transformation_matrix_looking_in_positive_z_direction ... ok
+test transformations::tests_transformations::the_view_transformation_moves_the_world ... ok
+test triangle::tests_triangle::a_ray_misses_the_p1_and_p2_edge ... ok
+test triangle::tests_triangle::a_ray_misses_the_p1_and_p3_edge ... ok
+test triangle::tests_triangle::a_ray_misses_the_p2_and_p3_edge ... ok
+test triangle::tests_triangle::a_ray_strikes_a_triangle ... ok
+test triangle::tests_triangle::constructing_a_triangle ... ok
+test triangle::tests_triangle::finding_the_normal_on_a_triangle ... ok
+test triangle::tests_triangle::intersecting_a_ray_parallel_to_the_triangle ... ok
+test tuple::tests_tuple::add_to_tuple ... ok
+test tuple::tests_tuple::div_tuple_by_scalar ... ok
+test tuple::tests_tuple::get_cross_of_two_vectors ... ok
+test tuple::tests_tuple::get_dot_product_of_two_vectors ... ok
+test tuple::tests_tuple::get_length_from_vector_normilize ... ok
+test tuple::tests_tuple::get_length_from_vectors ... ok
+test tuple::tests_tuple::mul_tuple_by_fraction ... ok
+test tuple::tests_tuple::mul_tuple_by_scalar ... ok
+test tuple::tests_tuple::neg_tuple ... ok
+test tuple::tests_tuple::normalize_two_vectors_in_one_vector ... ok
+test tuple::tests_tuple::points_does_fill_properties ... ok
+test tuple::tests_tuple::reflecting_a_vector_approaching_af_45_deg ... ok
+test tuple::tests_tuple::reflecting_a_vector_off_a_slanted_surface ... ok
+test tuple::tests_tuple::sub_a_vector_from_a_point_to_make_a_point ... ok
+test tuple::tests_tuple::sub_a_vector_from_a_zero_vector ... ok
+test tuple::tests_tuple::sub_tow_points_to_make_a_vector ... ok
+test tuple::tests_tuple::sub_tow_vector ... ok
+test tuple::tests_tuple::tuple_is_a_point ... ok
+test tuple::tests_tuple::tuple_is_a_vector ... ok
+test tuple::tests_tuple::vector_does_fill_properties ... ok
+test world::tests_world::color_at_with_mutually_reflective_surfaces ... ok
+test world::tests_world::creating_world ... ok
+test world::tests_world::intersect_a_world_with_a_ray ... ok
+test world::tests_world::shade_hit_with_a_reflective_material ... ok
+test world::tests_world::shade_hit_with_a_reflective_or_transparent_material ... ok
+test world::tests_world::shade_hit_with_a_transparent_material ... ok
+test world::tests_world::shading_an_intersection_from_the_inside ... ok
+test world::tests_world::shadow_hit_is_given_an_intersection_in_shadow ... ok
+test world::tests_world::the_color_when_a_ray_hits ... ok
+test world::tests_world::shading_an_intersection ... ok
+test world::tests_world::the_color_when_a_ray_missing ... ok
+test world::tests_world::the_color_with_an_intersection_behind_the_ray ... ok
+test world::tests_world::the_default_world ... ok
+test world::tests_world::the_is_no_shadow_when_an_object_is_behind_the_light ... ok
+test world::tests_world::the_is_no_shadow_when_an_object_is_behind_the_point ... ok
+test world::tests_world::the_reflected_color_at_the_maximum_recursive_depth ... ok
+test world::tests_world::the_reflected_color_for_a_reflective_material ... ok
+test world::tests_world::the_reflected_color_for_a_nonreflective_material ... ok
+test world::tests_world::the_refracted_color_under_total_internal_reflection ... ok
+test world::tests_world::the_refracted_color_at_the_maximum_recursive_depth ... ok
+test world::tests_world::the_refracted_color_with_a_refracted_ray ... ok
+test world::tests_world::the_refracted_color_with_an_opaque_surface ... ok
+test world::tests_world::the_shadow_when_an_object_is_between_the_point_and_the_light ... ok
+test world::tests_world::there_is_no_shadow_when_nothing_is_collinear_with_point_and_light ... ok
+test camera::tests_camera::external_scene_render_is_visually_stable ... ok
+test camera::tests_camera::render_benchmark_records_stats_for_fixed_scene ... ok
+
+test result: ok. 209 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.53s
+
+     Running unittests src/bin/bench_evidence.rs (target/debug/deps/bench_evidence-2c7105a80ab59c73)
+
+running 2 tests
+test tests::median_is_order_statistic ... ok
+test tests::synthetic_facts_keep_references_with_distinct_ids ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/bench_external_render.rs (target/debug/deps/bench_external_render-581c1f5f4405ef70)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/bench_render.rs (target/debug/deps/bench_render-69cb82f1da268df2)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/cap1.rs (target/debug/deps/cap1-69e19a52a231bea4)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/cap10.rs (target/debug/deps/cap10-146510e4f9811db8)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/cap11.rs (target/debug/deps/cap11-a8d490411a912772)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/cap12.rs (target/debug/deps/cap12-d8b9e6c6b2c89f91)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/cap13.rs (target/debug/deps/cap13-0913181acab0c836)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/cap14.rs (target/debug/deps/cap14-654d371e712f8ce4)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/cap15.rs (target/debug/deps/cap15-ae8663c5b8392a60)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/cap3.rs (target/debug/deps/cap3-e70d842ae07fa96d)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/cap4.rs (target/debug/deps/cap4-7d5e2dc67fe2052e)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/cap5.rs (target/debug/deps/cap5-9a7fb4485839e276)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/cap6.rs (target/debug/deps/cap6-321ef3fec80233d7)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/cap7.rs (target/debug/deps/cap7-deb291ab1a3ea553)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/cap9.rs (target/debug/deps/cap9-b7a573d4026bccbe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/capture_execution.rs (target/debug/deps/capture_execution-e9746dd8cd1581a6)
+
+running 11 tests
+test tests::existing_destination_prevents_execution ... ok
+test tests::cli_sources_are_repeatable_and_relative_to_cwd ... ok
+test tests::missing_command_has_no_exit_code ... ok
+test tests::arguments_are_not_interpreted_by_shell ... ok
+test tests::publication_failure_leaves_no_final_record ... ok
+test tests::cli_completion_does_not_require_command_success ... ok
+test tests::missing_source_prevents_command_and_final_record ... ok
+test tests::nonzero_is_a_completed_capture ... ok
+test tests::signal_is_not_normal_exit ... ok
+test tests::source_observations_cover_equal_changed_and_removed ... ok
+test tests::success_preserves_combined_binary_output ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.17s
+
+     Running unittests src/bin/explain_evidence.rs (target/debug/deps/explain_evidence-cff6acbc60c3823e)
+
+running 6 tests
+test tests::evaluated_rubric_rejected_before_validation_or_http ... ok
+test tests::query_changed_after_export_is_rejected_before_http ... ok
+test tests::record_lesson_pipeline ... ignored, Grava somente com OLLAMA_INTEGRATION_RECORD_DIR explícito e novo
+test tests::rubric_requires_unique_nonempty_criteria ... ok
+test tests::changed_source_blocks_http_and_preserves_diagnostic ... ok
+test tests::full_pipeline_links_fresh_export_and_prior_rubric_without_sending_answers ... ok
+
+test result: ok. 5 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.03s
+
+     Running unittests src/bin/prepare_ollama.rs (target/debug/deps/prepare_ollama-041b9cdf08ac0403)
+
+running 3 tests
+test tests::model_selection_does_not_change_prompt ... ok
+test tests::rejects_invalid_input ... ok
+test tests::preserves_exact_prompt_and_deterministic_body ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/send_ollama.rs (target/debug/deps/send_ollama-489c2e8396ec8f20)
+
+running 14 tests
+test tests::broken_body_preserves_received_bytes ... ok
+test tests::bounded_response_and_exact_boundary ... ok
+test tests::record_lesson_simulation ... ignored, Grava experimento somente com OLLAMA_SIMULATION_DIR explícito e novo
+test tests::provider_errors ... ok
+test tests::rejects_input_and_existing_destination ... ok
+test tests::refuses_redirect_without_following ... ok
+test tests::rejects_unsafe_or_implicit_configuration ... ok
+test tests::invalid_responses ... ok
+test tests::transport_classification_distinguishes_refusal_and_timeout ... ok
+test tests::unavailable_endpoint_records_observed_failure ... ok
+test tests::success_preserves_exact_request_prompt_response_and_identity ... ok
+test tests::incomplete_generation ... ok
+test tests::write_failure_leaves_no_final_result ... ok
+test tests::timeout_before_headers_and_during_body_preserves_prefix ... ok
+
+test result: ok. 13 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.84s
+
+     Running unittests src/bin/validate_evidence.rs (target/debug/deps/validate_evidence-53b998de6af2025f)
+
+running 68 tests
+test tests::accepts_empty_fact_list ... ok
+test tests::accepts_equal_statements_with_different_fact_ids ... ok
+test tests::accepts_execution_transcribed_from_report ... ok
+test tests::accepts_empty_source_catalog ... ok
+test tests::accepts_existing_reference ... ok
+test tests::accepts_unique_source_ids ... ok
+test tests::accepts_matching_source_content ... ok
+test tests::accepts_review_for_scoped_reformulation ... ok
+test tests::accepts_matching_nonzero_exit_code_without_claiming_success ... ok
+test tests::cache_key_separates_hash_run_and_location_and_does_not_save_failures ... ok
+test tests::capture_link_rejects_code_kind_and_legacy_execution ... ok
+test tests::capture_fixture_rejects_changed_current_source ... ok
+test tests::capture_export_preserves_source_and_run_id_with_limits ... ok
+test tests::context_zero_and_large_radius_preserve_bounds ... ok
+test tests::capture_link_rejects_wrong_run_or_record_hash ... ok
+test tests::does_not_export_invalid_reference ... ok
+test tests::distinguishes_missing_unknowns_from_explicit_empty_list ... ok
+test tests::does_not_infer_kind_when_missing ... ok
+test tests::capture_link_rejects_wrong_source_and_tampered_lines ... ok
+test tests::equal_text_from_different_sources_keeps_distinct_contexts ... ok
+test tests::execution_record_requires_test_run_but_legacy_sources_remain_accepted ... ok
+test tests::exports_context_with_correct_line_numbers_and_bounds ... ok
+test tests::export_reports_only_execution_fields_actually_compared ... ok
+test tests::exports_exact_statement_reference_and_excerpt ... ok
+test tests::exports_specific_execution_instead_of_legacy_flag ... ok
+test tests::finds_nothing_in_empty_collection ... ok
+test tests::finds_requested_fact_after_another_fact ... ok
+test tests::finds_source_after_another_source ... ok
+test tests::loads_experiment_and_validates_its_references ... ok
+test tests::loads_recorded_review ... ok
+test tests::merges_overlapping_adjacent_and_nested_ranges_but_preserves_gaps ... ok
+test tests::missing_dossier_id_remains_unknown ... ok
+test tests::multiple_export_rejects_invalid_reference_and_ambiguous_sources ... ok
+test tests::capture_reuse_does_not_cross_exports_or_sources ... ok
+test tests::parsing_does_not_validate_line_bounds ... ok
+test tests::preserves_declared_authorship_and_commit ... ok
+test tests::preserves_dossier_unknowns_without_filtering_or_rewording ... ok
+test tests::preserves_declared_source_kind_from_json_to_export ... ok
+test tests::preserves_execution_true_false_and_missing_as_distinct_values ... ok
+test tests::preserves_sources_without_version_metadata ... ok
+test tests::rejects_blank_question_or_malformed_selection ... ok
+test tests::query_preserves_question_and_evidence_as_separate_data ... ok
+test tests::preserves_dossier_id_alongside_local_fact_id ... ok
+test tests::rejects_changed_file_bytes ... ok
+test tests::rejects_duplicate_fact_ids_with_different_statements ... ok
+test tests::rejects_duplicate_source_ids_with_different_content ... ok
+test tests::rejects_fact_without_source_reference ... ok
+test tests::rejects_incomplete_execution_record ... ok
+test tests::rejects_line_beyond_source ... ok
+test tests::rejects_line_zero ... ok
+test tests::multiple_selections_preserve_code_and_execution_roles ... ok
+test tests::rejects_missing_source ... ok
+test tests::rejects_review_for_changed_excerpt ... ok
+test tests::rejects_review_for_changed_statement ... ok
+test tests::rejects_review_for_different_reference ... ok
+test tests::rejects_review_for_missing_fact ... ok
+test tests::rejects_tampered_snapshot_with_matching_hash ... ok
+test tests::rejects_text_instead_of_boolean_execution_metadata ... ok
+test tests::requires_complete_version_metadata ... ok
+test tests::rust_source_does_not_export_legacy_execution_flag ... ok
+test tests::selects_multiple_facts_in_requested_order_and_rejects_invalid_ids ... ok
+test tests::rejects_missing_or_duplicate_report_fields ... ok
+test tests::rejects_each_execution_field_when_it_disagrees_with_report ... ok
+test tests::same_selection_produces_identical_json ... ok
+test tests::single_selection_keeps_existing_json_format ... ok
+test tests::test_run_still_preserves_declared_execution_flag ... ok
+test tests::shared_capture_still_checks_each_source ... ok
+test tests::shared_context_preserves_each_requested_window_and_fact_order ... ok
+
+test result: ok. 68 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests/equivalence_boundary.rs (target/debug/deps/equivalence_boundary-c86831af06ba9629)
+
+running 4 tests
+test accepts_difference_below_epsilon ... ok
+test accepts_equal_values ... ok
+test rejects_difference_above_epsilon - should panic ... ok
+test rejects_difference_at_epsilon - should panic ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests renderer
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

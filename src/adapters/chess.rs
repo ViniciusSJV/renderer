@@ -15,4 +15,29 @@ impl ChessArtifact {
             line,
         }
     }
+
+    pub fn to_fact(&self) -> crate::core::BibliotecarioFact {
+        crate::core::BibliotecarioFact::new(&self.id, &self.statement, &self.source_id, self.line)
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn chess_artifact_converts_to_bibliotecario_fact() {
+        let artifact = ChessArtifact::new(
+            "C-1",
+            "white queen moves from d1 to h5",
+            "game-01",
+            18,
+        );
+        let fact = artifact.to_fact();
+
+        assert_eq!(fact.id, "C-1");
+        assert_eq!(fact.statement, "white queen moves from d1 to h5");
+        assert_eq!(fact.source_id, "game-01");
+        assert_eq!(fact.line, 18);
+    }
 }
