@@ -1,0 +1,52 @@
+{
+  "id": "EVAL_RENDER_CPU_EXTERNAL_BASELINE_01",
+  "attempt_archive": "ai/experimentos/attempt-02.zip",
+  "attempt_request_id": "RENDER_CPU_EXTERNAL_BASELINE_01",
+  "state": "completed",
+  "http_status": 200,
+  "response_body_complete": true,
+  "evidence_rechecked": true,
+  "response_sha256": "2a80a8f84251b84ab5b75d94b7fed408a024bcd120dc06900f15f535968eec36",
+  "response_word_count": 287,
+  "rubric_id": "RUBRIC_EXTERNAL_BASELINE_V1",
+  "criteria": [
+    {
+      "id": "C1",
+      "description": "Rastreabilidade",
+      "verdict": "partial",
+      "evidence": "A resposta usa os valores e limites presentes na seleção, sem inventar fatos, mas não cita explicitamente os IDs F_EXTERNAL_* ou SRC_EXTERNAL_*.",
+      "excerpt": "A mediana global registrada para os tempos de execução é de 13232986 nanossegundos."
+    },
+    {
+      "id": "C2",
+      "description": "Protocolo",
+      "verdict": "pass",
+      "evidence": "Informa 96x64, três warmups, cinco amostras por execução, sete execuções e 35 amostras.",
+      "excerpt": "A medição foi realizada em uma cena externa com resolução 96x64, utilizando três warmups e cinco amostras por execução."
+    },
+    {
+      "id": "C3",
+      "description": "Resultado",
+      "verdict": "pass",
+      "evidence": "Informa a mediana 13232986 ns e não inventa comparação antes/depois.",
+      "excerpt": "A mediana global registrada para os tempos de execução é de 13232986 nanossegundos."
+    },
+    {
+      "id": "C4",
+      "description": "Separação epistemológica",
+      "verdict": "pass",
+      "evidence": "Separa escopo, limites e hipóteses; afirma que a mediana foi recalculada e que não há autenticação histórica nem perfil CPU.",
+      "excerpt": "A mediana global foi recalculada a partir do log bruto, não representando uma nova execução."
+    },
+    {
+      "id": "C5",
+      "description": "Escopo",
+      "verdict": "pass",
+      "evidence": "Não generaliza a baseline, não afirma hotspot comprovado e registra que nenhuma otimização foi aplicada.",
+      "excerpt": "Não há perfil CPU que identifique hotspots dominantes."
+    }
+  ],
+  "overall": "partial_approval",
+  "summary": "Quatro critérios aprovados e um parcial. A resposta interpreta corretamente a baseline, mas perde rastreabilidade explícita ao não citar os IDs das evidências.",
+  "out_of_rubric_note": "Na conclusão, chama a baseline de medida do tempo de execução médio; o valor registrado é uma mediana, não uma média."
+}

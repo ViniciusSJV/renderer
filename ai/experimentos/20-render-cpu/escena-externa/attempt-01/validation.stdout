@@ -1,0 +1,41 @@
+Documento lido: /workspaces/renderer-local/ai/experimentos/20-render-cpu/escena-externa/evidencias.json (6102 bytes).
+Obras no acervo: 4
+Fichas no catálogo: 6
+Acervo sem IDs de fontes duplicados.
+Catálogo sem IDs de fatos duplicados.
+SRC_EXTERNAL_BENCH: arquivo atual e linhas correspondem à edição registrada.
+SRC_EXTERNAL_BASELINE: arquivo atual e linhas correspondem à edição registrada.
+SRC_EXTERNAL_STATS: arquivo atual e linhas correspondem à edição registrada.
+SRC_EXTERNAL_REGRESSION: arquivo atual e linhas correspondem à edição registrada.
+Fichas verificadas: 6. Referências inválidas: 0.
+Ficha selecionada: F_EXTERNAL_PROTOCOL
+Afirmação: O executável mede a cena externa em 96x64, com três warmups e cinco amostras por execução.
+Referência: SRC_EXTERNAL_BENCH, linha 4
+Arquivo: src/bin/bench_external_render.rs
+SHA-256: 217ecafb9935719e7ad9eee9d431a3cae20879374de0978e47029f637a0412a6
+Trecho:     let summary = render_external_benchmark(96, 64, 3, 5);
+Ficha selecionada: F_EXTERNAL_SAMPLE_TOTAL
+Afirmação: O log contém 35 amostras, obtidas em sete execuções de cinco amostras.
+Referência: SRC_EXTERNAL_STATS, linha 2
+Arquivo: ai/experimentos/20-render-cpu/external-scene-statistics.txt
+SHA-256: 8b14cb276b7ba248516e3f1dfe3c9f80d1300ffb9db996412839409b9326ed79
+Trecho: Amostras: 35 (7 execucoes de 5 amostras)
+Ficha selecionada: F_EXTERNAL_MEDIAN
+Afirmação: A mediana global registrada é 13232986 ns.
+Referência: SRC_EXTERNAL_STATS, linha 3
+Arquivo: ai/experimentos/20-render-cpu/external-scene-statistics.txt
+SHA-256: 8b14cb276b7ba248516e3f1dfe3c9f80d1300ffb9db996412839409b9326ed79
+Trecho: Mediana global: 13232986 ns
+Ficha selecionada: F_EXTERNAL_VISUAL_DIGEST
+Afirmação: O teste de regressão visual passou e fixou o digest quantizado por EPSILON informado.
+Referência: SRC_EXTERNAL_REGRESSION, linha 3
+Arquivo: ai/experimentos/20-render-cpu/external-scene-regression.txt
+SHA-256: 5e0abeab4c9b5460fca21ff016001e9c3fa421e8753ca5dcdf6b2b4ac3f92ed5
+Trecho: Digest quantizado por EPSILON: f8f450596cf93972fc99ffee22cbaf4126055156ac3a511170f0088bcae4abf6
+Ficha selecionada: F_EXTERNAL_LIMIT
+Afirmação: A regressão visual cobre estabilidade e o digest fixado, não equivalência universal.
+Referência: SRC_EXTERNAL_REGRESSION, linha 4
+Arquivo: ai/experimentos/20-render-cpu/external-scene-regression.txt
+SHA-256: 5e0abeab4c9b5460fca21ff016001e9c3fa421e8753ca5dcdf6b2b4ac3f92ed5
+Trecho: Escopo: estabilidade entre duas execuções e regressão contra o digest fixado; não prova equivalência universal.
+Seleção salva em /workspaces/renderer-local/ai/experimentos/20-render-cpu/escena-externa/attempt-01/bundle

@@ -1,0 +1,8 @@
+{
+  "elapsed_ms": 15.908601,
+  "exit_code": 0,
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_sha256": "934809a643d22a9285fb84d390f26df3c12b8eafc00e08a6bcec5f4e400d4a24",
+  "validator": "/workspaces/renderer-local/target/debug/validate_evidence",
+  "working_directory": "/workspaces/renderer-local"
+}

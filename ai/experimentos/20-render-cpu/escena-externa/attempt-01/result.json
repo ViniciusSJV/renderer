@@ -1,0 +1,40 @@
+{
+  "elapsed_ms": 40.886543999999994,
+  "format_version": 1,
+  "link": {
+    "dossier_origin": {
+      "file": "dossier.json",
+      "id": "RENDER_CPU_EXTERNAL_BASELINE_V1",
+      "sha256": "fdf894d7c6cbbc1b9b26828c73234b66467b2b8adc3efa2b7d1a5b188d799760",
+      "source_path": "/workspaces/renderer-local/ai/experimentos/20-render-cpu/escena-externa/evidencias.json"
+    },
+    "files_base": "Diretório transport; arquivos dossier/question/query da origem ficam em ../bundle",
+    "limits": "Conferência nesta invocação, sem snapshot atômico; não autentica execução nem valida semântica.",
+    "origin": {
+      "file": "../bundle/origin.json",
+      "sha256": "8abf67864da20be69094ef5b2976a7a63290b510eca530e4327a651b81736da5"
+    },
+    "query_sha256": "520afae5122d23e42c24ad17e60a79a5f1afe0c5dae7bf78329b13204ad11075",
+    "rubric": {
+      "file": "../rubric.json",
+      "sha256": "68228c16876d739cda081ebc6014b0a4ee2bd096b25def7deb5c7e91a878cc8f"
+    },
+    "selection": {
+      "context": 2,
+      "fact_ids": [
+        "F_EXTERNAL_PROTOCOL",
+        "F_EXTERNAL_SAMPLE_TOTAL",
+        "F_EXTERNAL_MEDIAN",
+        "F_EXTERNAL_VISUAL_DIGEST",
+        "F_EXTERNAL_LIMIT"
+      ]
+    }
+  },
+  "request_id": "RENDER_CPU_EXTERNAL_BASELINE_01",
+  "semantic_evaluation": "pending",
+  "state": "transport_failed",
+  "transport_result": {
+    "file": "transport/result.json",
+    "sha256": "e76afb0dc9dae37f651df523741f4e0b4be068ff9d79dd01913426caeb350ccf"
+  }
+}

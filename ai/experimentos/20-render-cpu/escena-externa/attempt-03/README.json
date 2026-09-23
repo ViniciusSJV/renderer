@@ -1,0 +1,13 @@
+{
+  "attempt": "attempt-03",
+  "archive": "ai/experimentos/attempt-03.zip",
+  "state": "completed",
+  "http_status": 200,
+  "evidence_rechecked": true,
+  "response_body_complete": true,
+  "query_sha256": "520afae5122d23e42c24ad17e60a79a5f1afe0c5dae7bf78329b13204ad11075",
+  "response_text_sha256": "2a80a8f84251b84ab5b75d94b7fed408a024bcd120dc06900f15f535968eec36",
+  "transport_result_sha256": "16cc1acfe97324b539203dfda34e92c0e35039398ac00ce32e123f7ded85db75",
+  "semantic_evaluation": "reuses EVAL_RENDER_CPU_EXTERNAL_BASELINE_01; no new semantic judgment",
+  "interpretation": "Replicação do ciclo após separação física do Graph Engine; resposta textual idêntica à attempt-02."
+}

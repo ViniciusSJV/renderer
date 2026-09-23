@@ -1,0 +1,30 @@
+{
+  "id": "RUBRIC_EXTERNAL_BASELINE_V1",
+  "criteria": [
+    {
+      "id": "C1",
+      "description": "Rastreabilidade",
+      "expected": "Usa apenas IDs e trechos presentes nas evidências selecionadas."
+    },
+    {
+      "id": "C2",
+      "description": "Protocolo",
+      "expected": "Informa 96x64, release, quatro threads, três warmups, cinco amostras por execução e sete execuções."
+    },
+    {
+      "id": "C3",
+      "description": "Resultado",
+      "expected": "Informa 35 amostras e mediana global de 13.232.986 ns sem inventar comparação antes/depois."
+    },
+    {
+      "id": "C4",
+      "description": "Separação epistemológica",
+      "expected": "Distingue fatos medidos, hipótese e ausência de autenticação histórica da execução."
+    },
+    {
+      "id": "C5",
+      "description": "Escopo",
+      "expected": "Não generaliza a baseline nem afirma que um hotspot ou otimização já foi comprovado."
+    }
+  ]
+}

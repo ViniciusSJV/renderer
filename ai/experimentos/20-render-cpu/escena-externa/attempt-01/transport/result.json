@@ -1,0 +1,77 @@
+{
+  "diagnostic": "error sending request for url (http://127.0.0.1:11434/api/generate)",
+  "dossier_origin": {
+    "file": "dossier.json",
+    "id": "RENDER_CPU_EXTERNAL_BASELINE_V1",
+    "sha256": "fdf894d7c6cbbc1b9b26828c73234b66467b2b8adc3efa2b7d1a5b188d799760",
+    "source_path": "/workspaces/renderer-local/ai/experimentos/20-render-cpu/escena-externa/evidencias.json"
+  },
+  "endpoint": "http://127.0.0.1:11434/api/generate",
+  "evidence_rechecked": true,
+  "explicit_options": {},
+  "files": {
+    "query": "query.json",
+    "request": "request.json",
+    "response": "response.bin",
+    "text": null
+  },
+  "format_version": 1,
+  "http_elapsed_ms": 1.2530270000000001,
+  "http_finished_unix_ms": 1790107654246,
+  "http_started_unix_ms": 1790107654244,
+  "http_status": null,
+  "integration": {
+    "dossier_origin": {
+      "file": "dossier.json",
+      "id": "RENDER_CPU_EXTERNAL_BASELINE_V1",
+      "sha256": "fdf894d7c6cbbc1b9b26828c73234b66467b2b8adc3efa2b7d1a5b188d799760",
+      "source_path": "/workspaces/renderer-local/ai/experimentos/20-render-cpu/escena-externa/evidencias.json"
+    },
+    "files_base": "Diretório transport; arquivos dossier/question/query da origem ficam em ../bundle",
+    "limits": "Conferência nesta invocação, sem snapshot atômico; não autentica execução nem valida semântica.",
+    "origin": {
+      "file": "../bundle/origin.json",
+      "sha256": "8abf67864da20be69094ef5b2976a7a63290b510eca530e4327a651b81736da5"
+    },
+    "query_sha256": "520afae5122d23e42c24ad17e60a79a5f1afe0c5dae7bf78329b13204ad11075",
+    "rubric": {
+      "file": "../rubric.json",
+      "sha256": "68228c16876d739cda081ebc6014b0a4ee2bd096b25def7deb5c7e91a878cc8f"
+    },
+    "selection": {
+      "context": 2,
+      "fact_ids": [
+        "F_EXTERNAL_PROTOCOL",
+        "F_EXTERNAL_SAMPLE_TOTAL",
+        "F_EXTERNAL_MEDIAN",
+        "F_EXTERNAL_VISUAL_DIGEST",
+        "F_EXTERNAL_LIMIT"
+      ]
+    }
+  },
+  "max_response_bytes": 1048576,
+  "query_bytes": 11787,
+  "query_sha256": "520afae5122d23e42c24ad17e60a79a5f1afe0c5dae7bf78329b13204ad11075",
+  "query_source_path": "/workspaces/renderer-local/ai/experimentos/20-render-cpu/escena-externa/attempt-01/bundle/query.json",
+  "request_bytes": 12552,
+  "request_id": "RENDER_CPU_EXTERNAL_BASELINE_01",
+  "request_sha256": "2164e6b5e471adc4bf0fdafbe8b699fd01cb1860513c7a424c437b6f102aa11c",
+  "requested_model": "renderer-analyst:latest",
+  "response_body_complete": false,
+  "response_bytes_preserved": 0,
+  "response_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "selection": {
+    "context": 2,
+    "fact_ids": [
+      "F_EXTERNAL_PROTOCOL",
+      "F_EXTERNAL_SAMPLE_TOTAL",
+      "F_EXTERNAL_MEDIAN",
+      "F_EXTERNAL_VISUAL_DIGEST",
+      "F_EXTERNAL_LIMIT"
+    ]
+  },
+  "semantic_evaluation": "pending",
+  "state": "transport_failed",
+  "timeout_ms": 120000,
+  "validation_scope": "Conferência nesta invocação antes do envio; sem snapshot atômico nem autenticação."
+}

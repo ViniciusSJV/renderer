@@ -1,0 +1,5 @@
+Fonte: ai/experimentos/20-render-cpu/external-scene-baseline.txt
+Amostras: 35 (7 execucoes de 5 amostras)
+Mediana global: 13232986 ns
+Minimo global: 12330831 ns
+Maximo global: 21777221 ns

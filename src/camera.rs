@@ -8,6 +8,7 @@ use crate::matrix::Matrix;
 use crate::object::Intersectable;
 use crate::ray::Ray;
 use crate::tuple::Tuple;
+use crate::transformations::Transform;
 use crate::world::World;
 
 #[derive(Debug, Clone, PartialEq)]
@@ -151,6 +152,54 @@ pub fn render_benchmark(width: usize, height: usize, warmups: usize, samples: us
 
     let world = World::new(vec![crate::object::Object::from(sphere), crate::object::Object::from(sphere_2)], vec![light]);
     let camera = Camera::new(width, height, std::f64::consts::PI / 2.0);
+    camera.benchmark_render(world, warmups, samples)
+}
+
+fn external_benchmark_scene(width: usize, height: usize) -> (Camera, World) {
+    let light = crate::lights::Light::point_light(
+        Tuple::point(-10.0, 12.0, -10.0),
+        crate::color::Color::new(1.0, 1.0, 1.0),
+    );
+
+    let mut floor = crate::plane::Plane::default();
+    floor.set_transform(crate::matrix::Matrix::translation(Tuple::vector(0.0, -1.0, 0.0)));
+    floor.material.color = crate::color::Color::new(0.55, 0.55, 0.55);
+
+    let sphere_specs = [
+        (-3.0, 0.0, 1.0, 1.0, (0.85, 0.25, 0.2)),
+        (-1.5, 0.0, 0.0, 0.75, (0.2, 0.65, 0.9)),
+        (0.0, 0.0, 1.0, 1.0, (0.25, 0.8, 0.35)),
+        (1.5, 0.0, 0.0, 0.75, (0.9, 0.7, 0.2)),
+        (3.0, 0.0, 1.0, 1.0, (0.75, 0.3, 0.8)),
+        (-2.25, 0.0, 3.0, 0.5, (0.85, 0.45, 0.2)),
+        (-0.75, 0.0, 3.0, 0.65, (0.25, 0.75, 0.75)),
+        (0.75, 0.0, 3.0, 0.65, (0.8, 0.35, 0.25)),
+        (2.25, 0.0, 3.0, 0.5, (0.35, 0.45, 0.9)),
+    ];
+
+    let mut objects = vec![crate::object::Object::from(floor)];
+    for (x, y, z, scale, color) in sphere_specs {
+        let mut sphere = crate::sphere::Sphere::default();
+        sphere.material.color = crate::color::Color::new(color.0, color.1, color.2);
+        sphere.set_transform(
+            crate::matrix::Matrix::translation(Tuple::vector(x, y, z))
+                * crate::matrix::Matrix::scaling(Tuple::vector(scale, scale, scale)),
+        );
+        objects.push(crate::object::Object::from(sphere));
+    }
+
+    let world = World::new(objects, vec![light]);
+    let camera = Camera::new(width, height, std::f64::consts::PI / 3.0).with_transform(
+        Tuple::point(0.0, 2.5, -10.0).view_transform(
+            Tuple::point(0.0, 0.5, 1.0),
+            Tuple::vector(0.0, 1.0, 0.0),
+        ),
+    );
+    (camera, world)
+}
+
+pub fn render_external_benchmark(width: usize, height: usize, warmups: usize, samples: usize) -> RenderBenchmarkSummary {
+    let (camera, world) = external_benchmark_scene(width, height);
     camera.benchmark_render(world, warmups, samples)
 }
 
@@ -311,5 +360,30 @@ mod tests_camera {
         assert!(summary.min_ns > 0);
         assert!(summary.median_ns >= summary.min_ns);
         assert!(summary.max_ns >= summary.median_ns);
+    }
+
+    #[test]
+    fn external_scene_render_is_visually_stable() {
+        use sha2::{Digest, Sha256};
+
+        fn digest(canvas: &Canvas) -> String {
+            let mut digest = Sha256::new();
+            for y in 0..canvas.height {
+                for x in 0..canvas.width {
+                    let color = canvas.get_pixel_color(x, y);
+                    for value in [color.red, color.green, color.blue] {
+                        digest.update(((value / crate::EPSILON).round() as i64).to_le_bytes());
+                    }
+                }
+            }
+            format!("{:x}", digest.finalize())
+        }
+
+        let (camera, world) = external_benchmark_scene(32, 24);
+        let first = digest(&camera.render(world.clone()));
+        let second = digest(&camera.render(world));
+
+        assert_eq!(first, second);
+        assert_eq!(first, "f8f450596cf93972fc99ffee22cbaf4126055156ac3a511170f0088bcae4abf6");
     }
 }

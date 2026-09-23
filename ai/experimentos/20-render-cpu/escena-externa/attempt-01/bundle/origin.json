@@ -1,0 +1,38 @@
+{
+  "dossier": {
+    "file": "dossier.json",
+    "id": "RENDER_CPU_EXTERNAL_BASELINE_V1",
+    "sha256": "fdf894d7c6cbbc1b9b26828c73234b66467b2b8adc3efa2b7d1a5b188d799760",
+    "source_path": "/workspaces/renderer-local/ai/experimentos/20-render-cpu/escena-externa/evidencias.json"
+  },
+  "export_finished_unix_ms": 1790107654223,
+  "format_version": 1,
+  "kind": "validated_query_export",
+  "limits": [
+    "Não autentica execução nem comprova bytes compilados.",
+    "Não é snapshot atômico das fontes.",
+    "Não valida semanticamente fichas ou respostas.",
+    "Nenhum envio HTTP realizado; rubrica e avaliação ainda não vinculadas."
+  ],
+  "query": {
+    "bytes": 11787,
+    "file": "query.json",
+    "sha256": "520afae5122d23e42c24ad17e60a79a5f1afe0c5dae7bf78329b13204ad11075"
+  },
+  "question": {
+    "file": "question.txt",
+    "sha256": "755906e94cf333184bcf615b53aa0adbabf97015b5ec44afdb1580f8cd88bc5e",
+    "source_path": "/workspaces/renderer-local/ai/experimentos/20-render-cpu/escena-externa/pergunta.txt"
+  },
+  "selection": {
+    "context": 2,
+    "fact_ids": [
+      "F_EXTERNAL_PROTOCOL",
+      "F_EXTERNAL_SAMPLE_TOTAL",
+      "F_EXTERNAL_MEDIAN",
+      "F_EXTERNAL_VISUAL_DIGEST",
+      "F_EXTERNAL_LIMIT"
+    ]
+  },
+  "validation_scope": "Conferência pelo validate_evidence antes desta exportação. Não é conferência no momento de um envio posterior."
+}

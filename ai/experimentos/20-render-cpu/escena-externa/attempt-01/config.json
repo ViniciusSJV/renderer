@@ -1,0 +1,19 @@
+{
+  "request_id": "RENDER_CPU_EXTERNAL_BASELINE_01",
+  "project_root": ".",
+  "dossier": "ai/experimentos/20-render-cpu/escena-externa/evidencias.json",
+  "question": "ai/experimentos/20-render-cpu/escena-externa/pergunta.txt",
+  "rubric": "ai/experimentos/20-render-cpu/escena-externa/rubrica.json",
+  "facts": [
+    "F_EXTERNAL_PROTOCOL",
+    "F_EXTERNAL_SAMPLE_TOTAL",
+    "F_EXTERNAL_MEDIAN",
+    "F_EXTERNAL_VISUAL_DIGEST",
+    "F_EXTERNAL_LIMIT"
+  ],
+  "context": 2,
+  "endpoint": "http://127.0.0.1:11434/api/generate",
+  "model": "renderer-analyst:latest",
+  "timeout_ms": 120000,
+  "max_response_bytes": 1048576
+}

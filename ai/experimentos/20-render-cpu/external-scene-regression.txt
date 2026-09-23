@@ -1,0 +1,4 @@
+Teste: camera::tests_camera::external_scene_render_is_visually_stable
+Resultado: 1 passed, 0 failed
+Digest quantizado por EPSILON: f8f450596cf93972fc99ffee22cbaf4126055156ac3a511170f0088bcae4abf6
+Escopo: estabilidade entre duas execuções e regressão contra o digest fixado; não prova equivalência universal.

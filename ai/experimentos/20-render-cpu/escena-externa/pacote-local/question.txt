@@ -1,0 +1,1 @@
+Interprete somente a baseline da cena externa usando as evidências selecionadas. Informe o escopo da medição, o protocolo, a mediana observada e os limites de proveniência. Separe explicitamente resultados medidos de hipóteses sobre custos; não proponha uma otimização como se já estivesse validada.

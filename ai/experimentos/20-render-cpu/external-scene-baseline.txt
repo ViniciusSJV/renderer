@@ -1,0 +1,49 @@
+round=0
+width=96 height=64 samples=5 min_ns=12330831 median_ns=12374112 max_ns=13681593
+sample_0=12338596ns
+sample_1=12330831ns
+sample_2=12576165ns
+sample_3=13681593ns
+sample_4=12374112ns
+round=1
+width=96 height=64 samples=5 min_ns=12969694 median_ns=16754303 max_ns=19609962
+sample_0=19609962ns
+sample_1=19308120ns
+sample_2=16754303ns
+sample_3=12969694ns
+sample_4=13208190ns
+round=2
+width=96 height=64 samples=5 min_ns=12422382 median_ns=13592798 max_ns=14544134
+sample_0=13202659ns
+sample_1=14544134ns
+sample_2=13592798ns
+sample_3=12422382ns
+sample_4=13713648ns
+round=3
+width=96 height=64 samples=5 min_ns=12592332 median_ns=13402573 max_ns=16168763
+sample_0=12592332ns
+sample_1=12702275ns
+sample_2=16168763ns
+sample_3=13455181ns
+sample_4=13402573ns
+round=4
+width=96 height=64 samples=5 min_ns=12359485 median_ns=13163005 max_ns=18206812
+sample_0=18206812ns
+sample_1=13163005ns
+sample_2=12359485ns
+sample_3=13129653ns
+sample_4=13232986ns
+round=5
+width=96 height=64 samples=5 min_ns=13451714 median_ns=17112769 max_ns=21777221
+sample_0=13451714ns
+sample_1=17112769ns
+sample_2=21777221ns
+sample_3=18910957ns
+sample_4=16493363ns
+round=6
+width=96 height=64 samples=5 min_ns=12333807 median_ns=12382360 max_ns=15351090
+sample_0=15351090ns
+sample_1=12382360ns
+sample_2=12376546ns
+sample_3=12406693ns
+sample_4=12333807ns
