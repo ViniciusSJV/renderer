@@ -1,11 +1,14 @@
 # Laboratório de IA, evidências e performance
 
+A [atualização para Librarian v0.1.0](experimentos/24-librarian-01-consumidor/README.md)
+valida a revisão `a009af8` no renderer e cadastra uma fonte real do xadrez-angular.
+
 O [acervo inicial do renderer](acervo/renderer-v1/README.md) consolida cadastro,
 conferência, seleção e exportação determinística. O [experimento 23](experimentos/23-librarian-01/README.md)
 registra a auditoria da 0.1 e sua validação, sem nova consulta LLM.
 
 O renderer consome [Librarian](https://github.com/ViniciusSJV/librarian) pela
-revisão Git `4e84f004061b1df84ae5d8f22af9007aa2d99962`, fixada em `Cargo.toml` e
+revisão Git `a009af8276c4bb58c67905a10fea32f1cbbf8a38`, fixada em `Cargo.toml` e
 `Cargo.lock`. Não é necessário clonar a biblioteca separadamente.
 
 A [validação da integração](experimentos/22-integracao-librarian/README.md) registra

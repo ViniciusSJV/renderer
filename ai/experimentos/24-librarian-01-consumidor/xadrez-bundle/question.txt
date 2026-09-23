@@ -1,0 +1,1 @@
+Quais chamadas HTTP o XadrezService declara e o que este arquivo não permite concluir? Cite os IDs e diferencie código de execução.

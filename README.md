@@ -28,7 +28,7 @@ The ray tracer challenge. By Jamis Buck.
 ## Build and Librarian integration
 
 The evidence tools use [Librarian](https://github.com/ViniciusSJV/librarian),
-pinned to Git revision `4e84f004061b1df84ae5d8f22af9007aa2d99962` in both
+pinned to Git revision `a009af8276c4bb58c67905a10fea32f1cbbf8a38` in both
 `Cargo.toml` and `Cargo.lock`. Cargo downloads the dependency; a separate local
 checkout is optional.
 

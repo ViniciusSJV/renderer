@@ -496,7 +496,7 @@ checksum = "3eaf3ede3fee6db1a4c2ee091bf8a8b4dccdc6d17f656fb07896ee72867612f2"
 [[package]]
 name = "librarian-core"
 version = "0.1.0"
-source = "git+https://github.com/ViniciusSJV/librarian.git?rev=4e84f004061b1df84ae5d8f22af9007aa2d99962#4e84f004061b1df84ae5d8f22af9007aa2d99962"
+source = "git+https://github.com/ViniciusSJV/librarian.git?rev=a009af8276c4bb58c67905a10fea32f1cbbf8a38#a009af8276c4bb58c67905a10fea32f1cbbf8a38"
 dependencies = [
  "serde",
 ]
@@ -504,7 +504,7 @@ dependencies = [
 [[package]]
 name = "librarian-graph-engine"
 version = "0.1.0"
-source = "git+https://github.com/ViniciusSJV/librarian.git?rev=4e84f004061b1df84ae5d8f22af9007aa2d99962#4e84f004061b1df84ae5d8f22af9007aa2d99962"
+source = "git+https://github.com/ViniciusSJV/librarian.git?rev=a009af8276c4bb58c67905a10fea32f1cbbf8a38#a009af8276c4bb58c67905a10fea32f1cbbf8a38"
 dependencies = [
  "librarian-core",
  "serde",

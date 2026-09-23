@@ -1,0 +1,37 @@
+{
+  "dossier": {
+    "file": "dossier.json",
+    "id": "XADREZ_SERVICE_V1",
+    "sha256": "a1e292e75d3afeabdec13713c9631dcf5cb1dffaa1bbbaa71bb60cf6568e915b",
+    "source_path": "ai/acervo/xadrez-v1/dossier.json"
+  },
+  "export_finished_unix_ms": 1790186732099,
+  "format_version": 1,
+  "kind": "validated_query_export",
+  "limits": [
+    "Não autentica execução nem comprova bytes compilados.",
+    "Não é snapshot atômico das fontes.",
+    "Não valida semanticamente fichas ou respostas.",
+    "Nenhum envio HTTP realizado; rubrica e avaliação ainda não vinculadas."
+  ],
+  "query": {
+    "bytes": 9174,
+    "file": "query.json",
+    "sha256": "3ddbf9a6c3e2c9df7b445fce8b12093975bd07957e07a22c75ae76cb220dd7ec"
+  },
+  "question": {
+    "file": "question.txt",
+    "sha256": "4d1cb267a817f24e145483167cd50d327704a26b374f80fe38ff2569f3904145",
+    "source_path": "ai/acervo/xadrez-v1/question.txt"
+  },
+  "selection": {
+    "context": 1,
+    "fact_ids": [
+      "F_INIT",
+      "F_POSITION",
+      "F_PLAY",
+      "F_MOVE"
+    ]
+  },
+  "validation_scope": "Conferência anterior à exportação pelo Graph Engine e pelo callback de fontes do consumidor. Não é conferência no momento de um envio posterior."
+}

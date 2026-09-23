@@ -1,0 +1,16 @@
+{
+  "librarian_revision": "a009af8276c4bb58c67905a10fea32f1cbbf8a38",
+  "integration_tests": {
+    "passed": 2,
+    "failed": 0
+  },
+  "xadrez": {
+    "sources": 1,
+    "selected_facts": 4,
+    "selection_references_limits_hashes": "passed",
+    "query_sha256": "3ddbf9a6c3e2c9df7b445fce8b12093975bd07957e07a22c75ae76cb220dd7ec"
+  },
+  "application_executed": false,
+  "llm_called": false,
+  "release": "https://github.com/ViniciusSJV/librarian/releases/tag/v0.1.0"
+}

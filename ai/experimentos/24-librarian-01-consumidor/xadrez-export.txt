@@ -1,0 +1,33 @@
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.10s
+     Running `target/debug/validate_evidence ai/acervo/xadrez-v1/dossier.json --fact F_INIT --fact F_POSITION --fact F_PLAY --fact F_MOVE --context 1 --question ai/acervo/xadrez-v1/question.txt --bundle /tmp/xadrez-bundle-v1`
+Documento lido: ai/acervo/xadrez-v1/dossier.json (2407 bytes).
+Obras no acervo: 1
+Fichas no catálogo: 4
+Acervo sem IDs de fontes duplicados.
+Catálogo sem IDs de fatos duplicados.
+Fichas verificadas: 4. Referências inválidas: 0.
+Ficha selecionada: F_INIT
+Afirmação: O método init declara GET em /api/init.
+Referência: SRC_XADREZ_SERVICE, linha 12
+Arquivo: ai/acervo/xadrez-v1/xadrez.service.ts
+SHA-256: 27364561359e372a3d693a6c1a574908d58f9bf453b9d45d61e34fb6cf67a456
+Trecho:     return this.http.get<Row[]>('/api/init');
+Ficha selecionada: F_POSITION
+Afirmação: getPosicao declara GET em /api/row/ concatenado com posicao.
+Referência: SRC_XADREZ_SERVICE, linha 16
+Arquivo: ai/acervo/xadrez-v1/xadrez.service.ts
+SHA-256: 27364561359e372a3d693a6c1a574908d58f9bf453b9d45d61e34fb6cf67a456
+Trecho:     return this.http.get<Posicao>('/api/row/' + posicao);
+Ficha selecionada: F_PLAY
+Afirmação: criarJogada declara PUT em /api/rows/jogada enviando posicaoSelecionada.
+Referência: SRC_XADREZ_SERVICE, linha 20
+Arquivo: ai/acervo/xadrez-v1/xadrez.service.ts
+SHA-256: 27364561359e372a3d693a6c1a574908d58f9bf453b9d45d61e34fb6cf67a456
+Trecho:     return this.http.put<Row[]>('/api/rows/jogada', posicaoSelecionada);
+Ficha selecionada: F_MOVE
+Afirmação: moverPosicao declara PUT em /api/rows/mover/ concatenado com posicao, enviando posicaoSelecionada.
+Referência: SRC_XADREZ_SERVICE, linha 24
+Arquivo: ai/acervo/xadrez-v1/xadrez.service.ts
+SHA-256: 27364561359e372a3d693a6c1a574908d58f9bf453b9d45d61e34fb6cf67a456
+Trecho:     return this.http.put<Row[]>('/api/rows/mover/' + posicao, posicaoSelecionada);
+Seleção salva em /tmp/xadrez-bundle-v1
