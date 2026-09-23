@@ -1,0 +1,75 @@
+Documento lido: ai/acervo/xadrez-v2/dossier.json (41472 bytes).
+Obras no acervo: 2
+Fichas no catálogo: 11
+Acervo sem IDs de fontes duplicados.
+Catálogo sem IDs de fatos duplicados.
+Fichas verificadas: 11. Referências inválidas: 0.
+Ficha selecionada: F_INIT
+Afirmação: O método init declara GET em /api/init.
+Referência: SRC_XADREZ_SERVICE, linha 12
+Arquivo: ai/acervo/xadrez-v1/xadrez.service.ts
+SHA-256: 27364561359e372a3d693a6c1a574908d58f9bf453b9d45d61e34fb6cf67a456
+Trecho:     return this.http.get<Row[]>('/api/init');
+Ficha selecionada: F_HANDLE_INIT
+Afirmação: O interceptador declara esta condição de rota e método: if (request.url.endsWith('/api/init') && request.method === 'GET') {
+Referência: SRC_XADREZ_INTERCEPTOR, linha 534
+Arquivo: ai/acervo/xadrez-v2/backEndInterceptor.ts
+SHA-256: b5e338defc7c68086b6864617f59780c7abdcc10151d3ff3fbb596bb80c75a93
+Trecho:             if (request.url.endsWith('/api/init') && request.method === 'GET') {
+Ficha selecionada: F_POSITION
+Afirmação: getPosicao declara GET em /api/row/ concatenado com posicao.
+Referência: SRC_XADREZ_SERVICE, linha 16
+Arquivo: ai/acervo/xadrez-v1/xadrez.service.ts
+SHA-256: 27364561359e372a3d693a6c1a574908d58f9bf453b9d45d61e34fb6cf67a456
+Trecho:     return this.http.get<Posicao>('/api/row/' + posicao);
+Ficha selecionada: F_HANDLE_POSITION
+Afirmação: O interceptador declara esta condição de rota e método: if (request.url.match(/\/api\/row\/\w+$/) && request.method === 'GET') {
+Referência: SRC_XADREZ_INTERCEPTOR, linha 643
+Arquivo: ai/acervo/xadrez-v2/backEndInterceptor.ts
+SHA-256: b5e338defc7c68086b6864617f59780c7abdcc10151d3ff3fbb596bb80c75a93
+Trecho:             if (request.url.match(/\/api\/row\/\w+$/) && request.method === 'GET') {
+Ficha selecionada: F_PLAY
+Afirmação: criarJogada declara PUT em /api/rows/jogada enviando posicaoSelecionada.
+Referência: SRC_XADREZ_SERVICE, linha 20
+Arquivo: ai/acervo/xadrez-v1/xadrez.service.ts
+SHA-256: 27364561359e372a3d693a6c1a574908d58f9bf453b9d45d61e34fb6cf67a456
+Trecho:     return this.http.put<Row[]>('/api/rows/jogada', posicaoSelecionada);
+Ficha selecionada: F_HANDLE_PLAY
+Afirmação: O interceptador declara esta condição de rota e método: if (request.url.endsWith('/api/rows/jogada') && request.method === 'PUT') {
+Referência: SRC_XADREZ_INTERCEPTOR, linha 663
+Arquivo: ai/acervo/xadrez-v2/backEndInterceptor.ts
+SHA-256: b5e338defc7c68086b6864617f59780c7abdcc10151d3ff3fbb596bb80c75a93
+Trecho:             if (request.url.endsWith('/api/rows/jogada') && request.method === 'PUT') {
+Ficha selecionada: F_MOVE
+Afirmação: moverPosicao declara PUT em /api/rows/mover/ concatenado com posicao, enviando posicaoSelecionada.
+Referência: SRC_XADREZ_SERVICE, linha 24
+Arquivo: ai/acervo/xadrez-v1/xadrez.service.ts
+SHA-256: 27364561359e372a3d693a6c1a574908d58f9bf453b9d45d61e34fb6cf67a456
+Trecho:     return this.http.put<Row[]>('/api/rows/mover/' + posicao, posicaoSelecionada);
+Ficha selecionada: F_HANDLE_MOVE
+Afirmação: O interceptador declara esta condição de rota e método: if (request.url.match(/\/api\/rows\/mover\/\w+$/) && request.method === 'PUT') {
+Referência: SRC_XADREZ_INTERCEPTOR, linha 674
+Arquivo: ai/acervo/xadrez-v2/backEndInterceptor.ts
+SHA-256: b5e338defc7c68086b6864617f59780c7abdcc10151d3ff3fbb596bb80c75a93
+Trecho:             if (request.url.match(/\/api\/rows\/mover\/\w+$/) && request.method === 'PUT') {
+Ficha selecionada: F_PLAY_ACTION
+Afirmação: O ramo de jogada chama criarJogada com o corpo atribuído a posicaoSelecionada e rows.
+Referência: SRC_XADREZ_INTERCEPTOR, linha 667
+Arquivo: ai/acervo/xadrez-v2/backEndInterceptor.ts
+SHA-256: b5e338defc7c68086b6864617f59780c7abdcc10151d3ff3fbb596bb80c75a93
+Trecho:               rows = this.criarJogada(posicaoSelecionada, rows);
+Ficha selecionada: F_MOVE_ACTION
+Afirmação: O ramo de mover chama atualizaPosicoes; isto descreve código, não movimento executado.
+Referência: SRC_XADREZ_INTERCEPTOR, linha 692
+Arquivo: ai/acervo/xadrez-v2/backEndInterceptor.ts
+SHA-256: b5e338defc7c68086b6864617f59780c7abdcc10151d3ff3fbb596bb80c75a93
+Trecho:               rows = this.atualizaPosicoes(rowFiltrada, posicaoFiltrada, rowSelecionada, posicaoSelecionada, rows);
+Ficha selecionada: F_FALLBACK
+Afirmação: Após os ramos de rota, o código delega a requisição a next.handle.
+Referência: SRC_XADREZ_INTERCEPTOR, linha 708
+Arquivo: ai/acervo/xadrez-v2/backEndInterceptor.ts
+SHA-256: b5e338defc7c68086b6864617f59780c7abdcc10151d3ff3fbb596bb80c75a93
+Trecho:             return next.handle(request);
+Seleção salva em ai/experimentos/25-xadrez-duas-fontes/bundle
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.09s
+     Running `target/debug/validate_evidence ai/acervo/xadrez-v2/dossier.json --fact F_INIT --fact F_HANDLE_INIT --fact F_POSITION --fact F_HANDLE_POSITION --fact F_PLAY --fact F_HANDLE_PLAY --fact F_MOVE --fact F_HANDLE_MOVE --fact F_PLAY_ACTION --fact F_MOVE_ACTION --fact F_FALLBACK --context 2 --question ai/acervo/xadrez-v2/question.txt --bundle ai/experimentos/25-xadrez-duas-fontes/bundle`

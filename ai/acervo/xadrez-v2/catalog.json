@@ -1,0 +1,38 @@
+{
+  "id": "XADREZ_ROUTES_V2",
+  "edition": 2,
+  "repository": "https://github.com/ViniciusSJV/xadrez-angular",
+  "git_commit": "18fdab8329b2f680c731a1929132caed67e33587",
+  "sources": [
+    {
+      "source_id": "SRC_XADREZ_SERVICE",
+      "path": "ai/acervo/xadrez-v1/xadrez.service.ts",
+      "sha256": "27364561359e372a3d693a6c1a574908d58f9bf453b9d45d61e34fb6cf67a456",
+      "original_path": "src/app/_servico/xadrez.service.ts"
+    },
+    {
+      "source_id": "SRC_XADREZ_INTERCEPTOR",
+      "path": "ai/acervo/xadrez-v2/backEndInterceptor.ts",
+      "sha256": "b5e338defc7c68086b6864617f59780c7abdcc10151d3ff3fbb596bb80c75a93",
+      "original_path": "src/app/_fake-api/backEndInterceptor.ts"
+    }
+  ],
+  "selection": [
+    "F_INIT",
+    "F_HANDLE_INIT",
+    "F_POSITION",
+    "F_HANDLE_POSITION",
+    "F_PLAY",
+    "F_HANDLE_PLAY",
+    "F_MOVE",
+    "F_HANDLE_MOVE",
+    "F_PLAY_ACTION",
+    "F_MOVE_ACTION",
+    "F_FALLBACK"
+  ],
+  "context_lines": 2,
+  "fact_role": "code_description",
+  "relation_scope": "Pares de IDs escolhidos manualmente; o Graph Engine confere referências, não a equivalência semântica das rotas.",
+  "hypotheses": [],
+  "semantic_evaluations": []
+}

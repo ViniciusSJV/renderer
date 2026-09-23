@@ -1,0 +1,16 @@
+{
+  "status": "passed",
+  "sources": 2,
+  "facts": 11,
+  "checks": [
+    "selection_order",
+    "source_references",
+    "excerpts",
+    "unknowns",
+    "contexts_by_source",
+    "bundle_hashes"
+  ],
+  "query_sha256": "3cc37f4e389abe21373645ed3a83c3b866371833c25cebc3ce4b3acd81eee584",
+  "application_executed": false,
+  "llm_called": false
+}

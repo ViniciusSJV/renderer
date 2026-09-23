@@ -87,6 +87,24 @@ de manutenção fictícia mostra cadastro e consulta de uma única afirmação.
 O [fluxograma](Librarian/WORKFLOW.md) explica validações, rejeições e limites.
 Esses links exigem o checkout local; ele é opcional para o passo 1.
 
+## 4. Relacionar duas fontes do xadrez
+
+O acervo edição 2 acrescenta o interceptador, preservando a edição 1.
+Execute na raiz do renderer com destino novo:
+
+```sh
+cargo run --locked --bin validate_evidence -- ai/acervo/xadrez-v2/dossier.json --fact F_INIT --fact F_HANDLE_INIT --fact F_POSITION --fact F_HANDLE_POSITION --fact F_PLAY --fact F_HANDLE_PLAY --fact F_MOVE --fact F_HANDLE_MOVE --fact F_PLAY_ACTION --fact F_MOVE_ACTION --fact F_FALLBACK --context 2 --question ai/acervo/xadrez-v2/question.txt --bundle ./xadrez-duas-fontes-bundle
+```
+
+Esperado: duas fontes, 11 fichas verificadas e zero referências inválidas.
+Abra `xadrez-duas-fontes-bundle/query.json`: os fatos alternam chamadas do
+serviço e condições do interceptador, seguidos por três fatos de implementação.
+Os blocos em `evidence.contexts` identificam a fonte a que pertencem.
+
+O Graph Engine confere os vínculos; a relação entre rotas foi cadastrada
+manualmente. Confira os [padrões de URL e limites](ai/acervo/xadrez-v2/README.md):
+não se conclui que qualquer posição será aceita ou que uma chamada foi executada.
+
 ## Verificação final opcional
 
 Depois de alterar a integração:
