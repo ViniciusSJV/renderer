@@ -1,0 +1,26 @@
+{
+  "librarian_base": "822a7edd0e82e69b07a175d6cae2de12cee5c331",
+  "librarian_worktree": "modified; see librarian-change.patch",
+  "renderer_base": "42e6d4dcd2ce1b2fdd827e3d038b356e02c8f5e3",
+  "renderer_dependency": "4e84f004061b1df84ae5d8f22af9007aa2d99962",
+  "tests": {
+    "librarian_passed": 23,
+    "renderer_integration_passed": 2,
+    "failed": 0
+  },
+  "sources": 7,
+  "facts": 9,
+  "selected": 8,
+  "query_equal_to_pinned_consumer": true,
+  "query_sha256": "9711b2e30f0ba9735f3cf723a5ef20e959a308455758e5e73d2bc76c33f16394",
+  "historical_samples": 35,
+  "recalculated_median_ns": 13232986,
+  "new_benchmark": false,
+  "llm_called": false,
+  "semantic_validation": false,
+  "librarian_patch_sha256": "0f7993560b093c0e8643b4d3cccd0e8f6f918ec76d5ba502b01ac7ed3659b134",
+  "remote_heads_verified": {
+    "renderer": "42e6d4dcd2ce1b2fdd827e3d038b356e02c8f5e3",
+    "librarian": "822a7edd0e82e69b07a175d6cae2de12cee5c331"
+  }
+}

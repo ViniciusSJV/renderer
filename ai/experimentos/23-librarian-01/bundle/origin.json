@@ -1,0 +1,41 @@
+{
+  "dossier": {
+    "file": "dossier.json",
+    "id": "RENDERER_COLLECTION_V1",
+    "sha256": "072fbd63ac0e6946397e66f58076e5306452b8be95e15eec3878d6fc60644abc",
+    "source_path": "/workspaces/renderer-local/ai/acervo/renderer-v1/dossier.json"
+  },
+  "export_finished_unix_ms": 1790184145678,
+  "format_version": 1,
+  "kind": "validated_query_export",
+  "limits": [
+    "Não autentica execução nem comprova bytes compilados.",
+    "Não é snapshot atômico das fontes.",
+    "Não valida semanticamente fichas ou respostas.",
+    "Nenhum envio HTTP realizado; rubrica e avaliação ainda não vinculadas."
+  ],
+  "query": {
+    "bytes": 21397,
+    "file": "query.json",
+    "sha256": "9711b2e30f0ba9735f3cf723a5ef20e959a308455758e5e73d2bc76c33f16394"
+  },
+  "question": {
+    "file": "question.txt",
+    "sha256": "c40d30814b75ae5b6e71a973b40a46889e3b1cf03b06e1f9fc00c084eb6d1a1a",
+    "source_path": "/workspaces/renderer-local/ai/acervo/renderer-v1/question.txt"
+  },
+  "selection": {
+    "context": 2,
+    "fact_ids": [
+      "F_EXTERNAL_PROTOCOL",
+      "F_EXTERNAL_SAMPLE_TOTAL",
+      "F_EXTERNAL_MEDIAN",
+      "F_EXTERNAL_VISUAL_DIGEST",
+      "F_EXTERNAL_LIMIT",
+      "F_TIMING",
+      "F_VISUAL_SCOPE",
+      "F_ENVIRONMENT"
+    ]
+  },
+  "validation_scope": "Conferência anterior à exportação pelo Graph Engine e pelo callback de fontes do consumidor. Não é conferência no momento de um envio posterior."
+}

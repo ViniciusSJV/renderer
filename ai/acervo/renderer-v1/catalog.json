@@ -1,0 +1,84 @@
+{
+  "format_version": 1,
+  "id": "RENDERER_COLLECTION_V1",
+  "edition": 1,
+  "sources": [
+    {
+      "source_id": "SRC_EXTERNAL_BENCH",
+      "path": "src/bin/bench_external_render.rs",
+      "sha256": "217ecafb9935719e7ad9eee9d431a3cae20879374de0978e47029f637a0412a6",
+      "repository": "https://github.com/ViniciusSJV/renderer",
+      "git_commit": "42e6d4dcd2ce1b2fdd827e3d038b356e02c8f5e3",
+      "role": "rust_source",
+      "provenance": "Bytes conferidos contra git show da revisão cadastrada; não autentica execução histórica."
+    },
+    {
+      "source_id": "SRC_EXTERNAL_BASELINE",
+      "path": "ai/experimentos/20-render-cpu/external-scene-baseline.txt",
+      "sha256": "135f6a12a90b7eeea4e123fb7af29d94baafc5ac8c36203ecb95deb52f7a876f",
+      "repository": "https://github.com/ViniciusSJV/renderer",
+      "git_commit": "42e6d4dcd2ce1b2fdd827e3d038b356e02c8f5e3",
+      "role": "benchmark_output",
+      "provenance": "Bytes conferidos contra git show da revisão cadastrada; não autentica execução histórica."
+    },
+    {
+      "source_id": "SRC_EXTERNAL_STATS",
+      "path": "ai/experimentos/20-render-cpu/external-scene-statistics.txt",
+      "sha256": "8b14cb276b7ba248516e3f1dfe3c9f80d1300ffb9db996412839409b9326ed79",
+      "repository": "https://github.com/ViniciusSJV/renderer",
+      "git_commit": "42e6d4dcd2ce1b2fdd827e3d038b356e02c8f5e3",
+      "role": "derived_report",
+      "provenance": "Bytes conferidos contra git show da revisão cadastrada; não autentica execução histórica."
+    },
+    {
+      "source_id": "SRC_EXTERNAL_REGRESSION",
+      "path": "ai/experimentos/20-render-cpu/external-scene-regression.txt",
+      "sha256": "5e0abeab4c9b5460fca21ff016001e9c3fa421e8753ca5dcdf6b2b4ac3f92ed5",
+      "repository": "https://github.com/ViniciusSJV/renderer",
+      "git_commit": "42e6d4dcd2ce1b2fdd827e3d038b356e02c8f5e3",
+      "role": "test_result",
+      "provenance": "Bytes conferidos contra git show da revisão cadastrada; não autentica execução histórica."
+    },
+    {
+      "source_id": "SRC_CPU_CAMERA",
+      "path": "src/camera.rs",
+      "sha256": "02ce8cd09d85c8d65e17bda8e3e73198b3ff4b611cbfa72fecf760c5ecce3725",
+      "repository": "https://github.com/ViniciusSJV/renderer",
+      "git_commit": "42e6d4dcd2ce1b2fdd827e3d038b356e02c8f5e3",
+      "role": "rust_source",
+      "provenance": "Bytes conferidos contra git show da revisão cadastrada; não autentica execução histórica."
+    },
+    {
+      "source_id": "SRC_CPU_WORLD",
+      "path": "src/world.rs",
+      "sha256": "0f0e08bb448b670c6ec8e8addd9c85219bc081c0da002770442dac9a806b80f9",
+      "repository": "https://github.com/ViniciusSJV/renderer",
+      "git_commit": "42e6d4dcd2ce1b2fdd827e3d038b356e02c8f5e3",
+      "role": "rust_source",
+      "provenance": "Bytes conferidos contra git show da revisão cadastrada; não autentica execução histórica."
+    },
+    {
+      "source_id": "SRC_PROTOCOL",
+      "path": "ai/experimentos/20-render-cpu/escena-externa/README.md",
+      "sha256": "04ab19a96f809caa7d72b108b650cce34b3f1cfae57adf3939012cbabaa5c9aa",
+      "repository": "https://github.com/ViniciusSJV/renderer",
+      "git_commit": "42e6d4dcd2ce1b2fdd827e3d038b356e02c8f5e3",
+      "role": "protocol_report",
+      "provenance": "Bytes conferidos contra git show da revisão cadastrada; não autentica execução histórica."
+    }
+  ],
+  "fact_roles": {
+    "F_EXTERNAL_PROTOCOL": "code_description",
+    "F_EXTERNAL_RUN_SAMPLE_COUNT": "recorded_measurement",
+    "F_EXTERNAL_SAMPLE_TOTAL": "derived_statistic",
+    "F_EXTERNAL_MEDIAN": "derived_statistic",
+    "F_EXTERNAL_VISUAL_DIGEST": "reported_test_result",
+    "F_EXTERNAL_LIMIT": "declared_limit",
+    "F_TIMING": "code_description",
+    "F_VISUAL_SCOPE": "code_description",
+    "F_ENVIRONMENT": "declared_protocol"
+  },
+  "hypotheses": [],
+  "semantic_evaluations": [],
+  "limits": "IDs locais ao dossiê; edição manual imutável por convenção, sem catálogo persistente ou autenticação."
+}

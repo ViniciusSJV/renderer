@@ -1,5 +1,7 @@
 # Ray Tracer
 
+For the renderer + Librarian evidence workflow, see [TESTME.md](TESTME.md).
+
 A design of a Ray Tracer Render in Rust based on the book:
 The ray tracer challenge. By Jamis Buck.
 

@@ -1,0 +1,23 @@
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.02s
+     Running `Librarian/target/debug/examples/export /workspaces/renderer-local/ai/acervo/renderer-v1/dossier.json /workspaces/renderer-local/ai/acervo/renderer-v1/question.txt /workspaces/renderer-local/ai/experimentos/23-librarian-01/bundle 2 F_EXTERNAL_PROTOCOL F_EXTERNAL_SAMPLE_TOTAL F_EXTERNAL_MEDIAN F_EXTERNAL_VISUAL_DIGEST F_EXTERNAL_LIMIT F_TIMING F_VISUAL_SCOPE F_ENVIRONMENT`
+{
+  "status": "passed",
+  "sources": 7,
+  "selected_facts": [
+    "F_EXTERNAL_PROTOCOL",
+    "F_EXTERNAL_SAMPLE_TOTAL",
+    "F_EXTERNAL_MEDIAN",
+    "F_EXTERNAL_VISUAL_DIGEST",
+    "F_EXTERNAL_LIMIT",
+    "F_TIMING",
+    "F_VISUAL_SCOPE",
+    "F_ENVIRONMENT"
+  ],
+  "recalculated": {
+    "samples": 35,
+    "median_ns": 13232986,
+    "min_ns": 12330831,
+    "max_ns": 21777221
+  },
+  "llm_evaluation": "not_performed"
+}

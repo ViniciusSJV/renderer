@@ -1,5 +1,9 @@
 # Laboratório de IA, evidências e performance
 
+O [acervo inicial do renderer](acervo/renderer-v1/README.md) consolida cadastro,
+conferência, seleção e exportação determinística. O [experimento 23](experimentos/23-librarian-01/README.md)
+registra a auditoria da 0.1 e sua validação, sem nova consulta LLM.
+
 O renderer consome [Librarian](https://github.com/ViniciusSJV/librarian) pela
 revisão Git `4e84f004061b1df84ae5d8f22af9007aa2d99962`, fixada em `Cargo.toml` e
 `Cargo.lock`. Não é necessário clonar a biblioteca separadamente.
