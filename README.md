@@ -1,6 +1,17 @@
 # Ray Tracer
 
+The [complete PowerShell walkthrough](TESTME.md) covers source
+generation through Librarian, lexical questions, graph verification, explicit
+prompt preparation, Ollama server/model setup, API submission and response evaluation.
+The [first real manual attempt](ai/consultas/manual-001/EVALUATION-OLLAMA-01.md)
+has verified transport artifacts and a partially correct explanation requiring clarification.
+
 For the renderer + Librarian evidence workflow, see [TESTME.md](TESTME.md).
+
+Lexical questions and a source-backed structural graph are now available through
+`catalog_sources search`, `graph`, and `verify-graph`. See the
+[search walkthrough](ai/acervo/renderer-search-v1/README.md) and [WORKFLOW](WORKFLOW.md).
+The algorithm lives in Librarian; renderer supplies vocabulary and reference questions.
 
 A design of a Ray Tracer Render in Rust based on the book:
 The ray tracer challenge. By Jamis Buck.
@@ -30,7 +41,11 @@ The ray tracer challenge. By Jamis Buck.
 The evidence tools use [Librarian](https://github.com/ViniciusSJV/librarian),
 pinned to Git revision `a009af8276c4bb58c67905a10fea32f1cbbf8a38` in both
 `Cargo.toml` and `Cargo.lock`. Cargo downloads the dependency; a separate local
-checkout is optional.
+checkout is required for the new local `librarian-ingest` development dependency:
+keep the updated Librarian checkout next to this directory at `../librarian`.
+The published v0.1.0 does not contain this new crate yet. The existing core and
+Graph Engine dependencies remain pinned to Git. See the
+[automatic source catalog](ai/acervo/renderer-auto-v1/README.md).
 
 ```sh
 cargo fetch --locked

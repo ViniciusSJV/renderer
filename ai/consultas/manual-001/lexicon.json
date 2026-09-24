@@ -1,0 +1,21 @@
+{
+  "groups": [
+    ["camera", "cameras"],
+    ["raio", "raios", "ray", "rays"],
+    ["direcao", "direction"],
+    ["cena", "cenas", "scene"],
+    ["mundo", "world"],
+    ["intersecao", "intersecoes", "intersection", "intersect"],
+    ["luz", "luzes", "light", "lights"],
+    ["sombra", "sombras", "shadow", "shadowed"],
+    ["renderizacao", "renderizar", "renderiza", "render", "rendering"],
+    ["reflexao", "reflection", "reflected"],
+    ["refracao", "refraction", "refracted"],
+    ["cor", "cores", "color"],
+    ["esfera", "sphere"],
+    ["pixel", "pixels"],
+    ["origem", "origin"],
+    ["normal", "normais"]
+  ],
+  "stop_words": ["calcula", "calcular", "calculada", "calculado", "codigo", "funcao", "metodo", "faz", "esta"]
+}

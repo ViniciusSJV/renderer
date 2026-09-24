@@ -1,0 +1,27 @@
+{
+  "diagnostic": null,
+  "dossier_origin": null,
+  "endpoint": "http://localhost:11434/api/generate",
+  "evidence_rechecked": false,
+  "explicit_options": {},
+  "files": {
+    "query": "query.json",
+    "request": "request.json",
+    "response": "response.bin",
+    "text": null
+  },
+  "format_version": 1,
+  "http_status": null,
+  "max_response_bytes": 1048576,
+  "query_bytes": 2582,
+  "query_sha256": "53f1322f2dd3b4800eadec2903dcf8b1a42a51d6ec875a0e92cba6685341ed99",
+  "query_source_path": "ai/consultas/manual-001/query-ollama.json",
+  "request_bytes": 2800,
+  "request_id": "MANUAL_001_OLLAMA_01",
+  "request_sha256": "32b322af12825c7c38d44c5613d9203c652aa6e59e48ed2b556a500fd61290f2",
+  "requested_model": "renderer-analyst:latest",
+  "response_body_complete": false,
+  "selection": null,
+  "semantic_evaluation": "pending",
+  "timeout_ms": 300000
+}

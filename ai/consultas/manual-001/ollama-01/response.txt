@@ -1,0 +1,7 @@
+**FACT**: A câmera calcula a direção dos raios no método `ray_from_pixel` definido na estrutura `Camera` no arquivo `src/camera.rs`, entre as linhas 75 e 89 (E1). O método recebe as coordenadas do pixel `(x, y)` e retorna um objeto `Ray`.
+
+**INFERENCE**: O método `ray_from_pixel` calcula a direção do raio baseada na posição do pixel na tela e na transformação inversa da câmera. A direção do raio é determinada pela subtração do ponto de origem (que é o centro da câmera) pelo ponto no mundo 3D correspondente ao pixel, normalizado.
+
+**HYPOTHESIS**: A eficiência do cálculo da direção do raio pode ser afetada pela complexidade da transformação inversa da câmera. Para testar essa hipótese, seria necessário medir o tempo de execução do método `ray_from_pixel` com diferentes tipos de transformações (por exemplo, transformações simples vs. transformações complexas) e comparar os resultados.
+
+**LACUNA**: Não há evidências de testes ou benchmarks que avaliem a performance do método `ray_from_pixel` ou a eficiência da transformação inversa da câmera. Para validar a hipótese, seria necessário implementar testes que medissem o tempo de execução do método com diferentes transformações e comparar os resultados.

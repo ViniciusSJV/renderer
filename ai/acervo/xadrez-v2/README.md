@@ -30,7 +30,14 @@ código, por exemplo, não comprova implementação correta dessa regra.
 
 ## Reproduzir
 
-Use o comando do passo 4 do [TESTME](../../../TESTME.md), com destino novo.
+Esta é uma referência histórica de cadastro manual, fora da trilha atual do
+[TESTME](../../../TESTME.md). Para reproduzir esta exportação, na raiz do renderer,
+use um destino novo:
+
+```sh
+cargo run --locked --bin validate_evidence -- ai/acervo/xadrez-v2/dossier.json --fact F_INIT --fact F_HANDLE_INIT --fact F_POSITION --fact F_HANDLE_POSITION --fact F_PLAY --fact F_HANDLE_PLAY --fact F_MOVE --fact F_HANDLE_MOVE --fact F_PLAY_ACTION --fact F_MOVE_ACTION --fact F_FALLBACK --context 2 --question ai/acervo/xadrez-v2/question.txt --bundle ./xadrez-duas-fontes-bundle
+```
+
 A seleção contém 11 fatos em duas fontes. Os IDs ficam na ordem solicitada;
 os contextos permanecem separados por fonte, unindo apenas janelas vizinhas
 da mesma fonte. Nenhum banco ou LLM é necessário.

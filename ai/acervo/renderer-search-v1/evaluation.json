@@ -1,0 +1,62 @@
+{
+    "date":  "2026-09-23",
+    "edition":  "ai/acervo/renderer-auto-v1/edition",
+    "vocabulary":  "ai/acervo/renderer-lexicon.json",
+    "scope":  "Development reference set, not independent generalization evaluation",
+    "cases":  [
+                  {
+                      "question":  "Onde a câmera calcula a direção dos raios?",
+                      "expected":  "impl Camera::ray_from_pixel",
+                      "actual":  "impl Camera::ray_from_pixel",
+                      "path":  "src/camera.rs",
+                      "status":  "candidates",
+                      "passed":  true,
+                      "exit_code":  0
+                  },
+                  {
+                      "question":  "Onde o mundo calcula a cor de um raio?",
+                      "expected":  "impl World::color_at",
+                      "actual":  "impl World::color_at",
+                      "path":  "src/world.rs",
+                      "status":  "candidates",
+                      "passed":  true,
+                      "exit_code":  0
+                  },
+                  {
+                      "question":  "Onde a câmera renderiza o mundo?",
+                      "expected":  "impl Camera::render",
+                      "actual":  "impl Camera::render",
+                      "path":  "src/camera.rs",
+                      "status":  "candidates",
+                      "passed":  true,
+                      "exit_code":  0
+                  },
+                  {
+                      "question":  "Como calcular sombras?",
+                      "expected":  "impl World::is_shadowed",
+                      "actual":  "impl World::is_shadowed",
+                      "path":  "src/world.rs",
+                      "status":  "candidates",
+                      "passed":  true,
+                      "exit_code":  0
+                  },
+                  {
+                      "question":  "Como conectar ao banco PostgreSQL?",
+                      "expected":  null,
+                      "actual":  null,
+                      "path":  null,
+                      "status":  "no_lexical_evidence",
+                      "passed":  true,
+                      "exit_code":  2
+                  },
+                  {
+                      "question":  "Qual autenticação OAuth existe?",
+                      "expected":  null,
+                      "actual":  null,
+                      "path":  null,
+                      "status":  "no_lexical_evidence",
+                      "passed":  true,
+                      "exit_code":  2
+                  }
+              ]
+}

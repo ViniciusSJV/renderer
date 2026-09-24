@@ -1,0 +1,396 @@
+//! CLI histórica: não reconfere evidências.
+#[path = "ollama_common/client.rs"]
+mod client;
+mod ollama_common;
+use client::{Config, Result};
+use std::path::Path;
+fn attempt(query: &Path, dir: &Path, id: &str, config: &Config) -> Result<String> {
+    client::attempt_linked(query, dir, id, config, None)
+}
+fn run() -> Result<bool> {
+    let args: Vec<String> = std::env::args().collect();
+    if args.len() != 8 {
+        return Err("Uso: send_ollama CONSULTA ENDPOINT MODELO TIMEOUT_MS MAX_BYTES REQUEST_ID DIRETORIO_NOVO".into());
+    }
+    let config = Config {
+        endpoint: args[2].clone(),
+        model: args[3].clone(),
+        timeout_ms: args[4].parse()?,
+        max_bytes: args[5].parse()?,
+    };
+    let state = attempt(Path::new(&args[1]), Path::new(&args[7]), &args[6], &config)?;
+    println!(
+        "Estado: {state}; registro: {}/result.json. Avaliação semântica pendente.",
+        args[7]
+    );
+    Ok(state == "completed")
+}
+fn main() {
+    let code = match run() {
+        Ok(true) => 0,
+        Ok(false) => 2,
+        Err(e) => {
+            eprintln!(
+                "Falha de configuração/gravação: {e}. Artefatos sem result.json são parciais."
+            );
+            1
+        }
+    };
+    std::process::exit(code);
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use client::*;
+    use serde_json::Value;
+    use std::{
+        fs,
+        io::{Read, Write},
+        time::Duration,
+    };
+    use std::{
+        net::TcpListener,
+        sync::atomic::{AtomicUsize, Ordering},
+        thread,
+    };
+    static NEXT: AtomicUsize = AtomicUsize::new(0);
+    struct Workspace(std::path::PathBuf);
+    impl Workspace {
+        fn new() -> Self {
+            let p = std::env::temp_dir().join(format!(
+                "ollama-test-{}-{}-{}",
+                std::process::id(),
+                now_ms(),
+                NEXT.fetch_add(1, Ordering::Relaxed)
+            ));
+            fs::create_dir(&p).unwrap();
+            fs::write(
+                p.join("query.json"),
+                "{\n\"question\":\"Câmera?\",\"evidence\":{},\"instructions\":[\"Cite IDs\"]}\n",
+            )
+            .unwrap();
+            Self(p)
+        }
+    }
+    impl Drop for Workspace {
+        fn drop(&mut self) {
+            let _ = fs::remove_dir_all(&self.0);
+        }
+    }
+    fn config(endpoint: String) -> Config {
+        Config {
+            endpoint,
+            model: "modelo-configurado".into(),
+            timeout_ms: 2000,
+            max_bytes: 4096,
+        }
+    }
+    fn server(
+        status: u16,
+        body: &[u8],
+        delay_headers: bool,
+        delay_body: bool,
+        declared: Option<usize>,
+    ) -> (String, thread::JoinHandle<Vec<u8>>) {
+        let listener = TcpListener::bind("127.0.0.1:0").unwrap();
+        let endpoint = format!("http://{}/api/generate", listener.local_addr().unwrap());
+        let body = body.to_vec();
+        let handle = thread::spawn(move || {
+            let (mut socket, _) = listener.accept().unwrap();
+            socket
+                .set_read_timeout(Some(Duration::from_secs(3)))
+                .unwrap();
+            let mut request = Vec::new();
+            let mut byte = [0];
+            while !request.ends_with(b"\r\n\r\n") {
+                socket.read_exact(&mut byte).unwrap();
+                request.push(byte[0]);
+            }
+            let header = String::from_utf8(request.clone()).unwrap();
+            assert!(header.starts_with("POST /api/generate HTTP/1.1\r\n"));
+            let length: usize = header
+                .lines()
+                .find_map(|l| {
+                    l.to_ascii_lowercase()
+                        .strip_prefix("content-length: ")
+                        .map(|s| s.parse().unwrap())
+                })
+                .unwrap();
+            let mut sent = vec![0; length];
+            socket.read_exact(&mut sent).unwrap();
+            if delay_headers {
+                thread::sleep(Duration::from_millis(400));
+            }
+            let _ = write!(
+                socket,
+                "HTTP/1.1 {status} Test\r\nContent-Length: {}\r\nConnection: close\r\n\r\n",
+                declared.unwrap_or(body.len())
+            );
+            if delay_body {
+                let _ = socket.write_all(&body[..1]);
+                let _ = socket.flush();
+                thread::sleep(Duration::from_millis(400));
+                let _ = socket.write_all(&body[1..]);
+            } else {
+                let _ = socket.write_all(&body);
+            }
+            sent
+        });
+        (endpoint, handle)
+    }
+    fn exercise(status: u16, body: &[u8], expected: &str) {
+        let w = Workspace::new();
+        let (endpoint, handle) = server(status, body, false, false, None);
+        let dir = w.0.join("attempt");
+        assert_eq!(
+            attempt(&w.0.join("query.json"), &dir, "TEST", &config(endpoint)).unwrap(),
+            expected
+        );
+        assert_eq!(fs::read(dir.join("response.bin")).unwrap(), body);
+        assert_eq!(
+            fs::read(dir.join("request.json")).unwrap(),
+            handle.join().unwrap()
+        );
+        let result: Value =
+            serde_json::from_slice(&fs::read(dir.join("result.json")).unwrap()).unwrap();
+        assert_eq!(result["response_sha256"], hash(body));
+        assert_eq!(result["evidence_rechecked"], false);
+        assert!(result["http_elapsed_ms"].as_f64().unwrap() >= 0.0);
+    }
+    #[test]
+    #[ignore = "Grava experimento somente com OLLAMA_SIMULATION_DIR explícito e novo"]
+    fn record_lesson_simulation() {
+        let dir = std::path::PathBuf::from(
+            std::env::var("OLLAMA_SIMULATION_DIR").expect("Defina diretório novo"),
+        );
+        let w = Workspace::new();
+        let raw = r#"{"model":"simulated-model","response":"Resposta sintética; nenhuma inferência real.","done":true,"done_reason":"stop"}"#.as_bytes();
+        let (endpoint, handle) = server(200, raw, false, false, None);
+        assert_eq!(
+            attempt(
+                &w.0.join("query.json"),
+                &dir,
+                "SIMULATED_HTTP_1",
+                &config(endpoint)
+            )
+            .unwrap(),
+            "completed"
+        );
+        assert_eq!(
+            handle.join().unwrap(),
+            fs::read(dir.join("request.json")).unwrap()
+        );
+        println!("{}", fs::read_to_string(dir.join("result.json")).unwrap());
+    }
+    #[test]
+    fn success_preserves_exact_request_prompt_response_and_identity() {
+        let w = Workspace::new();
+        let raw = br#"{"model":"reported-model","response":"FACT: teste","done":true,"done_reason":"stop"}"#;
+        let (endpoint, handle) = server(200, raw, false, false, None);
+        let dir = w.0.join("attempt");
+        assert_eq!(
+            attempt(&w.0.join("query.json"), &dir, "SUCCESS", &config(endpoint)).unwrap(),
+            "completed"
+        );
+        let sent = handle.join().unwrap();
+        assert_eq!(sent, fs::read(dir.join("request.json")).unwrap());
+        let body: Value = serde_json::from_slice(&sent).unwrap();
+        assert_eq!(
+            body["prompt"],
+            fs::read_to_string(w.0.join("query.json")).unwrap()
+        );
+        assert_eq!(body["model"], "modelo-configurado");
+        assert_eq!(body["stream"], false);
+        assert_eq!(
+            fs::read_to_string(dir.join("response.txt")).unwrap(),
+            "FACT: teste"
+        );
+        let result: Value =
+            serde_json::from_slice(&fs::read(dir.join("result.json")).unwrap()).unwrap();
+        assert_eq!(result["request_id"], "SUCCESS");
+        assert_eq!(result["request_sha256"], hash(&sent));
+    }
+    #[test]
+    fn provider_errors() {
+        exercise(404, br#"{"error":"model missing"}"#, "provider_failed");
+        exercise(200, br#"{"error":"failure"}"#, "provider_failed");
+    }
+    #[test]
+    fn invalid_responses() {
+        for raw in [b"not json".as_slice(), b"{}", b"\xff"] {
+            exercise(200, raw, "invalid_response");
+        }
+    }
+    #[test]
+    fn incomplete_generation() {
+        for tail in [
+            r#"false,"done_reason":"stop""#,
+            r#"true,"done_reason":"length""#,
+            r#"true"#,
+            r#"true,"done_reason":"unknown""#,
+        ] {
+            exercise(
+                200,
+                format!(r#"{{"model":"m","response":"partial","done":{tail}}}"#).as_bytes(),
+                "incomplete_response",
+            );
+        }
+    }
+    #[test]
+    fn refuses_redirect_without_following() {
+        exercise(302, b"redirect", "provider_failed");
+    }
+    #[test]
+    fn bounded_response_and_exact_boundary() {
+        for limit in [5, 6] {
+            let w = Workspace::new();
+            let (endpoint, handle) = server(200, b"123456", false, false, None);
+            let mut c = config(endpoint);
+            c.max_bytes = limit;
+            let dir = w.0.join("attempt");
+            let state = attempt(&w.0.join("query.json"), &dir, "LIMIT", &c).unwrap();
+            assert_eq!(
+                state,
+                if limit == 5 {
+                    "incomplete_response"
+                } else {
+                    "invalid_response"
+                }
+            );
+            assert_eq!(
+                fs::read(dir.join("response.bin")).unwrap(),
+                &b"123456"[..limit]
+            );
+            handle.join().unwrap();
+        }
+    }
+    #[test]
+    fn timeout_before_headers_and_during_body_preserves_prefix() {
+        for during_body in [false, true] {
+            let w = Workspace::new();
+            let (endpoint, handle) = server(200, b"abcdef", !during_body, during_body, None);
+            let mut c = config(endpoint);
+            c.timeout_ms = 150;
+            let dir = w.0.join("attempt");
+            assert_eq!(
+                attempt(&w.0.join("query.json"), &dir, "TIMEOUT", &c).unwrap(),
+                "timed_out"
+            );
+            assert_eq!(
+                fs::read(dir.join("response.bin")).unwrap(),
+                if during_body { b"a".as_slice() } else { b"" }
+            );
+            handle.join().unwrap();
+        }
+    }
+    #[test]
+    fn broken_body_preserves_received_bytes() {
+        let w = Workspace::new();
+        let (endpoint, handle) = server(200, b"partial", false, false, Some(100));
+        let dir = w.0.join("attempt");
+        assert_eq!(
+            attempt(&w.0.join("query.json"), &dir, "BROKEN", &config(endpoint)).unwrap(),
+            "transport_failed"
+        );
+        assert_eq!(fs::read(dir.join("response.bin")).unwrap(), b"partial");
+        handle.join().unwrap();
+    }
+    #[test]
+    fn transport_classification_distinguishes_refusal_and_timeout() {
+        let refused = std::io::Error::from(std::io::ErrorKind::ConnectionRefused);
+        let timeout = std::io::Error::from(std::io::ErrorKind::TimedOut);
+        assert_eq!(transport_state(&refused), "transport_failed");
+        assert_eq!(transport_state(&timeout), "timed_out");
+        let wrapped = std::io::Error::new(std::io::ErrorKind::Other, timeout);
+        assert_eq!(transport_state(&wrapped), "timed_out");
+    }
+    #[test]
+    fn unavailable_endpoint_records_observed_failure() {
+        let w = Workspace::new();
+        let listener = TcpListener::bind("127.0.0.1:0").unwrap();
+        let c = config(format!(
+            "http://{}/api/generate",
+            listener.local_addr().unwrap()
+        ));
+        drop(listener);
+        // The OS can report refusal or exhaust our deadline first. Port reuse is
+        // also possible after drop; this is a network observation, not error injection.
+        let dir = w.0.join("attempt");
+        let state = attempt(&w.0.join("query.json"), &dir, "UNAVAILABLE", &c).unwrap();
+        assert!(
+            matches!(state.as_str(), "transport_failed" | "timed_out"),
+            "unexpected state: {state}"
+        );
+        let result: Value =
+            serde_json::from_slice(&fs::read(dir.join("result.json")).unwrap()).unwrap();
+        assert_eq!(result["state"], state);
+        assert!(result["diagnostic"].as_str().is_some_and(|s| !s.is_empty()));
+        assert!(result["http_status"].is_null());
+        assert_eq!(result["response_body_complete"], false);
+        assert_eq!(fs::read(dir.join("response.bin")).unwrap(), b"");
+    }
+    #[test]
+    fn rejects_input_and_existing_destination() {
+        let w = Workspace::new();
+        let dir = w.0.join("attempt");
+        fs::write(w.0.join("query.json"), b"{}").unwrap();
+        let c = config("http://127.0.0.1:1/api/generate".into());
+        assert_eq!(
+            attempt(&w.0.join("query.json"), &dir, "INVALID", &c).unwrap(),
+            "input_rejected"
+        );
+        let original = fs::read(dir.join("result.json")).unwrap();
+        assert!(attempt(&w.0.join("query.json"), &dir, "AGAIN", &c).is_err());
+        assert_eq!(original, fs::read(dir.join("result.json")).unwrap());
+        assert!(!dir.join("request.json").exists());
+    }
+    #[test]
+    fn rejects_unsafe_or_implicit_configuration() {
+        for url in [
+            "ftp://host/api/generate",
+            "https://host/api/generate",
+            "http://user:secret@host/api/generate",
+            "http://host/api/generate?secret=x",
+            "http://host/api/generate#x",
+            "http://host/",
+        ] {
+            assert!(config(url.into()).validate().is_err());
+        }
+        let mut c = config("http://localhost:11434/api/generate".into());
+        assert!(c.validate().is_ok());
+        c.timeout_ms = 0;
+        assert!(c.validate().is_err());
+        c.timeout_ms = 10;
+        c.max_bytes = 0;
+        assert!(c.validate().is_err());
+    }
+    #[test]
+    fn write_failure_leaves_no_final_result() {
+        let w = Workspace::new();
+        let dir = w.0.join("attempt");
+        let listener = TcpListener::bind("127.0.0.1:0").unwrap();
+        let c = config(format!(
+            "http://{}/api/generate",
+            listener.local_addr().unwrap()
+        ));
+        let target = dir.clone();
+        let handle = thread::spawn(move || {
+            let (mut socket, _) = listener.accept().unwrap();
+            socket
+                .set_read_timeout(Some(Duration::from_secs(3)))
+                .unwrap();
+            let mut buf = [0; 4096];
+            socket.read(&mut buf).unwrap();
+            // Force a real persistence failure after the request has been sent.
+            fs::create_dir(target.join("response.bin")).unwrap();
+            socket
+                .write_all(b"HTTP/1.1 200 OK\r\nContent-Length: 2\r\nConnection: close\r\n\r\n{}")
+                .unwrap();
+        });
+        assert!(attempt(&w.0.join("query.json"), &dir, "WRITE", &c).is_err());
+        handle.join().unwrap();
+        assert!(dir.join("prepared.json").exists());
+        assert!(!dir.join("result.json").exists());
+    }
+}

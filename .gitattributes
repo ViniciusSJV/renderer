@@ -1,0 +1,2 @@
+# Preserve hashed catalog artifacts byte-for-byte on Windows and Unix.
+ai/acervo/renderer-auto-v1/edition/** -text

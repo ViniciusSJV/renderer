@@ -1,0 +1,100 @@
+extern crate renderer;
+
+use std::f64::consts::PI;
+use std::fs::write;
+
+use renderer::camera::Camera;
+use renderer::color::Color;
+use renderer::cone::Cone;
+use renderer::cube::Cube;
+use renderer::cylinder::Cylinder;
+use renderer::lights::Light;
+use renderer::materials::Material;
+use renderer::matrix::Matrix;
+use renderer::object::{Intersectable, Object};
+use renderer::plane::Plane;
+use renderer::sphere::Sphere;
+use renderer::transformations::Transform;
+use renderer::triangle::Triangle;
+use renderer::tuple::Tuple;
+use renderer::world::World;
+
+fn main() {
+    let mut floor = Plane::default();
+    let mut floor_material = Material::phong();
+    floor_material.color = Color::new(0.18, 0.2, 0.24);
+    floor_material.specular = 0.1;
+    floor.set_material(floor_material);
+
+    let mut sphere = Sphere::default();
+    sphere.material.color = Color::new(0.9, 0.15, 0.1);
+    sphere.material.diffuse = 0.7;
+    sphere.set_transform(Matrix::translation(Tuple::point(-2.2, 1., 0.5)));
+
+    let mut cube = Cube::default();
+    cube.material.color = Color::new(0.1, 0.35, 0.9);
+    cube.set_transform(
+        Matrix::translation(Tuple::point(0., 1., 0.5))
+            * Matrix::scaling(Tuple::vector(1., 1., 1.))
+            * Matrix::rotation_y(PI / 6.),
+    );
+
+    let mut cylinder = Cylinder::default();
+    cylinder.minimum = 0.;
+    cylinder.maximum = 2.;
+    cylinder.closed = true;
+    cylinder.material.color = Color::new(0.1, 0.75, 0.35);
+    cylinder.set_transform(
+        Matrix::translation(Tuple::point(2.2, 1., 0.5))
+            * Matrix::scaling(Tuple::vector(0.8, 1., 0.8)),
+    );
+
+    let mut cone = Cone::default();
+    cone.minimum = 0.;
+    cone.maximum = 2.;
+    cone.closed = true;
+    cone.material.color = Color::new(0.9, 0.55, 0.05);
+    cone.set_transform(
+        Matrix::translation(Tuple::point(-1., 1., 3.))
+            * Matrix::scaling(Tuple::vector(0.8, 1., 0.8)),
+    );
+
+    let mut triangle = Triangle::new(
+        Tuple::point(0., 0., 0.),
+        Tuple::point(2., 0., 0.),
+        Tuple::point(1., 2., 0.),
+    );
+    triangle.material.color = Color::new(0.7, 0.1, 0.75);
+    triangle.set_transform(
+        Matrix::translation(Tuple::point(1., 0.01, 3.))
+            * Matrix::rotation_x(-PI / 2.)
+            * Matrix::scaling(Tuple::vector(0.8, 0.8, 0.8)),
+    );
+
+    let light = Light::point_light(
+        Tuple::point(-6., 8., -8.),
+        Color::new(1., 1., 1.),
+    );
+
+    let world = World::new(
+        vec![
+            Object::from(floor),
+            Object::from(sphere),
+            Object::from(cube),
+            Object::from(cylinder),
+            Object::from(cone),
+            Object::from(triangle),
+        ],
+        vec![light],
+    );
+
+    let camera = Camera::new(1000, 700, PI / 3.).with_transform(
+        Tuple::point(0., 4., -9.).view_transform(
+            Tuple::point(0., 1., 1.5),
+            Tuple::vector(0., 1., 0.),
+        ),
+    );
+
+    let canvas = camera.render(world);
+    write("./cap14.png", canvas.to_png()).expect("Error writing cap14.png");
+}

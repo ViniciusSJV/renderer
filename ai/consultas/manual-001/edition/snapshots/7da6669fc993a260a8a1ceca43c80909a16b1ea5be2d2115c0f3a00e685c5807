@@ -1,0 +1,18 @@
+use renderer::camera::render_benchmark;
+
+fn main() {
+    let summary = render_benchmark(64, 64, 3, 5);
+
+    println!("width={} height={} samples={} min_ns={} median_ns={} max_ns={}",
+        summary.width,
+        summary.height,
+        summary.samples.len(),
+        summary.min_ns,
+        summary.median_ns,
+        summary.max_ns,
+    );
+
+    for (index, sample_ns) in summary.samples.iter().enumerate() {
+        println!("sample_{}={}ns", index, sample_ns);
+    }
+}

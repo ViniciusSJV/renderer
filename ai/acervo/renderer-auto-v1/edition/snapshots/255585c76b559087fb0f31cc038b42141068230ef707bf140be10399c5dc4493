@@ -1,0 +1,22 @@
+use serde_json::{json, Value};
+
+pub fn request(query: &str, model: &str) -> Result<Value, String> {
+    if model.trim().is_empty() {
+        return Err("Modelo deve ser explícito".into());
+    }
+    let value: Value = serde_json::from_str(query).map_err(|e| e.to_string())?;
+    if !value["question"]
+        .as_str()
+        .is_some_and(|q| !q.trim().is_empty())
+        || !value["evidence"].is_object()
+        || !value["instructions"].as_array().is_some_and(|items| {
+            !items.is_empty()
+                && items
+                    .iter()
+                    .all(|x| x.as_str().is_some_and(|s| !s.trim().is_empty()))
+        })
+    {
+        return Err("Consulta deve conter question, evidence e instructions válidos".into());
+    }
+    Ok(json!({"model": model, "prompt": query, "stream": false}))
+}

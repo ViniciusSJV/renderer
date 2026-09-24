@@ -1,0 +1,901 @@
+{
+  "version": "lexical-search-v1",
+  "catalog_sha256": "22fd931b4867b09ebb56467446e150409ee1d32c4965a719696f545b5f6bbb14",
+  "lexicon_sha256": "85f919e5a8fc4b85bd908b062c23ca3d55f7bdc802e8782a85db367d70cd67ab",
+  "question": "Onde a câmera calcula a direção dos raios?",
+  "terms": [
+    "camera",
+    "direcao",
+    "raios"
+  ],
+  "status": "candidates",
+  "hits": [
+    {
+      "symbol_id": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:method:2027:2643",
+      "name": "impl Camera::ray_from_pixel",
+      "path": "src/camera.rs",
+      "source_sha256": "81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744",
+      "start_line": 75,
+      "end_line": 89,
+      "chunk_id": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:method:2027:2643",
+      "chunk_sha256": "80ef19bcf6b244667f8ec9c1faaedda97ef297fdf1dbe410c2610f598403a97b",
+      "score": 312,
+      "reasons": [
+        {
+          "term": "camera",
+          "expanded": [
+            "camera",
+            "cameras"
+          ],
+          "fields": [
+            "scope",
+            "path",
+            "code"
+          ],
+          "weight": 3
+        },
+        {
+          "term": "direcao",
+          "expanded": [
+            "direcao",
+            "direction"
+          ],
+          "fields": [
+            "code"
+          ],
+          "weight": 1
+        },
+        {
+          "term": "raios",
+          "expanded": [
+            "raio",
+            "raios",
+            "ray",
+            "rays"
+          ],
+          "fields": [
+            "name",
+            "scope",
+            "code"
+          ],
+          "weight": 8
+        }
+      ],
+      "excerpt": "pub fn ray_from_pixel(self, x: usize, y: usize) -> Ray {\r\n        let offset_x = (0.5 + x as f64) * self.pixel_size;\r\n        let offset_y = (0.5 + y as f64) * self.pixel_size;\r\n\r\n        let world_x = self.half_width - offset_x;\r\n        let world_y = self.half_height - offset_y;\r\n\r\n        let inverse_camera_transform = self.transform.inverse();\r\n\r\n        let pixel = inverse_camera_transform * Tuple::point(world_x, world_y, -1.0);\r\n        let origin = inverse_camera_transform * Tuple::point(0.0, 0.0, 0.0);\r\n        let direction = (pixel - origin).normalize();\r\n\r\n        Ray::new(origin, direction)\r\n    }",
+      "excerpt_truncated": false
+    },
+    {
+      "symbol_id": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:function:9562:10037",
+      "name": "tests_camera::constructing_a_ray_when_the_camera_is_transformed",
+      "path": "src/camera.rs",
+      "source_sha256": "81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744",
+      "start_line": 275,
+      "end_line": 285,
+      "chunk_id": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:function:9562:10037",
+      "chunk_sha256": "5f200ce0e95553c024f8e95b03d7f856892154766c13c9c6a0870e2d8f3da3f9",
+      "score": 297,
+      "reasons": [
+        {
+          "term": "camera",
+          "expanded": [
+            "camera",
+            "cameras"
+          ],
+          "fields": [
+            "name",
+            "scope",
+            "path",
+            "code"
+          ],
+          "weight": 8
+        },
+        {
+          "term": "direcao",
+          "expanded": [
+            "direcao",
+            "direction"
+          ],
+          "fields": [
+            "code"
+          ],
+          "weight": 1
+        },
+        {
+          "term": "raios",
+          "expanded": [
+            "raio",
+            "raios",
+            "ray",
+            "rays"
+          ],
+          "fields": [
+            "name",
+            "scope",
+            "code"
+          ],
+          "weight": 8
+        }
+      ],
+      "excerpt": "#[test]\r\n    fn constructing_a_ray_when_the_camera_is_transformed() {\r\n        let c = Camera::new(201, 101, PI/2.).with_transform(\r\n            Matrix::rotation_y(PI/4.) * Matrix::translation(Tuple::vector(0., -2., 5.))\r\n        );\r\n\r\n        let ray = c.ray_from_pixel(100, 50);\r\n\r\n        assert_equivalent!(ray.origin, Tuple::point(0., 2., -5.));\r\n        assert_equivalent!(ray.direction, Tuple::vector((2.0 as f64).sqrt() / 2.0, 0., -(2.0 as f64).sqrt() / 2.0));\r\n    }",
+      "excerpt_truncated": false
+    },
+    {
+      "symbol_id": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:function:8908:9222",
+      "name": "tests_camera::constructing_a_ray_through_the_center_of_the_canvas",
+      "path": "src/camera.rs",
+      "source_sha256": "81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744",
+      "start_line": 255,
+      "end_line": 263,
+      "chunk_id": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:function:8908:9222",
+      "chunk_sha256": "3b3f24a39e7fc5e5493ce39cf0af1fd20d3d8507a727621a85c625362ac00526",
+      "score": 292,
+      "reasons": [
+        {
+          "term": "camera",
+          "expanded": [
+            "camera",
+            "cameras"
+          ],
+          "fields": [
+            "scope",
+            "path",
+            "code"
+          ],
+          "weight": 3
+        },
+        {
+          "term": "direcao",
+          "expanded": [
+            "direcao",
+            "direction"
+          ],
+          "fields": [
+            "code"
+          ],
+          "weight": 1
+        },
+        {
+          "term": "raios",
+          "expanded": [
+            "raio",
+            "raios",
+            "ray",
+            "rays"
+          ],
+          "fields": [
+            "name",
+            "scope",
+            "code"
+          ],
+          "weight": 8
+        }
+      ],
+      "excerpt": "#[test]\r\n    fn constructing_a_ray_through_the_center_of_the_canvas() {\r\n        let c = Camera::new(201, 101, PI/2.);\r\n\r\n        let ray = c.ray_from_pixel(100, 50);\r\n\r\n        assert_equivalent!(ray.origin, Tuple::point(0., 0., 0.));\r\n        assert_equivalent!(ray.direction, Tuple::vector(0., 0., -1.));\r\n    }",
+      "excerpt_truncated": false
+    },
+    {
+      "symbol_id": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:function:9230:9554",
+      "name": "tests_camera::constructing_a_ray_through_a_corner_of_the_canvas",
+      "path": "src/camera.rs",
+      "source_sha256": "81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744",
+      "start_line": 265,
+      "end_line": 273,
+      "chunk_id": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:function:9230:9554",
+      "chunk_sha256": "c32f85a31a70b9ba9346db858d2a6abfdb92d87ef3a58a8b865649e86e69f80a",
+      "score": 292,
+      "reasons": [
+        {
+          "term": "camera",
+          "expanded": [
+            "camera",
+            "cameras"
+          ],
+          "fields": [
+            "scope",
+            "path",
+            "code"
+          ],
+          "weight": 3
+        },
+        {
+          "term": "direcao",
+          "expanded": [
+            "direcao",
+            "direction"
+          ],
+          "fields": [
+            "code"
+          ],
+          "weight": 1
+        },
+        {
+          "term": "raios",
+          "expanded": [
+            "raio",
+            "raios",
+            "ray",
+            "rays"
+          ],
+          "fields": [
+            "name",
+            "scope",
+            "code"
+          ],
+          "weight": 8
+        }
+      ],
+      "excerpt": "#[test]\r\n    fn constructing_a_ray_through_a_corner_of_the_canvas() {\r\n        let c = Camera::new(201, 101, PI/2.);\r\n\r\n        let ray = c.ray_from_pixel(0, 0);\r\n\r\n        assert_equivalent!(ray.origin, Tuple::point(0., 0., 0.));\r\n        assert_equivalent!(ray.direction, Tuple::vector(0.66519, 0.33259, -0.66851));\r\n    }",
+      "excerpt_truncated": false
+    },
+    {
+      "symbol_id": "src:a3a9b4c318707d2160a0d62c757a060d873e6da159d7ba1653f3972bb4e1a88d:00e76ecba70325dafb96cb37313fdbc1c1c3213e75b55284ce70796e43d35005:struct:56:167",
+      "name": "Ray",
+      "path": "src/ray.rs",
+      "source_sha256": "00e76ecba70325dafb96cb37313fdbc1c1c3213e75b55284ce70796e43d35005",
+      "start_line": 4,
+      "end_line": 8,
+      "chunk_id": "src:a3a9b4c318707d2160a0d62c757a060d873e6da159d7ba1653f3972bb4e1a88d:00e76ecba70325dafb96cb37313fdbc1c1c3213e75b55284ce70796e43d35005:struct:56:167",
+      "chunk_sha256": "9e1812d6f621395f4196f0987a8155408c77834f4726f4e3dc2c742545d3d248",
+      "score": 209,
+      "reasons": [
+        {
+          "term": "direcao",
+          "expanded": [
+            "direcao",
+            "direction"
+          ],
+          "fields": [
+            "code"
+          ],
+          "weight": 1
+        },
+        {
+          "term": "raios",
+          "expanded": [
+            "raio",
+            "raios",
+            "ray",
+            "rays"
+          ],
+          "fields": [
+            "name",
+            "scope",
+            "path",
+            "code"
+          ],
+          "weight": 8
+        }
+      ],
+      "excerpt": "#[derive(PartialEq, Clone, Copy, Debug)]\r\npub struct Ray {\r\n    pub origin: Tuple,\r\n    pub direction: Tuple\r\n}",
+      "excerpt_truncated": false
+    }
+  ],
+  "graph": {
+    "nodes": [
+      {
+        "id": "src:a3a9b4c318707d2160a0d62c757a060d873e6da159d7ba1653f3972bb4e1a88d:00e76ecba70325dafb96cb37313fdbc1c1c3213e75b55284ce70796e43d35005:struct:56:167",
+        "kind": "struct",
+        "label": "Ray"
+      },
+      {
+        "id": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744",
+        "kind": "source",
+        "label": "src/camera.rs"
+      },
+      {
+        "id": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:impl:863:4414",
+        "kind": "impl",
+        "label": "impl Camera"
+      },
+      {
+        "id": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:method:1756:1877",
+        "kind": "method",
+        "label": "impl Camera::with_transform"
+      },
+      {
+        "id": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:method:1885:2019",
+        "kind": "method",
+        "label": "impl Camera::with_maximum_recursive_depth"
+      },
+      {
+        "id": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:method:2027:2643",
+        "kind": "method",
+        "label": "impl Camera::ray_from_pixel"
+      },
+      {
+        "id": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:method:2651:3292",
+        "kind": "method",
+        "label": "impl Camera::render"
+      },
+      {
+        "id": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:method:3300:4411",
+        "kind": "method",
+        "label": "impl Camera::benchmark_render"
+      },
+      {
+        "id": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:method:882:1748",
+        "kind": "method",
+        "label": "impl Camera::new"
+      },
+      {
+        "id": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:occurrence:call_observed:2427:2439",
+        "kind": "call_observed",
+        "label": "Tuple::point"
+      },
+      {
+        "id": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:occurrence:call_observed:2514:2526",
+        "kind": "call_observed",
+        "label": "Tuple::point"
+      },
+      {
+        "id": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:occurrence:call_observed:2609:2617",
+        "kind": "call_observed",
+        "label": "Ray::new"
+      },
+      {
+        "id": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:occurrence:declared_return:2078:2081",
+        "kind": "declared_return",
+        "label": "Ray"
+      },
+      {
+        "id": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:occurrence:local_binding:2097:2105",
+        "kind": "local_binding",
+        "label": "offset_x"
+      },
+      {
+        "id": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:occurrence:local_binding:2157:2165",
+        "kind": "local_binding",
+        "label": "offset_y"
+      },
+      {
+        "id": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:occurrence:local_binding:2219:2226",
+        "kind": "local_binding",
+        "label": "world_x"
+      },
+      {
+        "id": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:occurrence:local_binding:2270:2277",
+        "kind": "local_binding",
+        "label": "world_y"
+      },
+      {
+        "id": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:occurrence:local_binding:2324:2348",
+        "kind": "local_binding",
+        "label": "inverse_camera_transform"
+      },
+      {
+        "id": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:occurrence:local_binding:2392:2397",
+        "kind": "local_binding",
+        "label": "pixel"
+      },
+      {
+        "id": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:occurrence:local_binding:2478:2484",
+        "kind": "local_binding",
+        "label": "origin"
+      },
+      {
+        "id": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:occurrence:local_binding:2556:2565",
+        "kind": "local_binding",
+        "label": "direction"
+      },
+      {
+        "id": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:occurrence:method_call_observed:2351:2375",
+        "kind": "method_call_observed",
+        "label": "self.transform.inverse()"
+      },
+      {
+        "id": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:occurrence:method_call_observed:2568:2596",
+        "kind": "method_call_observed",
+        "label": "(pixel - origin).normalize()"
+      },
+      {
+        "id": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:occurrence:type_reference:2058:2063",
+        "kind": "type_reference",
+        "label": "usize"
+      },
+      {
+        "id": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:occurrence:type_reference:2068:2073",
+        "kind": "type_reference",
+        "label": "usize"
+      },
+      {
+        "id": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:occurrence:type_reference:2078:2081",
+        "kind": "type_reference",
+        "label": "Ray"
+      },
+      {
+        "id": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:occurrence:type_reference:2120:2123",
+        "kind": "type_reference",
+        "label": "f64"
+      },
+      {
+        "id": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:occurrence:type_reference:2180:2183",
+        "kind": "type_reference",
+        "label": "f64"
+      },
+      {
+        "id": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:occurrence:type_reference:868:874",
+        "kind": "type_reference",
+        "label": "Camera"
+      }
+    ],
+    "edges": [
+      {
+        "from": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744",
+        "to": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:impl:863:4414",
+        "kind": "declares",
+        "resolution": "structural",
+        "evidence": {
+          "source_id": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744",
+          "path": "src/camera.rs",
+          "source_sha256": "81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744",
+          "start_byte": 863,
+          "end_byte": 4414,
+          "start_line": 36,
+          "end_line": 137,
+          "excerpt_sha256": "417f9156e97553e4bbd0f5967f90d119526f6031e2fa8f2739835e2557daf9d9"
+        }
+      },
+      {
+        "from": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744",
+        "to": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:method:2027:2643",
+        "kind": "declares",
+        "resolution": "structural",
+        "evidence": {
+          "source_id": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744",
+          "path": "src/camera.rs",
+          "source_sha256": "81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744",
+          "start_byte": 2027,
+          "end_byte": 2643,
+          "start_line": 75,
+          "end_line": 89,
+          "excerpt_sha256": "80ef19bcf6b244667f8ec9c1faaedda97ef297fdf1dbe410c2610f598403a97b"
+        }
+      },
+      {
+        "from": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:impl:863:4414",
+        "to": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:method:1756:1877",
+        "kind": "contains",
+        "resolution": "structural",
+        "evidence": {
+          "source_id": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744",
+          "path": "src/camera.rs",
+          "source_sha256": "81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744",
+          "start_byte": 1756,
+          "end_byte": 1877,
+          "start_line": 65,
+          "end_line": 68,
+          "excerpt_sha256": "02c42fb9f400e56c9b05f0a182aa47bfa30f91ef16b5b54198b9645ad682c9fc"
+        }
+      },
+      {
+        "from": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:impl:863:4414",
+        "to": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:method:1885:2019",
+        "kind": "contains",
+        "resolution": "structural",
+        "evidence": {
+          "source_id": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744",
+          "path": "src/camera.rs",
+          "source_sha256": "81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744",
+          "start_byte": 1885,
+          "end_byte": 2019,
+          "start_line": 70,
+          "end_line": 73,
+          "excerpt_sha256": "75552c8dc6acc89d9554c994336b0f30ed86ba437375e3784124ede9e608db50"
+        }
+      },
+      {
+        "from": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:impl:863:4414",
+        "to": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:method:2027:2643",
+        "kind": "contains",
+        "resolution": "structural",
+        "evidence": {
+          "source_id": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744",
+          "path": "src/camera.rs",
+          "source_sha256": "81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744",
+          "start_byte": 2027,
+          "end_byte": 2643,
+          "start_line": 75,
+          "end_line": 89,
+          "excerpt_sha256": "80ef19bcf6b244667f8ec9c1faaedda97ef297fdf1dbe410c2610f598403a97b"
+        }
+      },
+      {
+        "from": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:impl:863:4414",
+        "to": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:method:2651:3292",
+        "kind": "contains",
+        "resolution": "structural",
+        "evidence": {
+          "source_id": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744",
+          "path": "src/camera.rs",
+          "source_sha256": "81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744",
+          "start_byte": 2651,
+          "end_byte": 3292,
+          "start_line": 91,
+          "end_line": 104,
+          "excerpt_sha256": "df0c55b07787a410be3a1b9805ae451ba624b55042458e475a66865525724936"
+        }
+      },
+      {
+        "from": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:impl:863:4414",
+        "to": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:method:3300:4411",
+        "kind": "contains",
+        "resolution": "structural",
+        "evidence": {
+          "source_id": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744",
+          "path": "src/camera.rs",
+          "source_sha256": "81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744",
+          "start_byte": 3300,
+          "end_byte": 4411,
+          "start_line": 106,
+          "end_line": 136,
+          "excerpt_sha256": "d2e629bd7b0d2e5620d8e71efc1c33ef68dddcf933f155b9ded63bce24f1f6fc"
+        }
+      },
+      {
+        "from": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:impl:863:4414",
+        "to": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:method:882:1748",
+        "kind": "contains",
+        "resolution": "structural",
+        "evidence": {
+          "source_id": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744",
+          "path": "src/camera.rs",
+          "source_sha256": "81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744",
+          "start_byte": 882,
+          "end_byte": 1748,
+          "start_line": 37,
+          "end_line": 63,
+          "excerpt_sha256": "841064b635762a4bab263e3b2ff71abe7465ffa05093749e3d4054666dac62e4"
+        }
+      },
+      {
+        "from": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:impl:863:4414",
+        "to": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:occurrence:type_reference:868:874",
+        "kind": "type_reference",
+        "resolution": "syntax_only",
+        "evidence": {
+          "source_id": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744",
+          "path": "src/camera.rs",
+          "source_sha256": "81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744",
+          "start_byte": 868,
+          "end_byte": 874,
+          "start_line": 36,
+          "end_line": 36,
+          "excerpt_sha256": "03494b0d1f803522a3497d751eaaf6f987883cd4fe0b0e66baf67a662ae231b2"
+        }
+      },
+      {
+        "from": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:method:2027:2643",
+        "to": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:occurrence:call_observed:2427:2439",
+        "kind": "call_observed",
+        "resolution": "syntax_only",
+        "evidence": {
+          "source_id": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744",
+          "path": "src/camera.rs",
+          "source_sha256": "81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744",
+          "start_byte": 2427,
+          "end_byte": 2439,
+          "start_line": 84,
+          "end_line": 84,
+          "excerpt_sha256": "77d80d8c21da80c09d1ce867aa3f621abd8308f6bb13e13102ddecc1a1e6dbb9"
+        }
+      },
+      {
+        "from": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:method:2027:2643",
+        "to": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:occurrence:call_observed:2514:2526",
+        "kind": "call_observed",
+        "resolution": "syntax_only",
+        "evidence": {
+          "source_id": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744",
+          "path": "src/camera.rs",
+          "source_sha256": "81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744",
+          "start_byte": 2514,
+          "end_byte": 2526,
+          "start_line": 85,
+          "end_line": 85,
+          "excerpt_sha256": "77d80d8c21da80c09d1ce867aa3f621abd8308f6bb13e13102ddecc1a1e6dbb9"
+        }
+      },
+      {
+        "from": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:method:2027:2643",
+        "to": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:occurrence:call_observed:2609:2617",
+        "kind": "call_observed",
+        "resolution": "syntax_only",
+        "evidence": {
+          "source_id": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744",
+          "path": "src/camera.rs",
+          "source_sha256": "81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744",
+          "start_byte": 2609,
+          "end_byte": 2617,
+          "start_line": 88,
+          "end_line": 88,
+          "excerpt_sha256": "a8b4786a3dba5e4d56c815e93cd9e34505bfb53830111721a5b09697c0d3394a"
+        }
+      },
+      {
+        "from": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:method:2027:2643",
+        "to": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:occurrence:declared_return:2078:2081",
+        "kind": "declared_return",
+        "resolution": "syntax_only",
+        "evidence": {
+          "source_id": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744",
+          "path": "src/camera.rs",
+          "source_sha256": "81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744",
+          "start_byte": 2078,
+          "end_byte": 2081,
+          "start_line": 75,
+          "end_line": 75,
+          "excerpt_sha256": "cc172a7c8269911b3ba1223fcdab399931b67ba12cd917fd0e5b3fb9c3707ad4"
+        }
+      },
+      {
+        "from": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:method:2027:2643",
+        "to": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:occurrence:local_binding:2097:2105",
+        "kind": "local_binding",
+        "resolution": "syntax_only",
+        "evidence": {
+          "source_id": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744",
+          "path": "src/camera.rs",
+          "source_sha256": "81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744",
+          "start_byte": 2097,
+          "end_byte": 2105,
+          "start_line": 76,
+          "end_line": 76,
+          "excerpt_sha256": "66070c51913ba7201b17754b84dd8323fda6eb6ce650b1e591e97f12e1082440"
+        }
+      },
+      {
+        "from": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:method:2027:2643",
+        "to": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:occurrence:local_binding:2157:2165",
+        "kind": "local_binding",
+        "resolution": "syntax_only",
+        "evidence": {
+          "source_id": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744",
+          "path": "src/camera.rs",
+          "source_sha256": "81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744",
+          "start_byte": 2157,
+          "end_byte": 2165,
+          "start_line": 77,
+          "end_line": 77,
+          "excerpt_sha256": "5990120a80c49898b3438158c9e16e874e48634dc453748d2d6fd2684920358f"
+        }
+      },
+      {
+        "from": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:method:2027:2643",
+        "to": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:occurrence:local_binding:2219:2226",
+        "kind": "local_binding",
+        "resolution": "syntax_only",
+        "evidence": {
+          "source_id": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744",
+          "path": "src/camera.rs",
+          "source_sha256": "81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744",
+          "start_byte": 2219,
+          "end_byte": 2226,
+          "start_line": 79,
+          "end_line": 79,
+          "excerpt_sha256": "c465b138c312e53a597f11506dfbae1e442948ae12ee457d5e6d6eb8dff2549f"
+        }
+      },
+      {
+        "from": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:method:2027:2643",
+        "to": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:occurrence:local_binding:2270:2277",
+        "kind": "local_binding",
+        "resolution": "syntax_only",
+        "evidence": {
+          "source_id": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744",
+          "path": "src/camera.rs",
+          "source_sha256": "81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744",
+          "start_byte": 2270,
+          "end_byte": 2277,
+          "start_line": 80,
+          "end_line": 80,
+          "excerpt_sha256": "bae504e31675041947d4c9dca8deeb884f5d328163dc7a5e17e50e4bc9623f5e"
+        }
+      },
+      {
+        "from": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:method:2027:2643",
+        "to": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:occurrence:local_binding:2324:2348",
+        "kind": "local_binding",
+        "resolution": "syntax_only",
+        "evidence": {
+          "source_id": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744",
+          "path": "src/camera.rs",
+          "source_sha256": "81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744",
+          "start_byte": 2324,
+          "end_byte": 2348,
+          "start_line": 82,
+          "end_line": 82,
+          "excerpt_sha256": "f12072180445d3df8cbb537699f9f337727c1d0bfceb0502ee1aa9f205de5b64"
+        }
+      },
+      {
+        "from": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:method:2027:2643",
+        "to": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:occurrence:local_binding:2392:2397",
+        "kind": "local_binding",
+        "resolution": "syntax_only",
+        "evidence": {
+          "source_id": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744",
+          "path": "src/camera.rs",
+          "source_sha256": "81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744",
+          "start_byte": 2392,
+          "end_byte": 2397,
+          "start_line": 84,
+          "end_line": 84,
+          "excerpt_sha256": "3f8d7379e2f0f7d0c845a06f7b67ef80cacce0c686254aced769c1698f3fe59a"
+        }
+      },
+      {
+        "from": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:method:2027:2643",
+        "to": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:occurrence:local_binding:2478:2484",
+        "kind": "local_binding",
+        "resolution": "syntax_only",
+        "evidence": {
+          "source_id": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744",
+          "path": "src/camera.rs",
+          "source_sha256": "81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744",
+          "start_byte": 2478,
+          "end_byte": 2484,
+          "start_line": 85,
+          "end_line": 85,
+          "excerpt_sha256": "181fdd46fc4a7246b9f4f1eba3129ba5d724011af5f10223b3589955d1df108a"
+        }
+      },
+      {
+        "from": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:method:2027:2643",
+        "to": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:occurrence:local_binding:2556:2565",
+        "kind": "local_binding",
+        "resolution": "syntax_only",
+        "evidence": {
+          "source_id": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744",
+          "path": "src/camera.rs",
+          "source_sha256": "81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744",
+          "start_byte": 2556,
+          "end_byte": 2565,
+          "start_line": 86,
+          "end_line": 86,
+          "excerpt_sha256": "93c4abe27cf1696102534bb60b3795f41f60f52fa806cd5d0feadfc8bd2b8170"
+        }
+      },
+      {
+        "from": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:method:2027:2643",
+        "to": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:occurrence:method_call_observed:2351:2375",
+        "kind": "method_call_observed",
+        "resolution": "syntax_only",
+        "evidence": {
+          "source_id": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744",
+          "path": "src/camera.rs",
+          "source_sha256": "81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744",
+          "start_byte": 2351,
+          "end_byte": 2375,
+          "start_line": 82,
+          "end_line": 82,
+          "excerpt_sha256": "c07cfcf843af318939ff8cb3a2fd19201707926d9e9b3715754a1303a4fc1506"
+        }
+      },
+      {
+        "from": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:method:2027:2643",
+        "to": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:occurrence:method_call_observed:2568:2596",
+        "kind": "method_call_observed",
+        "resolution": "syntax_only",
+        "evidence": {
+          "source_id": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744",
+          "path": "src/camera.rs",
+          "source_sha256": "81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744",
+          "start_byte": 2568,
+          "end_byte": 2596,
+          "start_line": 86,
+          "end_line": 86,
+          "excerpt_sha256": "492294c6a26841242a89d3400c11c22f7d73948274342e0f1a1f30147d6fe81d"
+        }
+      },
+      {
+        "from": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:method:2027:2643",
+        "to": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:occurrence:type_reference:2058:2063",
+        "kind": "type_reference",
+        "resolution": "syntax_only",
+        "evidence": {
+          "source_id": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744",
+          "path": "src/camera.rs",
+          "source_sha256": "81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744",
+          "start_byte": 2058,
+          "end_byte": 2063,
+          "start_line": 75,
+          "end_line": 75,
+          "excerpt_sha256": "f4176652dfce34ed72ecc9a5aa164dee1d7d1b6cb65c98dc300ea9c0f543e75e"
+        }
+      },
+      {
+        "from": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:method:2027:2643",
+        "to": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:occurrence:type_reference:2068:2073",
+        "kind": "type_reference",
+        "resolution": "syntax_only",
+        "evidence": {
+          "source_id": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744",
+          "path": "src/camera.rs",
+          "source_sha256": "81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744",
+          "start_byte": 2068,
+          "end_byte": 2073,
+          "start_line": 75,
+          "end_line": 75,
+          "excerpt_sha256": "f4176652dfce34ed72ecc9a5aa164dee1d7d1b6cb65c98dc300ea9c0f543e75e"
+        }
+      },
+      {
+        "from": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:method:2027:2643",
+        "to": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:occurrence:type_reference:2078:2081",
+        "kind": "type_reference",
+        "resolution": "syntax_only",
+        "evidence": {
+          "source_id": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744",
+          "path": "src/camera.rs",
+          "source_sha256": "81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744",
+          "start_byte": 2078,
+          "end_byte": 2081,
+          "start_line": 75,
+          "end_line": 75,
+          "excerpt_sha256": "cc172a7c8269911b3ba1223fcdab399931b67ba12cd917fd0e5b3fb9c3707ad4"
+        }
+      },
+      {
+        "from": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:method:2027:2643",
+        "to": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:occurrence:type_reference:2120:2123",
+        "kind": "type_reference",
+        "resolution": "syntax_only",
+        "evidence": {
+          "source_id": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744",
+          "path": "src/camera.rs",
+          "source_sha256": "81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744",
+          "start_byte": 2120,
+          "end_byte": 2123,
+          "start_line": 76,
+          "end_line": 76,
+          "excerpt_sha256": "6a3e2f9684f5186de9658cac3ee8a9af4dac01e72341f0223460fbc1532c8697"
+        }
+      },
+      {
+        "from": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:method:2027:2643",
+        "to": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:occurrence:type_reference:2180:2183",
+        "kind": "type_reference",
+        "resolution": "syntax_only",
+        "evidence": {
+          "source_id": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744",
+          "path": "src/camera.rs",
+          "source_sha256": "81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744",
+          "start_byte": 2180,
+          "end_byte": 2183,
+          "start_line": 77,
+          "end_line": 77,
+          "excerpt_sha256": "6a3e2f9684f5186de9658cac3ee8a9af4dac01e72341f0223460fbc1532c8697"
+        }
+      },
+      {
+        "from": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744:occurrence:type_reference:2078:2081",
+        "to": "src:a3a9b4c318707d2160a0d62c757a060d873e6da159d7ba1653f3972bb4e1a88d:00e76ecba70325dafb96cb37313fdbc1c1c3213e75b55284ce70796e43d35005:struct:56:167",
+        "kind": "name_candidate",
+        "resolution": "name_candidate",
+        "evidence": {
+          "source_id": "src:e73f90ab0f0491e6368341bc6018aad7721ea34aff137e157619a6b75f5b4529:81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744",
+          "path": "src/camera.rs",
+          "source_sha256": "81edd442069c820fe580346fe6de1f9e05b151a5270ef6b4f295351fd8c98744",
+          "start_byte": 2078,
+          "end_byte": 2081,
+          "start_line": 75,
+          "end_line": 75,
+          "excerpt_sha256": "cc172a7c8269911b3ba1223fcdab399931b67ba12cd917fd0e5b3fb9c3707ad4"
+        }
+      }
+    ],
+    "depth": 2,
+    "max_nodes": 48,
+    "max_edges": 96,
+    "truncated": false,
+    "label_bytes_limit": 256,
+    "labels_truncated": 0
+  },
+  "diagnostics": 0,
+  "limits": [
+    "Lexical candidates, not a semantic answer. Minimum coverage: 60% of query term groups; scores are not probabilities.",
+    "Name candidates are not resolved types/calls. No macros, cfg evaluation, compiler or runtime proof.",
+    "Graph expands only the first hit. Source nodes are leaves. Depth bounded to 0..3, 48 nodes, 96 edges.",
+    "Excerpts limited to 4000 UTF-8 bytes each and 16000 total. Truncation is explicit; hashes/lines refer to full chunks."
+  ]
+}

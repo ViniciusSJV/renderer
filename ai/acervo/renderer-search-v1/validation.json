@@ -1,0 +1,17 @@
+{
+  "date": "2026-09-23",
+  "platform": "Windows",
+  "status": "passed",
+  "edition": "../renderer-auto-v1/edition",
+  "edition_integrity": "verified; original snapshots unchanged",
+  "graph": {"version":"rust-syntax-graph-v1","nodes":8619,"edges":9800,"rederived_and_verified":true,"local_export":"target/renderer-syntax-graph-v1.json"},
+  "camera_query": {"first_hit":"impl Camera::ray_from_pixel","depth":2,"nodes":29,"edges":29,"truncated":false,"labels_truncated":0},
+  "development_reference_cases": {"positive_top1_passed":4,"negative_passed":2,"failed":0,"independent_evaluation":false},
+  "tests": {"librarian_workspace_passed":34,"renderer_library_passed":209,"renderer_catalog_sources_passed":3,"renderer_validate_evidence_passed":68,"failed":0},
+  "independent_consumer_check": {"binary":"librarian_ingest","project":"librarian","sources":20,"symbols":240,"diagnostics":0,"question":"prepare query","first_hit":"prepare_query"},
+  "limits": [
+    "Local validation report, not authenticated execution evidence.",
+    "Syntax and lexical name candidates are not compiler-resolved relationships.",
+    "No LLM call, graph database, or automatic conversion into PreparedQuery."
+  ]
+}

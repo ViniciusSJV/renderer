@@ -1,0 +1,46 @@
+{
+  "evaluation_date": "2026-09-24",
+  "request_id": "MANUAL_001_OLLAMA_01",
+  "evaluation_kind": "retrospective_manual_review",
+  "preregistered_rubric": false,
+  "assessment": "partially_correct_requires_clarification",
+  "review": "EVALUATION-OLLAMA-01.md",
+  "original_result_unchanged": true,
+  "query_sha256": "53f1322f2dd3b4800eadec2903dcf8b1a42a51d6ec875a0e92cba6685341ed99",
+  "text_sha256": "04dbaf9b0899ed33c0f1b7db7eb4735482934432349744875679cbef645a2052",
+  "response_sha256": "7336d64872e5fac9ba2f9822310f8d587842adf126ffd47ecc6a9b3086bc8d44",
+  "artifact_checks": {
+    "query_request_response_text_hashes": "passed",
+    "query_request_response_sizes": "passed",
+    "request_prompt_equals_query": true,
+    "response_field_equals_text": true,
+    "search_and_manifest_hashes_match_envelope": true,
+    "selected_excerpt_matches_verified_snapshot": true,
+    "edition_sources": 63,
+    "edition_symbols": 908,
+    "edition_diagnostics": 0
+  },
+  "transport": {
+    "http_status": 200,
+    "state": "completed",
+    "http_elapsed_ms": 12223.1222,
+    "done": true,
+    "done_reason": "stop",
+    "prompt_eval_count": 1637,
+    "eval_count": 322,
+    "evidence_rechecked_by_transport": false,
+    "effective_server_configuration_preserved": false
+  },
+  "criteria": [
+    {"id":"location_and_citation","status":"passed"},
+    {"id":"operation_order","status":"partial","correction":"Explicitly state direction = (pixel - origin).normalize(); prose is ambiguous about subtraction order."},
+    {"id":"fact_inference_separation","status":"partial"},
+    {"id":"hypothesis_relevance_and_protocol","status":"partial"},
+    {"id":"no_invented_execution","status":"passed","qualification":"Absence of measurements is limited to the supplied context, not the entire project."}
+  ],
+  "limits": [
+    "Checks establish local artifact consistency, not authentication of execution.",
+    "No new LLM response generated during this evaluation.",
+    "Single retrospective attempt does not establish general model reliability or close the integrated engine contract."
+  ]
+}

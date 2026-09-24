@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "extractor": "librarian-ingest/0.1.0;syn/3.0.5;rust-structural-v1",
+  "config": {
+    "project": "renderer",
+    "inputs": [
+      "src",
+      "tests",
+      "Cargo.toml",
+      "Cargo.lock"
+    ]
+  },
+  "git": {
+    "head": "6a8b04321dd8defd20adb184b01c583aef9c0dfe",
+    "dirty": true
+  },
+  "files": {
+    "chunks.jsonl": "f375f28463e80343f0663776362e368a0d80adfb1e29351e4c36ea177b615d88",
+    "diagnostics.json": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "sources.jsonl": "b33839fa0804e1dad121f8b981a7e9b7bec2b2e9ce097f7ecb10d779757a0900",
+    "symbols.jsonl": "23922b29b9974b68ff360d1f1c76e9662eebc2b04173fe12b53c929c4dd5caf3"
+  },
+  "source_count": 63,
+  "symbol_count": 908,
+  "diagnostic_count": 0,
+  "limits": [
+    "Structural declarations only; no behavioral claims or executed-test evidence.",
+    "No macro expansion, cfg evaluation, cross-file name resolution or call graph.",
+    "File-local scopes; ordinary comments are preserved in snapshots, not attached to declarations.",
+    "Files read individually; no atomic repository snapshot or Git/author authentication.",
+    "Parse failures preserve bytes and diagnostics; completeness requires inspecting diagnostics.",
+    "Hashes establish consistency, not authenticity; manifest is not signed."
+  ]
+}

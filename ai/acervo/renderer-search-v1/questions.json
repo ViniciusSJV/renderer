@@ -1,0 +1,8 @@
+[
+  {"question":"Onde a câmera calcula a direção dos raios?","expected_name":"impl Camera::ray_from_pixel","expected_path":"src/camera.rs"},
+  {"question":"Onde o mundo calcula a cor de um raio?","expected_name":"impl World::color_at","expected_path":"src/world.rs"},
+  {"question":"Onde a câmera renderiza o mundo?","expected_name":"impl Camera::render","expected_path":"src/camera.rs"},
+  {"question":"Como calcular sombras?","expected_name":"impl World::is_shadowed","expected_path":"src/world.rs"},
+  {"question":"Como conectar ao banco PostgreSQL?","expected_name":null,"expected_path":null},
+  {"question":"Qual autenticação OAuth existe?","expected_name":null,"expected_path":null}
+]

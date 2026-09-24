@@ -1,5 +1,21 @@
 # Laboratório de IA, evidências e performance
 
+O [roteiro completo de execução manual](../TESTME.md) conecta geração
+de fontes, Librarian, pergunta, grafo, prompt, servidor/modelo Ollama e API.
+A [primeira tentativa manual avaliada](consultas/manual-001/EVALUATION-OLLAMA-01.md)
+teve transporte e hashes conferidos, mas explicação parcialmente correta. É um
+caminho manual com avaliação retrospectiva, não o fechamento automático dos engines.
+
+A [busca lexical com grafo estrutural](acervo/renderer-search-v1/README.md) já
+recupera trechos por perguntas em português e expande relações observadas no código.
+O [WORKFLOW do renderer](../WORKFLOW.md) delimita a ponte ainda pendente até o bundle/LLM.
+
+A nova [extração automática de fontes](acervo/renderer-auto-v1/README.md) usa
+`librarian-ingest` para gerar snapshots, símbolos Rust, trechos e hashes e carregar
+um catálogo em memória. A busca nova usa esse catálogo, sem gerar afirmações semânticas.
+Durante este desenvolvimento, o crate é consumido de `../librarian`; mantenha o
+checkout vizinho atualizado. Ele ainda não faz parte da release v0.1.0.
+
 A [atualização para Librarian v0.1.0](experimentos/24-librarian-01-consumidor/README.md)
 valida a revisão `a009af8` no renderer e cadastra uma fonte real do xadrez-angular.
 
@@ -9,7 +25,8 @@ registra a auditoria da 0.1 e sua validação, sem nova consulta LLM.
 
 O renderer consome [Librarian](https://github.com/ViniciusSJV/librarian) pela
 revisão Git `a009af8276c4bb58c67905a10fea32f1cbbf8a38`, fixada em `Cargo.toml` e
-`Cargo.lock`. Não é necessário clonar a biblioteca separadamente.
+`Cargo.lock` para core/Graph Engine. O novo extrator usa o checkout local citado
+acima; as duas dependências de conferência continuam fixadas na revisão publicada.
 
 A [validação da integração](experimentos/22-integracao-librarian/README.md) registra
 os testes com a dependência publicada. A [baseline externa](experimentos/20-render-cpu/escena-externa/README.md)
