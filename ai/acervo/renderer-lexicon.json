@@ -1,21 +1,80 @@
 {
   "groups": [
     ["camera", "cameras"],
+
     ["raio", "raios", "ray", "rays"],
-    ["direcao", "direction"],
-    ["cena", "cenas", "scene"],
-    ["mundo", "world"],
-    ["intersecao", "intersecoes", "intersection", "intersect"],
+
+    ["direcao", "direcoes", "direction", "directions"],
+
+    ["cena", "cenas", "scene", "scenes"],
+
+    ["mundo", "mundos", "world", "worlds"],
+
+    ["intersecao", "intersecoes", "intersection", "intersections", "intersect"],
+
     ["luz", "luzes", "light", "lights"],
-    ["sombra", "sombras", "shadow", "shadowed"],
+
+    ["sombra", "sombras", "shadow", "shadows", "shadowed"],
+
     ["renderizacao", "renderizar", "renderiza", "render", "rendering"],
-    ["reflexao", "reflection", "reflected"],
-    ["refracao", "refraction", "refracted"],
-    ["cor", "cores", "color"],
-    ["esfera", "sphere"],
+
+    ["reflexao", "reflexoes", "reflection", "reflections", "reflect", "reflected"],
+
+    ["refracao", "refracoes", "refraction", "refractions", "refract", "refracted"],
+
+    ["cor", "cores", "color", "colors"],
+
+    ["esfera", "esferas", "sphere", "spheres"],
+
     ["pixel", "pixels"],
-    ["origem", "origin"],
-    ["normal", "normais"]
+
+    ["origem", "origens", "origin", "origins"],
+
+    ["normal", "normais", "normals"],
+
+    ["transformacao", "transformacoes", "transformation", "transformations", "transform"],
+
+    ["matriz", "matrizes", "matrix", "matrices"],
+
+    ["ponto", "pontos", "point", "points"],
+
+    ["vetor", "vetores", "vector", "vectors"],
+
+    ["objeto", "objetos", "object", "objects"],
+
+    ["forma", "formas", "shape", "shapes"],
+
+    ["material", "materiais", "materials"],
+
+    ["superficie", "superficies", "surface", "surfaces"],
+
+    ["coordenada", "coordenadas", "coordinate", "coordinates"],
+
+    ["transformacao inversa", "inverse transformation", "inverse transform"],
+
+    ["tamanho do pixel", "pixel size"]
   ],
-  "stop_words": ["calcula", "calcular", "calculada", "calculado", "codigo", "funcao", "metodo", "faz", "esta"]
+
+  "stop_words": [
+    "calcula",
+    "calcular",
+    "calculada",
+    "calculado",
+    "codigo",
+    "funcao",
+    "metodo",
+    "faz",
+    "fazer",
+    "esta",
+    "como",
+    "qual",
+    "quais",
+    "onde",
+    "usa",
+    "usar",
+    "usado",
+    "implementa",
+    "implementado",
+    "implementacao"
+  ]
 }
