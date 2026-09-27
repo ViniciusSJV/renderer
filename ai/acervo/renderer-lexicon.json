@@ -1,57 +1,31 @@
 {
   "groups": [
     ["camera", "cameras"],
-
     ["raio", "raios", "ray", "rays"],
-
     ["direcao", "direcoes", "direction", "directions"],
-
     ["cena", "cenas", "scene", "scenes"],
-
     ["mundo", "mundos", "world", "worlds"],
-
     ["intersecao", "intersecoes", "intersection", "intersections", "intersect"],
-
     ["luz", "luzes", "light", "lights"],
-
     ["sombra", "sombras", "shadow", "shadows", "shadowed"],
-
     ["renderizacao", "renderizar", "renderiza", "render", "rendering"],
-
     ["reflexao", "reflexoes", "reflection", "reflections", "reflect", "reflected"],
-
     ["refracao", "refracoes", "refraction", "refractions", "refract", "refracted"],
-
     ["cor", "cores", "color", "colors"],
-
     ["esfera", "esferas", "sphere", "spheres"],
-
     ["pixel", "pixels"],
-
     ["origem", "origens", "origin", "origins"],
-
     ["normal", "normais", "normals"],
-
     ["transformacao", "transformacoes", "transformation", "transformations", "transform"],
-
     ["matriz", "matrizes", "matrix", "matrices"],
-
     ["ponto", "pontos", "point", "points"],
-
     ["vetor", "vetores", "vector", "vectors"],
-
     ["objeto", "objetos", "object", "objects"],
-
     ["forma", "formas", "shape", "shapes"],
-
     ["material", "materiais", "materials"],
-
     ["superficie", "superficies", "surface", "surfaces"],
-
     ["coordenada", "coordenadas", "coordinate", "coordinates"],
-
     ["transformacao inversa", "inverse transformation", "inverse transform"],
-
     ["tamanho do pixel", "pixel size"]
   ],
 
