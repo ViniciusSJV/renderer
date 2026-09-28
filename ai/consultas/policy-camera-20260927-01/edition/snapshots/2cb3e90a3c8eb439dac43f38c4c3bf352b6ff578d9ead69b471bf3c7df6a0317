@@ -1,0 +1,198 @@
+//! Linha de base da CLI. Execute da raiz; não mede somente hashes.
+use serde_json::{json, Value};
+use sha2::{Digest, Sha256};
+use std::fs::{self, OpenOptions};
+use std::io::Write;
+use std::path::{Path, PathBuf};
+use std::process::{Command, Stdio};
+use std::time::Instant;
+
+type Result<T> = std::result::Result<T, Box<dyn std::error::Error>>;
+const SIZES: [usize; 3] = [1, 10, 100];
+const WARMUPS: usize = 3;
+const ROUNDS: usize = 15;
+fn hash(bytes: &[u8]) -> String {
+    format!("{:x}", Sha256::digest(bytes))
+}
+fn save(path: &Path, value: &Value) -> Result<()> {
+    let mut file = OpenOptions::new().write(true).create_new(true).open(path)?;
+    serde_json::to_writer_pretty(&mut file, value)?;
+    writeln!(file)?;
+    file.sync_all()?;
+    Ok(())
+}
+fn workload(base: &Value, count: usize) -> Result<Value> {
+    let fact = base["facts"]
+        .as_array()
+        .and_then(|a| a.first())
+        .ok_or("Dossiê sem fichas")?;
+    let mut value = base.clone();
+    value["id"] = json!(format!("SYNTHETIC_BENCH_{count}"));
+    value["facts"] = Value::Array(
+        (0..count)
+            .map(|i| {
+                let mut f = fact.clone();
+                f["id"] = json!(format!("BENCH_{i}"));
+                f
+            })
+            .collect(),
+    );
+    Ok(value)
+}
+fn summary(samples: &[u64]) -> Value {
+    let mut sorted = samples.to_vec();
+    sorted.sort_unstable();
+    json!({"min_ns": sorted[0], "median_ns": sorted[sorted.len()/2], "max_ns": sorted[sorted.len()-1]})
+}
+fn run() -> Result<()> {
+    let args: Vec<String> = std::env::args().collect();
+    if args.len() != 4 {
+        return Err("Uso: bench_evidence BINARIO DOSSIÊ DESTINO_NOVO".into());
+    }
+    let executable = Path::new(&args[1]).canonicalize()?;
+    let base_bytes = fs::read(&args[2])?;
+    let base: Value = serde_json::from_slice(&base_bytes)?;
+    let executable_hash = hash(&fs::read(&executable)?);
+    let destination = PathBuf::from(&args[3]);
+    fs::create_dir(&destination)?;
+    let mut workloads = Vec::new();
+    for count in SIZES {
+        let path = destination.join(format!("input-{count}.json"));
+        save(&path, &workload(&base, count)?)?;
+        let bytes = fs::read(&path)?;
+        workloads.push(json!({"facts":count,"input_path":path,"input_bytes":bytes.len(),"input_sha256":hash(&bytes),"samples_ns":[]}));
+    }
+    let mut order = Vec::new();
+    for round in 0..WARMUPS + ROUNDS {
+        for offset in 0..SIZES.len() {
+            let index = (round + offset) % SIZES.len();
+            let count = SIZES[index];
+            let output_path = destination.join(format!("export-{round}-{count}.json"));
+            let mut argv = vec![workloads[index]["input_path"]
+                .as_str()
+                .ok_or("path inválido")?
+                .to_owned()];
+            for i in 0..count {
+                argv.extend(["--fact".into(), format!("BENCH_{i}")]);
+            }
+            argv.extend([
+                "--context".into(),
+                "1".into(),
+                "--output".into(),
+                output_path.to_str().ok_or("path inválido")?.into(),
+            ]);
+            let start = Instant::now();
+            let result = Command::new(&executable)
+                .args(&argv)
+                .stdin(Stdio::null())
+                .stdout(Stdio::null())
+                .stderr(Stdio::piped())
+                .output()?;
+            let elapsed = u64::try_from(start.elapsed().as_nanos())?;
+            if !result.status.success() {
+                return Err(format!(
+                    "Falha do validador: {}",
+                    String::from_utf8_lossy(&result.stderr)
+                )
+                .into());
+            }
+            let bytes = fs::read(&output_path)?;
+            let export: Value = serde_json::from_slice(&bytes)?;
+            let selections: Vec<&Value> = if count == 1 {
+                vec![&export]
+            } else {
+                export["selections"]
+                    .as_array()
+                    .ok_or("Sem seleções")?
+                    .iter()
+                    .collect()
+            };
+            if selections.len() != count {
+                return Err("Contagem de seleções incorreta".into());
+            }
+            for (i, selection) in selections.iter().enumerate() {
+                if selection["fact_id"] != format!("BENCH_{i}")
+                    || selection["source"]["capture_validation"]["status"]
+                        != "capture_and_source_match"
+                {
+                    return Err("Exportação inesperada".into());
+                }
+            }
+            let output_hash = hash(&bytes);
+            if round == 0 {
+                workloads[index]["output_bytes"] = json!(bytes.len());
+                workloads[index]["output_sha256"] = json!(output_hash);
+            } else if workloads[index]["output_sha256"] != output_hash {
+                return Err("Exportação mudou entre amostras".into());
+            }
+            fs::remove_file(output_path)?;
+            if round >= WARMUPS {
+                workloads[index]["samples_ns"]
+                    .as_array_mut()
+                    .unwrap()
+                    .push(json!(elapsed));
+                order.push(
+                    json!({"round":round-WARMUPS,"facts":count,"elapsed_ns":elapsed,"argv":argv}),
+                );
+            }
+        }
+    }
+    if hash(&fs::read(&executable)?) != executable_hash {
+        return Err("Executável mudou durante ensaio".into());
+    }
+    for w in &mut workloads {
+        let samples: Vec<u64> = w["samples_ns"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .map(|v| v.as_u64().unwrap())
+            .collect();
+        w["summary"] = summary(&samples);
+    }
+    let report = json!({"schema_version":1,"executable":executable,"executable_sha256":executable_hash,
+        "base_dossier":args[2],"base_sha256":hash(&base_bytes),"cwd":std::env::current_dir()?,
+        "warmups_per_workload":WARMUPS,"samples_per_workload":ROUNDS,"workloads":workloads,"order":order,
+        "scope":"Tempo de parede da CLI inteira; caches aquecidos, ambiente compartilhado. Sem comparação entre versões ou prova de causalidade."});
+    save(&destination.join("results.json.tmp"), &report)?;
+    fs::rename(
+        destination.join("results.json.tmp"),
+        destination.join("results.json"),
+    )?;
+    println!(
+        "Ensaio concluído: {}",
+        destination.join("results.json").display()
+    );
+    for w in &workloads {
+        println!("{} fichas: {}", w["facts"], w["summary"]);
+    }
+    Ok(())
+}
+fn main() {
+    if let Err(e) = run() {
+        eprintln!("Ensaio incompleto: {e}");
+        std::process::exit(1);
+    }
+}
+#[cfg(test)]
+mod tests {
+    use super::*;
+    #[test]
+    fn synthetic_facts_keep_references_with_distinct_ids() {
+        let base = json!({"sources":[{"id":"S"}],"facts":[{"id":"F","source_id":"S","line":9}]});
+        let v = workload(&base, 10).unwrap();
+        assert_eq!(v["sources"], base["sources"]);
+        for i in 0..10 {
+            assert_eq!(v["facts"][i]["id"], format!("BENCH_{i}"));
+            assert_eq!(v["facts"][i]["line"], 9);
+            assert_eq!(v["facts"][i]["source_id"], "S");
+        }
+        assert_eq!(v["facts"].as_array().unwrap().len(), 10);
+    }
+    #[test]
+    fn median_is_order_statistic() {
+        assert_eq!(
+            summary(&[9, 1, 4, 2, 8]),
+            json!({"min_ns":1,"median_ns":4,"max_ns":9})
+        );
+    }
+}

@@ -1,7 +1,5 @@
 //! Confere/exporta e envia na mesma invocação; não executa sugestões do modelo.
-#[path = "ollama_common/client.rs"]
-mod client;
-mod ollama_common;
+use librarian_llm_engine::ollama::client;
 use client::{hash, save, save_json, Config, Result};
 use serde::Deserialize;
 use serde_json::{json, Value};

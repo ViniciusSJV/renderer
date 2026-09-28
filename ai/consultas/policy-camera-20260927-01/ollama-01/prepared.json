@@ -1,0 +1,27 @@
+{
+  "diagnostic": null,
+  "dossier_origin": null,
+  "endpoint": "http://127.0.0.1:11434/api/generate",
+  "evidence_rechecked": false,
+  "explicit_options": {},
+  "files": {
+    "query": "query.json",
+    "request": "request.json",
+    "response": "response.bin",
+    "text": null
+  },
+  "format_version": 1,
+  "http_status": null,
+  "max_response_bytes": 1048576,
+  "query_bytes": 3324,
+  "query_sha256": "c2210be577898584c30c133f9dfd4d798aaf1ee6f1a7a14fa757def73357b1d9",
+  "query_source_path": "C:\\Users\\beatl\\Documents\\Projetos\\renderer\\ai\\consultas\\policy-camera-20260927-01\\query-ollama.json",
+  "request_bytes": 3558,
+  "request_id": "PLAYME_308f655721c34c1d9aa44d2160ace15b",
+  "request_sha256": "17c8696065d2fe7e27dc51b188f7ef4482d959c4227be856927cf802cf6a4488",
+  "requested_model": "renderer-analyst:latest",
+  "response_body_complete": false,
+  "selection": null,
+  "semantic_evaluation": "pending",
+  "timeout_ms": 300000
+}

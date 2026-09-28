@@ -1,5 +1,11 @@
 # Ray Tracer
 
+The LLM request builder and Ollama transport now live in
+[`librarian-llm-engine`](../librarian/crates/librarian-llm-engine/README.md).
+PLAYME/TESTME use its executables; renderer retains compatibility CLI wrappers
+and the dossier coordinator. Keep the sibling Librarian checkout updated.
+This extraction preserves behavior and does not close semantic evaluation.
+
 The [complete PowerShell walkthrough](TESTME.md) covers source
 generation through Librarian, lexical questions, graph verification, explicit
 prompt preparation, Ollama server/model setup, API submission and response evaluation.

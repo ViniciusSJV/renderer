@@ -1,0 +1,38 @@
+#[derive(Debug, PartialEq, Eq, Clone)]
+pub struct RendererArtifact {
+    pub id: String,
+    pub statement: String,
+    pub source_id: String,
+    pub line: usize,
+}
+
+impl RendererArtifact {
+    pub fn new(id: &str, statement: &str, source_id: &str, line: usize) -> Self {
+        Self {
+            id: id.to_owned(),
+            statement: statement.to_owned(),
+            source_id: source_id.to_owned(),
+            line,
+        }
+    }
+
+    pub fn to_fact(&self) -> crate::core::BibliotecarioFact {
+        crate::core::BibliotecarioFact::new(&self.id, &self.statement, &self.source_id, self.line)
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn renderer_artifact_converts_to_bibliotecario_fact() {
+        let artifact = RendererArtifact::new("F-1", "ray hits sphere", "source-1", 12);
+        let fact = artifact.to_fact();
+
+        assert_eq!(fact.id, "F-1");
+        assert_eq!(fact.statement, "ray hits sphere");
+        assert_eq!(fact.source_id, "source-1");
+        assert_eq!(fact.line, 12);
+    }
+}

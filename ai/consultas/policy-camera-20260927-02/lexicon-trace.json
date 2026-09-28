@@ -1,0 +1,231 @@
+{
+    "terms":  [
+                  "camera",
+                  "direcao",
+                  "raios"
+              ],
+    "matches":  {
+                    "value":  [
+                                  {
+                                      "name":  "impl Camera::ray_from_pixel",
+                                      "reasons":  [
+                                                      {
+                                                          "term":  "camera",
+                                                          "expanded":  [
+                                                                           "camera",
+                                                                           "cameras"
+                                                                       ],
+                                                          "fields":  [
+                                                                         "scope",
+                                                                         "path",
+                                                                         "code"
+                                                                     ],
+                                                          "weight":  3
+                                                      },
+                                                      {
+                                                          "term":  "direcao",
+                                                          "expanded":  [
+                                                                           "direcao",
+                                                                           "direcoes",
+                                                                           "direction",
+                                                                           "directions"
+                                                                       ],
+                                                          "fields":  [
+                                                                         "code"
+                                                                     ],
+                                                          "weight":  1
+                                                      },
+                                                      {
+                                                          "term":  "raios",
+                                                          "expanded":  [
+                                                                           "raio",
+                                                                           "raios",
+                                                                           "ray",
+                                                                           "rays"
+                                                                       ],
+                                                          "fields":  [
+                                                                         "name",
+                                                                         "scope",
+                                                                         "code"
+                                                                     ],
+                                                          "weight":  8
+                                                      }
+                                                  ]
+                                  },
+                                  {
+                                      "name":  "tests_camera::constructing_a_ray_when_the_camera_is_transformed",
+                                      "reasons":  [
+                                                      {
+                                                          "term":  "camera",
+                                                          "expanded":  [
+                                                                           "camera",
+                                                                           "cameras"
+                                                                       ],
+                                                          "fields":  [
+                                                                         "name",
+                                                                         "scope",
+                                                                         "path",
+                                                                         "code"
+                                                                     ],
+                                                          "weight":  8
+                                                      },
+                                                      {
+                                                          "term":  "direcao",
+                                                          "expanded":  [
+                                                                           "direcao",
+                                                                           "direcoes",
+                                                                           "direction",
+                                                                           "directions"
+                                                                       ],
+                                                          "fields":  [
+                                                                         "code"
+                                                                     ],
+                                                          "weight":  1
+                                                      },
+                                                      {
+                                                          "term":  "raios",
+                                                          "expanded":  [
+                                                                           "raio",
+                                                                           "raios",
+                                                                           "ray",
+                                                                           "rays"
+                                                                       ],
+                                                          "fields":  [
+                                                                         "name",
+                                                                         "scope",
+                                                                         "code"
+                                                                     ],
+                                                          "weight":  8
+                                                      }
+                                                  ]
+                                  },
+                                  {
+                                      "name":  "tests_camera::constructing_a_ray_through_the_center_of_the_canvas",
+                                      "reasons":  [
+                                                      {
+                                                          "term":  "camera",
+                                                          "expanded":  [
+                                                                           "camera",
+                                                                           "cameras"
+                                                                       ],
+                                                          "fields":  [
+                                                                         "scope",
+                                                                         "path",
+                                                                         "code"
+                                                                     ],
+                                                          "weight":  3
+                                                      },
+                                                      {
+                                                          "term":  "direcao",
+                                                          "expanded":  [
+                                                                           "direcao",
+                                                                           "direcoes",
+                                                                           "direction",
+                                                                           "directions"
+                                                                       ],
+                                                          "fields":  [
+                                                                         "code"
+                                                                     ],
+                                                          "weight":  1
+                                                      },
+                                                      {
+                                                          "term":  "raios",
+                                                          "expanded":  [
+                                                                           "raio",
+                                                                           "raios",
+                                                                           "ray",
+                                                                           "rays"
+                                                                       ],
+                                                          "fields":  [
+                                                                         "name",
+                                                                         "scope",
+                                                                         "code"
+                                                                     ],
+                                                          "weight":  8
+                                                      }
+                                                  ]
+                                  },
+                                  {
+                                      "name":  "tests_camera::constructing_a_ray_through_a_corner_of_the_canvas",
+                                      "reasons":  [
+                                                      {
+                                                          "term":  "camera",
+                                                          "expanded":  [
+                                                                           "camera",
+                                                                           "cameras"
+                                                                       ],
+                                                          "fields":  [
+                                                                         "scope",
+                                                                         "path",
+                                                                         "code"
+                                                                     ],
+                                                          "weight":  3
+                                                      },
+                                                      {
+                                                          "term":  "direcao",
+                                                          "expanded":  [
+                                                                           "direcao",
+                                                                           "direcoes",
+                                                                           "direction",
+                                                                           "directions"
+                                                                       ],
+                                                          "fields":  [
+                                                                         "code"
+                                                                     ],
+                                                          "weight":  1
+                                                      },
+                                                      {
+                                                          "term":  "raios",
+                                                          "expanded":  [
+                                                                           "raio",
+                                                                           "raios",
+                                                                           "ray",
+                                                                           "rays"
+                                                                       ],
+                                                          "fields":  [
+                                                                         "name",
+                                                                         "scope",
+                                                                         "code"
+                                                                     ],
+                                                          "weight":  8
+                                                      }
+                                                  ]
+                                  },
+                                  {
+                                      "name":  "Ray",
+                                      "reasons":  [
+                                                      {
+                                                          "term":  "direcao",
+                                                          "expanded":  [
+                                                                           "direcao",
+                                                                           "direcoes",
+                                                                           "direction",
+                                                                           "directions"
+                                                                       ],
+                                                          "fields":  [
+                                                                         "code"
+                                                                     ],
+                                                          "weight":  1
+                                                      },
+                                                      {
+                                                          "term":  "raios",
+                                                          "expanded":  [
+                                                                           "raio",
+                                                                           "raios",
+                                                                           "ray",
+                                                                           "rays"
+                                                                       ],
+                                                          "fields":  [
+                                                                         "name",
+                                                                         "scope",
+                                                                         "path",
+                                                                         "code"
+                                                                     ],
+                                                          "weight":  8
+                                                      }
+                                                  ]
+                                  }
+                              ],
+                    "Count":  5
+                }
+}

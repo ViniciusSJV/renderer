@@ -1,0 +1,13 @@
+use crate::bibliotecario::{BibliotecarioFact, SourceRef};
+
+pub fn extract_source_fact(id: &str, statement: &str, source_id: &str, line: usize) -> BibliotecarioFact {
+    BibliotecarioFact::new(id, statement, source_id, line)
+}
+
+pub fn extract_source_ref(id: &str, path: &str, lines: Vec<&str>) -> SourceRef {
+    SourceRef {
+        id: id.to_owned(),
+        path: path.to_owned(),
+        lines: lines.into_iter().map(str::to_owned).collect(),
+    }
+}

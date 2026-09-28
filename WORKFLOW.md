@@ -11,17 +11,19 @@ flowchart TD
         G[Inspecionar termos, trechos e relações recuperados]
         H[Escolher E1 e conferir contra snapshot]
         P[Query, prompt e critérios prévios]
-        I[prepare_ollama e send_ollama]
-        J[Preservar request, retorno bruto, texto e estado]
         K[Conferir hashes e avaliar a explicação]
     end
-    subgraph L[Librarian: capacidade reutilizável, sem banco ou LLM]
+    subgraph L[Librarian: ingestao e busca, sem banco]
         B[Extrair fontes, símbolos, trechos e snapshots]
         C[Conferir acervo e carregar catálogo em memória]
         D[Derivar relações sintáticas com procedência]
         T[Normalizar pergunta e expandir pelo léxico]
         E[Ranquear símbolos candidatos]
         F[Expandir vizinhança limitada do primeiro resultado]
+    end
+    subgraph E[Librarian: LLM Engine]
+        I[prepare_ollama e send_ollama]
+        J[Preservar request, retorno bruto, texto e estado]
     end
     subgraph O[Ollama: servidor e inferência local]
         S[Iniciar servidor]
@@ -60,11 +62,11 @@ flowchart TD
 
 ## Fronteira atual
 
-O cliente HTTP pertence ao renderer e não reconfere fontes no envio; registra
+O cliente HTTP pertence ao librarian-llm-engine e não reconfere fontes no envio; registra
 `evidence_rechecked=false`. Conferência manual anterior e hashes dentro da query
 não são a integração automatizada `dossier_origin`/`selection` do cliente.
 O envelope deste roteiro não é um bundle `PreparedQuery`. A ponte automática
-da busca ao dossiê/bundle e a biblioteca LLM independente continuam pendentes.
+da busca ao dossiê/bundle continua pendente. A biblioteca LLM foi extraída sem mudar a política.
 
 A tentativa real `manual-001/ollama-01` teve HTTP 200 e hashes conferidos, com
 avaliação retrospectiva parcialmente correta. O roteiro atual acrescenta critérios

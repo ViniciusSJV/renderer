@@ -1,0 +1,7 @@
+**FACT**: A câmera calcula a direção dos raios na função `impl Camera::ray_from_pixel` (E1, arquivo `src/camera.rs`, linhas 75-89). A direção é calculada a partir das coordenadas do pixel, transformando-as para o espaço do mundo e, em seguida, normalizando o vetor resultante. A expressão relevante é:
+
+```rust
+let direction = (pixel - origin).normalize();
+```
+
+**LACUNA**: Não há informações sobre como a câmera obtém as coordenadas do pixel ou como a transformação inversa é aplicada.

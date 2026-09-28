@@ -1,0 +1,86 @@
+use crate::matrix::Matrix;
+use crate::ray::Ray;
+use crate::tuple::Tuple;
+
+#[derive(Debug, PartialEq, Clone, Copy)]
+pub struct Bounds {
+    pub minimum: Tuple,
+    pub maximum: Tuple,
+}
+
+impl Bounds {
+    pub fn new(minimum: Tuple, maximum: Tuple) -> Self {
+        Self { minimum, maximum }
+    }
+
+    pub fn empty() -> Self {
+        Self::new(
+            Tuple::point(f64::INFINITY, f64::INFINITY, f64::INFINITY),
+            Tuple::point(f64::NEG_INFINITY, f64::NEG_INFINITY, f64::NEG_INFINITY),
+        )
+    }
+
+    pub fn add_point(&mut self, point: Tuple) {
+        self.minimum.x = self.minimum.x.min(point.x);
+        self.minimum.y = self.minimum.y.min(point.y);
+        self.minimum.z = self.minimum.z.min(point.z);
+        self.maximum.x = self.maximum.x.max(point.x);
+        self.maximum.y = self.maximum.y.max(point.y);
+        self.maximum.z = self.maximum.z.max(point.z);
+    }
+
+    pub fn union(self, other: Self) -> Self {
+        let mut result = self;
+        result.add_point(other.minimum);
+        result.add_point(other.maximum);
+        result
+    }
+
+    pub fn center(&self) -> Tuple {
+        Tuple::point(
+            (self.minimum.x + self.maximum.x) / 2.,
+            (self.minimum.y + self.maximum.y) / 2.,
+            (self.minimum.z + self.maximum.z) / 2.,
+        )
+    }
+
+    pub fn transformed(self, transform: Matrix<4>) -> Self {
+        let mut result = Self::empty();
+        for x in [self.minimum.x, self.maximum.x] {
+            for y in [self.minimum.y, self.maximum.y] {
+                for z in [self.minimum.z, self.maximum.z] {
+                    result.add_point(transform * Tuple::point(x, y, z));
+                }
+            }
+        }
+        result
+    }
+
+    pub fn intersects(&self, ray: Ray) -> bool {
+        let (mut t_min, mut t_max) = (f64::NEG_INFINITY, f64::INFINITY);
+        for (origin, direction, minimum, maximum) in [
+            (ray.origin.x, ray.direction.x, self.minimum.x, self.maximum.x),
+            (ray.origin.y, ray.direction.y, self.minimum.y, self.maximum.y),
+            (ray.origin.z, ray.direction.z, self.minimum.z, self.maximum.z),
+        ] {
+            let (axis_min, axis_max) = if direction.abs() < crate::EPSILON {
+                if origin < minimum || origin > maximum {
+                    return false;
+                }
+                (f64::NEG_INFINITY, f64::INFINITY)
+            } else {
+                let mut values = ((minimum - origin) / direction, (maximum - origin) / direction);
+                if values.0 > values.1 {
+                    std::mem::swap(&mut values.0, &mut values.1);
+                }
+                values
+            };
+            t_min = t_min.max(axis_min);
+            t_max = t_max.min(axis_max);
+            if t_min > t_max {
+                return false;
+            }
+        }
+        true
+    }
+}

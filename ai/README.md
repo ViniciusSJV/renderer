@@ -1,5 +1,17 @@
 # Laboratório de IA, evidências e performance
 
+O preparador e o transporte foram extraídos para
+[`librarian-llm-engine`](../../librarian/crates/librarian-llm-engine/README.md).
+PLAYME/TESTME usam os executáveis do Librarian; os comandos antigos delegam à
+biblioteca. O coordenador de dossiês e a política do consumidor ficam no renderer.
+Somente a extração foi concluída; a Etapa 1 semântica continua aberta.
+
+A [etapa de política restritiva do LLM](experimentos/26-politica-llm-camera/README.md)
+registra duas consultas reais da câmera em 27/09/2026: transporte concluído, mas
+ambas semanticamente reprovadas por extrapolações/lacunas indevidas. PLAYME/TESTME
+e Modelfile usam a política nova; Etapa 1 continua pendente. Os estados das aulas
+e experimentos anteriores permanecem históricos.
+
 O [roteiro completo de execução manual](../TESTME.md) conecta geração
 de fontes, Librarian, pergunta, grafo, prompt, servidor/modelo Ollama e API.
 A [primeira tentativa manual avaliada](consultas/manual-001/EVALUATION-OLLAMA-01.md)

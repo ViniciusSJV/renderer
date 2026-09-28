@@ -1,0 +1,410 @@
+//! Captura local em Unix. Código 0 significa registro concluído, não teste aprovado.
+use serde_json::{json, Value};
+use sha2::{Digest, Sha256};
+use std::fs::{self, OpenOptions};
+use std::io::{self, Read, Write};
+use std::os::fd::OwnedFd;
+use std::os::unix::{net::UnixStream, process::ExitStatusExt};
+use std::path::{Path, PathBuf};
+use std::process::{Command, Stdio};
+
+fn hash_file(path: &Path) -> io::Result<String> {
+    let mut file = fs::File::open(path)?;
+    if !file.metadata()?.is_file() {
+        return Err(io::Error::other("a fonte deve ser um arquivo regular"));
+    }
+    let mut hash = Sha256::new();
+    let mut buffer = [0u8; 65536];
+    loop {
+        let n = file.read(&mut buffer)?;
+        if n == 0 {
+            break;
+        }
+        hash.update(&buffer[..n]);
+    }
+    Ok(format!("{:x}", hash.finalize()))
+}
+
+fn probe(argv: &[&str], cwd: &Path) -> Value {
+    match Command::new(argv[0])
+        .args(&argv[1..])
+        .current_dir(cwd)
+        .output()
+    {
+        Ok(o) => json!({"available": o.status.success(), "exit_code": o.status.code(),
+            "stdout": String::from_utf8_lossy(&o.stdout), "stderr": String::from_utf8_lossy(&o.stderr)}),
+        Err(e) => json!({"available": false, "error": e.to_string()}),
+    }
+}
+
+fn utc_now() -> io::Result<String> {
+    let o = Command::new("date")
+        .args(["-u", "+%Y-%m-%dT%H:%M:%SZ"])
+        .output()?;
+    if !o.status.success() {
+        return Err(io::Error::other("date não conseguiu registrar UTC"));
+    }
+    Ok(String::from_utf8(o.stdout)
+        .map_err(io::Error::other)?
+        .trim()
+        .to_owned())
+}
+
+fn publish(destination: &Path, record: &Value) -> io::Result<()> {
+    let temporary = destination.join("execucao.json.tmp");
+    let mut file = OpenOptions::new()
+        .write(true)
+        .create_new(true)
+        .open(&temporary)?;
+    serde_json::to_writer_pretty(&mut file, record)?;
+    writeln!(file)?;
+    file.sync_all()?;
+    fs::rename(temporary, destination.join("execucao.json"))
+}
+
+#[cfg(test)]
+fn capture(id: &str, destination: &Path, argv: &[String], cwd: &Path) -> io::Result<Value> {
+    capture_sources(id, destination, argv, cwd, &[])
+}
+
+fn capture_sources(
+    id: &str,
+    destination: &Path,
+    argv: &[String],
+    cwd: &Path,
+    sources: &[PathBuf],
+) -> io::Result<Value> {
+    if id.trim().is_empty() || argv.is_empty() {
+        return Err(io::Error::other("ID e comando são obrigatórios"));
+    }
+    let cwd = cwd.canonicalize()?;
+    if !cwd.is_dir() {
+        return Err(io::Error::other("cwd deve ser um diretório"));
+    }
+    fs::create_dir(destination)?;
+    let environment = json!({
+        "os": std::env::consts::OS, "architecture": std::env::consts::ARCH,
+        "os_release": probe(&["uname", "-r"], &cwd),
+        "rust": probe(&["rustc", "--version"], &cwd),
+        "cargo": probe(&["cargo", "--version"], &cwd),
+        "git_head": probe(&["git", "rev-parse", "HEAD"], &cwd),
+        "git_status": probe(&["git", "status", "--porcelain=v1", "--untracked-files=all"], &cwd)
+    });
+    let mut output = OpenOptions::new()
+        .write(true)
+        .create_new(true)
+        .open(destination.join("saida.bin"))?;
+    let (mut reader, writer) = UnixStream::pair()?;
+    let stderr: OwnedFd = writer.try_clone()?.into();
+    let stdout: OwnedFd = writer.into();
+    let mut observations = Vec::new();
+    for source in sources {
+        let path = cwd.join(source);
+        let before = hash_file(&path).map_err(|e| {
+            io::Error::other(format!("fonte {} antes da execução: {e}", path.display()))
+        })?;
+        observations.push(json!({"path": source, "resolved_path": path, "before_sha256": before}));
+    }
+    let started_at = utc_now()?;
+    let spawned = Command::new(&argv[0])
+        .args(&argv[1..])
+        .current_dir(&cwd)
+        .stdin(Stdio::null())
+        .stdout(Stdio::from(stdout))
+        .stderr(Stdio::from(stderr))
+        .spawn();
+    let result = match spawned {
+        Err(e) => json!({"status": "start_failed", "exit_code": null, "error": e.to_string()}),
+        Ok(mut child) => {
+            if let Err(e) = io::copy(&mut reader, &mut output) {
+                let _ = child.kill();
+                let _ = child.wait();
+                return Err(e);
+            }
+            let status = child.wait()?;
+            match status.code() {
+                Some(code) => json!({"status": "exited", "exit_code": code}),
+                None => json!({"status": "signaled", "exit_code": null, "signal": status.signal()}),
+            }
+        }
+    };
+    let finished_at = utc_now()?;
+    for observation in &mut observations {
+        let path = Path::new(
+            observation["resolved_path"]
+                .as_str()
+                .ok_or_else(|| io::Error::other("caminho inválido"))?,
+        );
+        match hash_file(path) {
+            Ok(after) => {
+                observation["comparison"] = json!(if observation["before_sha256"] == after {
+                    "equal"
+                } else {
+                    "different"
+                });
+                observation["after_sha256"] = json!(after);
+            }
+            Err(e) => {
+                observation["comparison"] = json!("unavailable");
+                observation["after_sha256"] = Value::Null;
+                observation["after_error"] = json!(e.to_string());
+            }
+        }
+    }
+    output.sync_all()?;
+    let bytes = output.metadata()?.len();
+    drop(output);
+    let output_hash = hash_file(&destination.join("saida.bin"))?;
+    let record = json!({"schema_version": 2, "sources": observations, "run_id": id, "argv": argv, "cwd": cwd,
+        "started_at": started_at, "finished_at": finished_at, "environment": environment,
+        "result": result, "output": {"path": "saida.bin", "streams": "stdout+stderr", "bytes": bytes, "sha256": output_hash}});
+    publish(destination, &record)?;
+    Ok(record)
+}
+
+fn run(args: Vec<String>) -> Result<(), Box<dyn std::error::Error>> {
+    let usage =
+        "Uso: capture_execution --id ID --destino PASTA [--cwd PASTA] [--source CAMINHO]... -- COMANDO [ARGUMENTOS]";
+    let split = args.iter().position(|a| a == "--").ok_or(usage)?;
+    let mut id = None;
+    let mut destination = None;
+    let mut cwd = PathBuf::from(".");
+    let mut sources = Vec::new();
+    let mut options = args[..split].chunks_exact(2);
+    for pair in &mut options {
+        match pair[0].as_str() {
+            "--id" if id.is_none() => id = Some(pair[1].clone()),
+            "--destino" if destination.is_none() => destination = Some(PathBuf::from(&pair[1])),
+            "--cwd" => cwd = PathBuf::from(&pair[1]),
+            "--source" => sources.push(PathBuf::from(&pair[1])),
+            _ => return Err(usage.into()),
+        }
+    }
+    if !options.remainder().is_empty() {
+        return Err(usage.into());
+    }
+    let record = capture_sources(
+        &id.ok_or(usage)?,
+        &destination.ok_or(usage)?,
+        &args[split + 1..],
+        &cwd,
+        &sources,
+    )?;
+    println!(
+        "Captura concluída. Resultado do comando: {}",
+        record["result"]
+    );
+    Ok(())
+}
+
+fn main() {
+    if let Err(e) = run(std::env::args().skip(1).collect()) {
+        eprintln!("Falha da captura: {e}");
+        std::process::exit(2);
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use std::sync::atomic::{AtomicUsize, Ordering};
+    static NEXT: AtomicUsize = AtomicUsize::new(0);
+    struct Temp(PathBuf);
+    impl Temp {
+        fn new() -> Self {
+            let path = std::env::temp_dir().join(format!(
+                "capture-{}-{}",
+                std::process::id(),
+                NEXT.fetch_add(1, Ordering::Relaxed)
+            ));
+            fs::create_dir(&path).unwrap();
+            Self(path)
+        }
+        fn shell(&self, script: &str) -> Value {
+            capture(
+                "RUN_TEST",
+                &self.0.join("run"),
+                &["sh".into(), "-c".into(), script.into()],
+                &self.0,
+            )
+            .unwrap()
+        }
+    }
+    impl Drop for Temp {
+        fn drop(&mut self) {
+            let _ = fs::remove_dir_all(&self.0);
+        }
+    }
+    #[test]
+    fn success_preserves_combined_binary_output() {
+        let t = Temp::new();
+        let r = t.shell("printf 'out\\377'; printf 'err\\000' >&2");
+        assert_eq!(
+            fs::read(t.0.join("run/saida.bin")).unwrap(),
+            b"out\xfferr\0"
+        );
+        assert_eq!(r["output"]["bytes"], 8);
+        assert_eq!(r["result"]["exit_code"], 0);
+        let saved: Value =
+            serde_json::from_slice(&fs::read(t.0.join("run/execucao.json")).unwrap()).unwrap();
+        assert_eq!(saved, r);
+        assert_eq!(r["environment"]["git_head"]["available"], false);
+    }
+    #[test]
+    fn nonzero_is_a_completed_capture() {
+        let t = Temp::new();
+        assert_eq!(
+            t.shell("echo falhou; exit 7")["result"],
+            json!({"status":"exited", "exit_code":7})
+        );
+    }
+    #[test]
+    fn missing_command_has_no_exit_code() {
+        let t = Temp::new();
+        let r = capture(
+            "RUN_MISSING",
+            &t.0.join("run"),
+            &[t.0.join("missing").to_str().unwrap().into()],
+            &t.0,
+        )
+        .unwrap();
+        assert_eq!(r["result"]["status"], "start_failed");
+        assert!(r["result"]["exit_code"].is_null());
+    }
+    #[test]
+    fn signal_is_not_normal_exit() {
+        let t = Temp::new();
+        assert_eq!(
+            t.shell("kill -TERM $$")["result"],
+            json!({"status":"signaled", "exit_code":null, "signal":15})
+        );
+    }
+    #[test]
+    fn existing_destination_prevents_execution() {
+        let t = Temp::new();
+        fs::create_dir(t.0.join("run")).unwrap();
+        assert!(capture(
+            "RUN",
+            &t.0.join("run"),
+            &["sh".into(), "-c".into(), "touch executed".into()],
+            &t.0
+        )
+        .is_err());
+        assert!(!t.0.join("executed").exists());
+    }
+    #[test]
+    fn publication_failure_leaves_no_final_record() {
+        let t = Temp::new();
+        fs::create_dir(t.0.join("execucao.json.tmp")).unwrap();
+        assert!(publish(&t.0, &json!({})).is_err());
+        assert!(!t.0.join("execucao.json").exists());
+    }
+    #[test]
+    fn cli_completion_does_not_require_command_success() {
+        let t = Temp::new();
+        run(vec![
+            "--id".into(),
+            "RUN".into(),
+            "--destino".into(),
+            t.0.join("run").to_str().unwrap().into(),
+            "--".into(),
+            "sh".into(),
+            "-c".into(),
+            "exit 7".into(),
+        ])
+        .unwrap();
+    }
+    #[test]
+    fn arguments_are_not_interpreted_by_shell() {
+        let t = Temp::new();
+        let args = vec![
+            "printf".into(),
+            "%s".into(),
+            "a b; $(touch executed)".into(),
+        ];
+        let r = capture("RUN", &t.0.join("run"), &args, &t.0).unwrap();
+        assert_eq!(r["argv"], json!(args));
+        assert_eq!(
+            fs::read_to_string(t.0.join("run/saida.bin")).unwrap(),
+            args[2]
+        );
+        assert!(!t.0.join("executed").exists());
+    }
+    #[test]
+    fn source_observations_cover_equal_changed_and_removed() {
+        let t = Temp::new();
+        for name in ["same", "changed", "removed"] {
+            fs::write(t.0.join(name), b"abc").unwrap();
+        }
+        let r = capture_sources(
+            "RUN",
+            &t.0.join("run"),
+            &[
+                "sh".into(),
+                "-c".into(),
+                "printf xyz > changed; rm removed; exit 7".into(),
+            ],
+            &t.0,
+            &["same".into(), "changed".into(), "removed".into()],
+        )
+        .unwrap();
+        assert_eq!(r["schema_version"], 2);
+        assert_eq!(
+            r["sources"][0]["before_sha256"],
+            "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad"
+        );
+        assert_eq!(r["sources"][0]["comparison"], "equal");
+        assert_eq!(r["sources"][1]["comparison"], "different");
+        assert_eq!(r["sources"][2]["comparison"], "unavailable");
+        assert!(r["sources"][2]["after_sha256"].is_null());
+        assert!(r["sources"][2]["after_error"].is_string());
+        assert_eq!(r["result"]["exit_code"], 7);
+        assert_eq!(
+            r["output"]["sha256"],
+            "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        );
+    }
+    #[test]
+    fn missing_source_prevents_command_and_final_record() {
+        let t = Temp::new();
+        assert!(capture_sources(
+            "RUN",
+            &t.0.join("run"),
+            &["sh".into(), "-c".into(), "touch executed".into()],
+            &t.0,
+            &["missing".into()]
+        )
+        .is_err());
+        assert!(!t.0.join("executed").exists());
+        assert!(!t.0.join("run/execucao.json").exists());
+    }
+    #[test]
+    fn cli_sources_are_repeatable_and_relative_to_cwd() {
+        let t = Temp::new();
+        fs::write(t.0.join("a"), b"a").unwrap();
+        fs::write(t.0.join("b"), b"b").unwrap();
+        run(vec![
+            "--id".into(),
+            "RUN".into(),
+            "--destino".into(),
+            t.0.join("run").to_str().unwrap().into(),
+            "--cwd".into(),
+            t.0.to_str().unwrap().into(),
+            "--source".into(),
+            "a".into(),
+            "--source".into(),
+            "b".into(),
+            "--".into(),
+            "printf".into(),
+            "abc".into(),
+        ])
+        .unwrap();
+        let r: Value =
+            serde_json::from_slice(&fs::read(t.0.join("run/execucao.json")).unwrap()).unwrap();
+        assert_eq!(r["sources"].as_array().unwrap().len(), 2);
+        assert_eq!(
+            r["output"]["sha256"],
+            "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad"
+        );
+    }
+}

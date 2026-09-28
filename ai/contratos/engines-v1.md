@@ -1,5 +1,58 @@
 # Contrato dos engines — versão 1
 
+## Extração para Librarian — 27/09/2026
+
+O preparador, transporte Ollama, CLIs e testes agora pertencem ao
+[`librarian-llm-engine`](../../../librarian/crates/librarian-llm-engine/README.md).
+O renderer mantém wrappers de compatibilidade e o coordenador `explain_evidence`,
+que importa a biblioteca. PLAYME/TESTME usam os executáveis do Librarian.
+Modelo e endpoint continuam explícitos. Esta extração não muda a política,
+não fecha a Etapa 1 semântica e não inclui nova consulta real. Os estados de
+extração pendente nas seções anteriores à mudança descrevem aquele momento.
+
+## Etapa 1 de política restritiva — 27/09/2026
+
+Esta atualização rege as novas consultas PLAYME/TESTME; os estados e registros
+das aulas abaixo são históricos. O contrato de transporte continua separado da
+aceitação semântica. A query formal de `PreparedQuery` ainda tem as instruções
+legadas; esta etapa não migra nem reescreve bundles existentes.
+
+- FACT exige sustentação direta nas evidências selecionadas e citação de ID,
+  arquivo e linhas. Nomes e conhecimento externo não comprovam finalidade.
+- INFERENCE somente por pedido explícito na pergunta, com evidências, premissas
+  disponíveis e limites. HYPOTHESIS somente por pedido explícito, como possibilidade
+  não comprovada e com forma de investigação. Nenhuma categoria é obrigatória.
+- Informação necessária ausente resulta em LACUNA; não autoriza preencher a resposta.
+  Lacunas devem ser pertinentes à pergunta e limitadas ao material recebido.
+- As regras valem também para prosa sem rótulos. Não propor alterações, testes ou
+  benchmarks espontâneos. Código, execução, resposta e avaliação mantêm papéis distintos.
+- Rubrica anterior à geração; avaliar cada afirmação, citações, fórmula/operandos,
+  extrapolações e contradições. Qualquer violação impede aprovação semântica.
+
+Primeiro caso solicitado: “Onde a câmera calcula a direção dos raios?”, com E1
+limitado ao método recuperado. Resultado esperado: localizar `Camera::ray_from_pixel`,
+citar E1 e `src/camera.rs:75–89`, reproduzir `(pixel - origin).normalize()` e distinguir
+a chamada escrita do conhecimento sobre implementações ausentes. A pergunta não
+autoriza INFERENCE ou HYPOTHESIS. O gabarito deste parágrafo não entra no prompt.
+
+Preservar configuração solicitada/reportada, query/request exatos, retorno bruto,
+texto e avaliação vinculada por hash. `context` do retorno permanece no bruto;
+métricas do provedor descrevem a chamada, não o desempenho do renderer.
+
+Uma resposta aprovada não fecha a bateria: ainda são necessários os casos integral,
+parcial, impossível, inferência e hipótese, com critérios prévios e repetições.
+O objetivo seguinte é extrair o preparador/transporte e seus testes para uma
+biblioteca LLM no Librarian. Modelo, parâmetros e domínio serão configuração;
+Ollama será um adaptador. Trocar Qwen por DeepSeek não deve exigir mudar o Graph
+Engine; cada modelo/configuração exige avaliação própria. Extração ainda não realizada.
+
+Resultado inicial: duas consultas reais da câmera tiveram transporte concluído e
+avaliação semântica reprovada. A segunda reproduziu a fórmula, mas manteve interpretação
+geométrica e lacuna indevida. Ver [experimento 26](../experimentos/26-politica-llm-camera/README.md).
+Nenhuma aprovação da Etapa 1 ou extração é inferida desses resultados.
+
+## Estado histórico ao final da Aula 25
+
 Estado atual: Aula 25 concluída; integração implementada e testada com servidor
 simulado, execução integrada real ainda pendente (Aula 26). Este documento
 é um contrato interno, não uma especificação da API HTTP do Ollama. O mapeamento

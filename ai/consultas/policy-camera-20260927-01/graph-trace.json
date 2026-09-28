@@ -1,0 +1,244 @@
+{
+    "limits":  {
+                   "depth":  2,
+                   "max_nodes":  48,
+                   "max_edges":  96,
+                   "truncated":  false,
+                   "label_bytes_limit":  256,
+                   "labels_truncated":  0
+               },
+    "relations":  [
+                      {
+                          "from":  "src/camera.rs",
+                          "kind":  "declares",
+                          "to":  "impl Camera",
+                          "resolution":  "structural",
+                          "path":  "src/camera.rs",
+                          "line":  36
+                      },
+                      {
+                          "from":  "src/camera.rs",
+                          "kind":  "declares",
+                          "to":  "impl Camera::ray_from_pixel",
+                          "resolution":  "structural",
+                          "path":  "src/camera.rs",
+                          "line":  75
+                      },
+                      {
+                          "from":  "impl Camera",
+                          "kind":  "contains",
+                          "to":  "impl Camera::with_transform",
+                          "resolution":  "structural",
+                          "path":  "src/camera.rs",
+                          "line":  65
+                      },
+                      {
+                          "from":  "impl Camera",
+                          "kind":  "contains",
+                          "to":  "impl Camera::with_maximum_recursive_depth",
+                          "resolution":  "structural",
+                          "path":  "src/camera.rs",
+                          "line":  70
+                      },
+                      {
+                          "from":  "impl Camera",
+                          "kind":  "contains",
+                          "to":  "impl Camera::ray_from_pixel",
+                          "resolution":  "structural",
+                          "path":  "src/camera.rs",
+                          "line":  75
+                      },
+                      {
+                          "from":  "impl Camera",
+                          "kind":  "contains",
+                          "to":  "impl Camera::render",
+                          "resolution":  "structural",
+                          "path":  "src/camera.rs",
+                          "line":  91
+                      },
+                      {
+                          "from":  "impl Camera",
+                          "kind":  "contains",
+                          "to":  "impl Camera::benchmark_render",
+                          "resolution":  "structural",
+                          "path":  "src/camera.rs",
+                          "line":  106
+                      },
+                      {
+                          "from":  "impl Camera",
+                          "kind":  "contains",
+                          "to":  "impl Camera::new",
+                          "resolution":  "structural",
+                          "path":  "src/camera.rs",
+                          "line":  37
+                      },
+                      {
+                          "from":  "impl Camera",
+                          "kind":  "type_reference",
+                          "to":  "Camera",
+                          "resolution":  "syntax_only",
+                          "path":  "src/camera.rs",
+                          "line":  36
+                      },
+                      {
+                          "from":  "impl Camera::ray_from_pixel",
+                          "kind":  "call_observed",
+                          "to":  "Tuple::point",
+                          "resolution":  "syntax_only",
+                          "path":  "src/camera.rs",
+                          "line":  84
+                      },
+                      {
+                          "from":  "impl Camera::ray_from_pixel",
+                          "kind":  "call_observed",
+                          "to":  "Tuple::point",
+                          "resolution":  "syntax_only",
+                          "path":  "src/camera.rs",
+                          "line":  85
+                      },
+                      {
+                          "from":  "impl Camera::ray_from_pixel",
+                          "kind":  "call_observed",
+                          "to":  "Ray::new",
+                          "resolution":  "syntax_only",
+                          "path":  "src/camera.rs",
+                          "line":  88
+                      },
+                      {
+                          "from":  "impl Camera::ray_from_pixel",
+                          "kind":  "declared_return",
+                          "to":  "Ray",
+                          "resolution":  "syntax_only",
+                          "path":  "src/camera.rs",
+                          "line":  75
+                      },
+                      {
+                          "from":  "impl Camera::ray_from_pixel",
+                          "kind":  "local_binding",
+                          "to":  "offset_x",
+                          "resolution":  "syntax_only",
+                          "path":  "src/camera.rs",
+                          "line":  76
+                      },
+                      {
+                          "from":  "impl Camera::ray_from_pixel",
+                          "kind":  "local_binding",
+                          "to":  "offset_y",
+                          "resolution":  "syntax_only",
+                          "path":  "src/camera.rs",
+                          "line":  77
+                      },
+                      {
+                          "from":  "impl Camera::ray_from_pixel",
+                          "kind":  "local_binding",
+                          "to":  "world_x",
+                          "resolution":  "syntax_only",
+                          "path":  "src/camera.rs",
+                          "line":  79
+                      },
+                      {
+                          "from":  "impl Camera::ray_from_pixel",
+                          "kind":  "local_binding",
+                          "to":  "world_y",
+                          "resolution":  "syntax_only",
+                          "path":  "src/camera.rs",
+                          "line":  80
+                      },
+                      {
+                          "from":  "impl Camera::ray_from_pixel",
+                          "kind":  "local_binding",
+                          "to":  "inverse_camera_transform",
+                          "resolution":  "syntax_only",
+                          "path":  "src/camera.rs",
+                          "line":  82
+                      },
+                      {
+                          "from":  "impl Camera::ray_from_pixel",
+                          "kind":  "local_binding",
+                          "to":  "pixel",
+                          "resolution":  "syntax_only",
+                          "path":  "src/camera.rs",
+                          "line":  84
+                      },
+                      {
+                          "from":  "impl Camera::ray_from_pixel",
+                          "kind":  "local_binding",
+                          "to":  "origin",
+                          "resolution":  "syntax_only",
+                          "path":  "src/camera.rs",
+                          "line":  85
+                      },
+                      {
+                          "from":  "impl Camera::ray_from_pixel",
+                          "kind":  "local_binding",
+                          "to":  "direction",
+                          "resolution":  "syntax_only",
+                          "path":  "src/camera.rs",
+                          "line":  86
+                      },
+                      {
+                          "from":  "impl Camera::ray_from_pixel",
+                          "kind":  "method_call_observed",
+                          "to":  "self.transform.inverse()",
+                          "resolution":  "syntax_only",
+                          "path":  "src/camera.rs",
+                          "line":  82
+                      },
+                      {
+                          "from":  "impl Camera::ray_from_pixel",
+                          "kind":  "method_call_observed",
+                          "to":  "(pixel - origin).normalize()",
+                          "resolution":  "syntax_only",
+                          "path":  "src/camera.rs",
+                          "line":  86
+                      },
+                      {
+                          "from":  "impl Camera::ray_from_pixel",
+                          "kind":  "type_reference",
+                          "to":  "usize",
+                          "resolution":  "syntax_only",
+                          "path":  "src/camera.rs",
+                          "line":  75
+                      },
+                      {
+                          "from":  "impl Camera::ray_from_pixel",
+                          "kind":  "type_reference",
+                          "to":  "usize",
+                          "resolution":  "syntax_only",
+                          "path":  "src/camera.rs",
+                          "line":  75
+                      },
+                      {
+                          "from":  "impl Camera::ray_from_pixel",
+                          "kind":  "type_reference",
+                          "to":  "Ray",
+                          "resolution":  "syntax_only",
+                          "path":  "src/camera.rs",
+                          "line":  75
+                      },
+                      {
+                          "from":  "impl Camera::ray_from_pixel",
+                          "kind":  "type_reference",
+                          "to":  "f64",
+                          "resolution":  "syntax_only",
+                          "path":  "src/camera.rs",
+                          "line":  76
+                      },
+                      {
+                          "from":  "impl Camera::ray_from_pixel",
+                          "kind":  "type_reference",
+                          "to":  "f64",
+                          "resolution":  "syntax_only",
+                          "path":  "src/camera.rs",
+                          "line":  77
+                      },
+                      {
+                          "from":  "Ray",
+                          "kind":  "name_candidate",
+                          "to":  "Ray",
+                          "resolution":  "name_candidate",
+                          "path":  "src/camera.rs",
+                          "line":  75
+                      }
+                  ]
+}

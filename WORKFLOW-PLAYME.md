@@ -1,5 +1,9 @@
 # Workflow completo: renderer, Librarian e Ollama
 
+O preparador e o transporte abaixo pertencem ao crate `librarian-llm-engine`
+do Librarian. PLAYME usa seus executáveis; o renderer conserva seleção,
+Modelfile e avaliação. Os artefatos e a política não mudaram na extração.
+
 A única trilha executável está no [PLAYME](PLAYME.ps1). Este fluxograma mostra o fluxo completo entre o renderer, o Librarian e o Ollama, desde a seleção e extração das fontes até a preparação da consulta, envio ao modelo, preservação da resposta e validação final dos artefatos.
 
 

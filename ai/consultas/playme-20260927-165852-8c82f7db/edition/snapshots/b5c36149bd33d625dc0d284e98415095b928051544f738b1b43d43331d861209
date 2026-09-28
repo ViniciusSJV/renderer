@@ -1,0 +1,29 @@
+pub use crate::bibliotecario::{
+    BibliotecarioFact,
+    EvidenceBundle,
+    QueryExport,
+    Selection,
+    SourceRef,
+    ValidationOutcome,
+};
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn core_re_exports_common_bibliotecario_types() {
+        let fact = BibliotecarioFact::new("F-1", "statement", "source-1", 2);
+        let source = SourceRef {
+            id: "source-1".into(),
+            path: "src/example.rs".into(),
+            lines: vec!["line 1".into(), "line 2".into()],
+        };
+        let selection = Selection::new(vec!["F-1"], 1);
+        let bundle = EvidenceBundle::new(source, vec![fact.clone()], selection.clone());
+
+        assert_eq!(fact.id, "F-1");
+        assert_eq!(bundle.selection.fact_ids, selection.fact_ids);
+        assert!(bundle.validate().ok);
+    }
+}

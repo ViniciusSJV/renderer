@@ -25,8 +25,8 @@
     ["material", "materiais", "materials"],
     ["superficie", "superficies", "surface", "surfaces"],
     ["coordenada", "coordenadas", "coordinate", "coordinates"],
-    ["transformacao inversa", "inverse transformation", "inverse transform"],
-    ["tamanho do pixel", "pixel size"]
+    ["inversa", "inverso", "inverse"],
+    ["tamanho", "tamanhos", "size", "sizes"]
   ],
 
   "stop_words": [

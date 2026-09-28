@@ -1,0 +1,9 @@
+**FACT**: A câmera calcula a direção dos raios no método `impl Camera::ray_from_pixel` (E1, arquivo `src/camera.rs`, linhas 75-89). O processo envolve os seguintes passos:
+
+1. Calcula o deslocamento `offset_x` e `offset_y` com base nas coordenadas do pixel e no tamanho do pixel.
+2. Converte esses deslocamentos para coordenadas no mundo (`world_x` e `world_y`).
+3. Aplica a transformação inversa da câmera (`inverse_camera_transform`) para obter o ponto `pixel` e a origem (`origin`) no espaço da câmera.
+4. Calcula a direção do raio subtraindo a origem do ponto e normalizando o resultado.
+5. Cria um novo raio com a origem e a direção calculadas.
+
+**LACUNA**: Não há informações sobre como a câmera é inicializada ou como a transformação da câmera é definida.
