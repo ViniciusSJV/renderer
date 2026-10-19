@@ -1,4 +1,0 @@
-num_ctx                        4096
-num_predict                    1024
-seed                           42
-temperature                    0

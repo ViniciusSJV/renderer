@@ -1,4 +1,0 @@
-{
-  "project": "renderer",
-  "inputs": ["src", "tests", "Cargo.toml", "Cargo.lock"]
-}
