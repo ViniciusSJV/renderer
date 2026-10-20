@@ -2,7 +2,7 @@
   "project_root": ".",
   "sources_config": "ai/acervo/renderer-sources.json",
   "lexicon": "ai/acervo/renderer-lexicon.json",
-  "modelfile": "ai/ollama/Modelfile",
+  "modelfile": "../librarian/modelfiles/analista.Modelfile",
   "model": "renderer-analyst:latest",
   "ollama_base_url": "http://127.0.0.1:11434",
   "instructions": "ai/playme/instructions.json",
