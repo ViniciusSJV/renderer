@@ -2,14 +2,16 @@
 
 The LLM request builder and Ollama transport now live in
 [`librarian-llm-engine`](../librarian/crates/librarian-llm-engine/README.md).
-PLAYME/TESTME use its executables; renderer retains compatibility CLI wrappers
-and the dossier coordinator. Keep the sibling Librarian checkout updated.
-This extraction preserves behavior and does not close semantic evaluation.
+PLAYME now runs from Librarian (`tools/playme`); this repository is a consumer
+that supplies only [playme.json](playme.json), sources, lexicon, Modelfile,
+instructions and criteria. Run `.\PLAYME.cmd -Question '...'`.
+Renderer retains compatibility CLI wrappers and the dossier coordinator.
+Keep the sibling Librarian checkout updated. Semantic evaluation remains open.
 
 The [complete PowerShell walkthrough](TESTME.md) covers source
 generation through Librarian, lexical questions, graph verification, explicit
 prompt preparation, Ollama server/model setup, API submission and response evaluation.
-The [first real manual attempt](ai/consultas/manual-001/EVALUATION-OLLAMA-01.md)
+The [first real manual attempt](https://github.com/ViniciusSJV/renderer/blob/a6e56ba19213d879f5de6e3e07f8a75ef84fe569/ai/consultas/manual-001/EVALUATION-OLLAMA-01.md)
 has verified transport artifacts and a partially correct explanation requiring clarification.
 
 For the renderer + Librarian evidence workflow, see [TESTME.md](TESTME.md).

@@ -14,7 +14,7 @@ e experimentos anteriores permanecem históricos.
 
 O [roteiro completo de execução manual](../TESTME.md) conecta geração
 de fontes, Librarian, pergunta, grafo, prompt, servidor/modelo Ollama e API.
-A [primeira tentativa manual avaliada](consultas/manual-001/EVALUATION-OLLAMA-01.md)
+A [primeira tentativa manual avaliada](https://github.com/ViniciusSJV/renderer/blob/a6e56ba19213d879f5de6e3e07f8a75ef84fe569/ai/consultas/manual-001/EVALUATION-OLLAMA-01.md)
 teve transporte e hashes conferidos, mas explicação parcialmente correta. É um
 caminho manual com avaliação retrospectiva, não o fechamento automático dos engines.
 
