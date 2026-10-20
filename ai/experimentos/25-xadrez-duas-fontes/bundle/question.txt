@@ -1,1 +1,0 @@
-Como as quatro chamadas declaradas no XadrezService se relacionam com as condições de rota do BackendInterceptor? Cite fatos e fontes, preserve os padrões de URL e não afirme execução ou correção das regras de xadrez.
