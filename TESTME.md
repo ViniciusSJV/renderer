@@ -1,14 +1,13 @@
-# TESTME — trilha única: código → Librarian → Ollama
+# TESTME — roteiro manual: código → Librarian → Ollama
 
-**Comece aqui e siga em ordem.** Esta é a única trilha operacional dos dois
-projetos, no Windows/PowerShell. Os outros READMEs explicam componentes ou preservam
-experimentos; não são etapas adicionais deste roteiro.
+**Execução automática:** `.\PLAYME.cmd -Question '...'` chama o PLAYME genérico do
+Librarian com o perfil [playme.json](playme.json); veja o [WORKFLOW do Librarian](../librarian/WORKFLOW.md).
 
-A trilha fica no renderer porque ele fornece o código estudado, o léxico, o
-Modelfile. O Librarian gera/verifica acervos, busca termos, navega pelas relações
-e fornece o preparador e o transporte no crate `librarian-llm-engine`.
-O transporte também pode ser usado diretamente no Librarian; o renderer mantém
-a seleção, a política e a avaliação do domínio.
+Este arquivo é o **roteiro manual comentado** dos mesmos passos para o renderer,
+no Windows/PowerShell, útil para inspecionar cada passagem. Não é uma segunda trilha.
+O renderer fornece o código estudado, o léxico, o Modelfile, as instruções e os
+critérios; o Librarian gera/verifica acervos, busca, navega pelas relações e
+fornece o preparador e o transporte no crate `librarian-llm-engine`.
 
 | Ordem | O que você faz | Resultado |
 | --- | --- | --- |

@@ -15,8 +15,8 @@ o escopo novo sem atribuí-lo retroativamente ao caminho formal PreparedQuery.
 
 | Tentativa | Política | Transporte | Avaliação |
 | --- | --- | --- | --- |
-| [01](../../consultas/policy-camera-20260927-01/EVALUATION-01.md) | Categorias condicionadas ao pedido e fatos restritos à evidência | HTTP 200, completed, 10.132,3363 ms no cliente | Reprovada: atribui espaços geométricos, omite fórmula literal e acrescenta lacuna irrelevante. |
-| [02](../../consultas/policy-camera-20260927-02/EVALUATION-02.md) | Acrescenta descrição literal, concisão em localização e proibição de deduzir espaço geométrico dos nomes | HTTP 200, completed, 3.094,9217 ms no cliente | Reprovada: fórmula correta, mas ainda afirma espaço do mundo e produz lacuna imprecisa sobre operações presentes. |
+| [01](https://github.com/ViniciusSJV/renderer/blob/a6e56ba19213d879f5de6e3e07f8a75ef84fe569/ai/consultas/policy-camera-20260927-01/EVALUATION-01.md) | Categorias condicionadas ao pedido e fatos restritos à evidência | HTTP 200, completed, 10.132,3363 ms no cliente | Reprovada: atribui espaços geométricos, omite fórmula literal e acrescenta lacuna irrelevante. |
+| [02](https://github.com/ViniciusSJV/renderer/blob/a6e56ba19213d879f5de6e3e07f8a75ef84fe569/ai/consultas/policy-camera-20260927-02/EVALUATION-02.md) | Acrescenta descrição literal, concisão em localização e proibição de deduzir espaço geométrico dos nomes | HTTP 200, completed, 3.094,9217 ms no cliente | Reprovada: fórmula correta, mas ainda afirma espaço do mundo e produz lacuna imprecisa sobre operações presentes. |
 
 As latências descrevem chamadas diferentes, com estado de carga/cache potencialmente
 distinto; não demonstram melhoria de desempenho. Não houve repetição controlada.

@@ -1,5 +1,7 @@
 # Preserve hashed catalog artifacts byte-for-byte on Windows and Unix.
 ai/acervo/renderer-auto-v1/edition/** -text
-ai/consultas/policy-camera-20260927-01/** -text
-ai/consultas/policy-camera-20260927-02/** -text
-ai/consultas/playme-20260927-165852-8c82f7db/** -text
+# Consultas preservadas com git add -f mantem os bytes avaliados.
+ai/consultas/** -text
+# Politica do PLAYME: bytes entram no prompt e nos hashes da consulta.
+ai/playme/** -text
+playme.json -text
