@@ -9,6 +9,7 @@
   "criteria": "ai/playme/criteria-before.md",
   "output_root": "ai/consultas",
   "question_prompt": "Qual a sua pergunta sobre o renderer?",
-  "search": { "top": 5, "depth": 2 },
+  "search": { "top": 5, "depth": 2, "hits": 1 },
+  "prepare": { "radius": 0 },
   "send": { "timeout_ms": 300000, "max_response_bytes": 1048576 }
 }
