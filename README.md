@@ -37,23 +37,23 @@ and has no Librarian dependency. It keeps the consumer profile, nothing else:
 
 | File | Role |
 | --- | --- |
-| [playme.json](playme.json) | Profile passed to Librarian's PLAYME |
+| [librarian.json](librarian.json) | Profile read by Librarian Studio when this folder is opened |
 | [ai/acervo/renderer-sources.json](ai/acervo/renderer-sources.json) | Files that form the edition |
 | [ai/acervo/renderer-lexicon.json](ai/acervo/renderer-lexicon.json) | Portuguese → code vocabulary |
-| [ai/ollama/Modelfile](ai/ollama/Modelfile) | Local model configuration (`renderer-analyst`) |
-| [ai/playme/](ai/playme) | Explanation instructions and prior criteria |
+| [ai/librarian/](ai/librarian) | Explanation instructions and prior criteria |
 
-With the Librarian checkout next to this directory (`../librarian`):
+The Modelfiles (for example `analista`) live in Librarian's
+[Modelfile library](https://github.com/ViniciusSJV/librarian/tree/main/modelfiles).
 
-```powershell
-.\PLAYME.cmd -Question 'Onde a câmera calcula a direção dos raios?'
-```
+To ask questions about the renderer, start Librarian Studio (`STUDIO.cmd` in the
+Librarian checkout) and open this folder in the page. The studio generates the graph,
+lights up what each question reaches and sends the checked query to an LLM. Its data
+lives in Librarian's `.studio/`, never here. How to start it and how it works:
+[Librarian STUDIO](https://github.com/ViniciusSJV/librarian/blob/main/STUDIO.md).
 
-Runs are written to `ai/consultas/` (ignored by Git). Open a run folder in
-Librarian's [Graph Viewer](https://github.com/ViniciusSJV/librarian/tree/main/tools/graph-viewer)
-to explore the generated graph. Flow and artifacts are in
-the [Librarian WORKFLOW](https://github.com/ViniciusSJV/librarian/blob/main/WORKFLOW.md). The lessons, experiments and
-legacy tools from when Librarian was built here are linked from its [HISTORICO](https://github.com/ViniciusSJV/librarian/blob/main/HISTORICO.md).
+`ai/consultas/` holds runs of the removed PLAYME, if any, and is ignored by Git. The
+lessons, experiments and legacy tools from when Librarian was built here are linked
+from its [HISTORICO](https://github.com/ViniciusSJV/librarian/blob/main/HISTORICO.md).
 
 # samples
 
