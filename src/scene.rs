@@ -1,4 +1,5 @@
-use crate::bibliotecario::{ValidationOutcome, BibliotecarioFact};
+/// Validation result: `Err` carries the first rule the specification breaks.
+pub type Validation = Result<(), String>;
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct CameraSpec {
@@ -8,14 +9,14 @@ pub struct CameraSpec {
 }
 
 impl CameraSpec {
-    pub fn validate(&self) -> ValidationOutcome {
+    pub fn validate(&self) -> Validation {
         if self.width == 0 || self.height == 0 {
-            return ValidationOutcome::fail("camera dimensions must be greater than zero");
+            return Err("camera dimensions must be greater than zero".into());
         }
         if !self.field_of_view.is_finite() || self.field_of_view <= 0.0 {
-            return ValidationOutcome::fail("camera.field_of_view must be a positive finite number");
+            return Err("camera.field_of_view must be a positive finite number".into());
         }
-        ValidationOutcome::ok()
+        Ok(())
     }
 }
 
@@ -26,14 +27,14 @@ pub struct LightSpec {
 }
 
 impl LightSpec {
-    pub fn validate(&self) -> ValidationOutcome {
+    pub fn validate(&self) -> Validation {
         if self.position.iter().all(|v| v.is_finite())
             && self.intensity.iter().all(|v| v.is_finite())
             && self.intensity.iter().all(|v| *v >= 0.0)
         {
-            return ValidationOutcome::ok();
+            return Ok(());
         }
-        ValidationOutcome::fail("light values must be finite and intensity non-negative")
+        Err("light values must be finite and intensity non-negative".into())
     }
 }
 
@@ -45,9 +46,9 @@ pub struct ObjectSpec {
 }
 
 impl ObjectSpec {
-    pub fn validate(&self) -> ValidationOutcome {
+    pub fn validate(&self) -> Validation {
         if self.kind.trim().is_empty() {
-            return ValidationOutcome::fail("object.kind must not be empty");
+            return Err("object.kind must not be empty".into());
         }
         self.material.validate()
     }
@@ -62,14 +63,14 @@ pub struct MaterialSpec {
 }
 
 impl MaterialSpec {
-    pub fn validate(&self) -> ValidationOutcome {
+    pub fn validate(&self) -> Validation {
         if !self.color.iter().all(|v| v.is_finite()) {
-            return ValidationOutcome::fail("material.color values must be finite");
+            return Err("material.color values must be finite".into());
         }
         if !self.ambient.is_finite() || !self.diffuse.is_finite() || !self.specular.is_finite() {
-            return ValidationOutcome::fail("material scalar values must be finite");
+            return Err("material scalar values must be finite".into());
         }
-        ValidationOutcome::ok()
+        Ok(())
     }
 }
 
@@ -78,7 +79,6 @@ pub struct SceneSpec {
     pub camera: CameraSpec,
     pub lights: Vec<LightSpec>,
     pub objects: Vec<ObjectSpec>,
-    pub facts: Vec<BibliotecarioFact>,
 }
 
 impl SceneSpec {
@@ -121,45 +121,24 @@ impl SceneSpec {
                     },
                 },
             ],
-            facts: vec![
-                BibliotecarioFact::new("SCENE-1", "single light and two spheres", "scene-spec", 1),
-            ],
         }
     }
 
-    pub fn validate(&self) -> ValidationOutcome {
-        let camera_result = self.camera.validate();
-        if !camera_result.ok {
-            return camera_result;
-        }
+    pub fn validate(&self) -> Validation {
+        self.camera.validate()?;
         if self.lights.is_empty() {
-            return ValidationOutcome::fail("scene.lights must contain at least one light");
+            return Err("scene.lights must contain at least one light".into());
         }
         if self.objects.is_empty() {
-            return ValidationOutcome::fail("scene.objects must contain at least one object");
+            return Err("scene.objects must contain at least one object".into());
         }
         for light in &self.lights {
-            let outcome = light.validate();
-            if !outcome.ok {
-                return outcome;
-            }
+            light.validate()?;
         }
         for object in &self.objects {
-            let outcome = object.validate();
-            if !outcome.ok {
-                return outcome;
-            }
+            object.validate()?;
         }
-        if self.facts.is_empty() {
-            return ValidationOutcome::fail("scene.facts must not be empty");
-        }
-        for fact in &self.facts {
-            let outcome = fact.validate();
-            if !outcome.ok {
-                return outcome;
-            }
-        }
-        ValidationOutcome::ok()
+        Ok(())
     }
 }
 
@@ -170,7 +149,7 @@ mod tests {
     #[test]
     fn scene_schema_accepts_valid_scene() {
         let scene = SceneSpec::default_sample();
-        assert!(scene.validate().ok);
+        assert!(scene.validate().is_ok());
         assert_eq!(scene.camera.width, 128);
         assert_eq!(scene.objects.len(), 2);
     }
@@ -179,10 +158,10 @@ mod tests {
     fn scene_schema_rejects_invalid_fov_and_missing_light() {
         let mut scene = SceneSpec::default_sample();
         scene.camera.field_of_view = 0.0;
-        assert!(!scene.validate().ok);
+        assert!(scene.validate().is_err());
 
         let mut bad = SceneSpec::default_sample();
         bad.lights.clear();
-        assert!(!bad.validate().ok);
+        assert!(bad.validate().is_err());
     }
 }

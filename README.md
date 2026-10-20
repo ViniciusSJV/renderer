@@ -1,26 +1,5 @@
 # Ray Tracer
 
-The LLM request builder and Ollama transport now live in
-[`librarian-llm-engine`](../librarian/crates/librarian-llm-engine/README.md).
-PLAYME now runs from Librarian (`tools/playme`); this repository is a consumer
-that supplies only [playme.json](playme.json), sources, lexicon, Modelfile,
-instructions and criteria. Run `.\PLAYME.cmd -Question '...'`.
-Renderer retains compatibility CLI wrappers and the dossier coordinator.
-Keep the sibling Librarian checkout updated. Semantic evaluation remains open.
-
-The [complete PowerShell walkthrough](TESTME.md) covers source
-generation through Librarian, lexical questions, graph verification, explicit
-prompt preparation, Ollama server/model setup, API submission and response evaluation.
-The [first real manual attempt](https://github.com/ViniciusSJV/renderer/blob/a6e56ba19213d879f5de6e3e07f8a75ef84fe569/ai/consultas/manual-001/EVALUATION-OLLAMA-01.md)
-has verified transport artifacts and a partially correct explanation requiring clarification.
-
-For the renderer + Librarian evidence workflow, see [TESTME.md](TESTME.md).
-
-Lexical questions and a source-backed structural graph are now available through
-`catalog_sources search`, `graph`, and `verify-graph`. See the
-[search walkthrough](ai/acervo/renderer-search-v1/README.md) and [WORKFLOW](WORKFLOW.md).
-The algorithm lives in Librarian; renderer supplies vocabulary and reference questions.
-
 A design of a Ray Tracer Render in Rust based on the book:
 The ray tracer challenge. By Jamis Buck.
 
@@ -44,30 +23,35 @@ The ray tracer challenge. By Jamis Buck.
 - [ ] Chapter 16 - Constructive Solid Geometry (CSG)
 - [ ] Chapter 17 - Next Steps
 
-## Build and Librarian integration
-
-The evidence tools use [Librarian](https://github.com/ViniciusSJV/librarian),
-pinned to Git revision `a009af8276c4bb58c67905a10fea32f1cbbf8a38` in both
-`Cargo.toml` and `Cargo.lock`. Cargo downloads the dependency; a separate local
-checkout is required for the new local `librarian-ingest` development dependency:
-keep the updated Librarian checkout next to this directory at `../librarian`.
-The published v0.1.0 does not contain this new crate yet. The existing core and
-Graph Engine dependencies remain pinned to Git. See the
-[automatic source catalog](ai/acervo/renderer-auto-v1/README.md).
+## Build
 
 ```sh
-cargo fetch --locked
 cargo test --locked
-cargo test --locked --test librarian_integration
+cargo run --locked --release --bin bench_render
 ```
 
-The integration test checks the external-scene dossier against its reference
-query and rejects an altered source. It does not contact an LLM. The full suite
-includes Unix-specific capture tools and local HTTP test servers; on native
-Windows, select supported targets explicitly.
+## Librarian
 
-See the [evidence laboratory](ai/README.md) and the
-[integration report](ai/experimentos/22-integracao-librarian/README.md).
+This project is only a source for [Librarian](https://github.com/ViniciusSJV/librarian)
+and has no Librarian dependency. It keeps the consumer profile, nothing else:
+
+| File | Role |
+| --- | --- |
+| [playme.json](playme.json) | Profile passed to Librarian's PLAYME |
+| [ai/acervo/renderer-sources.json](ai/acervo/renderer-sources.json) | Files that form the edition |
+| [ai/acervo/renderer-lexicon.json](ai/acervo/renderer-lexicon.json) | Portuguese → code vocabulary |
+| [ai/ollama/Modelfile](ai/ollama/Modelfile) | Local model configuration (`renderer-analyst`) |
+| [ai/playme/](ai/playme) | Explanation instructions and prior criteria |
+
+With the Librarian checkout next to this directory (`../librarian`):
+
+```powershell
+.\PLAYME.cmd -Question 'Onde a câmera calcula a direção dos raios?'
+```
+
+Runs are written to `ai/consultas/` (ignored by Git). Flow and artifacts are in
+the [Librarian WORKFLOW](../librarian/WORKFLOW.md). The lessons, experiments and
+legacy tools from when Librarian was built here are linked from its `HISTORICO.md`.
 
 # samples
 
