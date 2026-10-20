@@ -3,5 +3,5 @@
 # Optional independent checkout; Cargo uses the pinned Git dependency.
 /Librarian/
 
-# Consultas geradas a cada PLAYME; preserve explicitamente as que forem avaliadas.
+# Consultas antigas do PLAYME (removido); o Librarian Studio grava em librarian/.studio.
 /ai/consultas/
