@@ -49,9 +49,11 @@ With the Librarian checkout next to this directory (`../librarian`):
 .\PLAYME.cmd -Question 'Onde a câmera calcula a direção dos raios?'
 ```
 
-Runs are written to `ai/consultas/` (ignored by Git). Flow and artifacts are in
-the [Librarian WORKFLOW](../librarian/WORKFLOW.md). The lessons, experiments and
-legacy tools from when Librarian was built here are linked from its `HISTORICO.md`.
+Runs are written to `ai/consultas/` (ignored by Git). Open a run folder in
+Librarian's [Graph Viewer](https://github.com/ViniciusSJV/librarian/tree/main/tools/graph-viewer)
+to explore the generated graph. Flow and artifacts are in
+the [Librarian WORKFLOW](https://github.com/ViniciusSJV/librarian/blob/main/WORKFLOW.md). The lessons, experiments and
+legacy tools from when Librarian was built here are linked from its [HISTORICO](https://github.com/ViniciusSJV/librarian/blob/main/HISTORICO.md).
 
 # samples
 
