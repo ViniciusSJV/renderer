@@ -1,5 +1,5 @@
-# Consultas preservadas com git add -f mantem os bytes avaliados.
+# Consultas antigas preservadas com git add -f mantem os bytes avaliados.
 ai/consultas/** -text
-# Politica do PLAYME: bytes entram no prompt e nos hashes da consulta.
-ai/playme/** -text
-playme.json -text
+# Perfil do Librarian Studio: instrucoes e criterios entram na query e nos hashes.
+ai/librarian/** -text
+librarian.json -text
