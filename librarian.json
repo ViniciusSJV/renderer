@@ -10,7 +10,7 @@
     "compilar": { "argv": ["cargo", "build", "--release", "--bin", "librarian_measure"], "timeout_s": 1200 },
     "testes": { "argv": ["cargo", "test", "--release", "--quiet"], "timeout_s": 1800 },
     "medir": {
-      "argv": ["cargo", "run", "--release", "--quiet", "--bin", "librarian_measure", "--", "librarian-cap11.png", "1280", "676"],
+      "argv": ["cargo", "run", "--release", "--quiet", "--bin", "librarian_measure", "--", "librarian-cap11.png", "2048", "1080"],
       "timeout_s": 900, "repeat": 5, "outputs": ["librarian-cap11.png"]
     }
   }

@@ -55,8 +55,8 @@ fn main() {
     c.transform = Matrix::translation(Tuple::vector(-1.5, 0.5, 3.)) * Matrix::scaling(Tuple::vector(0.5, 0.5, 0.5));
 
     let lights = vec![
-        Light::point_light(Tuple::point(-10., 10., -10.), Color::new(0.7, 0.7, 0.7)),
-        Light::point_light(Tuple::point(10., 10., -10.), Color::new(0.3, 0.3, 0.3)),
+        Light::point_light(Tuple::point(-10., 10., -10.), Color::new(1., 1., 1.)),
+        Light::point_light(Tuple::point(10., 10., -10.), Color::new(0.4, 0.4, 0.4)),
     ];
     let objects = vec![Object::from(a), Object::from(b), Object::from(c), Object::from(wall), Object::from(floor)];
     let world = World::new(objects, lights);
