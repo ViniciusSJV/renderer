@@ -30,7 +30,8 @@ pub struct Camera {
     half_width: f64,
     half_height: f64,
     pixel_size: f64,
-    maximum_recursive_depth: u8
+    maximum_recursive_depth: u8,
+    inverse_transform: Matrix<4>,
 }
 
 impl Camera {
@@ -50,20 +51,25 @@ impl Camera {
 
         let pixel_size = (half_width * 2.0) / horizontal_size as f64;
 
+        let transform = Matrix::identity();
+        let inverse_transform = transform.inverse();
+
         Self {
             horizontal_size,
             vertical_size,
             field_of_view,
-            transform: Matrix::identity(),
+            transform,
             half_width,
             half_height,
             pixel_size,
-            maximum_recursive_depth: 4
+            maximum_recursive_depth: 4,
+            inverse_transform,
         }
     }
 
     pub fn with_transform(mut self, transform: Matrix<4>) -> Self {
         self.transform = transform;
+        self.inverse_transform = transform.inverse();
         self
     }
 
@@ -79,10 +85,8 @@ impl Camera {
         let world_x = self.half_width - offset_x;
         let world_y = self.half_height - offset_y;
 
-        let inverse_camera_transform = self.transform.inverse();
-
-        let pixel = inverse_camera_transform * Tuple::point(world_x, world_y, -1.0);
-        let origin = inverse_camera_transform * Tuple::point(0.0, 0.0, 0.0);
+        let pixel = self.inverse_transform * Tuple::point(world_x, world_y, -1.0);
+        let origin = self.inverse_transform * Tuple::point(0.0, 0.0, 0.0);
         let direction = (pixel - origin).normalize();
 
         Ray::new(origin, direction)
