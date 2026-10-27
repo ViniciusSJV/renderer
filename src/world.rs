@@ -12,17 +12,29 @@ pub struct World {
     pub objects: Vec<Object>,
     pub groups: Vec<Groups>,
     pub lights: Vec<Light>,
+    inverses: Vec<crate::matrix::Matrix<4>>,
 }
 
 impl World {
     pub fn new(objects: Vec<Object>, lights: Vec<Light>) -> Self {
-        World { objects, groups: vec![], lights }
+        World {
+            inverses: objects.iter().map(|o| o.transform().inverse()).collect(),
+            objects,
+            groups: vec![],
+            lights,
+        }
     }
 
     pub fn intersect_world(&self, ray: Ray) -> Intersections {
         let mut xs = vec![];
-        for object in self.objects.iter() {
-            xs.extend(object.intersect(ray));
+        let cached = self.inverses.len() == self.objects.len();
+        for (i, object) in self.objects.iter().enumerate() {
+            let inverse = if cached {
+                self.inverses[i]
+            } else {
+                object.transform().inverse()
+            };
+            xs.extend(object.local_intersect(ray.set_transform(inverse)));
         }
         for group in self.groups.iter() {
             xs.extend(group.intersect(ray));
@@ -110,6 +122,7 @@ impl Default for World {
             objects: vec![],
             groups: vec![],
             lights: vec![],
+            inverses: vec![],
         }
     }
 }
