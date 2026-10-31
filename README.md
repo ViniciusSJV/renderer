@@ -30,32 +30,9 @@ cargo test --locked
 cargo run --locked --release --bin bench_render
 ```
 
-## Librarian
-
-This project is only a source for [Librarian](https://github.com/ViniciusSJV/librarian)
-and has no Librarian dependency. It keeps the consumer profile, nothing else:
-
-| File | Role |
-| --- | --- |
-| [librarian.json](librarian.json) | Profile read by Librarian Studio when this folder is opened |
-| [ai/acervo/renderer-sources.json](ai/acervo/renderer-sources.json) | Files that form the edition |
-| [ai/acervo/renderer-lexicon.json](ai/acervo/renderer-lexicon.json) | Portuguese → code vocabulary |
-| [ai/librarian/](ai/librarian) | Explanation instructions and prior criteria |
-
-The Modelfiles (for example `analista`) live in Librarian's
-[Modelfile library](https://github.com/ViniciusSJV/librarian/tree/main/modelfiles).
-
-To ask questions about the renderer, start Librarian Studio (`STUDIO.cmd` in the
-Librarian checkout) and open this folder in the page. The studio generates the graph,
-lights up what each question reaches and sends the checked query to an LLM. Its data
-lives in Librarian's `.studio/`, never here. How to start it and how it works:
-[Librarian STUDIO](https://github.com/ViniciusSJV/librarian/blob/main/STUDIO.md).
-
-`ai/consultas/` holds runs of the removed PLAYME, if any, and is ignored by Git. The
-lessons, experiments and legacy tools from when Librarian was built here are linked
-from its [HISTORICO](https://github.com/ViniciusSJV/librarian/blob/main/HISTORICO.md).
-
 # samples
+
+![Teapots 4K](https://github.com/ViniciusSJV/renderer/blob/master/teapots-4k.png?raw=true)
 
 ![Chapter 10](https://github.com/ViniciusSJV/renderer/blob/master/cap10.png?raw=true)
 
