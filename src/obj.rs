@@ -45,6 +45,72 @@ pub fn parse_obj(model: &str, material: Material) -> Vec<Object> {
     triangles
 }
 
+/// The same triangles as `parse_obj`, smooth: each vertex gets a normal, the one written in
+/// the file (`vn`, referenced as `v//vn` or `v/vt/vn`) or, without it, the area-weighted mean of
+/// the faces around the vertex. Shading interpolates the three normals inside each triangle.
+///
+/// The vertices and normals are taken to `transform` here, so each triangle is already where it
+/// is drawn: a triangle in a group does not see the group's transform when shading, and a
+/// normal in the wrong space shades the surface wrong.
+pub fn parse_obj_smooth(model: &str, material: Material, transform: Matrix<4>) -> Vec<Object> {
+    let normal_transform = transform.inverse().transpose();
+    let mut vertices = Vec::new();
+    let mut written = Vec::new();
+    let mut faces: Vec<Vec<(usize, Option<usize>)>> = Vec::new();
+    for line in model.lines() {
+        let mut fields = line.split_whitespace();
+        let xyz = |f: &mut std::str::SplitWhitespace| {
+            let mut next = || f.next().unwrap().parse::<f64>().unwrap();
+            (next(), next(), next())
+        };
+        match fields.next() {
+            Some("v") => {
+                let (x, y, z) = xyz(&mut fields);
+                vertices.push(transform * Tuple::point(x, y, z));
+            }
+            Some("vn") => {
+                let (x, y, z) = xyz(&mut fields);
+                let mut n = normal_transform * Tuple::vector(x, y, z);
+                n.w = 0.;
+                written.push(n.normalize());
+            }
+            Some("f") => faces.push(
+                fields
+                    .map(|field| {
+                        let mut parts = field.split('/');
+                        let v = parts.next().unwrap().parse::<usize>().unwrap() - 1;
+                        let n = parts.nth(1).and_then(|n| n.parse::<usize>().ok()).map(|n| n - 1);
+                        (v, n)
+                    })
+                    .collect(),
+            ),
+            _ => {}
+        }
+    }
+    let fans = |face: &Vec<(usize, Option<usize>)>| (1..face.len().saturating_sub(1)).map(|i| [face[0], face[i], face[i + 1]]).collect::<Vec<_>>();
+    // Each face normal, unnormalized (its length is twice the area), added to its vertices.
+    let mut mean = vec![Tuple::vector(0., 0., 0.); vertices.len()];
+    for face in &faces {
+        for [a, b, c] in fans(face) {
+            let (pa, pb, pc) = (vertices[a.0], vertices[b.0], vertices[c.0]);
+            let n = (pc - pa).cross(pb - pa);
+            for v in [a.0, b.0, c.0] {
+                mean[v] = mean[v] + n;
+            }
+        }
+    }
+    let normal = |(v, n): (usize, Option<usize>)| n.and_then(|n| written.get(n).copied()).unwrap_or_else(|| mean[v].normalize());
+    let mut triangles = Vec::new();
+    for face in &faces {
+        for [a, b, c] in fans(face) {
+            let mut triangle = Triangle::smooth(vertices[a.0], vertices[b.0], vertices[c.0], normal(a), normal(b), normal(c));
+            triangle.set_material(material);
+            triangles.push(Object::from(triangle));
+        }
+    }
+    triangles
+}
+
 pub fn load_model(path: &str, material: Material, transform: Matrix<4>) -> Groups {
     let model = read_to_string(path).expect("Error reading model OBJ");
     let mut group = Groups::from(parse_obj(&model, material));
@@ -86,6 +152,13 @@ pub fn build_bvh(mut objects: Vec<Object>) -> Groups {
     let midpoint = objects.len() / 2;
     let right = objects.split_off(midpoint);
     Groups::from_subgroups(vec![build_bvh(objects), build_bvh(right)])
+}
+
+/// `load_bvh` with smooth triangles (see `parse_obj_smooth`).
+pub fn load_bvh_smooth(path: &str, material: Material, transform: Matrix<4>) -> Groups {
+    let model = read_to_string(path).expect("Error reading model OBJ");
+    // The transform is already in the vertices: the group stays at the identity.
+    build_bvh(parse_obj_smooth(&model, material, transform))
 }
 
 /// The model as a BVH that keeps the transform of the loaded group.

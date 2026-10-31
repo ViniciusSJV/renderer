@@ -15,7 +15,9 @@ pub struct Triangle {
     pub e2: Tuple,
     pub normal: Tuple,
     pub material: Material,
-    pub transform: Matrix<4>
+    pub transform: Matrix<4>,
+    /// Normais por vertice (smooth triangle): a normal num ponto e a interpolacao das tres.
+    pub normals: Option<[Tuple; 3]>,
 }
 
 impl Triangle {
@@ -23,7 +25,12 @@ impl Triangle {
         let e1 = p2 - p1;
         let e2 = p3 - p1;
         let normal = e2.cross(e1).normalize();
-        Triangle { p1, p2, p3, e1, e2, normal, material: Material::phong(), transform: Matrix::identity() }
+        Triangle { p1, p2, p3, e1, e2, normal, material: Material::phong(), transform: Matrix::identity(), normals: None }
+    }
+
+    /// Um triangulo com uma normal em cada vertice: a superficie parece curva.
+    pub fn smooth(p1: Tuple, p2: Tuple, p3: Tuple, n1: Tuple, n2: Tuple, n3: Tuple) -> Self {
+        Triangle { normals: Some([n1, n2, n3]), ..Triangle::new(p1, p2, p3) }
     }
 }
 
@@ -60,8 +67,18 @@ impl Intersectable for Triangle {
         ])
     }
 
-    fn local_normal_at(&self, _local_point: Tuple) -> Tuple {
-        self.normal
+    fn local_normal_at(&self, local_point: Tuple) -> Tuple {
+        let Some([n1, n2, n3]) = self.normals else { return self.normal };
+        // Coordenadas baricentricas do ponto: o peso de cada vertice.
+        let v0 = local_point - self.p1;
+        let (d00, d01, d11) = (self.e1.dot(self.e1), self.e1.dot(self.e2), self.e2.dot(self.e2));
+        let (d20, d21) = (v0.dot(self.e1), v0.dot(self.e2));
+        let denom = d00 * d11 - d01 * d01;
+        let v = (d11 * d20 - d01 * d21) / denom;
+        let w = (d00 * d21 - d01 * d20) / denom;
+        let mut n = n1 * (1. - v - w) + n2 * v + n3 * w;
+        n.w = 0.;
+        n.normalize()
     }
 
     fn material(&self) -> Material {
