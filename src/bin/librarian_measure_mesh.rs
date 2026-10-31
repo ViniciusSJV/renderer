@@ -1,6 +1,7 @@
-//! Medicao para o Librarian: renderiza uma malha OBJ (o teapot) numa BVH sobre o chao
-//! xadrez, imprime os tempos no formato `librarian-measure nome=valor unidade` e grava a
-//! imagem, cujo hash o Librarian guarda para conferir que nenhum pixel mudou.
+//! Medicao para o Librarian: dois teapots, um de vidro (com Fresnel) e um espelho ao lado,
+//! cada um numa BVH, sobre o chao xadrez e diante de uma parede. Imprime os tempos no
+//! formato `librarian-measure nome=valor unidade` e grava a imagem, cujo hash o Librarian
+//! guarda para conferir que nenhum pixel mudou.
 //! Uso: librarian_measure_mesh <saida.png> <modelo.obj> [largura] [altura]
 extern crate renderer;
 
@@ -28,30 +29,53 @@ fn main() {
     let width = args.get(3).map_or(64, |w| w.parse().expect("largura"));
     let height = args.get(4).map_or(64, |h| h.parse().expect("altura"));
 
-    let mut material = Material::phong();
-    material.color = Color::new(0.9, 0.3, 0.2);
-    material.specular = 0.4;
-    material.shininess = 100.;
+    let mut glass = Material::glass();
+    glass.color = Color::new(0.82, 0.95, 1.0);
+    glass.ambient = 0.05;
+    glass.diffuse = 0.1;
+    glass.specular = 0.9;
+    glass.shininess = 300.;
 
+    let mut mirror = Material::phong();
+    mirror.color = Color::new(0.1, 0.1, 0.1);
+    mirror.ambient = 0.;
+    mirror.diffuse = 0.1;
+    mirror.specular = 1.;
+    mirror.shininess = 300.;
+    mirror.reflective = 0.9;
+
+    let scale = Matrix::scaling(Tuple::vector(0.4, 0.4, 0.4));
     let start = Instant::now();
-    let model = load_bvh(
+    let glass_teapot = load_bvh(
         model_path,
-        material,
-        Matrix::rotation_y(PI / 6.) * Matrix::scaling(Tuple::vector(0.6, 0.6, 0.6)),
+        glass,
+        Matrix::translation(Tuple::vector(-1.5, 0., 0.)) * Matrix::rotation_y(PI / 6.) * scale,
+    );
+    let mirror_teapot = load_bvh(
+        model_path,
+        mirror,
+        Matrix::translation(Tuple::vector(1.5, 0., 0.)) * Matrix::rotation_y(-PI / 6.) * scale,
     );
     let load_ms = start.elapsed().as_secs_f64() * 1000.0;
 
-    let mut floor_material = Material::phong();
-    floor_material.pattern = Some(Patterns::from(Checkers::default()));
+    let mut checkers = Material::phong();
+    checkers.pattern = Some(Patterns::from(Checkers::default()));
+    checkers.specular = 0.;
+
     let mut floor = Plane::default();
-    floor.set_material(floor_material);
+    floor.set_material(checkers);
+
+    let mut wall = Plane::default();
+    wall.set_transform(Matrix::translation(Tuple::vector(0., 0., 6.)) * Matrix::rotation_x(PI / 2.));
+    wall.set_material(checkers);
 
     let lights = vec![Light::point_light(Tuple::point(-10., 10., -10.), Color::new(1., 1., 1.))];
-    let mut world = World::new(vec![Object::from(floor)], lights);
-    world.groups.push(model);
+    let mut world = World::new(vec![Object::from(floor), Object::from(wall)], lights);
+    world.groups.push(glass_teapot);
+    world.groups.push(mirror_teapot);
 
-    let from = Tuple::point(0., 3., -6.);
-    let to = Tuple::point(0., 0.8, 0.);
+    let from = Tuple::point(0., 2.5, -6.);
+    let to = Tuple::point(0., 0.6, 0.);
     let up = Tuple::vector(0., 1., 0.);
     let camera = Camera::new(width, height, PI / 3.).with_transform(from.view_transform(to, up));
 
