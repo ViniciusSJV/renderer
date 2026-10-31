@@ -1,105 +1,28 @@
 extern crate renderer;
 
 use std::f64::consts::PI;
-use std::fs::{read_to_string, write};
+use std::fs::write;
 
 use renderer::camera::Camera;
-use renderer::bounds::Bounds;
 use renderer::color::Color;
-use renderer::groups::Groups;
 use renderer::lights::Light;
 use renderer::materials::Material;
 use renderer::matrix::Matrix;
+use renderer::obj::load_bvh;
 use renderer::object::Object;
 use renderer::patterns::{Checkers, Patterns};
 use renderer::plane::Plane;
-use renderer::triangle::Triangle;
 use renderer::object::Intersectable;
 use renderer::transformations::Transform;
 use renderer::tuple::Tuple;
 use renderer::world::World;
 
-fn load_model(path: &str, material: Material, transform: Matrix<4>) -> Groups {
-    let mut vertices = Vec::new();
-    let mut triangles = Vec::new();
-    let model = read_to_string(path).expect("Error reading model OBJ");
-
-    for line in model.lines() {
-        let mut fields = line.split_whitespace();
-        match fields.next() {
-            Some("v") => {
-                let x = fields.next().unwrap().parse::<f64>().unwrap();
-                let y = fields.next().unwrap().parse::<f64>().unwrap();
-                let z = fields.next().unwrap().parse::<f64>().unwrap();
-                vertices.push(Tuple::point(x, y, z));
-            }
-            Some("f") => {
-                let indices: Vec<usize> = fields
-                    .map(|field| field.split('/').next().unwrap().parse::<usize>().unwrap() - 1)
-                    .collect();
-
-                for face in indices[1..].windows(2) {
-                    let mut triangle = Triangle::new(
-                        vertices[indices[0]],
-                        vertices[face[0]],
-                        vertices[face[1]],
-                    );
-                    triangle.set_material(material);
-                    triangles.push(Object::from(triangle));
-                }
-            }
-            _ => {}
-        }
-    }
-
-    let mut group = Groups::from(triangles);
-    group.transform = transform;
-    group
-}
-
-fn build_bvh(mut objects: Vec<Object>) -> Groups {
-    if objects.len() <= 8 {
-        return Groups::from(objects);
-    }
-
-    let mut bounds = Bounds::empty();
-    for object in &objects {
-        bounds = bounds.union(object.bounds());
-    }
-    let extent = bounds.maximum - bounds.minimum;
-    let axis = if extent.x >= extent.y && extent.x >= extent.z {
-        0
-    } else if extent.y >= extent.z {
-        1
-    } else {
-        2
-    };
-
-    objects.sort_by(|left, right| {
-        let a = left.bounds().center();
-        let b = right.bounds().center();
-        let (a, b) = match axis {
-            0 => (a.x, b.x),
-            1 => (a.y, b.y),
-            _ => (a.z, b.z),
-        };
-        a.partial_cmp(&b).unwrap()
-    });
-
-    let midpoint = objects.len() / 2;
-    let right = objects.split_off(midpoint);
-    Groups::from_subgroups(vec![build_bvh(objects), build_bvh(right)])
-}
-
 fn render_suzanne(material: Material, output: &str) {
-    let loaded = load_model(
+    let model = load_bvh(
         "suzanne.obj",
         material,
         Matrix::translation(Tuple::vector(2.5, -0.27, -4.1)),
     );
-    let transform = loaded.transform;
-    let mut model = build_bvh(loaded.children);
-    model.transform = transform;
     let mut floor = Plane::default();
     let mut floor_material = Material::phong();
     floor_material.pattern = Some(Patterns::from(Checkers::default()));

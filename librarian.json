@@ -7,11 +7,15 @@
   "search": { "top": 5, "depth": 2, "hits": 1 },
   "prepare": { "radius": 0, "numbered_lines": true },
   "commands": {
-    "compilar": { "argv": ["cargo", "build", "--release", "--bin", "librarian_measure"], "timeout_s": 1200 },
+    "compilar": { "argv": ["cargo", "build", "--release", "--bin", "librarian_measure", "--bin", "librarian_measure_mesh"], "timeout_s": 1200 },
     "testes": { "argv": ["cargo", "test", "--release", "--quiet"], "timeout_s": 1800 },
     "medir": {
       "argv": ["cargo", "run", "--release", "--quiet", "--bin", "librarian_measure", "--", "librarian-cap11.png", "2048", "1080"],
       "timeout_s": 900, "repeat": 5, "outputs": ["librarian-cap11.png"]
+    },
+    "medir-malha": {
+      "argv": ["cargo", "run", "--release", "--quiet", "--bin", "librarian_measure_mesh", "--", "librarian-teapot.png", "teapot.obj", "64", "64"],
+      "timeout_s": 900, "repeat": 5, "outputs": ["librarian-teapot.png"]
     }
   }
 }

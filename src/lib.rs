@@ -23,3 +23,4 @@ pub mod cylinder;
 pub mod cone;
 pub mod groups;
 pub mod triangle;
+pub mod obj;
