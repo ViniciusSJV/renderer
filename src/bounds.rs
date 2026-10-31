@@ -57,6 +57,7 @@ impl Bounds {
     }
 
     pub fn intersects(&self, ray: Ray) -> bool {
+        crate::count!();
         let (mut t_min, mut t_max) = (f64::NEG_INFINITY, f64::INFINITY);
         for (origin, direction, minimum, maximum) in [
             (ray.origin.x, ray.direction.x, self.minimum.x, self.maximum.x),

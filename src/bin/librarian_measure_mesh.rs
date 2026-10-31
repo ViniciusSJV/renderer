@@ -79,6 +79,7 @@ fn main() {
     let up = Tuple::vector(0., 1., 0.);
     let camera = Camera::new(width, height, PI / 3.).with_transform(from.view_transform(to, up));
 
+    renderer::count::reset();
     let start = Instant::now();
     let canvas = camera.render(world);
     let render_ms = start.elapsed().as_secs_f64() * 1000.0;
@@ -87,4 +88,6 @@ fn main() {
     println!("librarian-measure load_ms={load_ms:.3} ms");
     println!("librarian-measure render_ms={render_ms:.3} ms");
     println!("librarian-measure pixels={} px", width * height);
+    // Com a feature librarian-count, quantas vezes cada linha contada rodou no render.
+    renderer::count::report();
 }

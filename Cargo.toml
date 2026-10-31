@@ -10,3 +10,7 @@ rayon = "1.5"
 itertools = "0.10.2"
 png = "0.16.8"
 sha2 = "0.10"
+
+[features]
+# Contagem de chamadas por linha para o Librarian (src/count.rs).
+librarian-count = []

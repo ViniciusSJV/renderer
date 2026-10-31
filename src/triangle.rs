@@ -29,6 +29,7 @@ impl Triangle {
 
 impl Intersectable for Triangle {
     fn local_intersect(&self, local_ray: Ray) -> Intersections {
+        crate::count!();
         let dir_cross_e2 = local_ray.direction.cross(self.e2);
         let det = self.e1.dot(dir_cross_e2);
 

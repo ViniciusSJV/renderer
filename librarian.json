@@ -16,6 +16,10 @@
     "medir-malha": {
       "argv": ["cargo", "run", "--release", "--quiet", "--bin", "librarian_measure_mesh", "--", "librarian-teapot.png", "teapot.obj", "64", "64"],
       "timeout_s": 900, "repeat": 5, "outputs": ["librarian-teapot.png"]
+    },
+    "medir-contagem": {
+      "argv": ["cargo", "run", "--release", "--quiet", "--features", "librarian-count", "--bin", "librarian_measure_mesh", "--", "librarian-teapot-contagem.png", "teapot.obj", "64", "64"],
+      "timeout_s": 900, "repeat": 2, "outputs": ["librarian-teapot-contagem.png"]
     }
   }
 }

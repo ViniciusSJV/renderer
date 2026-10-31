@@ -24,3 +24,4 @@ pub mod cone;
 pub mod groups;
 pub mod triangle;
 pub mod obj;
+pub mod count;

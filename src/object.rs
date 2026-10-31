@@ -27,6 +27,7 @@ pub trait Intersectable {
     }
 
     fn intersect(&self, original_ray: Ray) -> Intersections {
+        crate::count!();
         let local_ray = original_ray.set_transform(self.transform().inverse());
         self.local_intersect(local_ray)
     }

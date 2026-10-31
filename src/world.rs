@@ -43,6 +43,7 @@ impl World {
     }
 
     pub fn shade_hit(&self, comps: Computations, remaining: u8) -> Color {
+        crate::count!();
         let mut surface = Color::black();
         for &light in self.lights.iter() {
             let shadowed = self.is_shadowed(comps.over_point, light);
@@ -89,6 +90,7 @@ impl World {
     }
 
     pub fn is_shadowed(&self, point: Tuple, light: Light) -> bool {
+        crate::count!();
         let shadow_vector : Tuple = light.position - point;
         let distance = shadow_vector.length();
         let direction = shadow_vector.normalize();
@@ -105,6 +107,7 @@ impl World {
     }
 
     pub fn color_at(&self, ray: Ray, remaining: u8) -> Color {
+        crate::count!();
         let xs = self.intersect_world(ray);
         if xs.hit() != None {
             let hit = xs.hit().unwrap();

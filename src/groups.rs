@@ -84,6 +84,7 @@ impl Groups {
     }
 
     pub fn intersect(&self, ray: Ray) -> Intersections {
+        crate::count!();
         let local_ray = ray.set_transform(self.transform.inverse());
         if !self.local_bounds.intersects(local_ray) {
             return Intersections::new(vec![]);

@@ -191,6 +191,7 @@ impl Matrix<4> {
     }
 
     pub fn inverse(&self) -> Self {
+        crate::count!();
         if !self.is_invertible() {
             panic!("Its is not invertible")
         }
