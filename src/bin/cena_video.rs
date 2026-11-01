@@ -72,7 +72,8 @@ fn main() {
     let mirror_teapot = load_bvh_smooth("teapot.obj", mirror,
         Matrix::translation(Tuple::vector(teapots[1].0, 0., 0.)) * Matrix::rotation_y(teapots[1].1) * scale);
 
-    // A Suzanne do arquivo fica fora da origem: centro em (-2.494, _, 4.104), base em y 0.267.
+    // A Suzanne suavizada (suzanne.obj subdividida duas vezes, sem as normais do arquivo, que nao
+    // batem com as faces) fica fora da origem: centro em (-2.494, _, 4.104), base em y 0.279.
     let mut gold = Material::phong();
     gold.color = Color::new(1.0, 0.72, 0.25);
     gold.diffuse = 0.6;
@@ -80,9 +81,9 @@ fn main() {
     gold.shininess = 250.;
     gold.reflective = 0.3;
     let suzanne_at = (0., 0.7);
-    let suzanne = load_bvh_smooth("suzanne.obj", gold,
+    let suzanne = load_bvh_smooth("suzanne-suave.obj", gold,
         Matrix::translation(Tuple::vector(suzanne_at.0, 0., suzanne_at.1)) * Matrix::rotation_y(PI) * Matrix::scaling(Tuple::vector(0.45, 0.45, 0.45))
-            * Matrix::translation(Tuple::vector(2.494, -0.267, -4.104)));
+            * Matrix::translation(Tuple::vector(2.494, -0.279, -4.104)));
     // O que as bolinhas nao podem tocar nem esconder: (x, z, raio no chao).
     let obstacles = [(teapots[0].0, 0., 1.6), (teapots[1].0, 0., 1.6), (suzanne_at.0, suzanne_at.1, 0.75)];
 
@@ -117,6 +118,27 @@ fn main() {
         // E separadas vistas da camera tambem: uma nao pode ficar na frente da outra na imagem.
         let apart_on_screen = balls.iter().all(|(bx, bz, br)| (x / (z + 7.) - bx / (bz + 7.)).abs() > (r / (z + 7.) + br / (bz + 7.)) * 1.2);
         if clear_of_teapots && clear_of_balls && apart_on_screen && visible {
+            balls.push((x, z, r));
+        }
+    }
+    // Bolinhas atras dos objetos, com outra semente (as da frente nao mudam): aparecem pelo vidro,
+    // no reflexo do espelho e entre os objetos. Nao encostam em nada; vistas da camera, nao ficam
+    // umas na frente das outras.
+    let front = balls.len();
+    // Duas logo atras do corpo do teapot de vidro: vistas da camera, aparecem pela refracao.
+    balls.push((teapots[0].0 - 0.25, 2.0, 0.3));
+    balls.push((teapots[0].0 + 0.55, 2.05, 0.22));
+    let mut sorteio = Sorteio(31);
+    let mut tries = 0;
+    while balls.len() < front + 10 && tries < 10_000 {
+        tries += 1;
+        let r = sorteio.between(0.15, 0.3);
+        let z = sorteio.between(1.2, 4.8);
+        let x = sorteio.between(-1., 1.) * 0.45 * (z + 7.);
+        let clear_of_objects = obstacles.iter().all(|(ox, oz, or)| ((x - ox).powi(2) + (z - oz).powi(2)).sqrt() > or + r);
+        let clear_of_balls = balls.iter().all(|(bx, bz, br)| ((x - bx).powi(2) + (z - bz).powi(2)).sqrt() > r + br + 0.08);
+        let apart_on_screen = balls[front..].iter().all(|(bx, bz, br)| (x / (z + 7.) - bx / (bz + 7.)).abs() > (r / (z + 7.) + br / (bz + 7.)) * 1.1);
+        if clear_of_objects && clear_of_balls && apart_on_screen {
             balls.push((x, z, r));
         }
     }
