@@ -49,5 +49,3 @@ cargo run --locked --release --bin bench_render
 ![Chapter 14](https://github.com/ViniciusSJV/renderer/blob/master/cap14.png?raw=true)
 
 ![Chapter 15](https://github.com/ViniciusSJV/renderer/blob/master/cap15-groups.png?raw=true)
-
-![Chapter 15](https://github.com/ViniciusSJV/renderer/blob/master/cap15.png?raw=true)
