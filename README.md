@@ -32,7 +32,7 @@ cargo run --locked --release --bin bench_render
 
 # samples
 
-![Teapots and Suzanne 4K](https://github.com/ViniciusSJV/renderer/blob/master/cena-4k-teapots-suzanne-suave-aa.png?raw=true)
+![All shapes 4K](https://github.com/ViniciusSJV/renderer/blob/master/cena-4k-formas-aa.png?raw=true)
 
 ![Teapots 4K](https://github.com/ViniciusSJV/renderer/blob/master/teapots-4k.png?raw=true)
 
