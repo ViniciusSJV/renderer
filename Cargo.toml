@@ -14,3 +14,56 @@ sha2 = "0.10"
 [features]
 # Contagem de chamadas por linha para o Librarian (src/count.rs).
 librarian-count = []
+
+# As cenas de cada capítulo do livro: fora de src, para não entrarem no grafo do Librarian.
+[[bin]]
+name = "cap1"
+path = "caps/cap1.rs"
+
+[[bin]]
+name = "cap3"
+path = "caps/cap3.rs"
+
+[[bin]]
+name = "cap4"
+path = "caps/cap4.rs"
+
+[[bin]]
+name = "cap5"
+path = "caps/cap5.rs"
+
+[[bin]]
+name = "cap6"
+path = "caps/cap6.rs"
+
+[[bin]]
+name = "cap7"
+path = "caps/cap7.rs"
+
+[[bin]]
+name = "cap9"
+path = "caps/cap9.rs"
+
+[[bin]]
+name = "cap10"
+path = "caps/cap10.rs"
+
+[[bin]]
+name = "cap11"
+path = "caps/cap11.rs"
+
+[[bin]]
+name = "cap12"
+path = "caps/cap12.rs"
+
+[[bin]]
+name = "cap13"
+path = "caps/cap13.rs"
+
+[[bin]]
+name = "cap14"
+path = "caps/cap14.rs"
+
+[[bin]]
+name = "cap15"
+path = "caps/cap15.rs"
